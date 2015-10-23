@@ -14,7 +14,7 @@
 <meta property="og:description" content="elasticsearch config
 1234567891011121314151617181920212223242526272829303132333435363738394041424344454647484950515253545556575859606162636465666768697071727374757677787980818283848586878889node.name:">
 <meta property="og:image" content="http://www.fovoy.com/thumbnails/t2.jpg">
-<meta property="og:updated_time" content="2015-10-20T08:59:37.000Z">
+<meta property="og:updated_time" content="2015-10-22T10:06:35.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="elasticsearch config">
 <meta name="twitter:description" content="elasticsearch config
@@ -106,7 +106,7 @@
         <span>文章</span>
       </div>
       <div class="article-info-block">
-        5
+        6
         <span>标签</span>
       </div>
     </div>
@@ -172,11 +172,12 @@
         <p><img src="/thumbnails/t2.jpg" alt=""></p>
 <h1 id="elasticsearch_config">elasticsearch config</h1><hr>
 <figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br></pre></td><td class="code"><pre><span class="line">node.name: $&#123;NAME&#125;</span><br><span class="line">bootstrap.mlockall: true</span><br><span class="line"></span><br><span class="line">#threadpool.get.type: fixed</span><br><span class="line">#threadpool.get.size: 1</span><br><span class="line">node.master: false</span><br><span class="line">threadpool.suggest.type: fixed</span><br><span class="line">threadpool.suggest.size: 1</span><br><span class="line"></span><br><span class="line">#index.refresh_interval: 120s</span><br><span class="line"></span><br><span class="line">#indices.memory.index_buffer_size: 1024m</span><br><span class="line"></span><br><span class="line">indices.fielddata.cache.size: 40%</span><br><span class="line"></span><br><span class="line">indices.fielddata.cache.expire: 20m</span><br><span class="line"></span><br><span class="line">indices.fielddata.breaker.limit: 40%</span><br><span class="line"></span><br><span class="line">indices.cache.filter.type: soft</span><br><span class="line"></span><br><span class="line">indices.fielddata.cache: soft</span><br><span class="line"></span><br><span class="line">indices.cache.filter.size: 30%</span><br><span class="line"></span><br><span class="line">indices.cache.filter.expire: 20m</span><br><span class="line"></span><br><span class="line">#http.enabled: false</span><br><span class="line"></span><br><span class="line">transport.tcp.compress: true</span><br><span class="line"></span><br><span class="line">#network.tcp.connect_timeout: 30s</span><br><span class="line"></span><br><span class="line"># transport.tcp.connect_timeout: 30s</span><br><span class="line"></span><br><span class="line">discovery.zen.ping.multicast.enabled: false</span><br><span class="line"></span><br><span class="line">discovery.zen.minimum_master_nodes: 2</span><br><span class="line"></span><br><span class="line">discovery.zen.fd.ping_interval: 10s</span><br><span class="line"></span><br><span class="line">discovery.zen.ping.timeout: 6s</span><br><span class="line"></span><br><span class="line">#discovery.initial_state_timeout: 60s</span><br><span class="line"></span><br><span class="line">discovery.zen.ping.unicast.hosts: [""]</span><br><span class="line"></span><br><span class="line">#################################### Paths ####################################</span><br><span class="line"></span><br><span class="line"># path.conf: /path/to/conf</span><br><span class="line">path.data: /server/es/data</span><br><span class="line">path.work: /server/es/work</span><br><span class="line">path.logs: /server/es/logs</span><br><span class="line">path.plugins: /path/to/plugins</span><br><span class="line"># marvel.agent.exporter.es.hosts: ["10.58.50.26:9200"]</span><br><span class="line"># Shard level query and fetch threshold logging.</span><br><span class="line">#index.search.slowlog.threshold.query.warn: 10s</span><br><span class="line">#index.search.slowlog.threshold.query.info: 5s</span><br><span class="line">index.search.slowlog.threshold.query.debug: 1s</span><br><span class="line">index.search.slowlog.threshold.query.trace: 500ms</span><br><span class="line"></span><br><span class="line">#index.search.slowlog.threshold.fetch.warn: 1s</span><br><span class="line">#index.search.slowlog.threshold.fetch.info: 800ms</span><br><span class="line">index.search.slowlog.threshold.fetch.debug: 500ms</span><br><span class="line">#index.search.slowlog.threshold.fetch.trace: 200ms</span><br><span class="line"></span><br><span class="line">#index.indexing.slowlog.threshold.index.warn: 10s</span><br><span class="line">#index.indexing.slowlog.threshold.index.info: 5s</span><br><span class="line">#index.indexing.slowlog.threshold.index.debug: 2s</span><br><span class="line">#index.indexing.slowlog.threshold.index.trace: 500ms</span><br><span class="line"></span><br><span class="line">################################## GC Logging ################################</span><br><span class="line"></span><br><span class="line">monitor.jvm.gc.young.warn: 1000ms</span><br><span class="line">monitor.jvm.gc.young.info: 700ms</span><br><span class="line">#monitor.jvm.gc.young.debug: 400ms</span><br><span class="line"></span><br><span class="line">monitor.jvm.gc.old.warn: 10s</span><br><span class="line">monitor.jvm.gc.old.info: 5s</span><br><span class="line">monitor.jvm.gc.old.debug: 2s</span><br><span class="line"></span><br><span class="line">action.disable_delete_all_indices: true</span><br><span class="line">indices.breaker.fielddata.limit: 60%</span><br><span class="line">indices.breaker.total.limit: 70%</span><br><span class="line"># 防止FULL GC</span><br><span class="line">indices.fielddata.cache.expire: 5m</span><br><span class="line">indices.cache.filter.type: soft</span><br><span class="line">indices.cache.filter.size: 20%</span><br><span class="line">indices.cache.filter.expire: 12h</span><br></pre></td></tr></table></figure>
+<p>*<a href="http://v.youku.com/v_show/id_XNTA4MjkxMTY4.html?from=y1.2-1-87.4.2-1.1-1-2-1-0" target="_blank" rel="external">配置视频</a></p>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://www.fovoy.com/2014/07/12/es config 模版/" data-id="cig1jzjn40015sms6lmof36h4" class="article-share-link">分享到</a>
+      <a data-url="http://www.fovoy.com/2014/07/12/es config 模版/" data-id="cig3h1y9i0017vzs6r0s9fis6" class="article-share-link">分享到</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Elasticsearch/">Elasticsearch</a></li></ul>
@@ -243,14 +244,14 @@
               <a href="/2015/10/12/前端开发待学习/" class="thumbnail">
   
     <span style="background-image:url(/thumbnails/t1.jpg
-)" alt="前段开发待学习" class="thumbnail-image"></span>
+)" alt="前端开发待学习" class="thumbnail-image"></span>
   
 </a>
             </div>
             
             <div class="item-inner">
               <p class="item-category"><a class="article-category-link" href="/categories/前端开发/">前端开发</a><i class="fa fa-angle-right"></i><a class="article-category-link" href="/categories/前端开发/学习/">学习</a></p>
-              <p class="item-title"><a href="/2015/10/12/前端开发待学习/" class="title">前段开发待学习</a></p>
+              <p class="item-title"><a href="/2015/10/12/前端开发待学习/" class="title">前端开发待学习</a></p>
               <p class="item-date"><time datetime="2015-10-12T11:25:12.000Z" itemprop="datePublished">2015-10-12</time></p>
             </div>
           </li>
@@ -327,7 +328,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">标签</h3>
     <div class="widget">
-      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Elasticsearch/">Elasticsearch</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/angularjs/">angularjs</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/secureCRT/">secureCRT</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/spring/">spring</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/tools/">tools</a><span class="tag-list-count">3</span></li></ul>
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Elasticsearch/">Elasticsearch</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/angularjs/">angularjs</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/play/">play</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/secureCRT/">secureCRT</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/spring/">spring</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/tools/">tools</a><span class="tag-list-count">3</span></li></ul>
     </div>
   </div>
 
@@ -336,7 +337,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">标签云</h3>
     <div class="widget tagcloud">
-      <a href="/tags/Elasticsearch/" style="font-size: 20px;">Elasticsearch</a> <a href="/tags/angularjs/" style="font-size: 10px;">angularjs</a> <a href="/tags/secureCRT/" style="font-size: 10px;">secureCRT</a> <a href="/tags/spring/" style="font-size: 10px;">spring</a> <a href="/tags/tools/" style="font-size: 15px;">tools</a>
+      <a href="/tags/Elasticsearch/" style="font-size: 20px;">Elasticsearch</a> <a href="/tags/angularjs/" style="font-size: 10px;">angularjs</a> <a href="/tags/play/" style="font-size: 10px;">play</a> <a href="/tags/secureCRT/" style="font-size: 10px;">secureCRT</a> <a href="/tags/spring/" style="font-size: 10px;">spring</a> <a href="/tags/tools/" style="font-size: 15px;">tools</a>
     </div>
   </div>
 

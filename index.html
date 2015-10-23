@@ -101,7 +101,7 @@
         <span>文章</span>
       </div>
       <div class="article-info-block">
-        5
+        6
         <span>标签</span>
       </div>
     </div>
@@ -167,12 +167,12 @@
                 
         <p><img src="/thumbnails/t2.jpg" alt=""></p>
 <h1 id="elasticsearch_待学习">elasticsearch 待学习</h1><hr>
-<p><a href="http://vdisk.weibo.com/u/1451057603" target="_blank" rel="external">学习</a></p>
+<p><a href="http://vdisk.weibo.com/u/1451057603" target="_blank" rel="external">学习</a><br><a href="https://www.digitalocean.com/community/tutorials/how-to-install-elasticsearch-logstash-and-kibana-4-on-ubuntu-14-04" target="_blank" rel="external">kibana Ng 安全代理</a></p>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://www.fovoy.com/2015/10/17/es待学习/" data-id="cig1jzjmv000osms6w9as2uqf" class="article-share-link">分享到</a>
+      <a data-url="http://www.fovoy.com/2015/10/17/es待学习/" data-id="cig3h1y99000qvzs6u7goomnk" class="article-share-link">分享到</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Elasticsearch/">Elasticsearch</a></li></ul>
@@ -194,7 +194,7 @@
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2015/10/12/前端开发待学习/">前段开发待学习</a>
+      <a class="article-title" href="/2015/10/12/前端开发待学习/">前端开发待学习</a>
     </h1>
   
 
@@ -228,9 +228,11 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://www.fovoy.com/2015/10/12/前端开发待学习/" data-id="cig1jzjmk0004sms679wwpvlt" class="article-share-link">分享到</a>
+      <a data-url="http://www.fovoy.com/2015/10/12/前端开发待学习/" data-id="cig3h1y8w0004vzs683jv2t2y" class="article-share-link">分享到</a>
       
       
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/play/">play</a></li></ul>
+
     </footer>
   </div>
   
@@ -279,7 +281,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://www.fovoy.com/2015/10/12/spring配置对比/" data-id="cig1jzjmr000esms63apypvte" class="article-share-link">分享到</a>
+      <a data-url="http://www.fovoy.com/2015/10/12/spring配置对比/" data-id="cig3h1y94000gvzs6wuprx4gf" class="article-share-link">分享到</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/spring/">spring</a></li></ul>
@@ -334,7 +336,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://www.fovoy.com/2015/08/16/es vs solr/" data-id="cig1jzjn00010sms6ymz1xh9c" class="article-share-link">分享到</a>
+      <a data-url="http://www.fovoy.com/2015/08/16/es vs solr/" data-id="cig3h1y9f0012vzs6xlogxs65" class="article-share-link">分享到</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Elasticsearch/">Elasticsearch</a></li></ul>
@@ -391,7 +393,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://www.fovoy.com/2015/07/12/企业工具/" data-id="cig1jzjmo0009sms6s91ud7nz" class="article-share-link">分享到</a>
+      <a data-url="http://www.fovoy.com/2015/07/12/企业工具/" data-id="cig3h1y91000bvzs6apz4owi7" class="article-share-link">分享到</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/tools/">tools</a></li></ul>
@@ -441,19 +443,23 @@
                 
         <p><img src="/thumbnails/t2.jpg" alt=""></p>
 <h1 id="elasticsearch动态修改配置">elasticsearch动态修改配置</h1><hr>
-<p>修改slowlog</p>
+<p>＊修改slowlog</p>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">XPUT /test_index/_settings</span><br><span class="line">&#123; <span class="string">"index"</span>: &#123;</span><br><span class="line"><span class="string">"search.slowlog.level"</span>: <span class="string">"trace"</span>,</span><br><span class="line"><span class="string">"search.slowlog.threshold.query.trace"</span>:<span class="string">"100ms"</span>&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <hr>
-<p>修改filterCache<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//persistent</span></span><br><span class="line">curl -XPUT /_cluster/settings -d </span><br><span class="line">   &#123; <span class="string">"persistent"</span> : &#123;</span><br><span class="line"><span class="string">"indices.cache.filter.type"</span>: <span class="string">"soft"</span>,</span><br><span class="line"><span class="string">"indices.cache.filter.size"</span>: <span class="string">"20%"</span>,</span><br><span class="line"><span class="string">"indices.cache.filter.expire"</span>: <span class="string">"12h"</span>&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>＊修改filterCache<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//persistent</span></span><br><span class="line">curl -XPUT /_cluster/settings -d </span><br><span class="line">   &#123; <span class="string">"persistent"</span> : &#123;</span><br><span class="line"><span class="string">"indices.cache.filter.type"</span>: <span class="string">"soft"</span>,</span><br><span class="line"><span class="string">"indices.cache.filter.size"</span>: <span class="string">"20%"</span>,</span><br><span class="line"><span class="string">"indices.cache.filter.expire"</span>: <span class="string">"12h"</span>&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
 <hr>
-<p>修改recovery<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//transient</span></span><br><span class="line"> curl -XPUT /_cluster/settings -d </span><br><span class="line"> &#123;</span><br><span class="line">  <span class="string">"persistent"</span> : &#123;</span><br><span class="line">    <span class="string">"indices"</span> : &#123;</span><br><span class="line">      <span class="string">"recovery"</span> : &#123;</span><br><span class="line">        <span class="string">"concurrent_streams"</span> : <span class="string">"30"</span>,</span><br><span class="line">        <span class="string">"max_bytes_per_sec"</span> : <span class="string">"2gb"</span>&#125;&#125;&#125;</span><br><span class="line">&#125;<span class="string">'</span></span><br></pre></td></tr></table></figure></p>
+<p>＊修改recovery<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//transient</span></span><br><span class="line"> curl -XPUT /_cluster/settings -d </span><br><span class="line"> &#123;</span><br><span class="line">  <span class="string">"persistent"</span> : &#123;</span><br><span class="line">    <span class="string">"indices"</span> : &#123;</span><br><span class="line">      <span class="string">"recovery"</span> : &#123;</span><br><span class="line">        <span class="string">"concurrent_streams"</span> : <span class="string">"30"</span>,</span><br><span class="line">        <span class="string">"max_bytes_per_sec"</span> : <span class="string">"2gb"</span>&#125;&#125;&#125;</span><br><span class="line">&#125;<span class="string">'</span></span><br></pre></td></tr></table></figure></p>
+<hr>
+<p>＊暂停分片<br><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"># curl -XPUT http://127.0.0.1:9200/_cluster/settings -d '&#123;</span><br><span class="line">  "transient" : &#123;</span><br><span class="line">    "cluster.routing.allocation.enable" : "none"</span><br><span class="line">  &#125;</span><br><span class="line">&#125;'</span><br></pre></td></tr></table></figure></p>
+<hr>
+<p>＊加大恢复速度<br><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"># curl -XPUT http://127.0.0.1:9200/_cluster/settings -d '&#123;</span><br><span class="line">  "persistent" : &#123;</span><br><span class="line">    "cluster" : &#123;</span><br><span class="line">      "routing" : &#123;</span><br><span class="line">        "allocation" : &#123;</span><br><span class="line">          "disable_allocation" : "false",</span><br><span class="line">          "cluster_concurrent_rebalance" : "5",</span><br><span class="line">          "node_concurrent_recoveries" : "5",</span><br><span class="line">          "enable" : "all"</span><br><span class="line">        &#125;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;,</span><br><span class="line">    "indices" : &#123;</span><br><span class="line">      "recovery" : &#123;</span><br><span class="line">        "concurrent_streams" : "30",</span><br><span class="line">        "max_bytes_per_sec" : "2gb"</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;,</span><br><span class="line">  "transient" : &#123;</span><br><span class="line">    "cluster" : &#123;</span><br><span class="line">      "routing" : &#123;</span><br><span class="line">        "allocation" : &#123;</span><br><span class="line">          "enable" : "all"</span><br><span class="line">        &#125;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;'</span><br></pre></td></tr></table></figure></p>
 <hr>
 <p>相关链接<br><a href="https://www.elastic.co/guide/en/elasticsearch/guide/current/_changing_settings_dynamically.html" target="_blank" rel="external">es官网文档</a><br><a href="https://www.elastic.co/blog/elasticsearch-logging-secrets" target="_blank" rel="external">相关blog</a></p>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://www.fovoy.com/2015/03/16/es 动态修改配置/" data-id="cig1jzjmy000vsms6kwys52r2" class="article-share-link">分享到</a>
+      <a data-url="http://www.fovoy.com/2015/03/16/es 动态修改配置/" data-id="cig3h1y9c000xvzs6kt8risp3" class="article-share-link">分享到</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Elasticsearch/">Elasticsearch</a></li></ul>
@@ -512,7 +518,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://www.fovoy.com/2014/11/12/maven/" data-id="cig1jzjmt000lsms6p5ck7fvg" class="article-share-link">分享到</a>
+      <a data-url="http://www.fovoy.com/2014/11/12/maven/" data-id="cig3h1y96000nvzs66a8gc9jo" class="article-share-link">分享到</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/tools/">tools</a></li></ul>
@@ -569,7 +575,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://www.fovoy.com/2014/11/12/angularjs/" data-id="cig1jzjn70019sms6nx754e5c" class="article-share-link">分享到</a>
+      <a data-url="http://www.fovoy.com/2014/11/12/angularjs/" data-id="cig3h1y9l001bvzs6nily5l4y" class="article-share-link">分享到</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/angularjs/">angularjs</a></li></ul>
@@ -620,11 +626,12 @@
         <p><img src="/thumbnails/t2.jpg" alt=""></p>
 <h1 id="elasticsearch_config">elasticsearch config</h1><hr>
 <figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br></pre></td><td class="code"><pre><span class="line">node.name: $&#123;NAME&#125;</span><br><span class="line">bootstrap.mlockall: true</span><br><span class="line"></span><br><span class="line">#threadpool.get.type: fixed</span><br><span class="line">#threadpool.get.size: 1</span><br><span class="line">node.master: false</span><br><span class="line">threadpool.suggest.type: fixed</span><br><span class="line">threadpool.suggest.size: 1</span><br><span class="line"></span><br><span class="line">#index.refresh_interval: 120s</span><br><span class="line"></span><br><span class="line">#indices.memory.index_buffer_size: 1024m</span><br><span class="line"></span><br><span class="line">indices.fielddata.cache.size: 40%</span><br><span class="line"></span><br><span class="line">indices.fielddata.cache.expire: 20m</span><br><span class="line"></span><br><span class="line">indices.fielddata.breaker.limit: 40%</span><br><span class="line"></span><br><span class="line">indices.cache.filter.type: soft</span><br><span class="line"></span><br><span class="line">indices.fielddata.cache: soft</span><br><span class="line"></span><br><span class="line">indices.cache.filter.size: 30%</span><br><span class="line"></span><br><span class="line">indices.cache.filter.expire: 20m</span><br><span class="line"></span><br><span class="line">#http.enabled: false</span><br><span class="line"></span><br><span class="line">transport.tcp.compress: true</span><br><span class="line"></span><br><span class="line">#network.tcp.connect_timeout: 30s</span><br><span class="line"></span><br><span class="line"># transport.tcp.connect_timeout: 30s</span><br><span class="line"></span><br><span class="line">discovery.zen.ping.multicast.enabled: false</span><br><span class="line"></span><br><span class="line">discovery.zen.minimum_master_nodes: 2</span><br><span class="line"></span><br><span class="line">discovery.zen.fd.ping_interval: 10s</span><br><span class="line"></span><br><span class="line">discovery.zen.ping.timeout: 6s</span><br><span class="line"></span><br><span class="line">#discovery.initial_state_timeout: 60s</span><br><span class="line"></span><br><span class="line">discovery.zen.ping.unicast.hosts: [""]</span><br><span class="line"></span><br><span class="line">#################################### Paths ####################################</span><br><span class="line"></span><br><span class="line"># path.conf: /path/to/conf</span><br><span class="line">path.data: /server/es/data</span><br><span class="line">path.work: /server/es/work</span><br><span class="line">path.logs: /server/es/logs</span><br><span class="line">path.plugins: /path/to/plugins</span><br><span class="line"># marvel.agent.exporter.es.hosts: ["10.58.50.26:9200"]</span><br><span class="line"># Shard level query and fetch threshold logging.</span><br><span class="line">#index.search.slowlog.threshold.query.warn: 10s</span><br><span class="line">#index.search.slowlog.threshold.query.info: 5s</span><br><span class="line">index.search.slowlog.threshold.query.debug: 1s</span><br><span class="line">index.search.slowlog.threshold.query.trace: 500ms</span><br><span class="line"></span><br><span class="line">#index.search.slowlog.threshold.fetch.warn: 1s</span><br><span class="line">#index.search.slowlog.threshold.fetch.info: 800ms</span><br><span class="line">index.search.slowlog.threshold.fetch.debug: 500ms</span><br><span class="line">#index.search.slowlog.threshold.fetch.trace: 200ms</span><br><span class="line"></span><br><span class="line">#index.indexing.slowlog.threshold.index.warn: 10s</span><br><span class="line">#index.indexing.slowlog.threshold.index.info: 5s</span><br><span class="line">#index.indexing.slowlog.threshold.index.debug: 2s</span><br><span class="line">#index.indexing.slowlog.threshold.index.trace: 500ms</span><br><span class="line"></span><br><span class="line">################################## GC Logging ################################</span><br><span class="line"></span><br><span class="line">monitor.jvm.gc.young.warn: 1000ms</span><br><span class="line">monitor.jvm.gc.young.info: 700ms</span><br><span class="line">#monitor.jvm.gc.young.debug: 400ms</span><br><span class="line"></span><br><span class="line">monitor.jvm.gc.old.warn: 10s</span><br><span class="line">monitor.jvm.gc.old.info: 5s</span><br><span class="line">monitor.jvm.gc.old.debug: 2s</span><br><span class="line"></span><br><span class="line">action.disable_delete_all_indices: true</span><br><span class="line">indices.breaker.fielddata.limit: 60%</span><br><span class="line">indices.breaker.total.limit: 70%</span><br><span class="line"># 防止FULL GC</span><br><span class="line">indices.fielddata.cache.expire: 5m</span><br><span class="line">indices.cache.filter.type: soft</span><br><span class="line">indices.cache.filter.size: 20%</span><br><span class="line">indices.cache.filter.expire: 12h</span><br></pre></td></tr></table></figure>
+<p>*<a href="http://v.youku.com/v_show/id_XNTA4MjkxMTY4.html?from=y1.2-1-87.4.2-1.1-1-2-1-0" target="_blank" rel="external">配置视频</a></p>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://www.fovoy.com/2014/07/12/es config 模版/" data-id="cig1jzjn40015sms6lmof36h4" class="article-share-link">分享到</a>
+      <a data-url="http://www.fovoy.com/2014/07/12/es config 模版/" data-id="cig3h1y9i0017vzs6r0s9fis6" class="article-share-link">分享到</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Elasticsearch/">Elasticsearch</a></li></ul>
@@ -678,7 +685,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://www.fovoy.com/2014/07/12/SecureCRT license/" data-id="cig1jzjn9001fsms6tmsrc863" class="article-share-link">分享到</a>
+      <a data-url="http://www.fovoy.com/2014/07/12/SecureCRT license/" data-id="cig3h1y9o001hvzs64rdgb7q8" class="article-share-link">分享到</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/secureCRT/">secureCRT</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/tools/">tools</a></li></ul>
@@ -724,14 +731,14 @@
               <a href="/2015/10/12/前端开发待学习/" class="thumbnail">
   
     <span style="background-image:url(/thumbnails/t1.jpg
-)" alt="前段开发待学习" class="thumbnail-image"></span>
+)" alt="前端开发待学习" class="thumbnail-image"></span>
   
 </a>
             </div>
             
             <div class="item-inner">
               <p class="item-category"><a class="article-category-link" href="/categories/前端开发/">前端开发</a><i class="fa fa-angle-right"></i><a class="article-category-link" href="/categories/前端开发/学习/">学习</a></p>
-              <p class="item-title"><a href="/2015/10/12/前端开发待学习/" class="title">前段开发待学习</a></p>
+              <p class="item-title"><a href="/2015/10/12/前端开发待学习/" class="title">前端开发待学习</a></p>
               <p class="item-date"><time datetime="2015-10-12T11:25:12.000Z" itemprop="datePublished">2015-10-12</time></p>
             </div>
           </li>
@@ -808,7 +815,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">标签</h3>
     <div class="widget">
-      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Elasticsearch/">Elasticsearch</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/angularjs/">angularjs</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/secureCRT/">secureCRT</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/spring/">spring</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/tools/">tools</a><span class="tag-list-count">3</span></li></ul>
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Elasticsearch/">Elasticsearch</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/angularjs/">angularjs</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/play/">play</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/secureCRT/">secureCRT</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/spring/">spring</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/tools/">tools</a><span class="tag-list-count">3</span></li></ul>
     </div>
   </div>
 
@@ -817,7 +824,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">标签云</h3>
     <div class="widget tagcloud">
-      <a href="/tags/Elasticsearch/" style="font-size: 20px;">Elasticsearch</a> <a href="/tags/angularjs/" style="font-size: 10px;">angularjs</a> <a href="/tags/secureCRT/" style="font-size: 10px;">secureCRT</a> <a href="/tags/spring/" style="font-size: 10px;">spring</a> <a href="/tags/tools/" style="font-size: 15px;">tools</a>
+      <a href="/tags/Elasticsearch/" style="font-size: 20px;">Elasticsearch</a> <a href="/tags/angularjs/" style="font-size: 10px;">angularjs</a> <a href="/tags/play/" style="font-size: 10px;">play</a> <a href="/tags/secureCRT/" style="font-size: 10px;">secureCRT</a> <a href="/tags/spring/" style="font-size: 10px;">spring</a> <a href="/tags/tools/" style="font-size: 15px;">tools</a>
     </div>
   </div>
 

@@ -6,28 +6,28 @@
   <title>elasticsearch动态修改配置 | z-star</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="description" content="elasticsearch动态修改配置
-修改slowlog
+＊修改slowlog
 12345XPUT /test_index/_settings&amp;#123; &quot;index&quot;: &amp;#123;&quot;search.slowlog.level&quot;: &quot;trace&quot;,&quot;search.slowlog.threshold.query.trace&quot;:&quot;100ms&quot;&amp;#125;&amp;#125;
 
-修改filterCache1234567//per">
+＊修改filterCache1234567//p">
 <meta property="og:type" content="article">
 <meta property="og:title" content="elasticsearch动态修改配置">
 <meta property="og:url" content="http://www.fovoy.com/2015/03/16/es 动态修改配置/index.html">
 <meta property="og:site_name" content="z-star">
 <meta property="og:description" content="elasticsearch动态修改配置
-修改slowlog
+＊修改slowlog
 12345XPUT /test_index/_settings&amp;#123; &quot;index&quot;: &amp;#123;&quot;search.slowlog.level&quot;: &quot;trace&quot;,&quot;search.slowlog.threshold.query.trace&quot;:&quot;100ms&quot;&amp;#125;&amp;#125;
 
-修改filterCache1234567//per">
+＊修改filterCache1234567//p">
 <meta property="og:image" content="http://www.fovoy.com/thumbnails/t2.jpg">
-<meta property="og:updated_time" content="2015-10-20T12:11:44.000Z">
+<meta property="og:updated_time" content="2015-10-23T09:39:59.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="elasticsearch动态修改配置">
 <meta name="twitter:description" content="elasticsearch动态修改配置
-修改slowlog
+＊修改slowlog
 12345XPUT /test_index/_settings&amp;#123; &quot;index&quot;: &amp;#123;&quot;search.slowlog.level&quot;: &quot;trace&quot;,&quot;search.slowlog.threshold.query.trace&quot;:&quot;100ms&quot;&amp;#125;&amp;#125;
 
-修改filterCache1234567//per">
+＊修改filterCache1234567//p">
   
   
     <link rel="icon" href="favicon.png">
@@ -115,7 +115,7 @@
         <span>文章</span>
       </div>
       <div class="article-info-block">
-        5
+        6
         <span>标签</span>
       </div>
     </div>
@@ -180,19 +180,23 @@
                 
         <p><img src="/thumbnails/t2.jpg" alt=""></p>
 <h1 id="elasticsearch动态修改配置">elasticsearch动态修改配置</h1><hr>
-<p>修改slowlog</p>
+<p>＊修改slowlog</p>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">XPUT /test_index/_settings</span><br><span class="line">&#123; <span class="string">"index"</span>: &#123;</span><br><span class="line"><span class="string">"search.slowlog.level"</span>: <span class="string">"trace"</span>,</span><br><span class="line"><span class="string">"search.slowlog.threshold.query.trace"</span>:<span class="string">"100ms"</span>&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <hr>
-<p>修改filterCache<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//persistent</span></span><br><span class="line">curl -XPUT /_cluster/settings -d </span><br><span class="line">   &#123; <span class="string">"persistent"</span> : &#123;</span><br><span class="line"><span class="string">"indices.cache.filter.type"</span>: <span class="string">"soft"</span>,</span><br><span class="line"><span class="string">"indices.cache.filter.size"</span>: <span class="string">"20%"</span>,</span><br><span class="line"><span class="string">"indices.cache.filter.expire"</span>: <span class="string">"12h"</span>&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>＊修改filterCache<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//persistent</span></span><br><span class="line">curl -XPUT /_cluster/settings -d </span><br><span class="line">   &#123; <span class="string">"persistent"</span> : &#123;</span><br><span class="line"><span class="string">"indices.cache.filter.type"</span>: <span class="string">"soft"</span>,</span><br><span class="line"><span class="string">"indices.cache.filter.size"</span>: <span class="string">"20%"</span>,</span><br><span class="line"><span class="string">"indices.cache.filter.expire"</span>: <span class="string">"12h"</span>&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
 <hr>
-<p>修改recovery<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//transient</span></span><br><span class="line"> curl -XPUT /_cluster/settings -d </span><br><span class="line"> &#123;</span><br><span class="line">  <span class="string">"persistent"</span> : &#123;</span><br><span class="line">    <span class="string">"indices"</span> : &#123;</span><br><span class="line">      <span class="string">"recovery"</span> : &#123;</span><br><span class="line">        <span class="string">"concurrent_streams"</span> : <span class="string">"30"</span>,</span><br><span class="line">        <span class="string">"max_bytes_per_sec"</span> : <span class="string">"2gb"</span>&#125;&#125;&#125;</span><br><span class="line">&#125;<span class="string">'</span></span><br></pre></td></tr></table></figure></p>
+<p>＊修改recovery<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//transient</span></span><br><span class="line"> curl -XPUT /_cluster/settings -d </span><br><span class="line"> &#123;</span><br><span class="line">  <span class="string">"persistent"</span> : &#123;</span><br><span class="line">    <span class="string">"indices"</span> : &#123;</span><br><span class="line">      <span class="string">"recovery"</span> : &#123;</span><br><span class="line">        <span class="string">"concurrent_streams"</span> : <span class="string">"30"</span>,</span><br><span class="line">        <span class="string">"max_bytes_per_sec"</span> : <span class="string">"2gb"</span>&#125;&#125;&#125;</span><br><span class="line">&#125;<span class="string">'</span></span><br></pre></td></tr></table></figure></p>
+<hr>
+<p>＊暂停分片<br><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"># curl -XPUT http://127.0.0.1:9200/_cluster/settings -d '&#123;</span><br><span class="line">  "transient" : &#123;</span><br><span class="line">    "cluster.routing.allocation.enable" : "none"</span><br><span class="line">  &#125;</span><br><span class="line">&#125;'</span><br></pre></td></tr></table></figure></p>
+<hr>
+<p>＊加大恢复速度<br><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"># curl -XPUT http://127.0.0.1:9200/_cluster/settings -d '&#123;</span><br><span class="line">  "persistent" : &#123;</span><br><span class="line">    "cluster" : &#123;</span><br><span class="line">      "routing" : &#123;</span><br><span class="line">        "allocation" : &#123;</span><br><span class="line">          "disable_allocation" : "false",</span><br><span class="line">          "cluster_concurrent_rebalance" : "5",</span><br><span class="line">          "node_concurrent_recoveries" : "5",</span><br><span class="line">          "enable" : "all"</span><br><span class="line">        &#125;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;,</span><br><span class="line">    "indices" : &#123;</span><br><span class="line">      "recovery" : &#123;</span><br><span class="line">        "concurrent_streams" : "30",</span><br><span class="line">        "max_bytes_per_sec" : "2gb"</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;,</span><br><span class="line">  "transient" : &#123;</span><br><span class="line">    "cluster" : &#123;</span><br><span class="line">      "routing" : &#123;</span><br><span class="line">        "allocation" : &#123;</span><br><span class="line">          "enable" : "all"</span><br><span class="line">        &#125;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;'</span><br></pre></td></tr></table></figure></p>
 <hr>
 <p>相关链接<br><a href="https://www.elastic.co/guide/en/elasticsearch/guide/current/_changing_settings_dynamically.html" target="_blank" rel="external">es官网文档</a><br><a href="https://www.elastic.co/blog/elasticsearch-logging-secrets" target="_blank" rel="external">相关blog</a></p>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://www.fovoy.com/2015/03/16/es 动态修改配置/" data-id="cig1jzjmy000vsms6kwys52r2" class="article-share-link">分享到</a>
+      <a data-url="http://www.fovoy.com/2015/03/16/es 动态修改配置/" data-id="cig3h1y9c000xvzs6kt8risp3" class="article-share-link">分享到</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Elasticsearch/">Elasticsearch</a></li></ul>
@@ -259,14 +263,14 @@
               <a href="/2015/10/12/前端开发待学习/" class="thumbnail">
   
     <span style="background-image:url(/thumbnails/t1.jpg
-)" alt="前段开发待学习" class="thumbnail-image"></span>
+)" alt="前端开发待学习" class="thumbnail-image"></span>
   
 </a>
             </div>
             
             <div class="item-inner">
               <p class="item-category"><a class="article-category-link" href="/categories/前端开发/">前端开发</a><i class="fa fa-angle-right"></i><a class="article-category-link" href="/categories/前端开发/学习/">学习</a></p>
-              <p class="item-title"><a href="/2015/10/12/前端开发待学习/" class="title">前段开发待学习</a></p>
+              <p class="item-title"><a href="/2015/10/12/前端开发待学习/" class="title">前端开发待学习</a></p>
               <p class="item-date"><time datetime="2015-10-12T11:25:12.000Z" itemprop="datePublished">2015-10-12</time></p>
             </div>
           </li>
@@ -343,7 +347,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">标签</h3>
     <div class="widget">
-      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Elasticsearch/">Elasticsearch</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/angularjs/">angularjs</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/secureCRT/">secureCRT</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/spring/">spring</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/tools/">tools</a><span class="tag-list-count">3</span></li></ul>
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Elasticsearch/">Elasticsearch</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/angularjs/">angularjs</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/play/">play</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/secureCRT/">secureCRT</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/spring/">spring</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/tools/">tools</a><span class="tag-list-count">3</span></li></ul>
     </div>
   </div>
 
@@ -352,7 +356,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">标签云</h3>
     <div class="widget tagcloud">
-      <a href="/tags/Elasticsearch/" style="font-size: 20px;">Elasticsearch</a> <a href="/tags/angularjs/" style="font-size: 10px;">angularjs</a> <a href="/tags/secureCRT/" style="font-size: 10px;">secureCRT</a> <a href="/tags/spring/" style="font-size: 10px;">spring</a> <a href="/tags/tools/" style="font-size: 15px;">tools</a>
+      <a href="/tags/Elasticsearch/" style="font-size: 20px;">Elasticsearch</a> <a href="/tags/angularjs/" style="font-size: 10px;">angularjs</a> <a href="/tags/play/" style="font-size: 10px;">play</a> <a href="/tags/secureCRT/" style="font-size: 10px;">secureCRT</a> <a href="/tags/spring/" style="font-size: 10px;">spring</a> <a href="/tags/tools/" style="font-size: 15px;">tools</a>
     </div>
   </div>
 
