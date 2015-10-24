@@ -130,6 +130,60 @@
 
       
       <section id="main">
+      <article id="post-Strategy策略模式" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2014/04/28/Strategy策略模式/">Strategy 策略模式</a>
+    </h1>
+  
+
+        <div class="article-meta">
+          
+  <div class="article-date">
+    <i class="fa fa-calendar"></i>
+    <a href="/2014/04/28/Strategy策略模式/">
+      <time datetime="2014-04-28T01:13:36.000Z" itemprop="datePublished">2014-04-28</time>
+    </a>
+  </div>
+
+
+          
+  <div class="article-category">
+  	<i class="fa fa-folder"></i>
+    <a class="article-category-link" href="/categories/design-pattern/">design pattern</a>
+  </div>
+
+        </div>
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+                
+        <p><img src="/thumbnails/strategy.png" alt=""></p>
+<p>#strategy 策略模式<br>＊将各种能拆分，复用的组建或者行为，抽象出来，并且封装起来。比如一个厨房水槽实例需要装一个水龙头，水龙头的具体实现是独立的。需要什么类型的水流形状，需要引入不同类型的龙头。在进行实现主体类时。组装各种需要的组建。让组建独立于使用者。<br>*优点：相比继承，碎片化，模块化，复用性，更高。<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"> public interface Tap&#123;</span><br><span class="line"> 	 public <span class="keyword">void</span> open();</span><br><span class="line"> &#125;</span><br><span class="line"></span><br><span class="line">public <span class="class"><span class="keyword">class</span> <span class="title">OneTap</span> <span class="title">implments</span> <span class="title">Tap</span></span>&#123;</span><br><span class="line">@Override</span><br><span class="line">public <span class="keyword">void</span> open()&#123;</span><br><span class="line">     system.out.print(<span class="string">"one top"</span>)</span><br><span class="line">   &#125;	</span><br><span class="line"> &#125;</span><br><span class="line"></span><br><span class="line">public <span class="class"><span class="keyword">class</span> <span class="title">TwoTap</span> <span class="title">implments</span> <span class="title">Tap</span></span>&#123;</span><br><span class="line">@Override</span><br><span class="line">public <span class="keyword">void</span> open()&#123;</span><br><span class="line">     system.out.print(<span class="string">"Two top"</span>)</span><br><span class="line">   &#125;	</span><br><span class="line"> &#125;</span><br><span class="line"></span><br><span class="line">public <span class="class"><span class="keyword">class</span> <span class="title">Strategy</span></span>&#123;</span><br><span class="line"></span><br><span class="line">  private Tap tap ;</span><br><span class="line"></span><br><span class="line">  public <span class="keyword">void</span> setTap(Tap tap)&#123;</span><br><span class="line">  	<span class="keyword">this</span>.tap =tap;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  public <span class="keyword">void</span> open()&#123;</span><br><span class="line">  	tap.open();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://www.fovoy.com/2014/04/28/Strategy策略模式/" data-id="cig52chp1001hwas6xs020kdv" class="article-share-link">分享到</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/design-pattern/">design pattern</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+    
       <article id="post-Command 装饰者模式" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -172,7 +226,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://www.fovoy.com/2014/04/26/Command 装饰者模式/" data-id="cig50ebky001xums6jm9ir7zk" class="article-share-link">分享到</a>
+      <a data-url="http://www.fovoy.com/2014/04/26/Command 装饰者模式/" data-id="cig52chpc001xwas65qpzxepd" class="article-share-link">分享到</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/design-pattern/">design pattern</a></li></ul>
@@ -226,7 +280,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://www.fovoy.com/2014/04/26/Observer观察者模式/" data-id="cig50ebkt001rums6qadd5zam" class="article-share-link">分享到</a>
+      <a data-url="http://www.fovoy.com/2014/04/26/Observer观察者模式/" data-id="cig52chp7001rwas6usw91oni" class="article-share-link">分享到</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/design-pattern/">design pattern</a></li></ul>
@@ -281,61 +335,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://www.fovoy.com/2014/04/26/Decorator装饰者模式/" data-id="cig50ebkw001uums6fkcvtnln" class="article-share-link">分享到</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/design-pattern/">design pattern</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-
-    
-      <article id="post-Strategy策略模式" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2014/04/26/Strategy策略模式/">Strategy 策略模式</a>
-    </h1>
-  
-
-        <div class="article-meta">
-          
-  <div class="article-date">
-    <i class="fa fa-calendar"></i>
-    <a href="/2014/04/26/Strategy策略模式/">
-      <time datetime="2014-04-26T01:13:36.000Z" itemprop="datePublished">2014-04-26</time>
-    </a>
-  </div>
-
-
-          
-  <div class="article-category">
-  	<i class="fa fa-folder"></i>
-    <a class="article-category-link" href="/categories/design-pattern/">design pattern</a>
-  </div>
-
-        </div>
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-                
-        <p><img src="/thumbnails/strategy.png" alt=""></p>
-<p>#strategy 策略模式<br>＊将各种能拆分，复用的组建或者行为，抽象出来，并且封装起来。比如一个厨房水槽实例需要装一个水龙头，水龙头的具体实现是独立的。需要什么类型的水流形状，需要引入不同类型的龙头。在进行实现主体类时。组装各种需要的组建。让组建独立于使用者。<br>*优点：相比继承，碎片化，模块化，复用性，更高。<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"> public interface Tap&#123;</span><br><span class="line"> 	 public <span class="keyword">void</span> open();</span><br><span class="line"> &#125;</span><br><span class="line"></span><br><span class="line"> public <span class="class"><span class="keyword">class</span> <span class="title">OneTap</span> <span class="title">implments</span> <span class="title">Tap</span></span>&#123;</span><br><span class="line"></span><br><span class="line">@Override</span><br><span class="line">public <span class="keyword">void</span> open()&#123;</span><br><span class="line">     system.out.print(<span class="string">"one top"</span>)</span><br><span class="line">   &#125;	</span><br><span class="line"> &#125;</span><br><span class="line"></span><br><span class="line">    public <span class="class"><span class="keyword">class</span> <span class="title">TwoTap</span> <span class="title">implments</span> <span class="title">Tap</span></span>&#123;</span><br><span class="line"></span><br><span class="line">@Override</span><br><span class="line">public <span class="keyword">void</span> open()&#123;</span><br><span class="line">     system.out.print(<span class="string">"Two top"</span>)</span><br><span class="line">   &#125;	</span><br><span class="line"> &#125;</span><br><span class="line"></span><br><span class="line"> public <span class="class"><span class="keyword">class</span> <span class="title">Strategy</span></span>&#123;</span><br><span class="line"></span><br><span class="line">  private Tap tap ;</span><br><span class="line"></span><br><span class="line">  public <span class="keyword">void</span> setTap(Tap tap)&#123;</span><br><span class="line">  	<span class="keyword">this</span>.tap =tap;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  public <span class="keyword">void</span> open()&#123;</span><br><span class="line">  	tap.open();</span><br><span class="line">  &#125;</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure></p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://www.fovoy.com/2014/04/26/Strategy策略模式/" data-id="cig50ebkn001hums6xc1qwzrm" class="article-share-link">分享到</a>
+      <a data-url="http://www.fovoy.com/2014/04/26/Decorator装饰者模式/" data-id="cig52chpb001uwas6i66q3573" class="article-share-link">分享到</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/design-pattern/">design pattern</a></li></ul>
