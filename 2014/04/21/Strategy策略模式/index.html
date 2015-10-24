@@ -5,23 +5,23 @@
   
   <title>Strategy 策略模式 | z-star</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="strategy 策略模式＊ 将各种能拆分，复用的组建或者行为，抽象出来，并且封装起来。比如一个厨房水槽实例需要装一个水龙头，水龙头的具体实现是独立的。需要什么类型的水流形状，需要引入不同类型的龙头。在进行实现主体类时。组装各种需要的组建。让组建独立于使用者。
+  <meta name="description" content="＊ 将各种能拆分，复用的组建或者行为，抽象出来，并且封装起来。比如一个厨房水槽实例需要装一个水龙头，水龙头的具体实现是独立的。需要什么类型的水流形状，需要引入不同类型的龙头。在进行实现主体类时。组装各种需要的组建。让组建独立于使用者。
 
-优点：相比继承，碎片化，模块化，复用性，更高。123456789101112131415161718192021222324252627">
+优点：相比继承，碎片化，模块化，复用性，更高。123456789101112131415161718192021222324252627282930 public">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Strategy 策略模式">
 <meta property="og:url" content="http://www.fovoy.com/2014/04/21/Strategy策略模式/index.html">
 <meta property="og:site_name" content="z-star">
-<meta property="og:description" content="strategy 策略模式＊ 将各种能拆分，复用的组建或者行为，抽象出来，并且封装起来。比如一个厨房水槽实例需要装一个水龙头，水龙头的具体实现是独立的。需要什么类型的水流形状，需要引入不同类型的龙头。在进行实现主体类时。组装各种需要的组建。让组建独立于使用者。
+<meta property="og:description" content="＊ 将各种能拆分，复用的组建或者行为，抽象出来，并且封装起来。比如一个厨房水槽实例需要装一个水龙头，水龙头的具体实现是独立的。需要什么类型的水流形状，需要引入不同类型的龙头。在进行实现主体类时。组装各种需要的组建。让组建独立于使用者。
 
-优点：相比继承，碎片化，模块化，复用性，更高。123456789101112131415161718192021222324252627">
+优点：相比继承，碎片化，模块化，复用性，更高。123456789101112131415161718192021222324252627282930 public">
 <meta property="og:image" content="http://www.fovoy.com/thumbnails/strategy.png">
-<meta property="og:updated_time" content="2015-10-24T14:01:56.000Z">
+<meta property="og:updated_time" content="2015-10-24T14:06:24.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Strategy 策略模式">
-<meta name="twitter:description" content="strategy 策略模式＊ 将各种能拆分，复用的组建或者行为，抽象出来，并且封装起来。比如一个厨房水槽实例需要装一个水龙头，水龙头的具体实现是独立的。需要什么类型的水流形状，需要引入不同类型的龙头。在进行实现主体类时。组装各种需要的组建。让组建独立于使用者。
+<meta name="twitter:description" content="＊ 将各种能拆分，复用的组建或者行为，抽象出来，并且封装起来。比如一个厨房水槽实例需要装一个水龙头，水龙头的具体实现是独立的。需要什么类型的水流形状，需要引入不同类型的龙头。在进行实现主体类时。组装各种需要的组建。让组建独立于使用者。
 
-优点：相比继承，碎片化，模块化，复用性，更高。123456789101112131415161718192021222324252627">
+优点：相比继承，碎片化，模块化，复用性，更高。123456789101112131415161718192021222324252627282930 public">
   
   
     <link rel="icon" href="favicon.png">
@@ -173,7 +173,7 @@
       
                 
         <p><img src="/thumbnails/strategy.png" alt=""></p>
-<h1 id="strategy_策略模式">strategy 策略模式</h1><p>＊ 将各种能拆分，复用的组建或者行为，抽象出来，并且封装起来。比如一个厨房水槽实例需要装一个水龙头，水龙头的具体实现是独立的。需要什么类型的水流形状，需要引入不同类型的龙头。在进行实现主体类时。组装各种需要的组建。让组建独立于使用者。</p>
+<p>＊ 将各种能拆分，复用的组建或者行为，抽象出来，并且封装起来。比如一个厨房水槽实例需要装一个水龙头，水龙头的具体实现是独立的。需要什么类型的水流形状，需要引入不同类型的龙头。在进行实现主体类时。组装各种需要的组建。让组建独立于使用者。</p>
 <ul>
 <li>优点：相比继承，碎片化，模块化，复用性，更高。<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"> public interface Tap&#123;</span><br><span class="line"> 	 public <span class="keyword">void</span> open();</span><br><span class="line"> &#125;</span><br><span class="line"></span><br><span class="line">public <span class="class"><span class="keyword">class</span> <span class="title">OneTap</span> <span class="title">implments</span> <span class="title">Tap</span></span>&#123;</span><br><span class="line">@Override</span><br><span class="line">public <span class="keyword">void</span> open()&#123;</span><br><span class="line">     system.out.print(<span class="string">"one top"</span>)</span><br><span class="line">   &#125;	</span><br><span class="line"> &#125;</span><br><span class="line"></span><br><span class="line">public <span class="class"><span class="keyword">class</span> <span class="title">TwoTap</span> <span class="title">implments</span> <span class="title">Tap</span></span>&#123;</span><br><span class="line">@Override</span><br><span class="line">public <span class="keyword">void</span> open()&#123;</span><br><span class="line">     system.out.print(<span class="string">"Two top"</span>)</span><br><span class="line">   &#125;	</span><br><span class="line"> &#125;</span><br><span class="line"></span><br><span class="line">public <span class="class"><span class="keyword">class</span> <span class="title">Strategy</span></span>&#123;</span><br><span class="line"></span><br><span class="line">  private Tap tap ;</span><br><span class="line"></span><br><span class="line">  public <span class="keyword">void</span> setTap(Tap tap)&#123;</span><br><span class="line">  	<span class="keyword">this</span>.tap =tap;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  public <span class="keyword">void</span> open()&#123;</span><br><span class="line">  	tap.open();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 </li>
@@ -182,7 +182,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://www.fovoy.com/2014/04/21/Strategy策略模式/" data-id="cig55q5ga001h08s6vi2xdyea" class="article-share-link">分享到</a>
+      <a data-url="http://www.fovoy.com/2014/04/21/Strategy策略模式/" data-id="cig55xlsw001h0is6qn5mrqcq" class="article-share-link">分享到</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/design-pattern/">design pattern</a></li></ul>
@@ -226,14 +226,14 @@
               <a href="/2015/10/17/es待学习/" class="thumbnail">
   
     <span style="background-image:url(/thumbnails/es.png
-)" alt="es待学习" class="thumbnail-image"></span>
+)" alt="elasticsearch 待学习" class="thumbnail-image"></span>
   
 </a>
             </div>
             
             <div class="item-inner">
               <p class="item-category"><a class="article-category-link" href="/categories/Elasticsearch/">Elasticsearch</a><i class="fa fa-angle-right"></i><a class="article-category-link" href="/categories/Elasticsearch/学习/">学习</a></p>
-              <p class="item-title"><a href="/2015/10/17/es待学习/" class="title">es待学习</a></p>
+              <p class="item-title"><a href="/2015/10/17/es待学习/" class="title">elasticsearch 待学习</a></p>
               <p class="item-date"><time datetime="2015-10-17T01:13:36.000Z" itemprop="datePublished">2015-10-17</time></p>
             </div>
           </li>
@@ -298,14 +298,14 @@
               <a href="/2015/07/12/企业工具/" class="thumbnail">
   
     <span style="background-image:url(/thumbnails/t1.jpg
-)" alt="fovoy tools" class="thumbnail-image"></span>
+)" alt="企业级别工具" class="thumbnail-image"></span>
   
 </a>
             </div>
             
             <div class="item-inner">
               <p class="item-category"><a class="article-category-link" href="/categories/tools/">tools</a></p>
-              <p class="item-title"><a href="/2015/07/12/企业工具/" class="title">fovoy tools</a></p>
+              <p class="item-title"><a href="/2015/07/12/企业工具/" class="title">企业级别工具</a></p>
               <p class="item-date"><time datetime="2015-07-12T11:25:12.000Z" itemprop="datePublished">2015-07-12</time></p>
             </div>
           </li>
