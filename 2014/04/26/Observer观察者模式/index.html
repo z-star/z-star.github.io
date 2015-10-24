@@ -3,17 +3,22 @@
 <head>
   <meta charset="utf-8">
   
-  <title>Archives: 2014/11 | z-star</title>
+  <title>Observer 观察者模式 | z-star</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="z-star的博客">
-<meta property="og:type" content="website">
-<meta property="og:title" content="z-star">
-<meta property="og:url" content="http://www.fovoy.com/archives/2014/11/index.html">
+  <meta name="description" content="#Observer 观察者模式＊注册 撤销 需要通知的用户。本质是一个消息发布。观察者顾名思义，就是每个观察人员查看变化及时通知。 Observer subject*优点：作为一个动作的连接点，能实现通知功能，pub／sub｀｀｀javascript   public interface Observer{        public void notify();   }
+   public cl">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Observer 观察者模式">
+<meta property="og:url" content="http://www.fovoy.com/2014/04/26/Observer观察者模式/index.html">
 <meta property="og:site_name" content="z-star">
-<meta property="og:description" content="z-star的博客">
+<meta property="og:description" content="#Observer 观察者模式＊注册 撤销 需要通知的用户。本质是一个消息发布。观察者顾名思义，就是每个观察人员查看变化及时通知。 Observer subject*优点：作为一个动作的连接点，能实现通知功能，pub／sub｀｀｀javascript   public interface Observer{        public void notify();   }
+   public cl">
+<meta property="og:image" content="http://www.fovoy.com/thumbnails/observer.png">
+<meta property="og:updated_time" content="2015-10-24T09:34:09.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="z-star">
-<meta name="twitter:description" content="z-star的博客">
+<meta name="twitter:title" content="Observer 观察者模式">
+<meta name="twitter:description" content="#Observer 观察者模式＊注册 撤销 需要通知的用户。本质是一个消息发布。观察者顾名思义，就是每个观察人员查看变化及时通知。 Observer subject*优点：作为一个动作的连接点，能实现通知功能，pub／sub｀｀｀javascript   public interface Observer{        public void notify();   }
+   public cl">
   
   
     <link rel="icon" href="favicon.png">
@@ -129,85 +134,129 @@
 </aside>
 
       
-      <section id="main">
-      <div class="archive-year-wrap">
-        <a href="/archives/2014" class="archive-year">2014</a>
+      <section id="main"><article id="post-Observer观察者模式" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Observer 观察者模式
+    </h1>
+  
+
+        <div class="article-meta">
+          
+  <div class="article-date">
+    <i class="fa fa-calendar"></i>
+    <a href="/2014/04/26/Observer观察者模式/">
+      <time datetime="2014-04-26T02:13:36.000Z" itemprop="datePublished">2014-04-26</time>
+    </a>
+  </div>
+
+
+          
+  <div class="article-category">
+  	<i class="fa fa-folder"></i>
+    <a class="article-category-link" href="/categories/design-pattern/">design pattern</a>
+  </div>
+
+        </div>
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+                
+        <p><img src="/thumbnails/observer.png" alt=""></p>
+<p>#Observer 观察者模式<br>＊注册 撤销 需要通知的用户。本质是一个消息发布。观察者顾名思义，就是每个观察人员查看变化及时通知。 Observer subject<br>*优点：作为一个动作的连接点，能实现通知功能，pub／sub<br>｀｀｀javascript<br>   public interface Observer{<br>        public void notify();<br>   }</p>
+<p>   public class OneObserver implments Observer{</p>
+<pre><code>  <span class="annotation">@Override</span>
+  <span class="keyword">public</span> <span class="function"><span class="keyword">void</span> <span class="title">notify</span><span class="params">()</span></span>{
+  system.out.print(<span class="string">"one notify"</span>);
+}    
+</code></pre><p>   }</p>
+<pre><code> <span class="keyword">public</span> <span class="keyword">class</span> <span class="title">TwoObserver</span> <span class="title">implments</span> <span class="title">Observer</span>{
+
+ @<span class="function">Override
+ <span class="keyword">public</span> <span class="keyword">void</span> <span class="title">notify</span>(<span class="params"></span>)</span>{
+  system.<span class="keyword">out</span>.print(<span class="string">"Two notify"</span>);
+}    
+</code></pre><p>   }</p>
+<p>   public interface Subject(){</p>
+<pre><code><span class="keyword">public</span> <span class="function"><span class="keyword">void</span> <span class="title">addObserver</span><span class="params">(String obName,Observer ob)</span></span>;
+
+<span class="keyword">public</span> <span class="function"><span class="keyword">void</span> <span class="title">removeObserver</span><span class="params">(String obName)</span></span>;
+
+<span class="keyword">public</span> <span class="function"><span class="keyword">void</span> <span class="title">notifyObserver</span><span class="params">()</span></span>;
+</code></pre><p>   }</p>
+<p>   public class OneObserver implements Subject{</p>
+<pre><code><span class="keyword">private</span> Map&lt;<span class="keyword">String</span>,Observer&gt; <span class="built_in">map</span> = <span class="keyword">new</span> HashBiMap.create(); ;
+
+<span class="keyword">public</span> <span class="keyword">void</span> addObserver(<span class="keyword">String</span> obName,Observer ob){
+  <span class="keyword">if</span>(!<span class="built_in">map</span>.contains(obName))<span class="keyword">return</span>;
+    <span class="keyword">this</span>.<span class="built_in">map</span>.put(obName,obj);
+}
+
+<span class="keyword">public</span> <span class="keyword">void</span> removeObserver(<span class="keyword">String</span> obName){
+    tap.<span class="built_in">map</span>.remove(obName);
+}
+
+<span class="keyword">public</span> <span class="keyword">void</span> notifyObserver(){
+  <span class="keyword">for</span>(<span class="keyword">String</span> <span class="variable">key</span>:<span class="built_in">map</span>.keySet()){
+    Observer obj = <span class="built_in">map</span>.<span class="built_in">get</span>(<span class="variable">key</span>);
+    obj.notify();
+  }
+}
+<span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> main(<span class="keyword">String</span>[] args){
+  Subject sub = <span class="keyword">new</span> OneObserver();
+  sub.<span class="built_in">add</span>(<span class="keyword">new</span> OneObserver());
+  sub.<span class="built_in">add</span>(<span class="keyword">new</span> TwoObserver());
+  sub.notifyObserver();
+}
+</code></pre><p>}</p>
+<p>｀｀｀</p>
+<hr>
+<p><a href="http://mp.weixin.qq.com/s?__biz=MzAwMDU1MTE1OQ==&amp;mid=209488723&amp;idx=1&amp;sn=d60c0637d7a9f4a4b981a69f10c6b90a&amp;scene=5#rd" target="_blank" rel="external">相关blog</a></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://www.fovoy.com/2014/04/26/Observer观察者模式/" data-id="cig4w4b8n001rqks60ahcxd6e" class="article-share-link">分享到</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/design-pattern/">design pattern</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2014/07/12/SecureCRT license/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">上一篇</strong>
+      <div class="article-nav-title">
+        
+          SecureCRT 7.1 license DATA
+        
       </div>
-      <section class="archives-wrap">
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    
-    <div class="archive-article-thumbnail">
-      <a href="/2014/11/12/maven/" class="thumbnail">
-  
-    <span style="background-image:url(/thumbnails/t1.jpg
-)" alt="maven" class="thumbnail-image"></span>
-  
-</a>
-    </div>
-    
-    <header class="archive-article-header">
-      
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2014/11/12/maven/">maven</a>
-    </h1>
-  
-
-      
-        
-  <div class="archive-article-date">
-    <i class="fa fa-calendar"></i>
-    <a href="/2014/11/12/maven/">
-      <time datetime="2014-11-12T11:25:12.000Z" itemprop="datePublished">11月 12</time>
     </a>
-  </div>
-
-
-      
-    </header>
-  </div>
-</article>
   
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    
-    <div class="archive-article-thumbnail">
-      <a href="/2014/11/12/angularjs/" class="thumbnail">
   
-    <span style="background-image:url(/thumbnails/t1.jpg
-)" alt="angularjs" class="thumbnail-image"></span>
-  
-</a>
-    </div>
-    
-    <header class="archive-article-header">
-      
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2014/11/12/angularjs/">angularjs</a>
-    </h1>
-  
-
-      
-        
-  <div class="archive-article-date">
-    <i class="fa fa-calendar"></i>
-    <a href="/2014/11/12/angularjs/">
-      <time datetime="2014-11-12T11:25:12.000Z" itemprop="datePublished">11月 12</time>
+    <a href="/2014/04/26/strategy策略模式/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">下一篇</strong>
+      <div class="article-nav-title">strategy 策略模式</div>
     </a>
-  </div>
-
-
-      
-    </header>
-  </div>
-</article>
   
-    </div></section>
-  </section>
+</nav>
+
+
+  
+</article>
+
+
+</section>
       
         <aside id="sidebar">
   
