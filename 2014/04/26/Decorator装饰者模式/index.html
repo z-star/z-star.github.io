@@ -3,22 +3,22 @@
 <head>
   <meta charset="utf-8">
   
-  <title>前端开发待学习 | z-star</title>
+  <title>Decorator 装饰者模式 | z-star</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="MAVEN
-play">
+  <meta name="description" content="#Decorator 装饰者模式装饰者与本类实现的是相同的接口，装饰者来修饰本类没有实现的功能。 多层包装，就是装饰者的本质。
+优点：装饰者的实现类，是完全复用的，易扩展，开放－关闭原则。依然是重点。递归是本质，因为需要一层一层的剥皮。1234567891011121314151617181920212223242526272829303132333435363738394041424344454">
 <meta property="og:type" content="article">
-<meta property="og:title" content="前端开发待学习">
-<meta property="og:url" content="http://www.fovoy.com/2015/10/12/前端开发待学习/index.html">
+<meta property="og:title" content="Decorator 装饰者模式">
+<meta property="og:url" content="http://www.fovoy.com/2014/04/26/Decorator装饰者模式/index.html">
 <meta property="og:site_name" content="z-star">
-<meta property="og:description" content="MAVEN
-play">
-<meta property="og:image" content="http://www.fovoy.com/thumbnails/t1.jpg">
-<meta property="og:updated_time" content="2015-10-22T02:21:52.000Z">
+<meta property="og:description" content="#Decorator 装饰者模式装饰者与本类实现的是相同的接口，装饰者来修饰本类没有实现的功能。 多层包装，就是装饰者的本质。
+优点：装饰者的实现类，是完全复用的，易扩展，开放－关闭原则。依然是重点。递归是本质，因为需要一层一层的剥皮。1234567891011121314151617181920212223242526272829303132333435363738394041424344454">
+<meta property="og:image" content="http://www.fovoy.com/thumbnails/decorator.png">
+<meta property="og:updated_time" content="2015-10-24T11:32:30.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="前端开发待学习">
-<meta name="twitter:description" content="MAVEN
-play">
+<meta name="twitter:title" content="Decorator 装饰者模式">
+<meta name="twitter:description" content="#Decorator 装饰者模式装饰者与本类实现的是相同的接口，装饰者来修饰本类没有实现的功能。 多层包装，就是装饰者的本质。
+优点：装饰者的实现类，是完全复用的，易扩展，开放－关闭原则。依然是重点。递归是本质，因为需要一层一层的剥皮。1234567891011121314151617181920212223242526272829303132333435363738394041424344454">
   
   
     <link rel="icon" href="favicon.png">
@@ -134,7 +134,7 @@ play">
 </aside>
 
       
-      <section id="main"><article id="post-前端开发待学习" class="article article-type-post" itemscope itemprop="blogPost">
+      <section id="main"><article id="post-Decorator装饰者模式" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-inner">
     
     
@@ -143,7 +143,7 @@ play">
         
   
     <h1 class="article-title" itemprop="name">
-      前端开发待学习
+      Decorator 装饰者模式
     </h1>
   
 
@@ -151,8 +151,8 @@ play">
           
   <div class="article-date">
     <i class="fa fa-calendar"></i>
-    <a href="/2015/10/12/前端开发待学习/">
-      <time datetime="2015-10-12T11:25:12.000Z" itemprop="datePublished">2015-10-12</time>
+    <a href="/2014/04/26/Decorator装饰者模式/">
+      <time datetime="2014-04-26T02:13:36.000Z" itemprop="datePublished">2014-04-26</time>
     </a>
   </div>
 
@@ -160,7 +160,7 @@ play">
           
   <div class="article-category">
   	<i class="fa fa-folder"></i>
-    <a class="article-category-link" href="/categories/前端开发/">前端开发</a><i class="fa fa-angle-right"></i><a class="article-category-link" href="/categories/前端开发/学习/">学习</a>
+    <a class="article-category-link" href="/categories/design-pattern/">design pattern</a>
   </div>
 
         </div>
@@ -169,18 +169,17 @@ play">
     <div class="article-entry" itemprop="articleBody">
       
                 
-        <p><img src="/thumbnails/t1.jpg" alt=""></p>
-<h1 id="MAVEN">MAVEN</h1><ul>
-<li><a href="https://www.playframework.com/documentation/2.4.x/Home\" target="_blank" rel="external">play</a></li>
-</ul>
+        <p><img src="/thumbnails/decorator.png" alt=""></p>
+<p>#Decorator 装饰者模式<br><em>装饰者与本类实现的是相同的接口，装饰者来修饰本类没有实现的功能。 多层包装，就是装饰者的本质。
+</em>优点：装饰者的实现类，是完全复用的，易扩展，开放－关闭原则。依然是重点。递归是本质，因为需要一层一层的剥皮。<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br></pre></td><td class="code"><pre><span class="line"> <span class="comment">//超类服务</span></span><br><span class="line"> public abstract <span class="class"><span class="keyword">class</span> <span class="title">AbstractService</span></span>&#123;</span><br><span class="line">   private <span class="built_in">String</span> serName;</span><br><span class="line"></span><br><span class="line">   private int price ;</span><br><span class="line"></span><br><span class="line">   public <span class="keyword">void</span> setPrice(int price)&#123;</span><br><span class="line">     <span class="keyword">this</span>.price =price;</span><br><span class="line">   &#125;</span><br><span class="line">   public int getPrice()&#123; <span class="keyword">return</span> price;&#125;</span><br><span class="line"></span><br><span class="line">   public <span class="keyword">void</span> setSerName(<span class="built_in">String</span> serName)&#123;</span><br><span class="line">     <span class="keyword">this</span>.serName =serName;</span><br><span class="line">   &#125;</span><br><span class="line">   public <span class="keyword">void</span> getSerName()&#123;<span class="keyword">return</span> serName;&#125;</span><br><span class="line"></span><br><span class="line">   public abstract int cost();</span><br><span class="line"></span><br><span class="line">   public abstract <span class="built_in">String</span> serName();</span><br><span class="line"> &#125;</span><br><span class="line"><span class="comment">//基础服务</span></span><br><span class="line">public <span class="class"><span class="keyword">class</span> <span class="title">BasicService</span> <span class="keyword">extends</span> <span class="title">AbstractService</span></span>&#123;</span><br><span class="line"></span><br><span class="line">    public int  cost()&#123;</span><br><span class="line">	     <span class="keyword">return</span> <span class="keyword">super</span>.getPrice();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public <span class="built_in">String</span> serName()&#123;</span><br><span class="line">       <span class="keyword">return</span> <span class="keyword">super</span>.getSerName();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"> <span class="comment">//机票服务是基础服务之一。</span></span><br><span class="line"> public <span class="class"><span class="keyword">class</span> <span class="title">TicketService</span> <span class="keyword">extends</span> <span class="title">BasicService</span></span>&#123;</span><br><span class="line">  public TicketService(<span class="built_in">String</span> serName,int price)&#123;</span><br><span class="line">    <span class="keyword">super</span>.setPrice(price);</span><br><span class="line">    <span class="keyword">super</span>.setSerName(serName);</span><br><span class="line">  &#125;</span><br><span class="line"> &#125;</span><br><span class="line"> <span class="comment">//修饰者类 非基础类。所以每次计算都得加上一个基础类。</span></span><br><span class="line">  public <span class="class"><span class="keyword">class</span> <span class="title">Decorator</span> <span class="keyword">extends</span> <span class="title">AbstractService</span></span>&#123;</span><br><span class="line">    private AbstractService service;</span><br><span class="line"></span><br><span class="line"> 	public Decorator(Service service)&#123;</span><br><span class="line"> 	  <span class="keyword">this</span>.service =service;</span><br><span class="line"> 	&#125;	</span><br><span class="line"></span><br><span class="line">    public int cost()&#123;</span><br><span class="line">      <span class="keyword">return</span> <span class="keyword">super</span>.getPrice()＋service.cost();</span><br><span class="line"> 	&#125;</span><br><span class="line">    </span><br><span class="line">    public <span class="built_in">String</span> serName()&#123;</span><br><span class="line">      <span class="keyword">return</span> ＋service.serName()+<span class="string">"&amp;&amp;"</span>+<span class="keyword">super</span>.getSerName();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"> &#125;</span><br><span class="line"></span><br><span class="line"> <span class="comment">//接机服务，必须有机票服务才能接机，也是一种可选服务，所以作为修饰者。当然可以多加几种服务；</span></span><br><span class="line"> public <span class="class"><span class="keyword">class</span> <span class="title">PickUp</span> <span class="keyword">extends</span> <span class="title">Decorator</span></span>&#123;</span><br><span class="line"> 	public PickUp(Service service,int price ,<span class="built_in">String</span> serName)&#123;</span><br><span class="line"> 	  <span class="keyword">this</span>.service =service;</span><br><span class="line"> 	  <span class="keyword">super</span>.setPrice(price);</span><br><span class="line"> 	  <span class="keyword">super</span>.setSerName(serName);</span><br><span class="line"> 	&#125;	</span><br><span class="line"> &#125;</span><br><span class="line"></span><br><span class="line">   <span class="comment">//调用</span></span><br><span class="line">  public <span class="class"><span class="keyword">class</span>  <span class="title">test</span> </span>&#123;</span><br><span class="line">   public static <span class="keyword">void</span> main(<span class="built_in">String</span>[] args)&#123;</span><br><span class="line">   	TicketService  ticket = <span class="keyword">new</span> TicketSerive(<span class="string">"bj-km"</span>,<span class="number">2000</span>);</span><br><span class="line">   	Service service = <span class="keyword">new</span> PickUp(ticket,<span class="number">10</span>,<span class="string">"接机服务"</span>);</span><br><span class="line">   	system.out.println(service.cost());</span><br><span class="line">   	system.out.println(service.serName());</span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure></p>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://www.fovoy.com/2015/10/12/前端开发待学习/" data-id="cig50ebjw0004ums6xbhb9w14" class="article-share-link">分享到</a>
+      <a data-url="http://www.fovoy.com/2014/04/26/Decorator装饰者模式/" data-id="cig50ebkw001uums6fkcvtnln" class="article-share-link">分享到</a>
       
       
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/play/">play</a></li></ul>
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/design-pattern/">design pattern</a></li></ul>
 
     </footer>
   </div>
@@ -188,19 +187,19 @@ play">
     
 <nav id="article-nav">
   
-    <a href="/2015/10/17/es待学习/" id="article-nav-newer" class="article-nav-link-wrap">
+    <a href="/2014/04/26/Observer观察者模式/" id="article-nav-newer" class="article-nav-link-wrap">
       <strong class="article-nav-caption">上一篇</strong>
       <div class="article-nav-title">
         
-          es待学习
+          Observer 观察者模式
         
       </div>
     </a>
   
   
-    <a href="/2015/10/12/spring配置对比/" id="article-nav-older" class="article-nav-link-wrap">
+    <a href="/2014/04/26/Strategy策略模式/" id="article-nav-older" class="article-nav-link-wrap">
       <strong class="article-nav-caption">下一篇</strong>
-      <div class="article-nav-title">spring配置对比</div>
+      <div class="article-nav-title">Strategy 策略模式</div>
     </a>
   
 </nav>
