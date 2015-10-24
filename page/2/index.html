@@ -166,60 +166,14 @@
       
                 
         <p><img src="/thumbnails/observer.png" alt=""></p>
-<p>#Observer 观察者模式<br>＊注册 撤销 需要通知的用户。本质是一个消息发布。观察者顾名思义，就是每个观察人员查看变化及时通知。 Observer subject<br>*优点：作为一个动作的连接点，能实现通知功能，pub／sub<br>｀｀｀javascript<br>   public interface Observer{<br>        public void notify();<br>   }</p>
-<p>   public class OneObserver implments Observer{</p>
-<pre><code>  <span class="annotation">@Override</span>
-  <span class="keyword">public</span> <span class="function"><span class="keyword">void</span> <span class="title">notify</span><span class="params">()</span></span>{
-  system.out.print(<span class="string">"one notify"</span>);
-}    
-</code></pre><p>   }</p>
-<pre><code> <span class="keyword">public</span> <span class="keyword">class</span> <span class="title">TwoObserver</span> <span class="title">implments</span> <span class="title">Observer</span>{
-
- @<span class="function">Override
- <span class="keyword">public</span> <span class="keyword">void</span> <span class="title">notify</span>(<span class="params"></span>)</span>{
-  system.<span class="keyword">out</span>.print(<span class="string">"Two notify"</span>);
-}    
-</code></pre><p>   }</p>
-<p>   public interface Subject(){</p>
-<pre><code><span class="keyword">public</span> <span class="function"><span class="keyword">void</span> <span class="title">addObserver</span><span class="params">(String obName,Observer ob)</span></span>;
-
-<span class="keyword">public</span> <span class="function"><span class="keyword">void</span> <span class="title">removeObserver</span><span class="params">(String obName)</span></span>;
-
-<span class="keyword">public</span> <span class="function"><span class="keyword">void</span> <span class="title">notifyObserver</span><span class="params">()</span></span>;
-</code></pre><p>   }</p>
-<p>   public class OneObserver implements Subject{</p>
-<pre><code><span class="keyword">private</span> Map&lt;<span class="keyword">String</span>,Observer&gt; <span class="built_in">map</span> = <span class="keyword">new</span> HashBiMap.create(); ;
-
-<span class="keyword">public</span> <span class="keyword">void</span> addObserver(<span class="keyword">String</span> obName,Observer ob){
-  <span class="keyword">if</span>(!<span class="built_in">map</span>.contains(obName))<span class="keyword">return</span>;
-    <span class="keyword">this</span>.<span class="built_in">map</span>.put(obName,obj);
-}
-
-<span class="keyword">public</span> <span class="keyword">void</span> removeObserver(<span class="keyword">String</span> obName){
-    tap.<span class="built_in">map</span>.remove(obName);
-}
-
-<span class="keyword">public</span> <span class="keyword">void</span> notifyObserver(){
-  <span class="keyword">for</span>(<span class="keyword">String</span> <span class="variable">key</span>:<span class="built_in">map</span>.keySet()){
-    Observer obj = <span class="built_in">map</span>.<span class="built_in">get</span>(<span class="variable">key</span>);
-    obj.notify();
-  }
-}
-<span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> main(<span class="keyword">String</span>[] args){
-  Subject sub = <span class="keyword">new</span> OneObserver();
-  sub.<span class="built_in">add</span>(<span class="keyword">new</span> OneObserver());
-  sub.<span class="built_in">add</span>(<span class="keyword">new</span> TwoObserver());
-  sub.notifyObserver();
-}
-</code></pre><p>}</p>
-<p>｀｀｀</p>
+<p>#Observer 观察者模式<br>＊注册 撤销 需要通知的用户。本质是一个消息发布。观察者顾名思义，就是每个观察人员查看变化及时通知。 Observer subject<br>*优点：作为一个动作的连接点，能实现通知功能，pub／sub<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br></pre></td><td class="code"><pre><span class="line">   public interface Observer&#123;</span><br><span class="line">   	 public <span class="keyword">void</span> notify();</span><br><span class="line">   &#125;</span><br><span class="line"></span><br><span class="line">   public <span class="class"><span class="keyword">class</span> <span class="title">OneObserver</span> <span class="title">implments</span> <span class="title">Observer</span></span>&#123;</span><br><span class="line"></span><br><span class="line"> 	  @Override</span><br><span class="line"> 	  public <span class="keyword">void</span> notify()&#123;</span><br><span class="line">       system.out.print(<span class="string">"one notify"</span>);</span><br><span class="line">     &#125;	</span><br><span class="line">   &#125;</span><br><span class="line"></span><br><span class="line">      public <span class="class"><span class="keyword">class</span> <span class="title">TwoObserver</span> <span class="title">implments</span> <span class="title">Observer</span></span>&#123;</span><br><span class="line"></span><br><span class="line"> 	 @Override</span><br><span class="line"> 	 public <span class="keyword">void</span> notify()&#123;</span><br><span class="line">       system.out.print(<span class="string">"Two notify"</span>);</span><br><span class="line">     &#125;	</span><br><span class="line">   &#125;</span><br><span class="line"></span><br><span class="line">   public interface Subject()&#123;</span><br><span class="line"></span><br><span class="line">    public <span class="keyword">void</span> addObserver(<span class="built_in">String</span> obName,Observer ob);</span><br><span class="line"></span><br><span class="line">    public <span class="keyword">void</span> removeObserver(<span class="built_in">String</span> obName);</span><br><span class="line"></span><br><span class="line">    public <span class="keyword">void</span> notifyObserver();</span><br><span class="line">   &#125;</span><br><span class="line"></span><br><span class="line">   public <span class="class"><span class="keyword">class</span> <span class="title">OneObserver</span> <span class="title">implements</span> <span class="title">Subject</span></span>&#123;</span><br><span class="line"></span><br><span class="line">    private <span class="built_in">Map</span>&lt;<span class="built_in">String</span>,Observer&gt; map = <span class="keyword">new</span> HashBiMap.create(); ;</span><br><span class="line"></span><br><span class="line">    public <span class="keyword">void</span> addObserver(<span class="built_in">String</span> obName,Observer ob)&#123;</span><br><span class="line">      <span class="keyword">if</span>(!map.contains(obName))<span class="keyword">return</span>;</span><br><span class="line">    	<span class="keyword">this</span>.map.put(obName,obj);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public <span class="keyword">void</span> removeObserver(<span class="built_in">String</span> obName)&#123;</span><br><span class="line">    	tap.map.remove(obName);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public <span class="keyword">void</span> notifyObserver()&#123;</span><br><span class="line">      <span class="keyword">for</span>(<span class="built_in">String</span> key:map.keySet())&#123;</span><br><span class="line">        Observer obj = map.get(key);</span><br><span class="line">        obj.notify();</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    public static <span class="keyword">void</span> main(<span class="built_in">String</span>[] args)&#123;</span><br><span class="line">      Subject sub = <span class="keyword">new</span> OneObserver();</span><br><span class="line">      sub.add(<span class="keyword">new</span> OneObserver());</span><br><span class="line">      sub.add(<span class="keyword">new</span> TwoObserver());</span><br><span class="line">      sub.notifyObserver();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
 <hr>
 <p><a href="http://mp.weixin.qq.com/s?__biz=MzAwMDU1MTE1OQ==&amp;mid=209488723&amp;idx=1&amp;sn=d60c0637d7a9f4a4b981a69f10c6b90a&amp;scene=5#rd" target="_blank" rel="external">相关blog</a></p>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://www.fovoy.com/2014/04/26/Observer观察者模式/" data-id="cig4w4b8n001rqks60ahcxd6e" class="article-share-link">分享到</a>
+      <a data-url="http://www.fovoy.com/2014/04/26/Observer观察者模式/" data-id="cig4wluzt001rr9s6el1fe70i" class="article-share-link">分享到</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/design-pattern/">design pattern</a></li></ul>
@@ -268,37 +222,12 @@
       
                 
         <p><img src="/thumbnails/strategy.png" alt=""></p>
-<p>#strategy 策略模式<br>＊将各种能拆分，复用的组建或者行为，抽象出来，并且封装起来。比如一个厨房水槽实例需要装一个水龙头，水龙头的具体实现是独立的。需要什么类型的水流形状，需要引入不同类型的龙头。在进行实现主体类时。组装各种需要的组建。让组建独立于使用者。<br>*优点：相比继承，碎片化，模块化，复用性，更高。<br>｀｀｀javascript<br>   public interface Tap{<br>        public void open();<br>   }</p>
-<p>   public class OneTap implments Tap{</p>
-<pre><code><span class="annotation">@Override</span>
-<span class="keyword">public</span> <span class="function"><span class="keyword">void</span> <span class="title">open</span><span class="params">()</span></span>{
-  system.out.print(<span class="string">"one top"</span>)
-}    
-</code></pre><p>   }</p>
-<pre><code> <span class="keyword">public</span> <span class="keyword">class</span> <span class="title">TwoTap</span> <span class="title">implments</span> <span class="title">Tap</span>{
-
-@<span class="function">Override
-<span class="keyword">public</span> <span class="keyword">void</span> <span class="title">open</span>(<span class="params"></span>)</span>{
-  system.<span class="keyword">out</span>.print(<span class="string">"Two top"</span>)
-}    
-</code></pre><p>   }</p>
-<p>   public class Strategy{</p>
-<pre><code><span class="keyword">private</span> Tap tap ;
-
-<span class="keyword">public</span> <span class="function"><span class="keyword">void</span> <span class="title">setTap</span><span class="params">(Tap tap)</span></span>{
-    <span class="keyword">this</span>.tap =tap;
-}
-
-<span class="keyword">public</span> <span class="function"><span class="keyword">void</span> <span class="title">open</span><span class="params">()</span></span>{
-    tap.open();
-}
-}
-</code></pre><p>｀｀｀</p>
+<p>#strategy 策略模式<br>＊将各种能拆分，复用的组建或者行为，抽象出来，并且封装起来。比如一个厨房水槽实例需要装一个水龙头，水龙头的具体实现是独立的。需要什么类型的水流形状，需要引入不同类型的龙头。在进行实现主体类时。组装各种需要的组建。让组建独立于使用者。<br>*优点：相比继承，碎片化，模块化，复用性，更高。<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"> public interface Tap&#123;</span><br><span class="line"> 	 public <span class="keyword">void</span> open();</span><br><span class="line"> &#125;</span><br><span class="line"></span><br><span class="line"> public <span class="class"><span class="keyword">class</span> <span class="title">OneTap</span> <span class="title">implments</span> <span class="title">Tap</span></span>&#123;</span><br><span class="line"></span><br><span class="line">@Override</span><br><span class="line">public <span class="keyword">void</span> open()&#123;</span><br><span class="line">     system.out.print(<span class="string">"one top"</span>)</span><br><span class="line">   &#125;	</span><br><span class="line"> &#125;</span><br><span class="line"></span><br><span class="line">    public <span class="class"><span class="keyword">class</span> <span class="title">TwoTap</span> <span class="title">implments</span> <span class="title">Tap</span></span>&#123;</span><br><span class="line"></span><br><span class="line">@Override</span><br><span class="line">public <span class="keyword">void</span> open()&#123;</span><br><span class="line">     system.out.print(<span class="string">"Two top"</span>)</span><br><span class="line">   &#125;	</span><br><span class="line"> &#125;</span><br><span class="line"></span><br><span class="line"> public <span class="class"><span class="keyword">class</span> <span class="title">Strategy</span></span>&#123;</span><br><span class="line"></span><br><span class="line">  private Tap tap ;</span><br><span class="line"></span><br><span class="line">  public <span class="keyword">void</span> setTap(Tap tap)&#123;</span><br><span class="line">  	<span class="keyword">this</span>.tap =tap;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  public <span class="keyword">void</span> open()&#123;</span><br><span class="line">  	tap.open();</span><br><span class="line">  &#125;</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure></p>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://www.fovoy.com/2014/04/26/strategy策略模式/" data-id="cig4w4b7y000gqks6jlopl5af" class="article-share-link">分享到</a>
+      <a data-url="http://www.fovoy.com/2014/04/26/strategy策略模式/" data-id="cig4wluz3000gr9s6ib8814ee" class="article-share-link">分享到</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/design-pattern/">design pattern</a></li></ul>

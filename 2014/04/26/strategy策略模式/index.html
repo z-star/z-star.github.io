@@ -5,17 +5,17 @@
   
   <title>strategy 策略模式 | z-star</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="#strategy 策略模式＊将各种能拆分，复用的组建或者行为，抽象出来，并且封装起来。比如一个厨房水槽实例需要装一个水龙头，水龙头的具体实现是独立的。需要什么类型的水流形状，需要引入不同类型的龙头。在进行实现主体类时。组装各种需要的组建。让组建独立于使用者。*优点：相比继承，碎片化，模块化，复用性，更高。｀｀｀javascript   public interface Tap{        p">
+  <meta name="description" content="#strategy 策略模式＊将各种能拆分，复用的组建或者行为，抽象出来，并且封装起来。比如一个厨房水槽实例需要装一个水龙头，水龙头的具体实现是独立的。需要什么类型的水流形状，需要引入不同类型的龙头。在进行实现主体类时。组装各种需要的组建。让组建独立于使用者。*优点：相比继承，碎片化，模块化，复用性，更高。1234567891011121314151617181920212223242526272">
 <meta property="og:type" content="article">
 <meta property="og:title" content="strategy 策略模式">
 <meta property="og:url" content="http://www.fovoy.com/2014/04/26/strategy策略模式/index.html">
 <meta property="og:site_name" content="z-star">
-<meta property="og:description" content="#strategy 策略模式＊将各种能拆分，复用的组建或者行为，抽象出来，并且封装起来。比如一个厨房水槽实例需要装一个水龙头，水龙头的具体实现是独立的。需要什么类型的水流形状，需要引入不同类型的龙头。在进行实现主体类时。组装各种需要的组建。让组建独立于使用者。*优点：相比继承，碎片化，模块化，复用性，更高。｀｀｀javascript   public interface Tap{        p">
+<meta property="og:description" content="#strategy 策略模式＊将各种能拆分，复用的组建或者行为，抽象出来，并且封装起来。比如一个厨房水槽实例需要装一个水龙头，水龙头的具体实现是独立的。需要什么类型的水流形状，需要引入不同类型的龙头。在进行实现主体类时。组装各种需要的组建。让组建独立于使用者。*优点：相比继承，碎片化，模块化，复用性，更高。1234567891011121314151617181920212223242526272">
 <meta property="og:image" content="http://www.fovoy.com/thumbnails/strategy.png">
-<meta property="og:updated_time" content="2015-10-24T09:34:16.000Z">
+<meta property="og:updated_time" content="2015-10-24T09:48:14.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="strategy 策略模式">
-<meta name="twitter:description" content="#strategy 策略模式＊将各种能拆分，复用的组建或者行为，抽象出来，并且封装起来。比如一个厨房水槽实例需要装一个水龙头，水龙头的具体实现是独立的。需要什么类型的水流形状，需要引入不同类型的龙头。在进行实现主体类时。组装各种需要的组建。让组建独立于使用者。*优点：相比继承，碎片化，模块化，复用性，更高。｀｀｀javascript   public interface Tap{        p">
+<meta name="twitter:description" content="#strategy 策略模式＊将各种能拆分，复用的组建或者行为，抽象出来，并且封装起来。比如一个厨房水槽实例需要装一个水龙头，水龙头的具体实现是独立的。需要什么类型的水流形状，需要引入不同类型的龙头。在进行实现主体类时。组装各种需要的组建。让组建独立于使用者。*优点：相比继承，碎片化，模块化，复用性，更高。1234567891011121314151617181920212223242526272">
   
   
     <link rel="icon" href="favicon.png">
@@ -167,37 +167,12 @@
       
                 
         <p><img src="/thumbnails/strategy.png" alt=""></p>
-<p>#strategy 策略模式<br>＊将各种能拆分，复用的组建或者行为，抽象出来，并且封装起来。比如一个厨房水槽实例需要装一个水龙头，水龙头的具体实现是独立的。需要什么类型的水流形状，需要引入不同类型的龙头。在进行实现主体类时。组装各种需要的组建。让组建独立于使用者。<br>*优点：相比继承，碎片化，模块化，复用性，更高。<br>｀｀｀javascript<br>   public interface Tap{<br>        public void open();<br>   }</p>
-<p>   public class OneTap implments Tap{</p>
-<pre><code><span class="annotation">@Override</span>
-<span class="keyword">public</span> <span class="function"><span class="keyword">void</span> <span class="title">open</span><span class="params">()</span></span>{
-  system.out.print(<span class="string">"one top"</span>)
-}    
-</code></pre><p>   }</p>
-<pre><code> <span class="keyword">public</span> <span class="keyword">class</span> <span class="title">TwoTap</span> <span class="title">implments</span> <span class="title">Tap</span>{
-
-@<span class="function">Override
-<span class="keyword">public</span> <span class="keyword">void</span> <span class="title">open</span>(<span class="params"></span>)</span>{
-  system.<span class="keyword">out</span>.print(<span class="string">"Two top"</span>)
-}    
-</code></pre><p>   }</p>
-<p>   public class Strategy{</p>
-<pre><code><span class="keyword">private</span> Tap tap ;
-
-<span class="keyword">public</span> <span class="function"><span class="keyword">void</span> <span class="title">setTap</span><span class="params">(Tap tap)</span></span>{
-    <span class="keyword">this</span>.tap =tap;
-}
-
-<span class="keyword">public</span> <span class="function"><span class="keyword">void</span> <span class="title">open</span><span class="params">()</span></span>{
-    tap.open();
-}
-}
-</code></pre><p>｀｀｀</p>
+<p>#strategy 策略模式<br>＊将各种能拆分，复用的组建或者行为，抽象出来，并且封装起来。比如一个厨房水槽实例需要装一个水龙头，水龙头的具体实现是独立的。需要什么类型的水流形状，需要引入不同类型的龙头。在进行实现主体类时。组装各种需要的组建。让组建独立于使用者。<br>*优点：相比继承，碎片化，模块化，复用性，更高。<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"> public interface Tap&#123;</span><br><span class="line"> 	 public <span class="keyword">void</span> open();</span><br><span class="line"> &#125;</span><br><span class="line"></span><br><span class="line"> public <span class="class"><span class="keyword">class</span> <span class="title">OneTap</span> <span class="title">implments</span> <span class="title">Tap</span></span>&#123;</span><br><span class="line"></span><br><span class="line">@Override</span><br><span class="line">public <span class="keyword">void</span> open()&#123;</span><br><span class="line">     system.out.print(<span class="string">"one top"</span>)</span><br><span class="line">   &#125;	</span><br><span class="line"> &#125;</span><br><span class="line"></span><br><span class="line">    public <span class="class"><span class="keyword">class</span> <span class="title">TwoTap</span> <span class="title">implments</span> <span class="title">Tap</span></span>&#123;</span><br><span class="line"></span><br><span class="line">@Override</span><br><span class="line">public <span class="keyword">void</span> open()&#123;</span><br><span class="line">     system.out.print(<span class="string">"Two top"</span>)</span><br><span class="line">   &#125;	</span><br><span class="line"> &#125;</span><br><span class="line"></span><br><span class="line"> public <span class="class"><span class="keyword">class</span> <span class="title">Strategy</span></span>&#123;</span><br><span class="line"></span><br><span class="line">  private Tap tap ;</span><br><span class="line"></span><br><span class="line">  public <span class="keyword">void</span> setTap(Tap tap)&#123;</span><br><span class="line">  	<span class="keyword">this</span>.tap =tap;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  public <span class="keyword">void</span> open()&#123;</span><br><span class="line">  	tap.open();</span><br><span class="line">  &#125;</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure></p>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://www.fovoy.com/2014/04/26/strategy策略模式/" data-id="cig4w4b7y000gqks6jlopl5af" class="article-share-link">分享到</a>
+      <a data-url="http://www.fovoy.com/2014/04/26/strategy策略模式/" data-id="cig4wluz3000gr9s6ib8814ee" class="article-share-link">分享到</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/design-pattern/">design pattern</a></li></ul>
