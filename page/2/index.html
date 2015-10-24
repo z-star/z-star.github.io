@@ -130,60 +130,6 @@
 
       
       <section id="main">
-      <article id="post-Strategy策略模式" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2014/04/28/Strategy策略模式/">Strategy 策略模式</a>
-    </h1>
-  
-
-        <div class="article-meta">
-          
-  <div class="article-date">
-    <i class="fa fa-calendar"></i>
-    <a href="/2014/04/28/Strategy策略模式/">
-      <time datetime="2014-04-28T01:13:36.000Z" itemprop="datePublished">2014-04-28</time>
-    </a>
-  </div>
-
-
-          
-  <div class="article-category">
-  	<i class="fa fa-folder"></i>
-    <a class="article-category-link" href="/categories/design-pattern/">design pattern</a>
-  </div>
-
-        </div>
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-                
-        <p><img src="/thumbnails/strategy.png" alt=""></p>
-<p>#strategy 策略模式<br>＊将各种能拆分，复用的组建或者行为，抽象出来，并且封装起来。比如一个厨房水槽实例需要装一个水龙头，水龙头的具体实现是独立的。需要什么类型的水流形状，需要引入不同类型的龙头。在进行实现主体类时。组装各种需要的组建。让组建独立于使用者。<br>*优点：相比继承，碎片化，模块化，复用性，更高。<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"> public interface Tap&#123;</span><br><span class="line"> 	 public <span class="keyword">void</span> open();</span><br><span class="line"> &#125;</span><br><span class="line"></span><br><span class="line">public <span class="class"><span class="keyword">class</span> <span class="title">OneTap</span> <span class="title">implments</span> <span class="title">Tap</span></span>&#123;</span><br><span class="line">@Override</span><br><span class="line">public <span class="keyword">void</span> open()&#123;</span><br><span class="line">     system.out.print(<span class="string">"one top"</span>)</span><br><span class="line">   &#125;	</span><br><span class="line"> &#125;</span><br><span class="line"></span><br><span class="line">public <span class="class"><span class="keyword">class</span> <span class="title">TwoTap</span> <span class="title">implments</span> <span class="title">Tap</span></span>&#123;</span><br><span class="line">@Override</span><br><span class="line">public <span class="keyword">void</span> open()&#123;</span><br><span class="line">     system.out.print(<span class="string">"Two top"</span>)</span><br><span class="line">   &#125;	</span><br><span class="line"> &#125;</span><br><span class="line"></span><br><span class="line">public <span class="class"><span class="keyword">class</span> <span class="title">Strategy</span></span>&#123;</span><br><span class="line"></span><br><span class="line">  private Tap tap ;</span><br><span class="line"></span><br><span class="line">  public <span class="keyword">void</span> setTap(Tap tap)&#123;</span><br><span class="line">  	<span class="keyword">this</span>.tap =tap;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  public <span class="keyword">void</span> open()&#123;</span><br><span class="line">  	tap.open();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://www.fovoy.com/2014/04/28/Strategy策略模式/" data-id="cig555pzc001hyjs62nzxhnk9" class="article-share-link">分享到</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/design-pattern/">design pattern</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-
-    
       <article id="post-Command命令模式" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -193,7 +139,7 @@
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2014/04/26/Command命令模式/">Command命令模式</a>
+      <a class="article-title" href="/2014/04/27/Command命令模式/">Command命令模式</a>
     </h1>
   
 
@@ -201,8 +147,8 @@
           
   <div class="article-date">
     <i class="fa fa-calendar"></i>
-    <a href="/2014/04/26/Command命令模式/">
-      <time datetime="2014-04-26T09:13:36.000Z" itemprop="datePublished">2014-04-26</time>
+    <a href="/2014/04/27/Command命令模式/">
+      <time datetime="2014-04-27T13:13:36.000Z" itemprop="datePublished">2014-04-27</time>
     </a>
   </div>
 
@@ -228,7 +174,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://www.fovoy.com/2014/04/26/Command命令模式/" data-id="cig555pzm001xyjs6f405f3ol" class="article-share-link">分享到</a>
+      <a data-url="http://www.fovoy.com/2014/04/27/Command命令模式/" data-id="cig55jefh001xzns6ua15ie16" class="article-share-link">分享到</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/design-pattern/">design pattern</a></li></ul>
@@ -277,12 +223,16 @@
       
                 
         <p><img src="/thumbnails/observer.png" alt=""></p>
-<p>#Observer 观察者模式<br>＊注册 撤销 需要通知的用户。本质是一个消息订阅／发布 pub／sub。订阅通知模式刚觉更适合中文语境。 Observer subject<br>*优点：作为一个动作的连接点，能实现通知功能。广播，喇叭  一对多。<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br></pre></td><td class="code"><pre><span class="line">   public interface Observer&#123;</span><br><span class="line">   	 public <span class="keyword">void</span> notify();</span><br><span class="line">   &#125;</span><br><span class="line"></span><br><span class="line">   public <span class="class"><span class="keyword">class</span> <span class="title">OneObserver</span> <span class="title">implments</span> <span class="title">Observer</span></span>&#123;</span><br><span class="line"></span><br><span class="line"> 	  @Override</span><br><span class="line"> 	  public <span class="keyword">void</span> notify()&#123;</span><br><span class="line">       system.out.print(<span class="string">"one notify"</span>);</span><br><span class="line">     &#125;	</span><br><span class="line">   &#125;</span><br><span class="line"></span><br><span class="line">      public <span class="class"><span class="keyword">class</span> <span class="title">TwoObserver</span> <span class="title">implments</span> <span class="title">Observer</span></span>&#123;</span><br><span class="line"></span><br><span class="line"> 	 @Override</span><br><span class="line"> 	 public <span class="keyword">void</span> notify()&#123;</span><br><span class="line">       system.out.print(<span class="string">"Two notify"</span>);</span><br><span class="line">     &#125;	</span><br><span class="line">   &#125;</span><br><span class="line"></span><br><span class="line">   public interface Subject()&#123;</span><br><span class="line"></span><br><span class="line">    public <span class="keyword">void</span> addObserver(<span class="built_in">String</span> obName,Observer ob);</span><br><span class="line"></span><br><span class="line">    public <span class="keyword">void</span> removeObserver(<span class="built_in">String</span> obName);</span><br><span class="line"></span><br><span class="line">    public <span class="keyword">void</span> notifyObserver();</span><br><span class="line">   &#125;</span><br><span class="line"></span><br><span class="line">   public <span class="class"><span class="keyword">class</span> <span class="title">OneObserver</span> <span class="title">implements</span> <span class="title">Subject</span></span>&#123;</span><br><span class="line"></span><br><span class="line">    private <span class="built_in">Map</span>&lt;<span class="built_in">String</span>,Observer&gt; map = <span class="keyword">new</span> HashBiMap.create(); ;</span><br><span class="line"></span><br><span class="line">    public <span class="keyword">void</span> addObserver(<span class="built_in">String</span> obName,Observer ob)&#123;</span><br><span class="line">      <span class="keyword">if</span>(!map.contains(obName))<span class="keyword">return</span>;</span><br><span class="line">    	<span class="keyword">this</span>.map.put(obName,obj);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public <span class="keyword">void</span> removeObserver(<span class="built_in">String</span> obName)&#123;</span><br><span class="line">    	tap.map.remove(obName);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public <span class="keyword">void</span> notifyObserver()&#123;</span><br><span class="line">      <span class="keyword">for</span>(<span class="built_in">String</span> key:map.keySet())&#123;</span><br><span class="line">        Observer obj = map.get(key);</span><br><span class="line">        obj.notify();</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    public static <span class="keyword">void</span> main(<span class="built_in">String</span>[] args)&#123;</span><br><span class="line">      Subject sub = <span class="keyword">new</span> OneObserver();</span><br><span class="line">      sub.add(<span class="keyword">new</span> OneObserver());</span><br><span class="line">      sub.add(<span class="keyword">new</span> TwoObserver());</span><br><span class="line">      sub.notifyObserver();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>#Observer 观察者模式</p>
+<ul>
+<li>注册 撤销 需要通知的用户。本质是一个消息订阅／发布 pub／sub。订阅通知模式刚觉更适合中文语境。 Observer subject</li>
+<li>优点：作为一个动作的连接点，能实现通知功能。广播，喇叭  一对多。<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br></pre></td><td class="code"><pre><span class="line">   public interface Observer&#123;</span><br><span class="line">   	 public <span class="keyword">void</span> notify();</span><br><span class="line">   &#125;</span><br><span class="line"></span><br><span class="line">   public <span class="class"><span class="keyword">class</span> <span class="title">OneObserver</span> <span class="title">implments</span> <span class="title">Observer</span></span>&#123;</span><br><span class="line"></span><br><span class="line"> 	  @Override</span><br><span class="line"> 	  public <span class="keyword">void</span> notify()&#123;</span><br><span class="line">       system.out.print(<span class="string">"one notify"</span>);</span><br><span class="line">     &#125;	</span><br><span class="line">   &#125;</span><br><span class="line"></span><br><span class="line">      public <span class="class"><span class="keyword">class</span> <span class="title">TwoObserver</span> <span class="title">implments</span> <span class="title">Observer</span></span>&#123;</span><br><span class="line"></span><br><span class="line"> 	 @Override</span><br><span class="line"> 	 public <span class="keyword">void</span> notify()&#123;</span><br><span class="line">       system.out.print(<span class="string">"Two notify"</span>);</span><br><span class="line">     &#125;	</span><br><span class="line">   &#125;</span><br><span class="line"></span><br><span class="line">   public interface Subject()&#123;</span><br><span class="line"></span><br><span class="line">    public <span class="keyword">void</span> addObserver(<span class="built_in">String</span> obName,Observer ob);</span><br><span class="line"></span><br><span class="line">    public <span class="keyword">void</span> removeObserver(<span class="built_in">String</span> obName);</span><br><span class="line"></span><br><span class="line">    public <span class="keyword">void</span> notifyObserver();</span><br><span class="line">   &#125;</span><br><span class="line"></span><br><span class="line">   public <span class="class"><span class="keyword">class</span> <span class="title">OneObserver</span> <span class="title">implements</span> <span class="title">Subject</span></span>&#123;</span><br><span class="line"></span><br><span class="line">    private <span class="built_in">Map</span>&lt;<span class="built_in">String</span>,Observer&gt; map = <span class="keyword">new</span> HashBiMap.create(); ;</span><br><span class="line"></span><br><span class="line">    public <span class="keyword">void</span> addObserver(<span class="built_in">String</span> obName,Observer ob)&#123;</span><br><span class="line">      <span class="keyword">if</span>(!map.contains(obName))<span class="keyword">return</span>;</span><br><span class="line">    	<span class="keyword">this</span>.map.put(obName,obj);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public <span class="keyword">void</span> removeObserver(<span class="built_in">String</span> obName)&#123;</span><br><span class="line">    	tap.map.remove(obName);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public <span class="keyword">void</span> notifyObserver()&#123;</span><br><span class="line">      <span class="keyword">for</span>(<span class="built_in">String</span> key:map.keySet())&#123;</span><br><span class="line">        Observer obj = map.get(key);</span><br><span class="line">        obj.notify();</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    public static <span class="keyword">void</span> main(<span class="built_in">String</span>[] args)&#123;</span><br><span class="line">      Subject sub = <span class="keyword">new</span> OneObserver();</span><br><span class="line">      sub.add(<span class="keyword">new</span> OneObserver());</span><br><span class="line">      sub.add(<span class="keyword">new</span> TwoObserver());</span><br><span class="line">      sub.notifyObserver();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+</ul>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://www.fovoy.com/2014/04/26/Observer观察者模式/" data-id="cig555pzi001ryjs6fftus1ii" class="article-share-link">分享到</a>
+      <a data-url="http://www.fovoy.com/2014/04/26/Observer观察者模式/" data-id="cig55jefd001rzns6eus4qs4b" class="article-share-link">分享到</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/design-pattern/">design pattern</a></li></ul>
@@ -304,7 +254,7 @@
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2014/04/26/Decorator装饰者模式/">Decorator 装饰者模式</a>
+      <a class="article-title" href="/2014/04/23/Decorator装饰者模式/">Decorator 装饰者模式</a>
     </h1>
   
 
@@ -312,8 +262,8 @@
           
   <div class="article-date">
     <i class="fa fa-calendar"></i>
-    <a href="/2014/04/26/Decorator装饰者模式/">
-      <time datetime="2014-04-26T02:13:36.000Z" itemprop="datePublished">2014-04-26</time>
+    <a href="/2014/04/23/Decorator装饰者模式/">
+      <time datetime="2014-04-23T02:13:36.000Z" itemprop="datePublished">2014-04-23</time>
     </a>
   </div>
 
@@ -331,13 +281,69 @@
       
                 
         <p><img src="/thumbnails/decorator.png" alt=""></p>
-<p>#Decorator 装饰者模式<br><em>装饰者与本类实现的是相同的接口，装饰者来修饰本类没有实现的功能。 多层包装，就是装饰者的本质。
-</em>优点：装饰者的实现类，是完全复用的，易扩展，开放－关闭原则。依然是重点。递归是本质，因为需要一层一层的剥皮。<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br></pre></td><td class="code"><pre><span class="line"> <span class="comment">//超类服务</span></span><br><span class="line"> public abstract <span class="class"><span class="keyword">class</span> <span class="title">AbstractService</span></span>&#123;</span><br><span class="line">   private <span class="built_in">String</span> serName;</span><br><span class="line"></span><br><span class="line">   private int price ;</span><br><span class="line"></span><br><span class="line">   public <span class="keyword">void</span> setPrice(int price)&#123;</span><br><span class="line">     <span class="keyword">this</span>.price =price;</span><br><span class="line">   &#125;</span><br><span class="line">   public int getPrice()&#123; <span class="keyword">return</span> price;&#125;</span><br><span class="line"></span><br><span class="line">   public <span class="keyword">void</span> setSerName(<span class="built_in">String</span> serName)&#123;</span><br><span class="line">     <span class="keyword">this</span>.serName =serName;</span><br><span class="line">   &#125;</span><br><span class="line">   public <span class="keyword">void</span> getSerName()&#123;<span class="keyword">return</span> serName;&#125;</span><br><span class="line"></span><br><span class="line">   public abstract int cost();</span><br><span class="line"></span><br><span class="line">   public abstract <span class="built_in">String</span> serName();</span><br><span class="line"> &#125;</span><br><span class="line"><span class="comment">//基础服务</span></span><br><span class="line">public <span class="class"><span class="keyword">class</span> <span class="title">BasicService</span> <span class="keyword">extends</span> <span class="title">AbstractService</span></span>&#123;</span><br><span class="line"></span><br><span class="line">    public int  cost()&#123;</span><br><span class="line">	     <span class="keyword">return</span> <span class="keyword">super</span>.getPrice();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public <span class="built_in">String</span> serName()&#123;</span><br><span class="line">       <span class="keyword">return</span> <span class="keyword">super</span>.getSerName();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"> <span class="comment">//机票服务是基础服务之一。</span></span><br><span class="line"> public <span class="class"><span class="keyword">class</span> <span class="title">TicketService</span> <span class="keyword">extends</span> <span class="title">BasicService</span></span>&#123;</span><br><span class="line">  public TicketService(<span class="built_in">String</span> serName,int price)&#123;</span><br><span class="line">    <span class="keyword">super</span>.setPrice(price);</span><br><span class="line">    <span class="keyword">super</span>.setSerName(serName);</span><br><span class="line">  &#125;</span><br><span class="line"> &#125;</span><br><span class="line"> <span class="comment">//修饰者类 非基础类。所以每次计算都得加上一个基础类。</span></span><br><span class="line">  public <span class="class"><span class="keyword">class</span> <span class="title">Decorator</span> <span class="keyword">extends</span> <span class="title">AbstractService</span></span>&#123;</span><br><span class="line">    private AbstractService service;</span><br><span class="line"></span><br><span class="line"> 	public Decorator(Service service)&#123;</span><br><span class="line"> 	  <span class="keyword">this</span>.service =service;</span><br><span class="line"> 	&#125;	</span><br><span class="line"></span><br><span class="line">    public int cost()&#123;</span><br><span class="line">      <span class="keyword">return</span> <span class="keyword">super</span>.getPrice()＋service.cost();</span><br><span class="line"> 	&#125;</span><br><span class="line">    </span><br><span class="line">    public <span class="built_in">String</span> serName()&#123;</span><br><span class="line">      <span class="keyword">return</span> ＋service.serName()+<span class="string">"&amp;&amp;"</span>+<span class="keyword">super</span>.getSerName();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"> &#125;</span><br><span class="line"></span><br><span class="line"> <span class="comment">//接机服务，必须有机票服务才能接机，也是一种可选服务，所以作为修饰者。当然可以多加几种服务；</span></span><br><span class="line"> public <span class="class"><span class="keyword">class</span> <span class="title">PickUp</span> <span class="keyword">extends</span> <span class="title">Decorator</span></span>&#123;</span><br><span class="line"> 	public PickUp(Service service,int price ,<span class="built_in">String</span> serName)&#123;</span><br><span class="line"> 	  <span class="keyword">this</span>.service =service;</span><br><span class="line"> 	  <span class="keyword">super</span>.setPrice(price);</span><br><span class="line"> 	  <span class="keyword">super</span>.setSerName(serName);</span><br><span class="line"> 	&#125;	</span><br><span class="line"> &#125;</span><br><span class="line"></span><br><span class="line">   <span class="comment">//调用</span></span><br><span class="line">  public <span class="class"><span class="keyword">class</span>  <span class="title">test</span> </span>&#123;</span><br><span class="line">   public static <span class="keyword">void</span> main(<span class="built_in">String</span>[] args)&#123;</span><br><span class="line">   	TicketService  ticket = <span class="keyword">new</span> TicketSerive(<span class="string">"bj-km"</span>,<span class="number">2000</span>);</span><br><span class="line">   	Service service = <span class="keyword">new</span> PickUp(ticket,<span class="number">10</span>,<span class="string">"接机服务"</span>);</span><br><span class="line">   	system.out.println(service.cost());</span><br><span class="line">   	system.out.println(service.serName());</span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure></p>
+<h1 id="Decorator装饰者模式">Decorator装饰者模式</h1><ul>
+<li>装饰者与本类实现的是相同的接口，装饰者来修饰本类没有实现的功能。 多层包装，就是装饰者的本质。</li>
+<li>优点：装饰者的实现类，是完全复用的，易扩展，开放－关闭原则。依然是重点。递归是本质，因为需要一层一层的剥皮。<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br></pre></td><td class="code"><pre><span class="line"> <span class="comment">//超类服务</span></span><br><span class="line"> public abstract <span class="class"><span class="keyword">class</span> <span class="title">AbstractService</span></span>&#123;</span><br><span class="line">   private <span class="built_in">String</span> serName;</span><br><span class="line"></span><br><span class="line">   private int price ;</span><br><span class="line"></span><br><span class="line">   public <span class="keyword">void</span> setPrice(int price)&#123;</span><br><span class="line">     <span class="keyword">this</span>.price =price;</span><br><span class="line">   &#125;</span><br><span class="line">   public int getPrice()&#123; <span class="keyword">return</span> price;&#125;</span><br><span class="line"></span><br><span class="line">   public <span class="keyword">void</span> setSerName(<span class="built_in">String</span> serName)&#123;</span><br><span class="line">     <span class="keyword">this</span>.serName =serName;</span><br><span class="line">   &#125;</span><br><span class="line">   public <span class="keyword">void</span> getSerName()&#123;<span class="keyword">return</span> serName;&#125;</span><br><span class="line"></span><br><span class="line">   public abstract int cost();</span><br><span class="line"></span><br><span class="line">   public abstract <span class="built_in">String</span> serName();</span><br><span class="line"> &#125;</span><br><span class="line"><span class="comment">//基础服务</span></span><br><span class="line">public <span class="class"><span class="keyword">class</span> <span class="title">BasicService</span> <span class="keyword">extends</span> <span class="title">AbstractService</span></span>&#123;</span><br><span class="line"></span><br><span class="line">    public int  cost()&#123;</span><br><span class="line">	     <span class="keyword">return</span> <span class="keyword">super</span>.getPrice();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public <span class="built_in">String</span> serName()&#123;</span><br><span class="line">       <span class="keyword">return</span> <span class="keyword">super</span>.getSerName();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"> <span class="comment">//机票服务是基础服务之一。</span></span><br><span class="line"> public <span class="class"><span class="keyword">class</span> <span class="title">TicketService</span> <span class="keyword">extends</span> <span class="title">BasicService</span></span>&#123;</span><br><span class="line">  public TicketService(<span class="built_in">String</span> serName,int price)&#123;</span><br><span class="line">    <span class="keyword">super</span>.setPrice(price);</span><br><span class="line">    <span class="keyword">super</span>.setSerName(serName);</span><br><span class="line">  &#125;</span><br><span class="line"> &#125;</span><br><span class="line"> <span class="comment">//修饰者类 非基础类。所以每次计算都得加上一个基础类。</span></span><br><span class="line">  public <span class="class"><span class="keyword">class</span> <span class="title">Decorator</span> <span class="keyword">extends</span> <span class="title">AbstractService</span></span>&#123;</span><br><span class="line">    private AbstractService service;</span><br><span class="line"></span><br><span class="line"> 	public Decorator(Service service)&#123;</span><br><span class="line"> 	  <span class="keyword">this</span>.service =service;</span><br><span class="line"> 	&#125;	</span><br><span class="line"></span><br><span class="line">    public int cost()&#123;</span><br><span class="line">      <span class="keyword">return</span> <span class="keyword">super</span>.getPrice()＋service.cost();</span><br><span class="line"> 	&#125;</span><br><span class="line">    </span><br><span class="line">    public <span class="built_in">String</span> serName()&#123;</span><br><span class="line">      <span class="keyword">return</span> ＋service.serName()+<span class="string">"&amp;&amp;"</span>+<span class="keyword">super</span>.getSerName();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"> &#125;</span><br><span class="line"></span><br><span class="line"> <span class="comment">//接机服务，必须有机票服务才能接机，也是一种可选服务，所以作为修饰者。当然可以多加几种服务；</span></span><br><span class="line"> public <span class="class"><span class="keyword">class</span> <span class="title">PickUp</span> <span class="keyword">extends</span> <span class="title">Decorator</span></span>&#123;</span><br><span class="line"> 	public PickUp(Service service,int price ,<span class="built_in">String</span> serName)&#123;</span><br><span class="line"> 	  <span class="keyword">this</span>.service =service;</span><br><span class="line"> 	  <span class="keyword">super</span>.setPrice(price);</span><br><span class="line"> 	  <span class="keyword">super</span>.setSerName(serName);</span><br><span class="line"> 	&#125;	</span><br><span class="line"> &#125;</span><br><span class="line"></span><br><span class="line">   <span class="comment">//调用</span></span><br><span class="line">  public <span class="class"><span class="keyword">class</span>  <span class="title">test</span> </span>&#123;</span><br><span class="line">   public static <span class="keyword">void</span> main(<span class="built_in">String</span>[] args)&#123;</span><br><span class="line">   	TicketService  ticket = <span class="keyword">new</span> TicketSerive(<span class="string">"bj-km"</span>,<span class="number">2000</span>);</span><br><span class="line">   	Service service = <span class="keyword">new</span> PickUp(ticket,<span class="number">10</span>,<span class="string">"接机服务"</span>);</span><br><span class="line">   	system.out.println(service.cost());</span><br><span class="line">   	system.out.println(service.serName());</span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure></li>
+</ul>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://www.fovoy.com/2014/04/26/Decorator装饰者模式/" data-id="cig555pzk001uyjs6d51k1q58" class="article-share-link">分享到</a>
+      <a data-url="http://www.fovoy.com/2014/04/23/Decorator装饰者模式/" data-id="cig55jeff001uzns61gngd4t9" class="article-share-link">分享到</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/design-pattern/">design pattern</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+    
+      <article id="post-Strategy策略模式" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2014/04/21/Strategy策略模式/">Strategy 策略模式</a>
+    </h1>
+  
+
+        <div class="article-meta">
+          
+  <div class="article-date">
+    <i class="fa fa-calendar"></i>
+    <a href="/2014/04/21/Strategy策略模式/">
+      <time datetime="2014-04-21T01:13:36.000Z" itemprop="datePublished">2014-04-21</time>
+    </a>
+  </div>
+
+
+          
+  <div class="article-category">
+  	<i class="fa fa-folder"></i>
+    <a class="article-category-link" href="/categories/design-pattern/">design pattern</a>
+  </div>
+
+        </div>
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+                
+        <p><img src="/thumbnails/strategy.png" alt=""></p>
+<p>#strategy 策略模式<br>＊将各种能拆分，复用的组建或者行为，抽象出来，并且封装起来。比如一个厨房水槽实例需要装一个水龙头，水龙头的具体实现是独立的。需要什么类型的水流形状，需要引入不同类型的龙头。在进行实现主体类时。组装各种需要的组建。让组建独立于使用者。<br>*优点：相比继承，碎片化，模块化，复用性，更高。<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"> public interface Tap&#123;</span><br><span class="line"> 	 public <span class="keyword">void</span> open();</span><br><span class="line"> &#125;</span><br><span class="line"></span><br><span class="line">public <span class="class"><span class="keyword">class</span> <span class="title">OneTap</span> <span class="title">implments</span> <span class="title">Tap</span></span>&#123;</span><br><span class="line">@Override</span><br><span class="line">public <span class="keyword">void</span> open()&#123;</span><br><span class="line">     system.out.print(<span class="string">"one top"</span>)</span><br><span class="line">   &#125;	</span><br><span class="line"> &#125;</span><br><span class="line"></span><br><span class="line">public <span class="class"><span class="keyword">class</span> <span class="title">TwoTap</span> <span class="title">implments</span> <span class="title">Tap</span></span>&#123;</span><br><span class="line">@Override</span><br><span class="line">public <span class="keyword">void</span> open()&#123;</span><br><span class="line">     system.out.print(<span class="string">"Two top"</span>)</span><br><span class="line">   &#125;	</span><br><span class="line"> &#125;</span><br><span class="line"></span><br><span class="line">public <span class="class"><span class="keyword">class</span> <span class="title">Strategy</span></span>&#123;</span><br><span class="line"></span><br><span class="line">  private Tap tap ;</span><br><span class="line"></span><br><span class="line">  public <span class="keyword">void</span> setTap(Tap tap)&#123;</span><br><span class="line">  	<span class="keyword">this</span>.tap =tap;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  public <span class="keyword">void</span> open()&#123;</span><br><span class="line">  	tap.open();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://www.fovoy.com/2014/04/21/Strategy策略模式/" data-id="cig55jef7001hzns6qcizyhfs" class="article-share-link">分享到</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/design-pattern/">design pattern</a></li></ul>
@@ -368,7 +374,7 @@
             <div class="item-thumbnail">
               <a href="/2015/10/17/es待学习/" class="thumbnail">
   
-    <span style="background-image:url(/thumbnails/t2.jpg
+    <span style="background-image:url(/thumbnails/es.png
 )" alt="es待学习" class="thumbnail-image"></span>
   
 </a>
@@ -422,7 +428,7 @@
             <div class="item-thumbnail">
               <a href="/2015/08/16/es vs solr/" class="thumbnail">
   
-    <span style="background-image:url(/thumbnails/t2.jpg
+    <span style="background-image:url(/thumbnails/es.png
 )" alt="es vs solr" class="thumbnail-image"></span>
   
 </a>

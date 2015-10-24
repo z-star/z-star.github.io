@@ -3,19 +3,25 @@
 <head>
   <meta charset="utf-8">
   
-  <title>Strategy 策略模式 | z-star</title>
+  <title>Command命令模式 | z-star</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="#strategy 策略模式＊将各种能拆分，复用的组建或者行为，抽象出来，并且封装起来。比如一个厨房水槽实例需要装一个水龙头，水龙头的具体实现是独立的。需要什么类型的水流形状，需要引入不同类型的龙头。在进行实现主体类时。组装各种需要的组建。让组建独立于使用者。*优点：相比继承，碎片化，模块化，复用性，更高。1234567891011121314151617181920212223242526272">
+  <meta name="description" content="Command命令模式
+如同一个遥控器一样。将一个请求封装为一个对象，从而使你可用不同的请求对客户进行参数化；做一个请求排队或记录请求日志，以及支持可取消的操作。
+优点把调用者与被调用者之间空命令解藕，并且抽象出很多个命令。1234567891011121314151617181920212223242526272829303132333435363738394041424344454647484">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Strategy 策略模式">
-<meta property="og:url" content="http://www.fovoy.com/2014/04/28/Strategy策略模式/index.html">
+<meta property="og:title" content="Command命令模式">
+<meta property="og:url" content="http://www.fovoy.com/2014/04/27/Command命令模式/index.html">
 <meta property="og:site_name" content="z-star">
-<meta property="og:description" content="#strategy 策略模式＊将各种能拆分，复用的组建或者行为，抽象出来，并且封装起来。比如一个厨房水槽实例需要装一个水龙头，水龙头的具体实现是独立的。需要什么类型的水流形状，需要引入不同类型的龙头。在进行实现主体类时。组装各种需要的组建。让组建独立于使用者。*优点：相比继承，碎片化，模块化，复用性，更高。1234567891011121314151617181920212223242526272">
-<meta property="og:image" content="http://www.fovoy.com/thumbnails/strategy.png">
-<meta property="og:updated_time" content="2015-10-24T12:28:42.000Z">
+<meta property="og:description" content="Command命令模式
+如同一个遥控器一样。将一个请求封装为一个对象，从而使你可用不同的请求对客户进行参数化；做一个请求排队或记录请求日志，以及支持可取消的操作。
+优点把调用者与被调用者之间空命令解藕，并且抽象出很多个命令。1234567891011121314151617181920212223242526272829303132333435363738394041424344454647484">
+<meta property="og:image" content="http://www.fovoy.com/thumbnails/command.png">
+<meta property="og:updated_time" content="2015-10-24T13:54:36.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Strategy 策略模式">
-<meta name="twitter:description" content="#strategy 策略模式＊将各种能拆分，复用的组建或者行为，抽象出来，并且封装起来。比如一个厨房水槽实例需要装一个水龙头，水龙头的具体实现是独立的。需要什么类型的水流形状，需要引入不同类型的龙头。在进行实现主体类时。组装各种需要的组建。让组建独立于使用者。*优点：相比继承，碎片化，模块化，复用性，更高。1234567891011121314151617181920212223242526272">
+<meta name="twitter:title" content="Command命令模式">
+<meta name="twitter:description" content="Command命令模式
+如同一个遥控器一样。将一个请求封装为一个对象，从而使你可用不同的请求对客户进行参数化；做一个请求排队或记录请求日志，以及支持可取消的操作。
+优点把调用者与被调用者之间空命令解藕，并且抽象出很多个命令。1234567891011121314151617181920212223242526272829303132333435363738394041424344454647484">
   
   
     <link rel="icon" href="favicon.png">
@@ -131,7 +137,7 @@
 </aside>
 
       
-      <section id="main"><article id="post-Strategy策略模式" class="article article-type-post" itemscope itemprop="blogPost">
+      <section id="main"><article id="post-Command命令模式" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-inner">
     
     
@@ -140,7 +146,7 @@
         
   
     <h1 class="article-title" itemprop="name">
-      Strategy 策略模式
+      Command命令模式
     </h1>
   
 
@@ -148,8 +154,8 @@
           
   <div class="article-date">
     <i class="fa fa-calendar"></i>
-    <a href="/2014/04/28/Strategy策略模式/">
-      <time datetime="2014-04-28T01:13:36.000Z" itemprop="datePublished">2014-04-28</time>
+    <a href="/2014/04/27/Command命令模式/">
+      <time datetime="2014-04-27T13:13:36.000Z" itemprop="datePublished">2014-04-27</time>
     </a>
   </div>
 
@@ -166,13 +172,16 @@
     <div class="article-entry" itemprop="articleBody">
       
                 
-        <p><img src="/thumbnails/strategy.png" alt=""></p>
-<p>#strategy 策略模式<br>＊将各种能拆分，复用的组建或者行为，抽象出来，并且封装起来。比如一个厨房水槽实例需要装一个水龙头，水龙头的具体实现是独立的。需要什么类型的水流形状，需要引入不同类型的龙头。在进行实现主体类时。组装各种需要的组建。让组建独立于使用者。<br>*优点：相比继承，碎片化，模块化，复用性，更高。<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"> public interface Tap&#123;</span><br><span class="line"> 	 public <span class="keyword">void</span> open();</span><br><span class="line"> &#125;</span><br><span class="line"></span><br><span class="line">public <span class="class"><span class="keyword">class</span> <span class="title">OneTap</span> <span class="title">implments</span> <span class="title">Tap</span></span>&#123;</span><br><span class="line">@Override</span><br><span class="line">public <span class="keyword">void</span> open()&#123;</span><br><span class="line">     system.out.print(<span class="string">"one top"</span>)</span><br><span class="line">   &#125;	</span><br><span class="line"> &#125;</span><br><span class="line"></span><br><span class="line">public <span class="class"><span class="keyword">class</span> <span class="title">TwoTap</span> <span class="title">implments</span> <span class="title">Tap</span></span>&#123;</span><br><span class="line">@Override</span><br><span class="line">public <span class="keyword">void</span> open()&#123;</span><br><span class="line">     system.out.print(<span class="string">"Two top"</span>)</span><br><span class="line">   &#125;	</span><br><span class="line"> &#125;</span><br><span class="line"></span><br><span class="line">public <span class="class"><span class="keyword">class</span> <span class="title">Strategy</span></span>&#123;</span><br><span class="line"></span><br><span class="line">  private Tap tap ;</span><br><span class="line"></span><br><span class="line">  public <span class="keyword">void</span> setTap(Tap tap)&#123;</span><br><span class="line">  	<span class="keyword">this</span>.tap =tap;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  public <span class="keyword">void</span> open()&#123;</span><br><span class="line">  	tap.open();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+        <p><img src="/thumbnails/command.png" alt=""></p>
+<h1 id="Command命令模式">Command命令模式</h1><ul>
+<li>如同一个遥控器一样。将一个请求封装为一个对象，从而使你可用不同的请求对客户进行参数化；做一个请求排队或记录请求日志，以及支持可取消的操作。</li>
+<li>优点把调用者与被调用者之间空命令解藕，并且抽象出很多个命令。<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//命令接口</span></span><br><span class="line">public interface Command&#123;</span><br><span class="line">	public <span class="keyword">void</span> execute();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//接受者抽象对象</span></span><br><span class="line">public interface Receiver&#123;</span><br><span class="line">	public <span class="keyword">void</span> action();</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//接收者电视机</span></span><br><span class="line">public Tv implements Receiver&#123;</span><br><span class="line">    public <span class="keyword">void</span> action(<span class="built_in">String</span> key)&#123;</span><br><span class="line">      system.out.println(<span class="string">"调整"</span>key);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//电视命令</span></span><br><span class="line">public abstract TvCommand  implements Command&#123;</span><br><span class="line">	private  Receiver receiver ;</span><br><span class="line"></span><br><span class="line">    protected Receiver getReceiver()&#123;</span><br><span class="line">    	<span class="keyword">return</span> receiver;</span><br><span class="line">    &#125;</span><br><span class="line">    protected  <span class="keyword">void</span> SetReceiver(Receiver receiver)&#123;</span><br><span class="line">     <span class="keyword">this</span>.receiver =receiver;</span><br><span class="line">    &#125;</span><br><span class="line">    public abstract <span class="keyword">void</span> execute();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//电视调台命令</span></span><br><span class="line">public <span class="class"><span class="keyword">class</span> <span class="title">ChangeChannel</span> <span class="keyword">extends</span> <span class="title">TvCommand</span></span>&#123;</span><br><span class="line">    private <span class="built_in">String</span> key = <span class="string">"ChangeChannel"</span>;</span><br><span class="line"></span><br><span class="line">    public ChangeChannel(Receiver receiver)&#123;</span><br><span class="line">    	<span class="keyword">super</span>.SetReceiver(receiver);</span><br><span class="line">    &#125;</span><br><span class="line">	public <span class="keyword">void</span> execute()&#123;</span><br><span class="line">      Receiver receiver =<span class="keyword">super</span>.getReceiver();</span><br><span class="line">      receiver.action(key);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line">public <span class="class"><span class="keyword">class</span> <span class="title">NoCommand</span> <span class="title">extend</span> <span class="title">Command</span></span>&#123;</span><br><span class="line">	public <span class="keyword">void</span> execute()&#123;&#125;;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//遥控器</span></span><br><span class="line">public <span class="class"><span class="keyword">class</span> <span class="title">Control</span></span>&#123;</span><br><span class="line">    private Command[] commands;</span><br><span class="line">    public Control()&#123;</span><br><span class="line">    	commands= <span class="keyword">new</span> Command[<span class="number">5</span>]</span><br><span class="line">    	NoCommand noCommand = <span class="keyword">new</span> NoCommand():</span><br><span class="line">    	<span class="keyword">for</span>(int i =<span class="number">0</span>; i&lt;=commands.length();i++)&#123;</span><br><span class="line">           commands[i]=noCommand;</span><br><span class="line">    	&#125;</span><br><span class="line">    &#125;</span><br><span class="line">	public <span class="keyword">void</span> addCommand(int index,Command command)&#123;</span><br><span class="line">       commandMap[index]=command;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">	public <span class="keyword">void</span> action(int index)&#123;</span><br><span class="line">       command[index].execute();</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//使用遥控器</span></span><br><span class="line">public <span class="class"><span class="keyword">class</span> <span class="title">UserControl</span></span>&#123;</span><br><span class="line">	</span><br><span class="line">	public static <span class="keyword">void</span> main(<span class="built_in">String</span>[] args )&#123;</span><br><span class="line">		Tv tv =<span class="keyword">new</span> Tv();</span><br><span class="line">		Control control = <span class="keyword">new</span> Control();</span><br><span class="line">		control.addCommand(<span class="number">1</span>,<span class="keyword">new</span> ChangeChannel(tv));</span><br><span class="line">		control.action(<span class="number">1</span>);</span><br><span class="line">	&#125;   </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+</ul>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://www.fovoy.com/2014/04/28/Strategy策略模式/" data-id="cig555pzc001hyjs62nzxhnk9" class="article-share-link">分享到</a>
+      <a data-url="http://www.fovoy.com/2014/04/27/Command命令模式/" data-id="cig55jefh001xzns6ua15ie16" class="article-share-link">分享到</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/design-pattern/">design pattern</a></li></ul>
@@ -193,9 +202,9 @@
     </a>
   
   
-    <a href="/2014/04/26/Command命令模式/" id="article-nav-older" class="article-nav-link-wrap">
+    <a href="/2014/04/26/Observer观察者模式/" id="article-nav-older" class="article-nav-link-wrap">
       <strong class="article-nav-caption">下一篇</strong>
-      <div class="article-nav-title">Command命令模式</div>
+      <div class="article-nav-title">Observer 观察者模式</div>
     </a>
   
 </nav>
@@ -220,7 +229,7 @@
             <div class="item-thumbnail">
               <a href="/2015/10/17/es待学习/" class="thumbnail">
   
-    <span style="background-image:url(/thumbnails/t2.jpg
+    <span style="background-image:url(/thumbnails/es.png
 )" alt="es待学习" class="thumbnail-image"></span>
   
 </a>
@@ -274,7 +283,7 @@
             <div class="item-thumbnail">
               <a href="/2015/08/16/es vs solr/" class="thumbnail">
   
-    <span style="background-image:url(/thumbnails/t2.jpg
+    <span style="background-image:url(/thumbnails/es.png
 )" alt="es vs solr" class="thumbnail-image"></span>
   
 </a>
