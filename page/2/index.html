@@ -97,7 +97,7 @@
     </div>
     <div class="article-info profile-block">
       <div class="article-info-block">
-        14
+        15
         <span>文章</span>
       </div>
       <div class="article-info-block">
@@ -175,7 +175,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://www.fovoy.com/2014/04/27/Command命令模式/" data-id="cig5usygb001xp5s6zv2cbg1s" class="article-share-link">分享到</a>
+      <a data-url="http://www.fovoy.com/2014/04/27/Command命令模式/" data-id="cig5ye8lp0020t6s6lbdnmv0z" class="article-share-link">分享到</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/design-pattern/">design pattern</a></li></ul>
@@ -233,7 +233,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://www.fovoy.com/2014/04/26/Observer观察者模式/" data-id="cig5usyg8001rp5s6pa4moj85" class="article-share-link">分享到</a>
+      <a data-url="http://www.fovoy.com/2014/04/26/Observer观察者模式/" data-id="cig5ye8lg001rt6s6kk7w2hiy" class="article-share-link">分享到</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/design-pattern/">design pattern</a></li></ul>
@@ -291,7 +291,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://www.fovoy.com/2014/04/23/Decorator装饰者模式/" data-id="cig5usyga001up5s6cn3de8hj" class="article-share-link">分享到</a>
+      <a data-url="http://www.fovoy.com/2014/04/23/Decorator装饰者模式/" data-id="cig5ye8ln001xt6s6lviq155p" class="article-share-link">分享到</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/design-pattern/">design pattern</a></li></ul>
@@ -350,7 +350,61 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://www.fovoy.com/2014/04/21/Strategy策略模式/" data-id="cig5usyg2001hp5s6uc75r7ge" class="article-share-link">分享到</a>
+      <a data-url="http://www.fovoy.com/2014/04/21/Strategy策略模式/" data-id="cig5ye8la001ht6s6j7c0tu9a" class="article-share-link">分享到</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/design-pattern/">design pattern</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+    
+      <article id="post-Factory工厂类" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2014/03/11/Factory工厂类/">Factory 工厂模式</a>
+    </h1>
+  
+
+        <div class="article-meta">
+          
+  <div class="article-date">
+    <i class="fa fa-calendar"></i>
+    <a href="/2014/03/11/Factory工厂类/">
+      <time datetime="2014-03-11T01:13:36.000Z" itemprop="datePublished">2014-03-11</time>
+    </a>
+  </div>
+
+
+          
+  <div class="article-category">
+  	<i class="fa fa-folder"></i>
+    <a class="article-category-link" href="/categories/design-pattern/">design pattern</a>
+  </div>
+
+        </div>
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+                
+        <p><img src="/thumbnails/strategy.png" alt=""></p>
+<h2 id="*_名字里就能看出意思，创建各种同类型的对象的实现，如同一个工厂生产各种同类型商品。集中管理，解藕，方便复用。">* 名字里就能看出意思，创建各种同类型的对象的实现，如同一个工厂生产各种同类型商品。集中管理，解藕，方便复用。</h2><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br></pre></td><td class="code"><pre><span class="line"> public interface Service&#123;</span><br><span class="line"> 	 public <span class="keyword">void</span> service();</span><br><span class="line"> &#125;</span><br><span class="line"></span><br><span class="line"> public <span class="class"><span class="keyword">class</span> <span class="title">TicketService</span> <span class="title">implements</span> <span class="title">Service</span></span>&#123;</span><br><span class="line">   public <span class="keyword">void</span> service()&#123;</span><br><span class="line">     system.out.println(<span class="string">"TicketService"</span>);</span><br><span class="line">   &#125;;</span><br><span class="line"> &#125;</span><br><span class="line">  public <span class="class"><span class="keyword">class</span> <span class="title">PickUpService</span> <span class="title">implements</span> <span class="title">Service</span></span>&#123;</span><br><span class="line">   public <span class="keyword">void</span> service()&#123;</span><br><span class="line">     system.out.println(<span class="string">"PickUpService"</span>);</span><br><span class="line">  &#125;;</span><br><span class="line"> &#125;</span><br><span class="line">  public <span class="class"><span class="keyword">class</span> <span class="title">HotelService</span> <span class="title">implements</span> <span class="title">Service</span></span>&#123;</span><br><span class="line">   public <span class="keyword">void</span> service()&#123;</span><br><span class="line">      system.out.println(<span class="string">"HotelService"</span>);</span><br><span class="line">   &#125;;</span><br><span class="line"> &#125;</span><br><span class="line"></span><br><span class="line"> public <span class="class"><span class="keyword">class</span> <span class="title">SmapleFactory</span> </span>&#123;</span><br><span class="line">  public Service getService(<span class="built_in">String</span> serName)&#123;</span><br><span class="line">         Service service =<span class="literal">null</span>;</span><br><span class="line">        <span class="keyword">if</span>(serName.equals(<span class="string">"ticket"</span>))&#123;</span><br><span class="line">          service=<span class="keyword">new</span> TicketService();</span><br><span class="line">        &#125;<span class="keyword">else</span> <span class="keyword">if</span>(serName.equals(<span class="string">"pickup"</span>))&#123;</span><br><span class="line">          service=<span class="keyword">new</span> PickUpService();</span><br><span class="line">        &#125;<span class="keyword">else</span> <span class="keyword">if</span>(serName.equals(<span class="string">"hotel"</span>))&#123;</span><br><span class="line">          service=<span class="keyword">new</span> HotelService();</span><br><span class="line">      &#125;</span><br><span class="line"> &#125;</span><br><span class="line"> <span class="comment">//抽象工程</span></span><br><span class="line">public interface AbstractFactory&#123;</span><br><span class="line">  public Service getService(<span class="built_in">String</span> serName)；</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"> <span class="comment">//工厂方法</span></span><br><span class="line"> public abstract <span class="class"><span class="keyword">class</span> <span class="title">FactoryMethod</span> </span>&#123;</span><br><span class="line"></span><br><span class="line"> public abstract createMethod(<span class="built_in">String</span> serName);</span><br><span class="line"></span><br><span class="line"> public Service getService(<span class="built_in">String</span> SerName)&#123;</span><br><span class="line">      createMethod(SerName);</span><br><span class="line">   &#125;</span><br><span class="line"> &#125;</span><br><span class="line"> public <span class="class"><span class="keyword">class</span> <span class="title">oneFactoryMethod</span></span>&#123;</span><br><span class="line">   public Service createMethod(<span class="built_in">String</span> serName)&#123;</span><br><span class="line">         Service service =<span class="literal">null</span>;</span><br><span class="line">        <span class="keyword">if</span>(serName.equals(<span class="string">"ticket"</span>))&#123;</span><br><span class="line">          service=<span class="keyword">new</span> TicketService();</span><br><span class="line">        &#125;<span class="keyword">else</span> <span class="keyword">if</span>(serName.equals(<span class="string">"pickup"</span>))&#123;</span><br><span class="line">          service=<span class="keyword">new</span> PickUpService();</span><br><span class="line">        &#125;<span class="keyword">else</span> <span class="keyword">if</span>(serName.equals(<span class="string">"hotel"</span>))&#123;</span><br><span class="line">          service=<span class="keyword">new</span> HotelService();</span><br><span class="line">      &#125;</span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://www.fovoy.com/2014/03/11/Factory工厂类/" data-id="cig5ye8lk001ut6s6e8z7oc2k" class="article-share-link">分享到</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/design-pattern/">design pattern</a></li></ul>
@@ -475,7 +529,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">分类</h3>
     <div class="widget">
-      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Elasticsearch/">Elasticsearch</a><span class="category-list-count">4</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Elasticsearch/config/">config</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Elasticsearch/performance/">performance</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Elasticsearch/学习/">学习</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Framework/">Framework</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Framework/spring/">spring</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/design-pattern/">design pattern</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/tools/">tools</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/前端开发/">前端开发</a><span class="category-list-count">2</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/前端开发/angularjs/">angularjs</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/前端开发/学习/">学习</a><span class="category-list-count">1</span></li></ul></li></ul>
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Elasticsearch/">Elasticsearch</a><span class="category-list-count">4</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Elasticsearch/config/">config</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Elasticsearch/performance/">performance</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Elasticsearch/学习/">学习</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Framework/">Framework</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Framework/spring/">spring</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/design-pattern/">design pattern</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/tools/">tools</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/前端开发/">前端开发</a><span class="category-list-count">2</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/前端开发/angularjs/">angularjs</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/前端开发/学习/">学习</a><span class="category-list-count">1</span></li></ul></li></ul>
     </div>
   </div>
 
@@ -484,7 +538,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">标签</h3>
     <div class="widget">
-      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Elasticsearch/">Elasticsearch</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/angularjs/">angularjs</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/design-pattern/">design pattern</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/play/">play</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/secureCRT/">secureCRT</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/spring/">spring</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/tools/">tools</a><span class="tag-list-count">3</span></li></ul>
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Elasticsearch/">Elasticsearch</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/angularjs/">angularjs</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/design-pattern/">design pattern</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/play/">play</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/secureCRT/">secureCRT</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/spring/">spring</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/tools/">tools</a><span class="tag-list-count">3</span></li></ul>
     </div>
   </div>
 
@@ -493,7 +547,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">标签云</h3>
     <div class="widget tagcloud">
-      <a href="/tags/Elasticsearch/" style="font-size: 20px;">Elasticsearch</a> <a href="/tags/angularjs/" style="font-size: 10px;">angularjs</a> <a href="/tags/design-pattern/" style="font-size: 20px;">design pattern</a> <a href="/tags/play/" style="font-size: 10px;">play</a> <a href="/tags/secureCRT/" style="font-size: 10px;">secureCRT</a> <a href="/tags/spring/" style="font-size: 10px;">spring</a> <a href="/tags/tools/" style="font-size: 15px;">tools</a>
+      <a href="/tags/Elasticsearch/" style="font-size: 16.67px;">Elasticsearch</a> <a href="/tags/angularjs/" style="font-size: 10px;">angularjs</a> <a href="/tags/design-pattern/" style="font-size: 20px;">design pattern</a> <a href="/tags/play/" style="font-size: 10px;">play</a> <a href="/tags/secureCRT/" style="font-size: 10px;">secureCRT</a> <a href="/tags/spring/" style="font-size: 10px;">spring</a> <a href="/tags/tools/" style="font-size: 13.33px;">tools</a>
     </div>
   </div>
 
@@ -502,7 +556,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">归档</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/10/">十月 2015</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/08/">八月 2015</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/07/">七月 2015</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/03/">三月 2015</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/11/">十一月 2014</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/07/">七月 2014</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/04/">四月 2014</a><span class="archive-list-count">4</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/10/">十月 2015</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/08/">八月 2015</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/07/">七月 2015</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/03/">三月 2015</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/11/">十一月 2014</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/07/">七月 2014</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/04/">四月 2014</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/03/">三月 2014</a><span class="archive-list-count">1</span></li></ul>
     </div>
   </div>
 

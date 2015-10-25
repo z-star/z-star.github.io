@@ -3,17 +3,19 @@
 <head>
   <meta charset="utf-8">
   
-  <title>Archives: 2015/10 | z-star</title>
+  <title>Factory 工厂模式 | z-star</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="z-star的博客">
-<meta property="og:type" content="website">
-<meta property="og:title" content="z-star">
-<meta property="og:url" content="http://www.fovoy.com/archives/2015/10/index.html">
+  <meta name="description" content="* 名字里就能看出意思，创建各种同类型的对象的实现，如同一个工厂生产各种同类型商品。集中管理，解藕，方便复用。1234567891011121314151617181920212223242526272829303132333435363738394041424344454647484950515253545556 public interface Service&amp;#123; 	 public v">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Factory 工厂模式">
+<meta property="og:url" content="http://www.fovoy.com/2014/03/11/Factory工厂类/index.html">
 <meta property="og:site_name" content="z-star">
-<meta property="og:description" content="z-star的博客">
+<meta property="og:description" content="* 名字里就能看出意思，创建各种同类型的对象的实现，如同一个工厂生产各种同类型商品。集中管理，解藕，方便复用。1234567891011121314151617181920212223242526272829303132333435363738394041424344454647484950515253545556 public interface Service&amp;#123; 	 public v">
+<meta property="og:image" content="http://www.fovoy.com/thumbnails/strategy.png">
+<meta property="og:updated_time" content="2015-10-25T02:51:18.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="z-star">
-<meta name="twitter:description" content="z-star的博客">
+<meta name="twitter:title" content="Factory 工厂模式">
+<meta name="twitter:description" content="* 名字里就能看出意思，创建各种同类型的对象的实现，如同一个工厂生产各种同类型商品。集中管理，解藕，方便复用。1234567891011121314151617181920212223242526272829303132333435363738394041424344454647484950515253545556 public interface Service&amp;#123; 	 public v">
   
   
     <link rel="icon" href="favicon.png">
@@ -129,120 +131,76 @@
 </aside>
 
       
-      <section id="main">
-      <div class="archive-year-wrap">
-        <a href="/archives/2015" class="archive-year">2015</a>
+      <section id="main"><article id="post-Factory工厂类" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Factory 工厂模式
+    </h1>
+  
+
+        <div class="article-meta">
+          
+  <div class="article-date">
+    <i class="fa fa-calendar"></i>
+    <a href="/2014/03/11/Factory工厂类/">
+      <time datetime="2014-03-11T01:13:36.000Z" itemprop="datePublished">2014-03-11</time>
+    </a>
+  </div>
+
+
+          
+  <div class="article-category">
+  	<i class="fa fa-folder"></i>
+    <a class="article-category-link" href="/categories/design-pattern/">design pattern</a>
+  </div>
+
+        </div>
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+                
+        <p><img src="/thumbnails/strategy.png" alt=""></p>
+<h2 id="*_名字里就能看出意思，创建各种同类型的对象的实现，如同一个工厂生产各种同类型商品。集中管理，解藕，方便复用。">* 名字里就能看出意思，创建各种同类型的对象的实现，如同一个工厂生产各种同类型商品。集中管理，解藕，方便复用。</h2><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br></pre></td><td class="code"><pre><span class="line"> public interface Service&#123;</span><br><span class="line"> 	 public <span class="keyword">void</span> service();</span><br><span class="line"> &#125;</span><br><span class="line"></span><br><span class="line"> public <span class="class"><span class="keyword">class</span> <span class="title">TicketService</span> <span class="title">implements</span> <span class="title">Service</span></span>&#123;</span><br><span class="line">   public <span class="keyword">void</span> service()&#123;</span><br><span class="line">     system.out.println(<span class="string">"TicketService"</span>);</span><br><span class="line">   &#125;;</span><br><span class="line"> &#125;</span><br><span class="line">  public <span class="class"><span class="keyword">class</span> <span class="title">PickUpService</span> <span class="title">implements</span> <span class="title">Service</span></span>&#123;</span><br><span class="line">   public <span class="keyword">void</span> service()&#123;</span><br><span class="line">     system.out.println(<span class="string">"PickUpService"</span>);</span><br><span class="line">  &#125;;</span><br><span class="line"> &#125;</span><br><span class="line">  public <span class="class"><span class="keyword">class</span> <span class="title">HotelService</span> <span class="title">implements</span> <span class="title">Service</span></span>&#123;</span><br><span class="line">   public <span class="keyword">void</span> service()&#123;</span><br><span class="line">      system.out.println(<span class="string">"HotelService"</span>);</span><br><span class="line">   &#125;;</span><br><span class="line"> &#125;</span><br><span class="line"></span><br><span class="line"> public <span class="class"><span class="keyword">class</span> <span class="title">SmapleFactory</span> </span>&#123;</span><br><span class="line">  public Service getService(<span class="built_in">String</span> serName)&#123;</span><br><span class="line">         Service service =<span class="literal">null</span>;</span><br><span class="line">        <span class="keyword">if</span>(serName.equals(<span class="string">"ticket"</span>))&#123;</span><br><span class="line">          service=<span class="keyword">new</span> TicketService();</span><br><span class="line">        &#125;<span class="keyword">else</span> <span class="keyword">if</span>(serName.equals(<span class="string">"pickup"</span>))&#123;</span><br><span class="line">          service=<span class="keyword">new</span> PickUpService();</span><br><span class="line">        &#125;<span class="keyword">else</span> <span class="keyword">if</span>(serName.equals(<span class="string">"hotel"</span>))&#123;</span><br><span class="line">          service=<span class="keyword">new</span> HotelService();</span><br><span class="line">      &#125;</span><br><span class="line"> &#125;</span><br><span class="line"> <span class="comment">//抽象工程</span></span><br><span class="line">public interface AbstractFactory&#123;</span><br><span class="line">  public Service getService(<span class="built_in">String</span> serName)；</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"> <span class="comment">//工厂方法</span></span><br><span class="line"> public abstract <span class="class"><span class="keyword">class</span> <span class="title">FactoryMethod</span> </span>&#123;</span><br><span class="line"></span><br><span class="line"> public abstract createMethod(<span class="built_in">String</span> serName);</span><br><span class="line"></span><br><span class="line"> public Service getService(<span class="built_in">String</span> SerName)&#123;</span><br><span class="line">      createMethod(SerName);</span><br><span class="line">   &#125;</span><br><span class="line"> &#125;</span><br><span class="line"> public <span class="class"><span class="keyword">class</span> <span class="title">oneFactoryMethod</span></span>&#123;</span><br><span class="line">   public Service createMethod(<span class="built_in">String</span> serName)&#123;</span><br><span class="line">         Service service =<span class="literal">null</span>;</span><br><span class="line">        <span class="keyword">if</span>(serName.equals(<span class="string">"ticket"</span>))&#123;</span><br><span class="line">          service=<span class="keyword">new</span> TicketService();</span><br><span class="line">        &#125;<span class="keyword">else</span> <span class="keyword">if</span>(serName.equals(<span class="string">"pickup"</span>))&#123;</span><br><span class="line">          service=<span class="keyword">new</span> PickUpService();</span><br><span class="line">        &#125;<span class="keyword">else</span> <span class="keyword">if</span>(serName.equals(<span class="string">"hotel"</span>))&#123;</span><br><span class="line">          service=<span class="keyword">new</span> HotelService();</span><br><span class="line">      &#125;</span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://www.fovoy.com/2014/03/11/Factory工厂类/" data-id="cig5ye8lk001ut6s6e8z7oc2k" class="article-share-link">分享到</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/design-pattern/">design pattern</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2014/04/21/Strategy策略模式/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">上一篇</strong>
+      <div class="article-nav-title">
+        
+          Strategy 策略模式
+        
       </div>
-      <section class="archives-wrap">
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    
-    <div class="archive-article-thumbnail">
-      <a href="/2015/10/17/es待学习/" class="thumbnail">
-  
-    <span style="background-image:url(/thumbnails/es.png
-)" alt="elasticsearch 待学习" class="thumbnail-image"></span>
-  
-</a>
-    </div>
-    
-    <header class="archive-article-header">
-      
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2015/10/17/es待学习/">elasticsearch 待学习</a>
-    </h1>
-  
-
-      
-        
-  <div class="archive-article-date">
-    <i class="fa fa-calendar"></i>
-    <a href="/2015/10/17/es待学习/">
-      <time datetime="2015-10-17T01:13:36.000Z" itemprop="datePublished">10月 17</time>
     </a>
-  </div>
+  
+  
+</nav>
 
 
-      
-    </header>
-  </div>
+  
 </article>
-  
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    
-    <div class="archive-article-thumbnail">
-      <a href="/2015/10/12/前端开发待学习/" class="thumbnail">
-  
-    <span style="background-image:url(/thumbnails/td.jpg
-)" alt="前端开发待学习" class="thumbnail-image"></span>
-  
-</a>
-    </div>
-    
-    <header class="archive-article-header">
-      
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2015/10/12/前端开发待学习/">前端开发待学习</a>
-    </h1>
-  
-
-      
-        
-  <div class="archive-article-date">
-    <i class="fa fa-calendar"></i>
-    <a href="/2015/10/12/前端开发待学习/">
-      <time datetime="2015-10-12T11:25:12.000Z" itemprop="datePublished">10月 12</time>
-    </a>
-  </div>
 
 
-      
-    </header>
-  </div>
-</article>
-  
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    
-    <div class="archive-article-thumbnail">
-      <a href="/2015/10/12/spring配置对比/" class="thumbnail">
-  
-    <span style="background-image:url(/thumbnails/t3.png
-)" alt="spring配置对比" class="thumbnail-image"></span>
-  
-</a>
-    </div>
-    
-    <header class="archive-article-header">
-      
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2015/10/12/spring配置对比/">spring配置对比</a>
-    </h1>
-  
-
-      
-        
-  <div class="archive-article-date">
-    <i class="fa fa-calendar"></i>
-    <a href="/2015/10/12/spring配置对比/">
-      <time datetime="2015-10-12T11:25:12.000Z" itemprop="datePublished">10月 12</time>
-    </a>
-  </div>
-
-
-      
-    </header>
-  </div>
-</article>
-  
-    </div></section>
-  </section>
+</section>
       
         <aside id="sidebar">
   
