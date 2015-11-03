@@ -7,21 +7,21 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="description" content="monitor  -c 5  org.elasticsearch.search.SearchService executeQueryPhase
 ptrace org.elasticsearch.search.SearchService executeQueryPhase –path org.elasticsearch.search* -t
-case   —{“query”: { “filtered">
+case   1234567891011121314151">
 <meta property="og:type" content="article">
 <meta property="og:title" content="性能测试">
 <meta property="og:url" content="http://www.fovoy.com/2015/01/12/性能测试/index.html">
 <meta property="og:site_name" content="z-star">
 <meta property="og:description" content="monitor  -c 5  org.elasticsearch.search.SearchService executeQueryPhase
 ptrace org.elasticsearch.search.SearchService executeQueryPhase –path org.elasticsearch.search* -t
-case   —{“query”: { “filtered">
+case   1234567891011121314151">
 <meta property="og:image" content="http://www.fovoy.com/thumbnails/t2.png">
-<meta property="og:updated_time" content="2015-11-02T07:33:34.000Z">
+<meta property="og:updated_time" content="2015-11-03T07:03:40.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="性能测试">
 <meta name="twitter:description" content="monitor  -c 5  org.elasticsearch.search.SearchService executeQueryPhase
 ptrace org.elasticsearch.search.SearchService executeQueryPhase –path org.elasticsearch.search* -t
-case   —{“query”: { “filtered">
+case   1234567891011121314151">
   
   
    <link rel="shortcut icon" type="image/x-icon"  rel="icon" href="css/images/favicon.ico">
@@ -176,25 +176,8 @@ case   —{“query”: { “filtered">
 <ol>
 <li>monitor  -c 5  org.elasticsearch.search.SearchService executeQueryPhase</li>
 <li>ptrace org.elasticsearch.search.SearchService executeQueryPhase –path org.elasticsearch.search* -t</li>
-<li>case   —{<br>“query”: {<br> “filtered”: {<br>   “query”: {<pre><code><span class="string">"bool"</span>: {
-  <span class="string">"must"</span>: {
-    <span class="string">"match"</span>: {
-      <span class="string">"hotel_name"</span>: {
-        <span class="string">"query"</span>: <span class="string">"金%"</span>,
-        <span class="string">"type"</span>: <span class="string">"phrase"</span>
-      }
-    }
-  }
-}
-</code></pre>   },<br>   “filter”: {<pre><code><span class="string">"has_parent"</span>: {
-  <span class="string">"filter"</span>: {
-    <span class="string">"prefix"</span>: {
-      <span class="string">"treecode"</span>: <span class="string">"1#55#57#61#85#mingqiang.li"</span>
-    }
-  },
-  <span class="string">"parent_type"</span>: <span class="string">"treecode"</span>
-}
-</code></pre>   }<br> }<br>}<br>}</li>
+<li>case   <figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  "<span class="attribute">query</span>": <span class="value">&#123;</span><br><span class="line">    "<span class="attribute">filtered</span>": <span class="value">&#123;</span><br><span class="line">      "<span class="attribute">query</span>": <span class="value">&#123;</span><br><span class="line">        "<span class="attribute">bool</span>": <span class="value">&#123;</span><br><span class="line">          "<span class="attribute">must</span>": <span class="value">&#123;</span><br><span class="line">            "<span class="attribute">match</span>": <span class="value">&#123;</span><br><span class="line">              "<span class="attribute">hotel_name</span>": <span class="value">&#123;</span><br><span class="line">                "<span class="attribute">query</span>": <span class="value"><span class="string">"金%"</span></span>,</span><br><span class="line">                "<span class="attribute">type</span>": <span class="value"><span class="string">"phrase"</span></span><br><span class="line">              </span>&#125;</span><br><span class="line">            </span>&#125;</span><br><span class="line">          </span>&#125;</span><br><span class="line">        </span>&#125;</span><br><span class="line">      </span>&#125;</span>,</span><br><span class="line">      "<span class="attribute">filter</span>": <span class="value">&#123;</span><br><span class="line">        "<span class="attribute">has_parent</span>": <span class="value">&#123;</span><br><span class="line">          "<span class="attribute">filter</span>": <span class="value">&#123;</span><br><span class="line">            "<span class="attribute">prefix</span>": <span class="value">&#123;</span><br><span class="line">              "<span class="attribute">treecode</span>": <span class="value"><span class="string">"1#55#57#61#85#mingqiang"</span></span><br><span class="line">            </span>&#125;</span><br><span class="line">          </span>&#125;</span>,</span><br><span class="line">          "<span class="attribute">parent_type</span>": <span class="value"><span class="string">"treecode"</span></span><br><span class="line">        </span>&#125;</span><br><span class="line">      </span>&#125;</span><br><span class="line">    </span>&#125;</span><br><span class="line">  </span>&#125;</span><br><span class="line"></span>&#125;</span><br></pre></td></tr></table></figure>
+</li>
 </ol>
 <ul>
 <li><a href="https://github.com/CSUG/HouseMD/wiki/UserGuideCN" target="_blank" rel="external">HouseMD诊断调试工具</a></li>
@@ -204,7 +187,7 @@ case   —{“query”: { “filtered">
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://www.fovoy.com/2015/01/12/性能测试/" data-id="cigiuvorg0004k0s6a2z3p9tw" class="article-share-link">分享到</a>
+      <a data-url="http://www.fovoy.com/2015/01/12/性能测试/" data-id="cigj15h9t0004was6l4uk1f82" class="article-share-link">分享到</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/tools/">tools</a></li></ul>
