@@ -5,38 +5,29 @@
   
   <title>elasticsearch动态修改配置 | z-star</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="修改slowlog
+  <meta name="description" content="ClusterDynamicSettingsModule   IndexDynamicSettingsModule
 
-12345XPUT /test_index/_settings&amp;#123; &quot;index&quot;: &amp;#123;&quot;search.slowlog.level&quot;: &quot;trace&quot;,&quot;search.slowlog.threshold.query.trace&quot;:&quot;100ms&quot;&amp;#125;&amp;#125;
+修改slowlog
 
-
-修改filterCache
-
-1234567//persistentcurl -XPU">
+12345XPUT /test_index/_settings&amp;#123; &quot;index&quot;: &amp;#123;&quot;search.slowlog.level&quot;: &quot;trace&quot;,&quot;search.slowlog.threshold.query.trace&quot;:&quot;100ms">
 <meta property="og:type" content="article">
 <meta property="og:title" content="elasticsearch动态修改配置">
 <meta property="og:url" content="http://www.fovoy.com/2015/03/16/es 动态修改配置/index.html">
 <meta property="og:site_name" content="z-star">
-<meta property="og:description" content="修改slowlog
+<meta property="og:description" content="ClusterDynamicSettingsModule   IndexDynamicSettingsModule
 
-12345XPUT /test_index/_settings&amp;#123; &quot;index&quot;: &amp;#123;&quot;search.slowlog.level&quot;: &quot;trace&quot;,&quot;search.slowlog.threshold.query.trace&quot;:&quot;100ms&quot;&amp;#125;&amp;#125;
+修改slowlog
 
-
-修改filterCache
-
-1234567//persistentcurl -XPU">
+12345XPUT /test_index/_settings&amp;#123; &quot;index&quot;: &amp;#123;&quot;search.slowlog.level&quot;: &quot;trace&quot;,&quot;search.slowlog.threshold.query.trace&quot;:&quot;100ms">
 <meta property="og:image" content="http://www.fovoy.com/thumbnails/es.png">
-<meta property="og:updated_time" content="2015-11-05T10:40:40.000Z">
+<meta property="og:updated_time" content="2015-11-23T03:12:42.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="elasticsearch动态修改配置">
-<meta name="twitter:description" content="修改slowlog
+<meta name="twitter:description" content="ClusterDynamicSettingsModule   IndexDynamicSettingsModule
 
-12345XPUT /test_index/_settings&amp;#123; &quot;index&quot;: &amp;#123;&quot;search.slowlog.level&quot;: &quot;trace&quot;,&quot;search.slowlog.threshold.query.trace&quot;:&quot;100ms&quot;&amp;#125;&amp;#125;
+修改slowlog
 
-
-修改filterCache
-
-1234567//persistentcurl -XPU">
+12345XPUT /test_index/_settings&amp;#123; &quot;index&quot;: &amp;#123;&quot;search.slowlog.level&quot;: &quot;trace&quot;,&quot;search.slowlog.threshold.query.trace&quot;:&quot;100ms">
   
   
    <link rel="shortcut icon" type="image/x-icon"  rel="icon" href="/css/images/favicon.ico">
@@ -120,11 +111,11 @@
     </div>
     <div class="article-info profile-block">
       <div class="article-info-block">
-        33
+        43
         <span>文章</span>
       </div>
       <div class="article-info-block">
-        16
+        22
         <span>标签</span>
       </div>
     </div>
@@ -188,7 +179,7 @@
       
                 
         <p><img src="/thumbnails/es.png" alt=""></p>
-<hr>
+<h3 id="ClusterDynamicSettingsModule_IndexDynamicSettingsModule">ClusterDynamicSettingsModule   IndexDynamicSettingsModule</h3><hr>
 <ul>
 <li>修改slowlog</li>
 </ul>
@@ -197,7 +188,7 @@
 <ul>
 <li>修改filterCache</li>
 </ul>
-<figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//persistent</span></span><br><span class="line">curl -XPUT <span class="regexp">/_cluster/</span>settings -d </span><br><span class="line">   &#123; <span class="string">"persistent"</span> : &#123;</span><br><span class="line"><span class="string">"indices.cache.filter.type"</span>: <span class="string">"node"</span>,</span><br><span class="line"><span class="string">"indices.cache.filter.size"</span>: <span class="string">"20%"</span>,</span><br><span class="line"><span class="string">"indices.cache.filter.expire"</span>: <span class="string">"12h"</span>&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//persistent</span></span><br><span class="line">curl -XPUT <span class="regexp">/_cluster/</span>settings -d </span><br><span class="line">   &#123; <span class="string">"persistent"</span> : &#123;</span><br><span class="line"><span class="string">"indices.cache.filter.type"</span>: <span class="string">"node"</span>,</span><br><span class="line"><span class="string">"indices.cache.filter.size"</span>: <span class="string">"20%"</span>,</span><br><span class="line"><span class="string">"indices.cache.filter.expire"</span>: <span class="string">"12h"</span>,</span><br><span class="line"><span class="string">"indices.breaker.fielddata.limit"</span>: <span class="string">"30%"</span></span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">   IndicesFilterCache</span><br></pre></td></tr></table></figure>
 <hr>
 <ul>
 <li>修改recovery</li>
@@ -213,13 +204,14 @@
 <li>加大恢复速度</li>
 </ul>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="preprocessor"># curl -XPUT http:<span class="comment">//127.0.0.1:9200/_cluster/settings -d '&#123;</span></span></span><br><span class="line">  <span class="string">"persistent"</span> : &#123;</span><br><span class="line">    <span class="string">"cluster"</span> : &#123;</span><br><span class="line">      <span class="string">"routing"</span> : &#123;</span><br><span class="line">        <span class="string">"allocation"</span> : &#123;</span><br><span class="line">          <span class="string">"disable_allocation"</span> : <span class="string">"false"</span>,</span><br><span class="line">          <span class="string">"cluster_concurrent_rebalance"</span> : <span class="string">"5"</span>,</span><br><span class="line">          <span class="string">"node_concurrent_recoveries"</span> : <span class="string">"5"</span>,</span><br><span class="line">          <span class="string">"enable"</span> : <span class="string">"all"</span></span><br><span class="line">        &#125;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="string">"indices"</span> : &#123;</span><br><span class="line">      <span class="string">"recovery"</span> : &#123;</span><br><span class="line">        <span class="string">"concurrent_streams"</span> : <span class="string">"30"</span>,</span><br><span class="line">        <span class="string">"max_bytes_per_sec"</span> : <span class="string">"2gb"</span></span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="string">"transient"</span> : &#123;</span><br><span class="line">    <span class="string">"cluster"</span> : &#123;</span><br><span class="line">      <span class="string">"routing"</span> : &#123;</span><br><span class="line">        <span class="string">"allocation"</span> : &#123;</span><br><span class="line">          <span class="string">"enable"</span> : <span class="string">"all"</span></span><br><span class="line">        &#125;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;'</span><br></pre></td></tr></table></figure>
+<figure class="highlight vala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="preprocessor"># Per-index</span></span><br><span class="line">GET /_stats/fielddata?human&amp;fields=_parent</span><br><span class="line"></span><br><span class="line"><span class="preprocessor"># Per-node per-index</span></span><br><span class="line">GET /_nodes/stats/indices/fielddata?human&amp;fields=_parent</span><br></pre></td></tr></table></figure>
 <hr>
 <p>相关链接<br><a href="https://www.elastic.co/guide/en/elasticsearch/guide/current/_changing_settings_dynamically.html" target="_blank" rel="external">es官网文档</a><br><a href="https://www.elastic.co/blog/elasticsearch-logging-secrets" target="_blank" rel="external">相关blog</a></p>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://www.fovoy.com/2015/03/16/es 动态修改配置/" data-id="cih3gcg70002lf2s6umpmtbv6" class="article-share-link">分享到</a>
+      <a data-url="http://www.fovoy.com/2015/03/16/es 动态修改配置/" data-id="cihscovnc003hy6s6ipz6fnhp" class="article-share-link">分享到</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Elasticsearch/">Elasticsearch</a></li></ul>
@@ -240,9 +232,9 @@
     </a>
   
   
-    <a href="/2015/01/27/Compound复合模式/" id="article-nav-older" class="article-nav-link-wrap">
+    <a href="/2015/03/16/redis 使用/" id="article-nav-older" class="article-nav-link-wrap">
       <strong class="article-nav-caption">下一篇</strong>
-      <div class="article-nav-title">Compound复合模式</div>
+      <div class="article-nav-title">redis 使用</div>
     </a>
   
 </nav>
@@ -265,90 +257,88 @@
           <li>
             
             <div class="item-thumbnail">
-              <a href="/2015/10/22/html5学习/" class="thumbnail">
+              <a href="/2015/12/16/es upgrad/" class="thumbnail">
   
-    <span style="background-image:url(/thumbnails/html5.jpg
-)" alt="html5 学习" class="thumbnail-image"></span>
+    <span style="background-image:url(/thumbnails/es.png
+)" alt="elasticsearch upgrad" class="thumbnail-image"></span>
   
 </a>
             </div>
             
             <div class="item-inner">
-              <p class="item-category"><a class="article-category-link" href="/categories/前端开发/">前端开发</a><i class="fa fa-angle-right"></i><a class="article-category-link" href="/categories/前端开发/html5/">html5</a></p>
-              <p class="item-title"><a href="/2015/10/22/html5学习/" class="title">html5 学习</a></p>
-              <p class="item-date"><time datetime="2015-10-22T01:13:36.000Z" itemprop="datePublished">2015-10-22</time></p>
+              <p class="item-category"><a class="article-category-link" href="/categories/Elasticsearch/">Elasticsearch</a></p>
+              <p class="item-title"><a href="/2015/12/16/es upgrad/" class="title">elasticsearch upgrad</a></p>
+              <p class="item-date"><time datetime="2015-12-16T01:13:36.000Z" itemprop="datePublished">2015-12-16</time></p>
             </div>
           </li>
         
           <li>
             
             <div class="item-thumbnail">
-              <a href="/2015/10/17/es待学习/" class="thumbnail">
+              <a href="/2015/11/24/延时队列方案/" class="thumbnail">
   
     <span style="background-image:url(/thumbnails/es.png
-)" alt="elasticsearch 待学习" class="thumbnail-image"></span>
+)" alt="延时队列方案" class="thumbnail-image"></span>
   
 </a>
             </div>
             
             <div class="item-inner">
-              <p class="item-category"><a class="article-category-link" href="/categories/Elasticsearch/">Elasticsearch</a><i class="fa fa-angle-right"></i><a class="article-category-link" href="/categories/Elasticsearch/学习/">学习</a></p>
-              <p class="item-title"><a href="/2015/10/17/es待学习/" class="title">elasticsearch 待学习</a></p>
-              <p class="item-date"><time datetime="2015-10-17T01:13:36.000Z" itemprop="datePublished">2015-10-17</time></p>
+              <p class="item-category"><a class="article-category-link" href="/categories/java/">java</a><i class="fa fa-angle-right"></i><a class="article-category-link" href="/categories/java/学习/">学习</a></p>
+              <p class="item-title"><a href="/2015/11/24/延时队列方案/" class="title">延时队列方案</a></p>
+              <p class="item-date"><time datetime="2015-11-24T02:13:36.000Z" itemprop="datePublished">2015-11-24</time></p>
             </div>
           </li>
         
           <li>
             
             <div class="item-thumbnail">
-              <a href="/2015/10/17/英语学习/" class="thumbnail">
+              <a href="/2015/11/24/前后端分离/" class="thumbnail">
   
-    <span style="background-image:url(/thumbnails/es.png
-)" alt="英语学习" class="thumbnail-image"></span>
+    <span style="background-image:url(/thumbnails/t1.png
+)" alt="前后端分离" class="thumbnail-image"></span>
   
 </a>
             </div>
             
             <div class="item-inner">
-              <p class="item-category"><a class="article-category-link" href="/categories/英语学习/">英语学习</a></p>
-              <p class="item-title"><a href="/2015/10/17/英语学习/" class="title">英语学习</a></p>
-              <p class="item-date"><time datetime="2015-10-17T01:13:36.000Z" itemprop="datePublished">2015-10-17</time></p>
+              <p class="item-category"><a class="article-category-link" href="/categories/前端开发/">前端开发</a><i class="fa fa-angle-right"></i><a class="article-category-link" href="/categories/前端开发/学习/">学习</a></p>
+              <p class="item-title"><a href="/2015/11/24/前后端分离/" class="title">前后端分离</a></p>
+              <p class="item-date"><time datetime="2015-11-24T02:13:36.000Z" itemprop="datePublished">2015-11-24</time></p>
             </div>
           </li>
         
           <li>
             
             <div class="item-thumbnail">
-              <a href="/2015/10/17/mac/" class="thumbnail">
+              <a href="/2015/11/23/cmake/" class="thumbnail">
   
-    <span style="background-image:url(/thumbnails/es.png
-)" alt="Mac" class="thumbnail-image"></span>
+    <span class="thumbnail-image thumbnail-none"></span>
   
 </a>
             </div>
             
             <div class="item-inner">
-              <p class="item-category"><a class="article-category-link" href="/categories/Mac/">Mac</a></p>
-              <p class="item-title"><a href="/2015/10/17/mac/" class="title">Mac</a></p>
-              <p class="item-date"><time datetime="2015-10-17T01:13:36.000Z" itemprop="datePublished">2015-10-17</time></p>
+              <p class="item-category"></p>
+              <p class="item-title"><a href="/2015/11/23/cmake/" class="title"></a></p>
+              <p class="item-date"><time datetime="2015-11-23T03:12:55.000Z" itemprop="datePublished">2015-11-23</time></p>
             </div>
           </li>
         
           <li>
             
             <div class="item-thumbnail">
-              <a href="/2015/10/17/site/" class="thumbnail">
+              <a href="/2015/11/17/jenkins脚本/" class="thumbnail">
   
-    <span style="background-image:url(/thumbnails/es.png
-)" alt="网站要点" class="thumbnail-image"></span>
+    <span class="thumbnail-image thumbnail-none"></span>
   
 </a>
             </div>
             
             <div class="item-inner">
-              <p class="item-category"><a class="article-category-link" href="/categories/site/">site</a></p>
-              <p class="item-title"><a href="/2015/10/17/site/" class="title">网站要点</a></p>
-              <p class="item-date"><time datetime="2015-10-17T01:13:36.000Z" itemprop="datePublished">2015-10-17</time></p>
+              <p class="item-category"></p>
+              <p class="item-title"><a href="/2015/11/17/jenkins脚本/" class="title"></a></p>
+              <p class="item-date"><time datetime="2015-11-17T14:12:01.000Z" itemprop="datePublished">2015-11-17</time></p>
             </div>
           </li>
         
@@ -361,7 +351,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">分类</h3>
     <div class="widget">
-      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Elasticsearch/">Elasticsearch</a><span class="category-list-count">5</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Elasticsearch/config/">config</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Elasticsearch/performance/">performance</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Elasticsearch/学习/">学习</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Framework/">Framework</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Framework/spring/">spring</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Mac/">Mac</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/design-pattern/">design pattern</a><span class="category-list-count">10</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/java/">java</a><span class="category-list-count">2</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/java/jvm/">jvm</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/site/">site</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/tools/">tools</a><span class="category-list-count">8</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/tools/nginx/">nginx</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/tools/管理平台/">管理平台</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/中间件/">中间件</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/中间件/kafka/">kafka</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/前端开发/">前端开发</a><span class="category-list-count">3</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/前端开发/angularjs/">angularjs</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/前端开发/html5/">html5</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/前端开发/学习/">学习</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/英语学习/">英语学习</a><span class="category-list-count">1</span></li></ul>
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Elasticsearch/">Elasticsearch</a><span class="category-list-count">6</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Elasticsearch/config/">config</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Elasticsearch/performance/">performance</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Elasticsearch/学习/">学习</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Framework/">Framework</a><span class="category-list-count">2</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Framework/spring/">spring</a><span class="category-list-count">2</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Mac/">Mac</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/design-pattern/">design pattern</a><span class="category-list-count">10</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/java/">java</a><span class="category-list-count">5</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/java/gc/">gc</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/java/jvm/">jvm</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/java/学习/">学习</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/kibana/">kibana</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/redis/">redis</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/site/">site</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/tools/">tools</a><span class="category-list-count">8</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/tools/nginx/">nginx</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/tools/管理平台/">管理平台</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/中间件/">中间件</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/中间件/kafka/">kafka</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/前端开发/">前端开发</a><span class="category-list-count">4</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/前端开发/angularjs/">angularjs</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/前端开发/html5/">html5</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/前端开发/学习/">学习</a><span class="category-list-count">2</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/英语学习/">英语学习</a><span class="category-list-count">1</span></li></ul>
     </div>
   </div>
 
@@ -370,7 +360,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">标签</h3>
     <div class="widget">
-      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Elasticsearch/">Elasticsearch</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Mac/">Mac</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/angularjs/">angularjs</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/design-pattern/">design pattern</a><span class="tag-list-count">10</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/html5/">html5</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/jvm/">jvm</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/kafka/">kafka</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mysql/">mysql</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/nginx/">nginx</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/play/">play</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/reflect/">reflect</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/secureCRT/">secureCRT</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/site/">site</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/spring/">spring</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/tools/">tools</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/英语学习/">英语学习</a><span class="tag-list-count">1</span></li></ul>
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Elasticsearch/">Elasticsearch</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Mac/">Mac</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Quasar/">Quasar</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/angularjs/">angularjs</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/design-pattern/">design pattern</a><span class="tag-list-count">10</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/gc/">gc</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/html5/">html5</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/java/">java</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/jvm/">jvm</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/kafka/">kafka</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/kibana/">kibana</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mysql/">mysql</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/nginx/">nginx</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/play/">play</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/redis/">redis</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/reflect/">reflect</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/secureCRT/">secureCRT</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/site/">site</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/spring/">spring</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/tools/">tools</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/前端开发/">前端开发</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/英语学习/">英语学习</a><span class="tag-list-count">1</span></li></ul>
     </div>
   </div>
 
@@ -379,7 +369,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">标签云</h3>
     <div class="widget tagcloud">
-      <a href="/tags/Elasticsearch/" style="font-size: 16.67px;">Elasticsearch</a> <a href="/tags/Mac/" style="font-size: 10px;">Mac</a> <a href="/tags/angularjs/" style="font-size: 10px;">angularjs</a> <a href="/tags/design-pattern/" style="font-size: 20px;">design pattern</a> <a href="/tags/html5/" style="font-size: 10px;">html5</a> <a href="/tags/jvm/" style="font-size: 10px;">jvm</a> <a href="/tags/kafka/" style="font-size: 10px;">kafka</a> <a href="/tags/mysql/" style="font-size: 13.33px;">mysql</a> <a href="/tags/nginx/" style="font-size: 10px;">nginx</a> <a href="/tags/play/" style="font-size: 10px;">play</a> <a href="/tags/reflect/" style="font-size: 10px;">reflect</a> <a href="/tags/secureCRT/" style="font-size: 10px;">secureCRT</a> <a href="/tags/site/" style="font-size: 10px;">site</a> <a href="/tags/spring/" style="font-size: 10px;">spring</a> <a href="/tags/tools/" style="font-size: 16.67px;">tools</a> <a href="/tags/英语学习/" style="font-size: 10px;">英语学习</a>
+      <a href="/tags/Elasticsearch/" style="font-size: 17.5px;">Elasticsearch</a> <a href="/tags/Mac/" style="font-size: 10px;">Mac</a> <a href="/tags/Quasar/" style="font-size: 10px;">Quasar</a> <a href="/tags/angularjs/" style="font-size: 10px;">angularjs</a> <a href="/tags/design-pattern/" style="font-size: 20px;">design pattern</a> <a href="/tags/gc/" style="font-size: 10px;">gc</a> <a href="/tags/html5/" style="font-size: 10px;">html5</a> <a href="/tags/java/" style="font-size: 10px;">java</a> <a href="/tags/jvm/" style="font-size: 10px;">jvm</a> <a href="/tags/kafka/" style="font-size: 10px;">kafka</a> <a href="/tags/kibana/" style="font-size: 10px;">kibana</a> <a href="/tags/mysql/" style="font-size: 12.5px;">mysql</a> <a href="/tags/nginx/" style="font-size: 10px;">nginx</a> <a href="/tags/play/" style="font-size: 10px;">play</a> <a href="/tags/redis/" style="font-size: 10px;">redis</a> <a href="/tags/reflect/" style="font-size: 10px;">reflect</a> <a href="/tags/secureCRT/" style="font-size: 10px;">secureCRT</a> <a href="/tags/site/" style="font-size: 10px;">site</a> <a href="/tags/spring/" style="font-size: 12.5px;">spring</a> <a href="/tags/tools/" style="font-size: 15px;">tools</a> <a href="/tags/前端开发/" style="font-size: 10px;">前端开发</a> <a href="/tags/英语学习/" style="font-size: 10px;">英语学习</a>
     </div>
   </div>
 
@@ -388,7 +378,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">归档</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/10/">十月 2015</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/08/">八月 2015</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/07/">七月 2015</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/05/">五月 2015</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/03/">三月 2015</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/01/">一月 2015</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/12/">十二月 2014</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/11/">十一月 2014</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/07/">七月 2014</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/05/">五月 2014</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/04/">四月 2014</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/03/">三月 2014</a><span class="archive-list-count">1</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/12/">十二月 2015</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/11/">十一月 2015</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/10/">十月 2015</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/08/">八月 2015</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/07/">七月 2015</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/05/">五月 2015</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/03/">三月 2015</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/01/">一月 2015</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/12/">十二月 2014</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/11/">十一月 2014</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/10/">十月 2014</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/07/">七月 2014</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/05/">五月 2014</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/04/">四月 2014</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/03/">三月 2014</a><span class="archive-list-count">1</span></li></ul>
     </div>
   </div>
 

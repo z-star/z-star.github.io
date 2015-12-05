@@ -97,11 +97,11 @@
     </div>
     <div class="article-info profile-block">
       <div class="article-info-block">
-        33
+        43
         <span>文章</span>
       </div>
       <div class="article-info-block">
-        16
+        22
         <span>标签</span>
       </div>
     </div>
@@ -130,6 +130,438 @@
 
       
       <section id="main">
+      <article id="post-jvm" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2015/05/11/jvm/">jvm 调优</a>
+    </h1>
+  
+
+        <div class="article-meta">
+          
+  <div class="article-date">
+    <i class="fa fa-calendar"></i>
+    <a href="/2015/05/11/jvm/">
+      <time datetime="2015-05-11T01:13:36.000Z" itemprop="datePublished">2015-05-11</time>
+    </a>
+  </div>
+
+
+          
+  <div class="article-category">
+  	<i class="fa fa-folder"></i>
+    <a class="article-category-link" href="/categories/java/">java</a><i class="fa fa-angle-right"></i><a class="article-category-link" href="/categories/java/jvm/">jvm</a>
+  </div>
+
+        </div>
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+                
+        <p><img src="/thumbnails/template.png" alt=""></p>
+<p><a href="http://guojuanjun.blog.51cto.com/277646/268611/" target="_blank" rel="external">jvm</a></p>
+<ul>
+<li>如果我们的应用中使用了java nio中的direct memory，那么使用-XX:+DisableExplicitGC一定要小心，存在潜在的内存泄露风险。<br><a href="http://blog.sina.com.cn/s/blog_6940cab30101ghgj.html" target="_blank" rel="external">java nio 和 jvm 虚拟机参数的 XX:+DisableExplicitGC 的潜规则</a><br><a href="http://blog.csdn.net/aitangyong/article/details/39403031" target="_blank" rel="external">jvm 博文</a></li>
+</ul>
+<p>[TOC]</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://www.fovoy.com/2015/05/11/jvm/" data-id="cihscovmx002ny6s6vz7rmkfq" class="article-share-link">分享到</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/jvm/">jvm</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+    
+      <article id="post-java反射" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2015/05/11/java反射/">Java 反射</a>
+    </h1>
+  
+
+        <div class="article-meta">
+          
+  <div class="article-date">
+    <i class="fa fa-calendar"></i>
+    <a href="/2015/05/11/java反射/">
+      <time datetime="2015-05-11T01:13:36.000Z" itemprop="datePublished">2015-05-11</time>
+    </a>
+  </div>
+
+
+          
+  <div class="article-category">
+  	<i class="fa fa-folder"></i>
+    <a class="article-category-link" href="/categories/java/">java</a>
+  </div>
+
+        </div>
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+                
+        <p><img src="/thumbnails/template.png" alt=""></p>
+<p><a href="hhttp://azrael6619.iteye.com/blog/429797" target="_blank" rel="external">reflect</a></p>
+<p>[TOC]</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://www.fovoy.com/2015/05/11/java反射/" data-id="cihscovn2002uy6s6adeah7i1" class="article-share-link">分享到</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/reflect/">reflect</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+    
+      <article id="post-es 动态修改配置" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2015/03/16/es 动态修改配置/">elasticsearch动态修改配置</a>
+    </h1>
+  
+
+        <div class="article-meta">
+          
+  <div class="article-date">
+    <i class="fa fa-calendar"></i>
+    <a href="/2015/03/16/es 动态修改配置/">
+      <time datetime="2015-03-16T01:13:36.000Z" itemprop="datePublished">2015-03-16</time>
+    </a>
+  </div>
+
+
+          
+  <div class="article-category">
+  	<i class="fa fa-folder"></i>
+    <a class="article-category-link" href="/categories/Elasticsearch/">Elasticsearch</a><i class="fa fa-angle-right"></i><a class="article-category-link" href="/categories/Elasticsearch/config/">config</a>
+  </div>
+
+        </div>
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+                
+        <p><img src="/thumbnails/es.png" alt=""></p>
+<h3 id="ClusterDynamicSettingsModule_IndexDynamicSettingsModule">ClusterDynamicSettingsModule   IndexDynamicSettingsModule</h3><hr>
+<ul>
+<li>修改slowlog</li>
+</ul>
+<figure class="highlight xquery"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">XPUT /test_index/_settings</span><br><span class="line">&#123; <span class="string">"index"</span>: &#123;</span><br><span class="line"><span class="string">"search.slowlog.level"</span>: <span class="string">"trace"</span>,</span><br><span class="line"><span class="string">"search.slowlog.threshold.query.trace"</span>:<span class="string">"100ms"</span>&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<hr>
+<ul>
+<li>修改filterCache</li>
+</ul>
+<figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//persistent</span></span><br><span class="line">curl -XPUT <span class="regexp">/_cluster/</span>settings -d </span><br><span class="line">   &#123; <span class="string">"persistent"</span> : &#123;</span><br><span class="line"><span class="string">"indices.cache.filter.type"</span>: <span class="string">"node"</span>,</span><br><span class="line"><span class="string">"indices.cache.filter.size"</span>: <span class="string">"20%"</span>,</span><br><span class="line"><span class="string">"indices.cache.filter.expire"</span>: <span class="string">"12h"</span>,</span><br><span class="line"><span class="string">"indices.breaker.fielddata.limit"</span>: <span class="string">"30%"</span></span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">   IndicesFilterCache</span><br></pre></td></tr></table></figure>
+<hr>
+<ul>
+<li>修改recovery</li>
+</ul>
+<figure class="highlight xquery"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">//transient</span><br><span class="line"> curl -XPUT /_cluster/settings -d </span><br><span class="line"> &#123;</span><br><span class="line">  <span class="string">"persistent"</span> : &#123;</span><br><span class="line">    <span class="string">"indices"</span> : &#123;</span><br><span class="line">      <span class="string">"recovery"</span> : &#123;</span><br><span class="line">        <span class="string">"concurrent_streams"</span> : <span class="string">"30"</span>,</span><br><span class="line">        <span class="string">"max_bytes_per_sec"</span> : <span class="string">"2gb"</span>&#125;&#125;&#125;</span><br><span class="line">&#125;<span class="string">'</span></span><br></pre></td></tr></table></figure>
+<hr>
+<ul>
+<li>暂停分片</li>
+</ul>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="preprocessor"># curl -XPUT http:<span class="comment">//127.0.0.1:9200/_cluster/settings -d '&#123;</span></span></span><br><span class="line">  <span class="string">"transient"</span> : &#123;</span><br><span class="line">    <span class="string">"cluster.routing.allocation.enable"</span> : <span class="string">"none"</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;'</span><br></pre></td></tr></table></figure>
+<hr>
+<ul>
+<li>加大恢复速度</li>
+</ul>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="preprocessor"># curl -XPUT http:<span class="comment">//127.0.0.1:9200/_cluster/settings -d '&#123;</span></span></span><br><span class="line">  <span class="string">"persistent"</span> : &#123;</span><br><span class="line">    <span class="string">"cluster"</span> : &#123;</span><br><span class="line">      <span class="string">"routing"</span> : &#123;</span><br><span class="line">        <span class="string">"allocation"</span> : &#123;</span><br><span class="line">          <span class="string">"disable_allocation"</span> : <span class="string">"false"</span>,</span><br><span class="line">          <span class="string">"cluster_concurrent_rebalance"</span> : <span class="string">"5"</span>,</span><br><span class="line">          <span class="string">"node_concurrent_recoveries"</span> : <span class="string">"5"</span>,</span><br><span class="line">          <span class="string">"enable"</span> : <span class="string">"all"</span></span><br><span class="line">        &#125;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="string">"indices"</span> : &#123;</span><br><span class="line">      <span class="string">"recovery"</span> : &#123;</span><br><span class="line">        <span class="string">"concurrent_streams"</span> : <span class="string">"30"</span>,</span><br><span class="line">        <span class="string">"max_bytes_per_sec"</span> : <span class="string">"2gb"</span></span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="string">"transient"</span> : &#123;</span><br><span class="line">    <span class="string">"cluster"</span> : &#123;</span><br><span class="line">      <span class="string">"routing"</span> : &#123;</span><br><span class="line">        <span class="string">"allocation"</span> : &#123;</span><br><span class="line">          <span class="string">"enable"</span> : <span class="string">"all"</span></span><br><span class="line">        &#125;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;'</span><br></pre></td></tr></table></figure>
+<figure class="highlight vala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="preprocessor"># Per-index</span></span><br><span class="line">GET /_stats/fielddata?human&amp;fields=_parent</span><br><span class="line"></span><br><span class="line"><span class="preprocessor"># Per-node per-index</span></span><br><span class="line">GET /_nodes/stats/indices/fielddata?human&amp;fields=_parent</span><br></pre></td></tr></table></figure>
+<hr>
+<p>相关链接<br><a href="https://www.elastic.co/guide/en/elasticsearch/guide/current/_changing_settings_dynamically.html" target="_blank" rel="external">es官网文档</a><br><a href="https://www.elastic.co/blog/elasticsearch-logging-secrets" target="_blank" rel="external">相关blog</a></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://www.fovoy.com/2015/03/16/es 动态修改配置/" data-id="cihscovnc003hy6s6ipz6fnhp" class="article-share-link">分享到</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Elasticsearch/">Elasticsearch</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+    
+      <article id="post-redis 使用" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2015/03/16/redis 使用/">redis 使用</a>
+    </h1>
+  
+
+        <div class="article-meta">
+          
+  <div class="article-date">
+    <i class="fa fa-calendar"></i>
+    <a href="/2015/03/16/redis 使用/">
+      <time datetime="2015-03-16T01:13:36.000Z" itemprop="datePublished">2015-03-16</time>
+    </a>
+  </div>
+
+
+          
+  <div class="article-category">
+  	<i class="fa fa-folder"></i>
+    <a class="article-category-link" href="/categories/redis/">redis</a>
+  </div>
+
+        </div>
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+                
+        <p><a href="http://blog.csdn.net/gaogaoshan/article/details/41039581" target="_blank" rel="external">redis</a></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://www.fovoy.com/2015/03/16/redis 使用/" data-id="cihscovm5001ly6s6i48ewvfm" class="article-share-link">分享到</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/redis/">redis</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+    
+      <article id="post-Compound复合模式" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2015/01/27/Compound复合模式/">Compound复合模式</a>
+    </h1>
+  
+
+        <div class="article-meta">
+          
+  <div class="article-date">
+    <i class="fa fa-calendar"></i>
+    <a href="/2015/01/27/Compound复合模式/">
+      <time datetime="2015-01-27T12:23:15.000Z" itemprop="datePublished">2015-01-27</time>
+    </a>
+  </div>
+
+
+          
+  <div class="article-category">
+  	<i class="fa fa-folder"></i>
+    <a class="article-category-link" href="/categories/design-pattern/">design pattern</a>
+  </div>
+
+        </div>
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+                
+        <p><img src="/thumbnails/adapter.png" alt=""></p>
+<h4 id="混合模式">混合模式</h4><h5 id="描述">描述</h5><ul>
+<li>各种模式结合处理复杂的问题。形成了某一类问题。就形成了一种混合的模式，例如mvc复合模式。</li>
+</ul>
+<h5 id="代码如下">代码如下</h5><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>[TOC]</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://www.fovoy.com/2015/01/27/Compound复合模式/" data-id="cihscovoh0054y6s6ap7t6v3x" class="article-share-link">分享到</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/design-pattern/">design pattern</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+    
+      <article id="post-Proxy代理模式" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2015/01/27/Proxy代理模式/">Proxy代理模式</a>
+    </h1>
+  
+
+        <div class="article-meta">
+          
+  <div class="article-date">
+    <i class="fa fa-calendar"></i>
+    <a href="/2015/01/27/Proxy代理模式/">
+      <time datetime="2015-01-27T12:23:15.000Z" itemprop="datePublished">2015-01-27</time>
+    </a>
+  </div>
+
+
+          
+  <div class="article-category">
+  	<i class="fa fa-folder"></i>
+    <a class="article-category-link" href="/categories/design-pattern/">design pattern</a>
+  </div>
+
+        </div>
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+                
+        <p><img src="/thumbnails/rmi.png" alt=""></p>
+<h4 id="代理模式">代理模式</h4><h5 id="描述">描述</h5><ul>
+<li>为对象提供一个替身，能通过替身来访问远程的或者不能直接调用的对象。能控制和管理对象访问。</li>
+</ul>
+<h5 id="代码如下">代码如下</h5><ol>
+<li>java RMI<br><img src="/thumbnails/rmi.png" alt=""></li>
+<li>虚拟代理<br>虚拟代理为创建开销大的对象提供代理，如：加载图片时候出现的转圈圈就是虚拟代理，加载玩之后再加载出真正的图片。</li>
+<li>动态代理<br><img src="/thumbnails/dynproxy.png" alt=""><br>动态创建代理类，方法的指定也是动态的。proxy invocationHandler.</li>
+<li>保护代理<br>动态代理实现，保护性代理</li>
+</ol>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>[TOC]</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://www.fovoy.com/2015/01/27/Proxy代理模式/" data-id="cihscovo5004py6s699141xmz" class="article-share-link">分享到</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/design-pattern/">design pattern</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+    
+      <article id="post-性能测试" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2015/01/12/性能测试/">性能测试</a>
+    </h1>
+  
+
+        <div class="article-meta">
+          
+  <div class="article-date">
+    <i class="fa fa-calendar"></i>
+    <a href="/2015/01/12/性能测试/">
+      <time datetime="2015-01-12T11:25:12.000Z" itemprop="datePublished">2015-01-12</time>
+    </a>
+  </div>
+
+
+          
+  <div class="article-category">
+  	<i class="fa fa-folder"></i>
+    <a class="article-category-link" href="/categories/tools/">tools</a>
+  </div>
+
+        </div>
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+                
+        <p><img src="/thumbnails/t2.png" alt=""></p>
+<ol>
+<li>monitor  -c 5  org.elasticsearch.search.SearchService executeQueryPhase</li>
+<li>ptrace org.elasticsearch.search.SearchService executeQueryPhase –path org.elasticsearch.search* -t</li>
+<li>case   <figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  "<span class="attribute">query</span>": <span class="value">&#123;</span><br><span class="line">    "<span class="attribute">filtered</span>": <span class="value">&#123;</span><br><span class="line">      "<span class="attribute">query</span>": <span class="value">&#123;</span><br><span class="line">        "<span class="attribute">bool</span>": <span class="value">&#123;</span><br><span class="line">          "<span class="attribute">must</span>": <span class="value">&#123;</span><br><span class="line">            "<span class="attribute">match</span>": <span class="value">&#123;</span><br><span class="line">              "<span class="attribute">hotel_name</span>": <span class="value">&#123;</span><br><span class="line">                "<span class="attribute">query</span>": <span class="value"><span class="string">"金%"</span></span>,</span><br><span class="line">                "<span class="attribute">type</span>": <span class="value"><span class="string">"phrase"</span></span><br><span class="line">              </span>&#125;</span><br><span class="line">            </span>&#125;</span><br><span class="line">          </span>&#125;</span><br><span class="line">        </span>&#125;</span><br><span class="line">      </span>&#125;</span>,</span><br><span class="line">      "<span class="attribute">filter</span>": <span class="value">&#123;</span><br><span class="line">        "<span class="attribute">has_parent</span>": <span class="value">&#123;</span><br><span class="line">          "<span class="attribute">filter</span>": <span class="value">&#123;</span><br><span class="line">            "<span class="attribute">prefix</span>": <span class="value">&#123;</span><br><span class="line">              "<span class="attribute">treecode</span>": <span class="value"><span class="string">"1#55#57#61#85#mingqiang"</span></span><br><span class="line">            </span>&#125;</span><br><span class="line">          </span>&#125;</span>,</span><br><span class="line">          "<span class="attribute">parent_type</span>": <span class="value"><span class="string">"treecode"</span></span><br><span class="line">        </span>&#125;</span><br><span class="line">      </span>&#125;</span><br><span class="line">    </span>&#125;</span><br><span class="line">  </span>&#125;</span><br><span class="line"></span>&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<ul>
+<li><a href="https://github.com/CSUG/HouseMD/wiki/UserGuideCN" target="_blank" rel="external">HouseMD诊断调试工具</a></li>
+<li><a href="http://www.infoq.com/cn/news/2014/04/tmall-recommendation-team/" target="_blank" rel="external">推荐算法</a></li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://www.fovoy.com/2015/01/12/性能测试/" data-id="cihscovlh0009y6s6y01rx7h5" class="article-share-link">分享到</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/tools/">tools</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+    
       <article id="post-es plugin" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -180,7 +612,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://www.fovoy.com/2014/12/16/es plugin/" data-id="cih3gcg75002vf2s6gkrqdgba" class="article-share-link">分享到</a>
+      <a data-url="http://www.fovoy.com/2014/12/16/es plugin/" data-id="cihscovnm003uy6s6la18y9u4" class="article-share-link">分享到</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Elasticsearch/">Elasticsearch</a></li></ul>
@@ -193,7 +625,7 @@
 
 
     
-      <article id="post-angularjs" class="article article-type-post" itemscope itemprop="blogPost">
+      <article id="post-Quasar库" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-inner">
     
     
@@ -202,7 +634,7 @@
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2014/11/12/angularjs/">angularjs</a>
+      <a class="article-title" href="/2014/12/16/Quasar库/">Quasar库</a>
     </h1>
   
 
@@ -210,8 +642,8 @@
           
   <div class="article-date">
     <i class="fa fa-calendar"></i>
-    <a href="/2014/11/12/angularjs/">
-      <time datetime="2014-11-12T11:25:12.000Z" itemprop="datePublished">2014-11-12</time>
+    <a href="/2014/12/16/Quasar库/">
+      <time datetime="2014-12-16T01:13:36.000Z" itemprop="datePublished">2014-12-16</time>
     </a>
   </div>
 
@@ -219,7 +651,7 @@
           
   <div class="article-category">
   	<i class="fa fa-folder"></i>
-    <a class="article-category-link" href="/categories/前端开发/">前端开发</a><i class="fa fa-angle-right"></i><a class="article-category-link" href="/categories/前端开发/angularjs/">angularjs</a>
+    <a class="article-category-link" href="/categories/java/">java</a>
   </div>
 
         </div>
@@ -228,20 +660,16 @@
     <div class="article-entry" itemprop="articleBody">
       
                 
-        <hr>
-<p><img src="/thumbnails/t1.png" alt=""></p>
-<h3 id="学习资料等">学习资料等</h3><hr>
-<ul>
-<li><a href="http://my.oschina.net/buwei/blog/191640" target="_blank" rel="external">angular的post请求 接受不到</a></li>
-</ul>
+        <p><img src="/thumbnails/es.png" alt=""></p>
+<p><a href="http://docs.paralleluniverse.co/quasar/" target="_blank" rel="external">Quasar QuicketStart</a></p>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://www.fovoy.com/2014/11/12/angularjs/" data-id="cih3gcg7a0032f2s6947c0hsy" class="article-share-link">分享到</a>
+      <a data-url="http://www.fovoy.com/2014/12/16/Quasar库/" data-id="cihscovo3004ly6s69qux889a" class="article-share-link">分享到</a>
       
       
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/angularjs/">angularjs</a></li></ul>
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Quasar/">Quasar</a></li></ul>
 
     </footer>
   </div>
@@ -296,7 +724,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://www.fovoy.com/2014/11/12/maven/" data-id="cih3gcg6d001if2s6p8id89bh" class="article-share-link">分享到</a>
+      <a data-url="http://www.fovoy.com/2014/11/12/maven/" data-id="cihscovmm0023y6s6wfrx47bw" class="article-share-link">分享到</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/tools/">tools</a></li></ul>
@@ -309,432 +737,8 @@
 
 
     
-      <article id="post-SecureCRT license" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2014/07/12/SecureCRT license/">SecureCRT 7.1 license DATA</a>
-    </h1>
-  
-
-        <div class="article-meta">
-          
-  <div class="article-date">
-    <i class="fa fa-calendar"></i>
-    <a href="/2014/07/12/SecureCRT license/">
-      <time datetime="2014-07-12T11:25:12.000Z" itemprop="datePublished">2014-07-12</time>
-    </a>
-  </div>
-
-
-          
-  <div class="article-category">
-  	<i class="fa fa-folder"></i>
-    <a class="article-category-link" href="/categories/tools/">tools</a>
-  </div>
-
-        </div>
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-                
-        <hr>
-<p><img src="/thumbnails/t2.png" alt=""></p>
-<p>＊ SecureCRT 7.1 license DATA</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">&gt;SecureCRT <span class="number">7.1</span> License Data:                                  Checksum</span><br><span class="line">   Name:           xiao ming                                  [<span class="number">014</span>C]</span><br><span class="line">   Company:                                                   [<span class="number">0000</span>]</span><br><span class="line">   Serial <span class="built_in">Number</span>:  <span class="number">03</span>-<span class="number">71</span>-<span class="number">009807</span>                               [<span class="number">8</span>BD7]</span><br><span class="line">   License Key:</span><br><span class="line">      ABBWGJ <span class="number">3</span>G47T3 G8ZCRR <span class="number">5E53</span>NG ABKPU2 HTH1BF CYA2SU <span class="number">1</span>G6JN3 [<span class="number">8814</span>]</span><br><span class="line">   Issue <span class="built_in">Date</span>:     <span class="number">06</span>-<span class="number">08</span>-<span class="number">2013</span>                                 [C0FB]</span><br><span class="line">   Features:       Maintenance Expiration=<span class="number">06</span>-<span class="number">07</span>-<span class="number">2016</span>          [<span class="number">5289</span>]</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">   Note:  The checksum values are <span class="keyword">for</span> troubleshooting purposes only</span><br><span class="line">   and should not be entered <span class="keyword">as</span> part <span class="keyword">of</span> the license data.</span><br><span class="line"></span><br><span class="line">   WARNING: SecureCRT is subject to <span class="keyword">export</span> control and may be</span><br><span class="line">   transmitted, exported, or re-exported only under applicable <span class="keyword">export</span></span><br><span class="line">   laws and restrictions and regulations <span class="keyword">of</span> the United States Bureau</span><br><span class="line">   <span class="keyword">of</span> Industry and Security or foreign agencies or authorities.</span><br></pre></td></tr></table></figure>
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://www.fovoy.com/2014/07/12/SecureCRT license/" data-id="cih3gcg7f003gf2s68rimm3kq" class="article-share-link">分享到</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/secureCRT/">secureCRT</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/tools/">tools</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-
-    
-      <article id="post-es config 模版" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2014/07/12/es config 模版/">elasticsearch config</a>
-    </h1>
-  
-
-        <div class="article-meta">
-          
-  <div class="article-date">
-    <i class="fa fa-calendar"></i>
-    <a href="/2014/07/12/es config 模版/">
-      <time datetime="2014-07-12T11:25:12.000Z" itemprop="datePublished">2014-07-12</time>
-    </a>
-  </div>
-
-
-          
-  <div class="article-category">
-  	<i class="fa fa-folder"></i>
-    <a class="article-category-link" href="/categories/Elasticsearch/">Elasticsearch</a><i class="fa fa-angle-right"></i><a class="article-category-link" href="/categories/Elasticsearch/config/">config</a>
-  </div>
-
-        </div>
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-                
-        <p><img src="/thumbnails/es.png" alt=""></p>
-<h4 id="es模版">es模版</h4><hr>
-<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br></pre></td><td class="code"><pre><span class="line">node.name: $&#123;NAME&#125;</span><br><span class="line">bootstrap.mlockall: true</span><br><span class="line"></span><br><span class="line">#threadpool.get.type: fixed</span><br><span class="line">#threadpool.get.size: 1</span><br><span class="line">node.master: false</span><br><span class="line">threadpool.suggest.type: fixed</span><br><span class="line">threadpool.suggest.size: 1</span><br><span class="line"></span><br><span class="line">#index.refresh_interval: 120s</span><br><span class="line"></span><br><span class="line">#indices.memory.index_buffer_size: 1024m</span><br><span class="line"></span><br><span class="line">indices.fielddata.cache.size: 40%</span><br><span class="line"></span><br><span class="line">indices.fielddata.cache.expire: 20m</span><br><span class="line"></span><br><span class="line">indices.fielddata.breaker.limit: 40%</span><br><span class="line"></span><br><span class="line">indices.cache.filter.type: soft</span><br><span class="line"></span><br><span class="line">indices.fielddata.cache: soft</span><br><span class="line"></span><br><span class="line">indices.cache.filter.size: 30%</span><br><span class="line"></span><br><span class="line">indices.cache.filter.expire: 20m</span><br><span class="line"></span><br><span class="line">#http.enabled: false</span><br><span class="line"></span><br><span class="line">transport.tcp.compress: true</span><br><span class="line"></span><br><span class="line">#network.tcp.connect_timeout: 30s</span><br><span class="line"></span><br><span class="line"># transport.tcp.connect_timeout: 30s</span><br><span class="line"></span><br><span class="line">discovery.zen.ping.multicast.enabled: false</span><br><span class="line"></span><br><span class="line">discovery.zen.minimum_master_nodes: 2</span><br><span class="line"></span><br><span class="line">discovery.zen.fd.ping_interval: 10s</span><br><span class="line"></span><br><span class="line">discovery.zen.ping.timeout: 6s</span><br><span class="line"></span><br><span class="line">#discovery.initial_state_timeout: 60s</span><br><span class="line"></span><br><span class="line">discovery.zen.ping.unicast.hosts: [""]</span><br><span class="line"></span><br><span class="line">#################################### Paths ####################################</span><br><span class="line"></span><br><span class="line"># path.conf: /path/to/conf</span><br><span class="line">path.data: /server/es/data</span><br><span class="line">path.work: /server/es/work</span><br><span class="line">path.logs: /server/es/logs</span><br><span class="line">path.plugins: /path/to/plugins</span><br><span class="line"># marvel.agent.exporter.es.hosts: ["10.58.50.26:9200"]</span><br><span class="line"># Shard level query and fetch threshold logging.</span><br><span class="line">#index.search.slowlog.threshold.query.warn: 10s</span><br><span class="line">#index.search.slowlog.threshold.query.info: 5s</span><br><span class="line">index.search.slowlog.threshold.query.debug: 1s</span><br><span class="line">index.search.slowlog.threshold.query.trace: 500ms</span><br><span class="line"></span><br><span class="line">#index.search.slowlog.threshold.fetch.warn: 1s</span><br><span class="line">#index.search.slowlog.threshold.fetch.info: 800ms</span><br><span class="line">index.search.slowlog.threshold.fetch.debug: 500ms</span><br><span class="line">#index.search.slowlog.threshold.fetch.trace: 200ms</span><br><span class="line"></span><br><span class="line">#index.indexing.slowlog.threshold.index.warn: 10s</span><br><span class="line">#index.indexing.slowlog.threshold.index.info: 5s</span><br><span class="line">#index.indexing.slowlog.threshold.index.debug: 2s</span><br><span class="line">#index.indexing.slowlog.threshold.index.trace: 500ms</span><br><span class="line"></span><br><span class="line">################################## GC Logging ################################</span><br><span class="line"></span><br><span class="line">monitor.jvm.gc.young.warn: 1000ms</span><br><span class="line">monitor.jvm.gc.young.info: 700ms</span><br><span class="line">#monitor.jvm.gc.young.debug: 400ms</span><br><span class="line"></span><br><span class="line">monitor.jvm.gc.old.warn: 10s</span><br><span class="line">monitor.jvm.gc.old.info: 5s</span><br><span class="line">monitor.jvm.gc.old.debug: 2s</span><br><span class="line"></span><br><span class="line">action.disable_delete_all_indices: true</span><br><span class="line">indices.breaker.fielddata.limit: 60%</span><br><span class="line">indices.breaker.total.limit: 70%</span><br><span class="line"># 防止FULL GC</span><br><span class="line">indices.fielddata.cache.expire: 5m</span><br><span class="line">indices.cache.filter.type: soft</span><br><span class="line">indices.cache.filter.size: 20%</span><br><span class="line">indices.cache.filter.expire: 12h</span><br></pre></td></tr></table></figure>
-<p><em><a href="http://v.youku.com/v_show/id_XNTA4MjkxMTY4.html?from=y1.2-1-87.4.2-1.1-1-2-1-0" target="_blank" rel="external">配置视频</a>
-</em><a href="https://www.loggly.com/blog/nine-tips-configuring-elasticsearch-for-high-performance/" target="_blank" rel="external">es top9</a></p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://www.fovoy.com/2014/07/12/es config 模版/" data-id="cih3gcg78002yf2s6lgvxk8qq" class="article-share-link">分享到</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Elasticsearch/">Elasticsearch</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-
-    
-      <article id="post-Adapter适配器模式" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2014/05/22/Adapter适配器模式/">Adapter适配器模式</a>
-    </h1>
-  
-
-        <div class="article-meta">
-          
-  <div class="article-date">
-    <i class="fa fa-calendar"></i>
-    <a href="/2014/05/22/Adapter适配器模式/">
-      <time datetime="2014-05-22T11:23:36.000Z" itemprop="datePublished">2014-05-22</time>
-    </a>
-  </div>
-
-
-          
-  <div class="article-category">
-  	<i class="fa fa-folder"></i>
-    <a class="article-category-link" href="/categories/design-pattern/">design pattern</a>
-  </div>
-
-        </div>
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-                
-        <p><img src="/thumbnails/adapter.png" alt=""></p>
-<h4 id="适配器模式">适配器模式</h4><h5 id="描述">描述</h5><ul>
-<li>对象适配器 适配器把原来不兼容的对象，兼容应用的对象。各种国家插头之间的适配，就是一个典型的适配器模式。更灵活。</li>
-<li>类适配器 实现接口，并且继承需要适配的类。 灵活性比较低。<br><img src="/thumbnails/adapter1.png" alt=""></li>
-</ul>
-<h5 id="代码如下">代码如下</h5><figure class="highlight cs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">interface</span> <span class="title">ChinaType</span>&#123;</span><br><span class="line">  </span><br><span class="line">  <span class="function">pubilc <span class="keyword">void</span> <span class="title">action</span>(<span class="params"></span>)</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">interface</span> <span class="title">EinType</span>&#123;</span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">action</span>(<span class="params"></span>)</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">adapter</span> <span class="title">implement</span> <span class="title">Eintype</span>&#123;</span><br><span class="line">  <span class="keyword">public</span> ChinaType chinaType;</span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="title">adapter</span>(<span class="params">ChinaType chinaType</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">this</span>.chinaType=chinaType;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">action</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    chinaType.action();</span><br><span class="line">   &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>[TOC]</p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://www.fovoy.com/2014/05/22/Adapter适配器模式/" data-id="cih3gcg7v0046f2s6d7w1n94g" class="article-share-link">分享到</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/design-pattern/">design pattern</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-
-    
-      <article id="post-Template模版模式" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2014/05/11/Template模版模式/">template 模版模式</a>
-    </h1>
-  
-
-        <div class="article-meta">
-          
-  <div class="article-date">
-    <i class="fa fa-calendar"></i>
-    <a href="/2014/05/11/Template模版模式/">
-      <time datetime="2014-05-11T01:13:36.000Z" itemprop="datePublished">2014-05-11</time>
-    </a>
-  </div>
-
-
-          
-  <div class="article-category">
-  	<i class="fa fa-folder"></i>
-    <a class="article-category-link" href="/categories/design-pattern/">design pattern</a>
-  </div>
-
-        </div>
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-                
-        <p><img src="/thumbnails/template.png" alt=""></p>
-<h4 id="模版模式">模版模式</h4><h5 id="描述">描述</h5><ul>
-<li>把多部调用统一在一起，减少调用。模版就是重复使用的处理过程。</li>
-<li>hook 引进,超类定义hook=true，子类具体定义，需不需要执行，hook，所判断的方法。</li>
-</ul>
-<h5 id="代码如下">代码如下</h5><hr>
-<figure class="highlight aspectj"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">abstract</span> <span class="class"><span class="keyword">class</span> <span class="title">Template</span>&lt;<span class="title">T</span>&gt; </span>&#123;</span><br><span class="line"></span><br><span class="line">      <span class="keyword">abstract</span> <span class="function">T <span class="title">process</span><span class="params">()</span> <span class="keyword">throws</span> Throwable</span>;</span><br><span class="line"></span><br><span class="line">      <span class="keyword">abstract</span> <span class="function"><span class="keyword">void</span> <span class="title">checkParam</span><span class="params">()</span></span>;</span><br><span class="line"></span><br><span class="line">      <span class="keyword">public</span> <span class="function">T <span class="title">execute</span><span class="params">()</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">          <span class="keyword">try</span> &#123;</span><br><span class="line">              checkParam();</span><br><span class="line">              <span class="function"><span class="keyword">return</span> <span class="title">process</span><span class="params">()</span></span>;</span><br><span class="line">          &#125; <span class="keyword">catch</span> (Throwable th) &#123;</span><br><span class="line">              <span class="keyword">if</span> (th <span class="keyword">instanceof</span> Exception) &#123;</span><br><span class="line">                  <span class="keyword">throw</span> (Exception) th;</span><br><span class="line">              &#125;</span><br><span class="line">              <span class="keyword">throw</span> <span class="keyword">new</span> Exception(th.getMessage(), th);</span><br><span class="line">          &#125;</span><br><span class="line">      &#125;</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
-<p>[TOC]</p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://www.fovoy.com/2014/05/11/Template模版模式/" data-id="cih3gcg7b0038f2s6sm7pcxsg" class="article-share-link">分享到</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/design-pattern/">design pattern</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-
-    
-      <article id="post-Facade外观模式" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2014/05/11/Facade外观模式/">Facade 外观模式</a>
-    </h1>
-  
-
-        <div class="article-meta">
-          
-  <div class="article-date">
-    <i class="fa fa-calendar"></i>
-    <a href="/2014/05/11/Facade外观模式/">
-      <time datetime="2014-05-11T01:13:36.000Z" itemprop="datePublished">2014-05-11</time>
-    </a>
-  </div>
-
-
-          
-  <div class="article-category">
-  	<i class="fa fa-folder"></i>
-    <a class="article-category-link" href="/categories/design-pattern/">design pattern</a>
-  </div>
-
-        </div>
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-                
-        <p><img src="/thumbnails/facade.jpg" alt=""></p>
-<h4 id="外观模式">外观模式</h4><h5 id="描述">描述</h5><ul>
-<li>与命令模式的区别，调用暴露的接口简化，调用者不用知道，具体内部的调用步骤，而宏命令是需要的，因为需要组合不同的命令。</li>
-<li>一键处理某些过程。侧重点是简化接口。<h5 id="最少知识原则">最少知识原则</h5></li>
-</ul>
-<p>######对象之间的交互，越少越好，越小越好。是不是有一种，管理学的精髓在里面，哈哈。</p>
-<ul>
-<li>对象方法调用范围。</li>
-</ul>
-<ol>
-<li>对象本身。</li>
-<li>参数传进来的对象。</li>
-<li>这个方法创建和实力化的对象。</li>
-<li>对象的组件。</li>
-<li>返回对象不适合。</li>
-</ol>
-<figure class="highlight lasso"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> class Car&#123;</span><br><span class="line">    <span class="keyword">private</span> Engine engine;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> vois start(Key key)&#123;</span><br><span class="line">        <span class="keyword">Do</span><span class="subst">or</span> <span class="keyword">do</span><span class="subst">or</span> =<span class="literal">new</span> <span class="keyword">Do</span><span class="subst">or</span>();</span><br><span class="line">        <span class="built_in">boolean</span> auth =key<span class="built_in">.</span>auth();<span class="comment">//使用返回对象不合适。</span></span><br><span class="line">        <span class="keyword">if</span>(auth)&#123;</span><br><span class="line">          <span class="keyword">do</span><span class="subst">or</span><span class="built_in">.</span>open();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>[TOC]</p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://www.fovoy.com/2014/05/11/Facade外观模式/" data-id="cih3gcg7p003uf2s682a7p3og" class="article-share-link">分享到</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/design-pattern/">design pattern</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-
-    
-      <article id="post-Command命令模式" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2014/04/27/Command命令模式/">Command命令模式</a>
-    </h1>
-  
-
-        <div class="article-meta">
-          
-  <div class="article-date">
-    <i class="fa fa-calendar"></i>
-    <a href="/2014/04/27/Command命令模式/">
-      <time datetime="2014-04-27T13:13:36.000Z" itemprop="datePublished">2014-04-27</time>
-    </a>
-  </div>
-
-
-          
-  <div class="article-category">
-  	<i class="fa fa-folder"></i>
-    <a class="article-category-link" href="/categories/design-pattern/">design pattern</a>
-  </div>
-
-        </div>
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-                
-        <p><img src="/thumbnails/command.png" alt=""></p>
-<p>####命令模式</p>
-<p>#####描述</p>
-<ul>
-<li>如同一个遥控器一样。将一个请求封装为一个对象，从而使你可用不同的请求对客户进行参数化；做一个请求排队或记录请求日志，以及支持可取消的操作。</li>
-<li>优点把调用者与被调用者之间空命令解藕，并且抽象出很多个命令。</li>
-<li>hook 返回</li>
-</ul>
-<h5 id="代码如下">代码如下</h5><hr>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//命令接口</span></span><br><span class="line">public interface Command&#123;</span><br><span class="line">	public <span class="keyword">void</span> execute();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//接受者抽象对象</span></span><br><span class="line">public interface Receiver&#123;</span><br><span class="line">	public <span class="keyword">void</span> action();</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//接收者电视机</span></span><br><span class="line">public Tv implements Receiver&#123;</span><br><span class="line">    public <span class="keyword">void</span> action(<span class="built_in">String</span> key)&#123;</span><br><span class="line">      system.out.println(<span class="string">"调整"</span>key);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//电视命令</span></span><br><span class="line">public abstract TvCommand  implements Command&#123;</span><br><span class="line">	private  Receiver receiver ;</span><br><span class="line"></span><br><span class="line">    protected Receiver getReceiver()&#123;</span><br><span class="line">    	<span class="keyword">return</span> receiver;</span><br><span class="line">    &#125;</span><br><span class="line">    protected  <span class="keyword">void</span> SetReceiver(Receiver receiver)&#123;</span><br><span class="line">     <span class="keyword">this</span>.receiver =receiver;</span><br><span class="line">    &#125;</span><br><span class="line">    public abstract <span class="keyword">void</span> execute();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//电视调台命令</span></span><br><span class="line">public <span class="class"><span class="keyword">class</span> <span class="title">ChangeChannel</span> <span class="keyword">extends</span> <span class="title">TvCommand</span></span>&#123;</span><br><span class="line">    private <span class="built_in">String</span> key = <span class="string">"ChangeChannel"</span>;</span><br><span class="line"></span><br><span class="line">    public ChangeChannel(Receiver receiver)&#123;</span><br><span class="line">    	<span class="keyword">super</span>.SetReceiver(receiver);</span><br><span class="line">    &#125;</span><br><span class="line">	public <span class="keyword">void</span> execute()&#123;</span><br><span class="line">      Receiver receiver =<span class="keyword">super</span>.getReceiver();</span><br><span class="line">      receiver.action(key);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line">public <span class="class"><span class="keyword">class</span> <span class="title">NoCommand</span> <span class="title">extend</span> <span class="title">Command</span></span>&#123;</span><br><span class="line">	public <span class="keyword">void</span> execute()&#123;&#125;;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//遥控器</span></span><br><span class="line">public <span class="class"><span class="keyword">class</span> <span class="title">Control</span></span>&#123;</span><br><span class="line">    private Command[] commands;</span><br><span class="line">    public Control()&#123;</span><br><span class="line">    	commands= <span class="keyword">new</span> Command[<span class="number">5</span>]</span><br><span class="line">    	NoCommand noCommand = <span class="keyword">new</span> NoCommand():</span><br><span class="line">    	<span class="keyword">for</span>(int i =<span class="number">0</span>; i&lt;=commands.length();i++)&#123;</span><br><span class="line">           commands[i]=noCommand;</span><br><span class="line">    	&#125;</span><br><span class="line">    &#125;</span><br><span class="line">	public <span class="keyword">void</span> addCommand(int index,Command command)&#123;</span><br><span class="line">       commandMap[index]=command;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">	public <span class="keyword">void</span> action(int index)&#123;</span><br><span class="line">       command[index].execute();</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//使用遥控器</span></span><br><span class="line">public <span class="class"><span class="keyword">class</span> <span class="title">UserControl</span></span>&#123;</span><br><span class="line">	</span><br><span class="line">	public static <span class="keyword">void</span> main(<span class="built_in">String</span>[] args )&#123;</span><br><span class="line">		Tv tv =<span class="keyword">new</span> Tv();</span><br><span class="line">		Control control = <span class="keyword">new</span> Control();</span><br><span class="line">		control.addCommand(<span class="number">1</span>,<span class="keyword">new</span> ChangeChannel(tv));</span><br><span class="line">		control.action(<span class="number">1</span>);</span><br><span class="line">	&#125;   </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>[TOC]</p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://www.fovoy.com/2014/04/27/Command命令模式/" data-id="cih3gcg7u0043f2s66dgocxmc" class="article-share-link">分享到</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/design-pattern/">design pattern</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-
-    
-      <article id="post-Observer观察者模式" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2014/04/26/Observer观察者模式/">Observer 观察者模式</a>
-    </h1>
-  
-
-        <div class="article-meta">
-          
-  <div class="article-date">
-    <i class="fa fa-calendar"></i>
-    <a href="/2014/04/26/Observer观察者模式/">
-      <time datetime="2014-04-26T02:13:36.000Z" itemprop="datePublished">2014-04-26</time>
-    </a>
-  </div>
-
-
-          
-  <div class="article-category">
-  	<i class="fa fa-folder"></i>
-    <a class="article-category-link" href="/categories/design-pattern/">design pattern</a>
-  </div>
-
-        </div>
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-                
-        <p><img src="/thumbnails/observer.png" alt=""></p>
-<h4 id="观察者模式">观察者模式</h4><h5 id="描述">描述</h5><ul>
-<li>注册 撤销 需要通知的用户。本质是一个消息订阅／发布 pub／sub。订阅通知模式刚觉更适合中文语境。 Observer subject</li>
-<li>优点：作为一个动作的连接点，能实现通知功能。广播，喇叭  一对多。</li>
-</ul>
-<h5 id="代码如下">代码如下</h5><hr>
-<figure class="highlight cs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br></pre></td><td class="code"><pre><span class="line">   <span class="keyword">public</span> <span class="keyword">interface</span> <span class="title">Observer</span>&#123;</span><br><span class="line">   	 <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">notify</span>(<span class="params"></span>)</span>;</span><br><span class="line">   &#125;</span><br><span class="line"></span><br><span class="line">   <span class="keyword">public</span> <span class="keyword">class</span> <span class="title">OneObserver</span> <span class="title">implments</span> <span class="title">Observer</span>&#123;</span><br><span class="line"></span><br><span class="line"> 	  @<span class="function">Override</span><br><span class="line"> 	  <span class="keyword">public</span> <span class="keyword">void</span> <span class="title">notify</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">       system.<span class="keyword">out</span>.print(<span class="string">"one notify"</span>);</span><br><span class="line">     &#125;	</span><br><span class="line">   &#125;</span><br><span class="line"></span><br><span class="line">      <span class="keyword">public</span> <span class="keyword">class</span> <span class="title">TwoObserver</span> <span class="title">implments</span> <span class="title">Observer</span>&#123;</span><br><span class="line"></span><br><span class="line"> 	 @<span class="function">Override</span><br><span class="line"> 	 <span class="keyword">public</span> <span class="keyword">void</span> <span class="title">notify</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">       system.<span class="keyword">out</span>.print(<span class="string">"Two notify"</span>);</span><br><span class="line">     &#125;	</span><br><span class="line">   &#125;</span><br><span class="line"></span><br><span class="line">   <span class="function"><span class="keyword">public</span> <span class="keyword">interface</span> <span class="title">Subject</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">addObserver</span>(<span class="params">String obName,Observer ob</span>)</span>;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">removeObserver</span>(<span class="params">String obName</span>)</span>;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">notifyObserver</span>(<span class="params"></span>)</span>;</span><br><span class="line">   &#125;</span><br><span class="line"></span><br><span class="line">   <span class="keyword">public</span> <span class="keyword">class</span> <span class="title">OneObserver</span> <span class="title">implements</span> <span class="title">Subject</span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> Map&lt;String,Observer&gt; map = <span class="keyword">new</span> HashBiMap.create(); ;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">addObserver</span>(<span class="params">String obName,Observer ob</span>)</span>&#123;</span><br><span class="line">      <span class="keyword">if</span>(!map.contains(obName))<span class="keyword">return</span>;</span><br><span class="line">    	<span class="keyword">this</span>.map.put(obName,obj);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">removeObserver</span>(<span class="params">String obName</span>)</span>&#123;</span><br><span class="line">    	tap.map.remove(obName);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">notifyObserver</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">      <span class="keyword">for</span>(String key:map.keySet())&#123;</span><br><span class="line">        Observer obj = map.<span class="keyword">get</span>(key);</span><br><span class="line">        obj.notify();</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span>(<span class="params">String[] args</span>)</span>&#123;</span><br><span class="line">      Subject sub = <span class="keyword">new</span> OneObserver();</span><br><span class="line">      sub.add(<span class="keyword">new</span> OneObserver());</span><br><span class="line">      sub.add(<span class="keyword">new</span> TwoObserver());</span><br><span class="line">      sub.notifyObserver();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>[TOC]</p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://www.fovoy.com/2014/04/26/Observer观察者模式/" data-id="cih3gcg7l003of2s6pqdkor98" class="article-share-link">分享到</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/design-pattern/">design pattern</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-
-    
       <nav id="page-nav">
-        <a class="extend prev" rel="prev" href="/page/2/">&laquo; 上一页</a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><span class="page-number current">3</span><a class="page-number" href="/page/4/">4</a><a class="extend next" rel="next" href="/page/4/">下一页 &raquo;</a>
+        <a class="extend prev" rel="prev" href="/page/2/">&laquo; 上一页</a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><span class="page-number current">3</span><a class="page-number" href="/page/4/">4</a><a class="page-number" href="/page/5/">5</a><a class="extend next" rel="next" href="/page/4/">下一页 &raquo;</a>
       </nav>
     </section>
       
@@ -749,90 +753,88 @@
           <li>
             
             <div class="item-thumbnail">
-              <a href="/2015/10/22/html5学习/" class="thumbnail">
+              <a href="/2015/12/16/es upgrad/" class="thumbnail">
   
-    <span style="background-image:url(/thumbnails/html5.jpg
-)" alt="html5 学习" class="thumbnail-image"></span>
+    <span style="background-image:url(/thumbnails/es.png
+)" alt="elasticsearch upgrad" class="thumbnail-image"></span>
   
 </a>
             </div>
             
             <div class="item-inner">
-              <p class="item-category"><a class="article-category-link" href="/categories/前端开发/">前端开发</a><i class="fa fa-angle-right"></i><a class="article-category-link" href="/categories/前端开发/html5/">html5</a></p>
-              <p class="item-title"><a href="/2015/10/22/html5学习/" class="title">html5 学习</a></p>
-              <p class="item-date"><time datetime="2015-10-22T01:13:36.000Z" itemprop="datePublished">2015-10-22</time></p>
+              <p class="item-category"><a class="article-category-link" href="/categories/Elasticsearch/">Elasticsearch</a></p>
+              <p class="item-title"><a href="/2015/12/16/es upgrad/" class="title">elasticsearch upgrad</a></p>
+              <p class="item-date"><time datetime="2015-12-16T01:13:36.000Z" itemprop="datePublished">2015-12-16</time></p>
             </div>
           </li>
         
           <li>
             
             <div class="item-thumbnail">
-              <a href="/2015/10/17/es待学习/" class="thumbnail">
+              <a href="/2015/11/24/延时队列方案/" class="thumbnail">
   
     <span style="background-image:url(/thumbnails/es.png
-)" alt="elasticsearch 待学习" class="thumbnail-image"></span>
+)" alt="延时队列方案" class="thumbnail-image"></span>
   
 </a>
             </div>
             
             <div class="item-inner">
-              <p class="item-category"><a class="article-category-link" href="/categories/Elasticsearch/">Elasticsearch</a><i class="fa fa-angle-right"></i><a class="article-category-link" href="/categories/Elasticsearch/学习/">学习</a></p>
-              <p class="item-title"><a href="/2015/10/17/es待学习/" class="title">elasticsearch 待学习</a></p>
-              <p class="item-date"><time datetime="2015-10-17T01:13:36.000Z" itemprop="datePublished">2015-10-17</time></p>
+              <p class="item-category"><a class="article-category-link" href="/categories/java/">java</a><i class="fa fa-angle-right"></i><a class="article-category-link" href="/categories/java/学习/">学习</a></p>
+              <p class="item-title"><a href="/2015/11/24/延时队列方案/" class="title">延时队列方案</a></p>
+              <p class="item-date"><time datetime="2015-11-24T02:13:36.000Z" itemprop="datePublished">2015-11-24</time></p>
             </div>
           </li>
         
           <li>
             
             <div class="item-thumbnail">
-              <a href="/2015/10/17/英语学习/" class="thumbnail">
+              <a href="/2015/11/24/前后端分离/" class="thumbnail">
   
-    <span style="background-image:url(/thumbnails/es.png
-)" alt="英语学习" class="thumbnail-image"></span>
+    <span style="background-image:url(/thumbnails/t1.png
+)" alt="前后端分离" class="thumbnail-image"></span>
   
 </a>
             </div>
             
             <div class="item-inner">
-              <p class="item-category"><a class="article-category-link" href="/categories/英语学习/">英语学习</a></p>
-              <p class="item-title"><a href="/2015/10/17/英语学习/" class="title">英语学习</a></p>
-              <p class="item-date"><time datetime="2015-10-17T01:13:36.000Z" itemprop="datePublished">2015-10-17</time></p>
+              <p class="item-category"><a class="article-category-link" href="/categories/前端开发/">前端开发</a><i class="fa fa-angle-right"></i><a class="article-category-link" href="/categories/前端开发/学习/">学习</a></p>
+              <p class="item-title"><a href="/2015/11/24/前后端分离/" class="title">前后端分离</a></p>
+              <p class="item-date"><time datetime="2015-11-24T02:13:36.000Z" itemprop="datePublished">2015-11-24</time></p>
             </div>
           </li>
         
           <li>
             
             <div class="item-thumbnail">
-              <a href="/2015/10/17/mac/" class="thumbnail">
+              <a href="/2015/11/23/cmake/" class="thumbnail">
   
-    <span style="background-image:url(/thumbnails/es.png
-)" alt="Mac" class="thumbnail-image"></span>
+    <span class="thumbnail-image thumbnail-none"></span>
   
 </a>
             </div>
             
             <div class="item-inner">
-              <p class="item-category"><a class="article-category-link" href="/categories/Mac/">Mac</a></p>
-              <p class="item-title"><a href="/2015/10/17/mac/" class="title">Mac</a></p>
-              <p class="item-date"><time datetime="2015-10-17T01:13:36.000Z" itemprop="datePublished">2015-10-17</time></p>
+              <p class="item-category"></p>
+              <p class="item-title"><a href="/2015/11/23/cmake/" class="title"></a></p>
+              <p class="item-date"><time datetime="2015-11-23T03:12:55.000Z" itemprop="datePublished">2015-11-23</time></p>
             </div>
           </li>
         
           <li>
             
             <div class="item-thumbnail">
-              <a href="/2015/10/17/site/" class="thumbnail">
+              <a href="/2015/11/17/jenkins脚本/" class="thumbnail">
   
-    <span style="background-image:url(/thumbnails/es.png
-)" alt="网站要点" class="thumbnail-image"></span>
+    <span class="thumbnail-image thumbnail-none"></span>
   
 </a>
             </div>
             
             <div class="item-inner">
-              <p class="item-category"><a class="article-category-link" href="/categories/site/">site</a></p>
-              <p class="item-title"><a href="/2015/10/17/site/" class="title">网站要点</a></p>
-              <p class="item-date"><time datetime="2015-10-17T01:13:36.000Z" itemprop="datePublished">2015-10-17</time></p>
+              <p class="item-category"></p>
+              <p class="item-title"><a href="/2015/11/17/jenkins脚本/" class="title"></a></p>
+              <p class="item-date"><time datetime="2015-11-17T14:12:01.000Z" itemprop="datePublished">2015-11-17</time></p>
             </div>
           </li>
         
@@ -845,7 +847,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">分类</h3>
     <div class="widget">
-      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Elasticsearch/">Elasticsearch</a><span class="category-list-count">5</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Elasticsearch/config/">config</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Elasticsearch/performance/">performance</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Elasticsearch/学习/">学习</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Framework/">Framework</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Framework/spring/">spring</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Mac/">Mac</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/design-pattern/">design pattern</a><span class="category-list-count">10</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/java/">java</a><span class="category-list-count">2</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/java/jvm/">jvm</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/site/">site</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/tools/">tools</a><span class="category-list-count">8</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/tools/nginx/">nginx</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/tools/管理平台/">管理平台</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/中间件/">中间件</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/中间件/kafka/">kafka</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/前端开发/">前端开发</a><span class="category-list-count">3</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/前端开发/angularjs/">angularjs</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/前端开发/html5/">html5</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/前端开发/学习/">学习</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/英语学习/">英语学习</a><span class="category-list-count">1</span></li></ul>
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Elasticsearch/">Elasticsearch</a><span class="category-list-count">6</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Elasticsearch/config/">config</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Elasticsearch/performance/">performance</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Elasticsearch/学习/">学习</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Framework/">Framework</a><span class="category-list-count">2</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Framework/spring/">spring</a><span class="category-list-count">2</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Mac/">Mac</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/design-pattern/">design pattern</a><span class="category-list-count">10</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/java/">java</a><span class="category-list-count">5</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/java/gc/">gc</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/java/jvm/">jvm</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/java/学习/">学习</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/kibana/">kibana</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/redis/">redis</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/site/">site</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/tools/">tools</a><span class="category-list-count">8</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/tools/nginx/">nginx</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/tools/管理平台/">管理平台</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/中间件/">中间件</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/中间件/kafka/">kafka</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/前端开发/">前端开发</a><span class="category-list-count">4</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/前端开发/angularjs/">angularjs</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/前端开发/html5/">html5</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/前端开发/学习/">学习</a><span class="category-list-count">2</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/英语学习/">英语学习</a><span class="category-list-count">1</span></li></ul>
     </div>
   </div>
 
@@ -854,7 +856,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">标签</h3>
     <div class="widget">
-      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Elasticsearch/">Elasticsearch</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Mac/">Mac</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/angularjs/">angularjs</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/design-pattern/">design pattern</a><span class="tag-list-count">10</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/html5/">html5</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/jvm/">jvm</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/kafka/">kafka</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mysql/">mysql</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/nginx/">nginx</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/play/">play</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/reflect/">reflect</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/secureCRT/">secureCRT</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/site/">site</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/spring/">spring</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/tools/">tools</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/英语学习/">英语学习</a><span class="tag-list-count">1</span></li></ul>
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Elasticsearch/">Elasticsearch</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Mac/">Mac</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Quasar/">Quasar</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/angularjs/">angularjs</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/design-pattern/">design pattern</a><span class="tag-list-count">10</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/gc/">gc</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/html5/">html5</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/java/">java</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/jvm/">jvm</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/kafka/">kafka</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/kibana/">kibana</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mysql/">mysql</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/nginx/">nginx</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/play/">play</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/redis/">redis</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/reflect/">reflect</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/secureCRT/">secureCRT</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/site/">site</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/spring/">spring</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/tools/">tools</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/前端开发/">前端开发</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/英语学习/">英语学习</a><span class="tag-list-count">1</span></li></ul>
     </div>
   </div>
 
@@ -863,7 +865,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">标签云</h3>
     <div class="widget tagcloud">
-      <a href="/tags/Elasticsearch/" style="font-size: 16.67px;">Elasticsearch</a> <a href="/tags/Mac/" style="font-size: 10px;">Mac</a> <a href="/tags/angularjs/" style="font-size: 10px;">angularjs</a> <a href="/tags/design-pattern/" style="font-size: 20px;">design pattern</a> <a href="/tags/html5/" style="font-size: 10px;">html5</a> <a href="/tags/jvm/" style="font-size: 10px;">jvm</a> <a href="/tags/kafka/" style="font-size: 10px;">kafka</a> <a href="/tags/mysql/" style="font-size: 13.33px;">mysql</a> <a href="/tags/nginx/" style="font-size: 10px;">nginx</a> <a href="/tags/play/" style="font-size: 10px;">play</a> <a href="/tags/reflect/" style="font-size: 10px;">reflect</a> <a href="/tags/secureCRT/" style="font-size: 10px;">secureCRT</a> <a href="/tags/site/" style="font-size: 10px;">site</a> <a href="/tags/spring/" style="font-size: 10px;">spring</a> <a href="/tags/tools/" style="font-size: 16.67px;">tools</a> <a href="/tags/英语学习/" style="font-size: 10px;">英语学习</a>
+      <a href="/tags/Elasticsearch/" style="font-size: 17.5px;">Elasticsearch</a> <a href="/tags/Mac/" style="font-size: 10px;">Mac</a> <a href="/tags/Quasar/" style="font-size: 10px;">Quasar</a> <a href="/tags/angularjs/" style="font-size: 10px;">angularjs</a> <a href="/tags/design-pattern/" style="font-size: 20px;">design pattern</a> <a href="/tags/gc/" style="font-size: 10px;">gc</a> <a href="/tags/html5/" style="font-size: 10px;">html5</a> <a href="/tags/java/" style="font-size: 10px;">java</a> <a href="/tags/jvm/" style="font-size: 10px;">jvm</a> <a href="/tags/kafka/" style="font-size: 10px;">kafka</a> <a href="/tags/kibana/" style="font-size: 10px;">kibana</a> <a href="/tags/mysql/" style="font-size: 12.5px;">mysql</a> <a href="/tags/nginx/" style="font-size: 10px;">nginx</a> <a href="/tags/play/" style="font-size: 10px;">play</a> <a href="/tags/redis/" style="font-size: 10px;">redis</a> <a href="/tags/reflect/" style="font-size: 10px;">reflect</a> <a href="/tags/secureCRT/" style="font-size: 10px;">secureCRT</a> <a href="/tags/site/" style="font-size: 10px;">site</a> <a href="/tags/spring/" style="font-size: 12.5px;">spring</a> <a href="/tags/tools/" style="font-size: 15px;">tools</a> <a href="/tags/前端开发/" style="font-size: 10px;">前端开发</a> <a href="/tags/英语学习/" style="font-size: 10px;">英语学习</a>
     </div>
   </div>
 
@@ -872,7 +874,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">归档</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/10/">十月 2015</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/08/">八月 2015</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/07/">七月 2015</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/05/">五月 2015</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/03/">三月 2015</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/01/">一月 2015</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/12/">十二月 2014</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/11/">十一月 2014</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/07/">七月 2014</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/05/">五月 2014</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/04/">四月 2014</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/03/">三月 2014</a><span class="archive-list-count">1</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/12/">十二月 2015</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/11/">十一月 2015</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/10/">十月 2015</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/08/">八月 2015</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/07/">七月 2015</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/05/">五月 2015</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/03/">三月 2015</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/01/">一月 2015</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/12/">十二月 2014</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/11/">十一月 2014</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/10/">十月 2014</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/07/">七月 2014</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/05/">五月 2014</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/04/">四月 2014</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/03/">三月 2014</a><span class="archive-list-count">1</span></li></ul>
     </div>
   </div>
 
