@@ -3,31 +3,44 @@
 <head>
   <meta charset="utf-8">
   
-  <title>Compound复合模式 | z-star</title>
+  <title>node.js | z-star</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="混合模式描述
-各种模式结合处理复杂的问题。形成了某一类问题。就形成了一种混合的模式，例如mvc复合模式。
+  <meta name="description" content="node
 
-代码如下12
-[TOC]">
+前后端分离
+
+
+
+最上端是服务端，就是我们常说的后端。后端对于我们来说，就是一个接口的集合，服务端提供各种各样的接口供我们使用。因为有Node层，也不用局限是什么形式的服务。对于后端开发来说，他们只用关心业务代码的接口实现。
+服务端下面是Node应用。
+Node应用中有一层Model Proxy与服务端进行通讯。这一层主要目前是抹平我们对不同接口的调用方式，封装一些view层需要的Mo">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Compound复合模式">
-<meta property="og:url" content="http://www.fovoy.com/2015/01/27/Compound复合模式/index.html">
+<meta property="og:title" content="node.js">
+<meta property="og:url" content="http://www.fovoy.com/2014/11/12/nodejs/index.html">
 <meta property="og:site_name" content="z-star">
-<meta property="og:description" content="混合模式描述
-各种模式结合处理复杂的问题。形成了某一类问题。就形成了一种混合的模式，例如mvc复合模式。
+<meta property="og:description" content="node
 
-代码如下12
-[TOC]">
-<meta property="og:image" content="http://www.fovoy.com/thumbnails/adapter.png">
-<meta property="og:updated_time" content="2015-11-14T04:22:48.000Z">
+前后端分离
+
+
+
+最上端是服务端，就是我们常说的后端。后端对于我们来说，就是一个接口的集合，服务端提供各种各样的接口供我们使用。因为有Node层，也不用局限是什么形式的服务。对于后端开发来说，他们只用关心业务代码的接口实现。
+服务端下面是Node应用。
+Node应用中有一层Model Proxy与服务端进行通讯。这一层主要目前是抹平我们对不同接口的调用方式，封装一些view层需要的Mo">
+<meta property="og:image" content="http://www.fovoy.com/thumbnails/node.png">
+<meta property="og:image" content="http://www.fovoy.com/thumbnails/taobaonode.jpg">
+<meta property="og:updated_time" content="2015-12-06T04:33:33.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Compound复合模式">
-<meta name="twitter:description" content="混合模式描述
-各种模式结合处理复杂的问题。形成了某一类问题。就形成了一种混合的模式，例如mvc复合模式。
+<meta name="twitter:title" content="node.js">
+<meta name="twitter:description" content="node
 
-代码如下12
-[TOC]">
+前后端分离
+
+
+
+最上端是服务端，就是我们常说的后端。后端对于我们来说，就是一个接口的集合，服务端提供各种各样的接口供我们使用。因为有Node层，也不用局限是什么形式的服务。对于后端开发来说，他们只用关心业务代码的接口实现。
+服务端下面是Node应用。
+Node应用中有一层Model Proxy与服务端进行通讯。这一层主要目前是抹平我们对不同接口的调用方式，封装一些view层需要的Mo">
   
   
    <link rel="shortcut icon" type="image/x-icon"  rel="icon" href="/css/images/favicon.ico">
@@ -143,7 +156,7 @@
 </aside>
 
       
-      <section id="main"><article id="post-Compound复合模式" class="article article-type-post" itemscope itemprop="blogPost">
+      <section id="main"><article id="post-nodejs" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-inner">
     
     
@@ -152,7 +165,7 @@
         
   
     <h1 class="article-title" itemprop="name">
-      Compound复合模式
+      node.js
     </h1>
   
 
@@ -160,8 +173,8 @@
           
   <div class="article-date">
     <i class="fa fa-calendar"></i>
-    <a href="/2015/01/27/Compound复合模式/">
-      <time datetime="2015-01-27T12:23:15.000Z" itemprop="datePublished">2015-01-27</time>
+    <a href="/2014/11/12/nodejs/">
+      <time datetime="2014-11-12T11:25:12.000Z" itemprop="datePublished">2014-11-12</time>
     </a>
   </div>
 
@@ -169,7 +182,7 @@
           
   <div class="article-category">
   	<i class="fa fa-folder"></i>
-    <a class="article-category-link" href="/categories/design-pattern/">design pattern</a>
+    <a class="article-category-link" href="/categories/前端开发/">前端开发</a><i class="fa fa-angle-right"></i><a class="article-category-link" href="/categories/前端开发/node-js/">node.js</a>
   </div>
 
         </div>
@@ -178,20 +191,30 @@
     <div class="article-entry" itemprop="articleBody">
       
                 
-        <p><img src="/thumbnails/adapter.png" alt=""></p>
-<h4 id="混合模式">混合模式</h4><h5 id="描述">描述</h5><ul>
-<li>各种模式结合处理复杂的问题。形成了某一类问题。就形成了一种混合的模式，例如mvc复合模式。</li>
+        <hr>
+<p><img src="/thumbnails/node.png" alt=""></p>
+<h3 id="node">node</h3><hr>
+<ul>
+<li>前后端分离</li>
 </ul>
-<h5 id="代码如下">代码如下</h5><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
-<p>[TOC]</p>
+<p><img src="/thumbnails/taobaonode.jpg" alt=""></p>
+<ul>
+<li>最上端是服务端，就是我们常说的后端。后端对于我们来说，就是一个接口的集合，服务端提供各种各样的接口供我们使用。因为有Node层，也不用局限是什么形式的服务。对于后端开发来说，他们只用关心业务代码的接口实现。</li>
+<li>服务端下面是Node应用。</li>
+<li>Node应用中有一层Model Proxy与服务端进行通讯。这一层主要目前是抹平我们对不同接口的调用方式，封装一些view层需要的Model。</li>
+<li>Node层还能轻松实现原来vmcommon,tms（引用淘宝内容管理系统）等需求。</li>
+<li>Node层要使用什么框架由开发者自己决定。不过推荐使用express+xTemplate的组合，xTemplate能做到前后端公用。</li>
+<li>怎么用Node大家自己决定，但是令人兴奋的是，我们终于可以使用Node轻松实现我们想要的输出方式:JSON/JSONP/RESTful/HTML/BigPipe/Comet/Socket 同步、异步，想怎么整就怎么整，完全根据你的场景决定。</li>
+<li>浏览器层在我们这个架构中没有变化，也不希望因为引入Node改变你以前在浏览器中开发的认知。<br>*引入Node，只是把本该就前端控制的部分交由前端掌控。</li>
+</ul>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://www.fovoy.com/2015/01/27/Compound复合模式/" data-id="cihu0vpyi005brhs6ti3fqww8" class="article-share-link">分享到</a>
+      <a data-url="http://www.fovoy.com/2014/11/12/nodejs/" data-id="cihu0vpw1001rrhs6h32cu1xp" class="article-share-link">分享到</a>
       
       
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/design-pattern/">design pattern</a></li></ul>
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/node-js/">node.js</a></li></ul>
 
     </footer>
   </div>
@@ -199,19 +222,19 @@
     
 <nav id="article-nav">
   
-    <a href="/2015/03/16/redis 使用/" id="article-nav-newer" class="article-nav-link-wrap">
+    <a href="/2014/12/16/Quasar库/" id="article-nav-newer" class="article-nav-link-wrap">
       <strong class="article-nav-caption">上一篇</strong>
       <div class="article-nav-title">
         
-          redis 使用
+          Quasar库
         
       </div>
     </a>
   
   
-    <a href="/2015/01/27/Proxy代理模式/" id="article-nav-older" class="article-nav-link-wrap">
+    <a href="/2014/11/12/maven/" id="article-nav-older" class="article-nav-link-wrap">
       <strong class="article-nav-caption">下一篇</strong>
-      <div class="article-nav-title">Proxy代理模式</div>
+      <div class="article-nav-title">MAVEN</div>
     </a>
   
 </nav>
