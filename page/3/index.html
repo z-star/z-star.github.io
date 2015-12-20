@@ -97,7 +97,7 @@
     </div>
     <div class="article-info profile-block">
       <div class="article-info-block">
-        50
+        49
         <span>文章</span>
       </div>
       <div class="article-info-block">
@@ -130,7 +130,7 @@
 
       
       <section id="main">
-      <article id="post-应用中心" class="article article-type-post" itemscope itemprop="blogPost">
+      <article id="post-企业工具" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-inner">
     
     
@@ -139,7 +139,7 @@
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2015/07/12/应用中心/">应用中心</a>
+      <a class="article-title" href="/2015/07/12/企业工具/">企业级别工具</a>
     </h1>
   
 
@@ -147,7 +147,7 @@
           
   <div class="article-date">
     <i class="fa fa-calendar"></i>
-    <a href="/2015/07/12/应用中心/">
+    <a href="/2015/07/12/企业工具/">
       <time datetime="2015-07-12T11:25:12.000Z" itemprop="datePublished">2015-07-12</time>
     </a>
   </div>
@@ -156,7 +156,7 @@
           
   <div class="article-category">
   	<i class="fa fa-folder"></i>
-    <a class="article-category-link" href="/categories/tools/">tools</a><i class="fa fa-angle-right"></i><a class="article-category-link" href="/categories/tools/管理平台/">管理平台</a>
+    <a class="article-category-link" href="/categories/tools/">tools</a>
   </div>
 
         </div>
@@ -165,20 +165,21 @@
     <div class="article-entry" itemprop="articleBody">
       
                 
-        <hr>
-<p><img src="/thumbnails/t1.png" alt=""></p>
-<h5 id="应用中心">应用中心</h5><ul>
-<li>维护应用/组织/人之间的关系</li>
-<li>基础系统交互 应用启动时，通知其他系统</li>
-<li>应用资源访问控制 如：维护应用与应用之间接口访问的HTTP和Dubbo接口白名单</li>
-</ul>
-<p>App应用验证过程<br>发送app到应用中心进行验证；<br>验证通过后，返回识别出环境(dev/beta)、主机名等信息，并下发临时服务器令牌(server_token)<br>对于应用程序，可通过如下方法完成上述步骤。</p>
-<p>Web应用<br>在完成上述App验证过程后，注册服务器端口等信息<br>根据中心返回的环境类型，选定对应的(dev/beta/prod)应用中心；<br>发送web应用的服务端口号<br>应用中心接收请求后，（dev/beta环境从线上同步应用信息），注册主机信息<br>应用中心广播”应用启动”事件到消息系统<br>可通过在web.xml中配置ServletWatcher为Filter完成。</p>
+        <p><img src="/thumbnails/t1.png" alt=""></p>
+<ol>
+<li>wiki  Atlassian Confluence</li>
+<li>监控 nagios和cacti   </li>
+<li>collectd是部署在服务器上的一个daemon，用来收集系统级别监控数据，比如cpu、memory等指标。</li>
+<li>Graphite是一个开源项目，基于Python，专注做两个事情：存储数字时间序列，并支持以丰富的函数获取数据，以图片或者json的格式。由三个组件组成:<br>Carbon - 负责接收数据<br>Whisper - 将收到的数据存储成whisper文件（类似RRD文件）<br>graphite-api - 支持Restful的URL获取图片或JSON数据，URL里可以带各种有用的函数</li>
+<li>Watcher Dashboard 基于开源项目Grafana做二次开发，专注于以丰富的方式来实现对数字时间序列的可视化。</li>
+<li>发布Jenkins <a href="http://www.thinksaas.cn/group/topic/378471/" target="_blank" rel="external">发布安装</a></li>
+<li>PMO atlassian<br><a target="_blank" href="http://wpa.qq.com/msgrd?v=3&uin=2585449600&site=qq&menu=yes"><img border="0" src="http://wpa.qq.com/pa?p=2:2585449600:41" alt="点击这里给我发消息" title="点击这里给我发消息"></a></li>
+</ol>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://www.fovoy.com/2015/07/12/应用中心/" data-id="ciia6w0r7000kxqs6cvwkwz8c" class="article-share-link">分享到</a>
+      <a data-url="http://www.fovoy.com/2015/07/12/企业工具/" data-id="ciie89hgw0018b4s6g3r4k74f" class="article-share-link">分享到</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/tools/">tools</a></li></ul>
@@ -254,7 +255,7 @@ location / {
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://www.fovoy.com/2015/07/12/nginx跨域转发/" data-id="ciia6w0s1002axqs6pgfab8t5" class="article-share-link">分享到</a>
+      <a data-url="http://www.fovoy.com/2015/07/12/nginx跨域转发/" data-id="ciie89hhi002ab4s6m311d4nv" class="article-share-link">分享到</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/nginx/">nginx</a></li></ul>
@@ -267,7 +268,7 @@ location / {
 
 
     
-      <article id="post-企业工具" class="article article-type-post" itemscope itemprop="blogPost">
+      <article id="post-jvm" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-inner">
     
     
@@ -276,7 +277,7 @@ location / {
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2015/07/12/企业工具/">企业级别工具</a>
+      <a class="article-title" href="/2015/05/11/jvm/">jvm 调优</a>
     </h1>
   
 
@@ -284,8 +285,8 @@ location / {
           
   <div class="article-date">
     <i class="fa fa-calendar"></i>
-    <a href="/2015/07/12/企业工具/">
-      <time datetime="2015-07-12T11:25:12.000Z" itemprop="datePublished">2015-07-12</time>
+    <a href="/2015/05/11/jvm/">
+      <time datetime="2015-05-11T01:13:36.000Z" itemprop="datePublished">2015-05-11</time>
     </a>
   </div>
 
@@ -293,7 +294,7 @@ location / {
           
   <div class="article-category">
   	<i class="fa fa-folder"></i>
-    <a class="article-category-link" href="/categories/tools/">tools</a>
+    <a class="article-category-link" href="/categories/java/">java</a><i class="fa fa-angle-right"></i><a class="article-category-link" href="/categories/java/jvm/">jvm</a>
   </div>
 
         </div>
@@ -302,24 +303,34 @@ location / {
     <div class="article-entry" itemprop="articleBody">
       
                 
-        <p><img src="/thumbnails/t1.png" alt=""></p>
-<ol>
-<li>wiki  Atlassian Confluence</li>
-<li>监控 nagios和cacti   </li>
-<li>collectd是部署在服务器上的一个daemon，用来收集系统级别监控数据，比如cpu、memory等指标。</li>
-<li>Graphite是一个开源项目，基于Python，专注做两个事情：存储数字时间序列，并支持以丰富的函数获取数据，以图片或者json的格式。由三个组件组成:<br>Carbon - 负责接收数据<br>Whisper - 将收到的数据存储成whisper文件（类似RRD文件）<br>graphite-api - 支持Restful的URL获取图片或JSON数据，URL里可以带各种有用的函数</li>
-<li>Watcher Dashboard 基于开源项目Grafana做二次开发，专注于以丰富的方式来实现对数字时间序列的可视化。</li>
-<li>发布Jenkins <a href="http://www.thinksaas.cn/group/topic/378471/" target="_blank" rel="external">发布安装</a></li>
-<li>PMO atlassian<br><a target="_blank" href="http://wpa.qq.com/msgrd?v=3&uin=2585449600&site=qq&menu=yes"><img border="0" src="http://wpa.qq.com/pa?p=2:2585449600:41" alt="点击这里给我发消息" title="点击这里给我发消息"></a></li>
+        <p><img src="/thumbnails/jvm.png" alt=""></p>
+<hr>
+<p><img src="/thumbnails/thread.png" alt=""></p>
+<h5 id="Java_GC机制主要完成3件事：">Java GC机制主要完成3件事：</h5><ol>
+<li>确定哪些内存需要回收</li>
+<li>确定什么时候需要执行GC</li>
+<li>如何执行GC。</li>
 </ol>
+<h5 id="学习Java_GC机制">学习Java GC机制</h5><ol>
+<li>内存是如何分配的</li>
+<li>如何保证内存不被错误回收（即：哪些内存需要回收）</li>
+<li>在什么情况下执行GC以及执行GC的方式</li>
+<li>如何监控和优化GC机制。</li>
+</ol>
+<p>Java HotSpot(TM) 64-Bit Server VM warning: ignoring option MaxPermSize=384m; support was removed in 8.0<br>Java HotSpot(TM) 64-Bit Server VM warning: CMSFullGCsBeforeCompaction is deprecated and will likely be removed in a future release.</p>
+<p><a href="http://guojuanjun.blog.51cto.com/277646/268611/" target="_blank" rel="external">jvm</a></p>
+<ul>
+<li>如果我们的应用中使用了java nio中的direct memory，那么使用-XX:+DisableExplicitGC一定要小心，存在潜在的内存泄露风险。<br><a href="http://blog.sina.com.cn/s/blog_6940cab30101ghgj.html" target="_blank" rel="external">java nio 和 jvm 虚拟机参数的 XX:+DisableExplicitGC 的潜规则</a><br><a href="http://blog.csdn.net/aitangyong/article/details/39403031" target="_blank" rel="external">jvm 博文</a></li>
+</ul>
+<p>[TOC]</p>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://www.fovoy.com/2015/07/12/企业工具/" data-id="ciia6w0rj0018xqs6tvxkc4zb" class="article-share-link">分享到</a>
+      <a data-url="http://www.fovoy.com/2015/05/11/jvm/" data-id="ciie89hi30037b4s6vmgbdrkr" class="article-share-link">分享到</a>
       
       
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/tools/">tools</a></li></ul>
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/jvm/">jvm</a></li></ul>
 
     </footer>
   </div>
@@ -371,134 +382,10 @@ location / {
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://www.fovoy.com/2015/05/11/java反射/" data-id="ciia6w0so003exqs6ws08b0a3" class="article-share-link">分享到</a>
+      <a data-url="http://www.fovoy.com/2015/05/11/java反射/" data-id="ciie89hi7003eb4s6shno2bfr" class="article-share-link">分享到</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/reflect/">reflect</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-
-    
-      <article id="post-jvm" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2015/05/11/jvm/">jvm 调优</a>
-    </h1>
-  
-
-        <div class="article-meta">
-          
-  <div class="article-date">
-    <i class="fa fa-calendar"></i>
-    <a href="/2015/05/11/jvm/">
-      <time datetime="2015-05-11T01:13:36.000Z" itemprop="datePublished">2015-05-11</time>
-    </a>
-  </div>
-
-
-          
-  <div class="article-category">
-  	<i class="fa fa-folder"></i>
-    <a class="article-category-link" href="/categories/java/">java</a><i class="fa fa-angle-right"></i><a class="article-category-link" href="/categories/java/jvm/">jvm</a>
-  </div>
-
-        </div>
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-                
-        <p><img src="/thumbnails/jvm.png" alt=""></p>
-<hr>
-<h5 id="Java_GC机制主要完成3件事：">Java GC机制主要完成3件事：</h5><ol>
-<li>确定哪些内存需要回收</li>
-<li>确定什么时候需要执行GC</li>
-<li>如何执行GC。</li>
-</ol>
-<h5 id="学习Java_GC机制">学习Java GC机制</h5><ol>
-<li>内存是如何分配的</li>
-<li>如何保证内存不被错误回收（即：哪些内存需要回收）</li>
-<li>在什么情况下执行GC以及执行GC的方式</li>
-<li>如何监控和优化GC机制。</li>
-</ol>
-<p>Java HotSpot(TM) 64-Bit Server VM warning: ignoring option MaxPermSize=384m; support was removed in 8.0<br>Java HotSpot(TM) 64-Bit Server VM warning: CMSFullGCsBeforeCompaction is deprecated and will likely be removed in a future release.</p>
-<p><a href="http://guojuanjun.blog.51cto.com/277646/268611/" target="_blank" rel="external">jvm</a></p>
-<ul>
-<li>如果我们的应用中使用了java nio中的direct memory，那么使用-XX:+DisableExplicitGC一定要小心，存在潜在的内存泄露风险。<br><a href="http://blog.sina.com.cn/s/blog_6940cab30101ghgj.html" target="_blank" rel="external">java nio 和 jvm 虚拟机参数的 XX:+DisableExplicitGC 的潜规则</a><br><a href="http://blog.csdn.net/aitangyong/article/details/39403031" target="_blank" rel="external">jvm 博文</a></li>
-</ul>
-<p>[TOC]</p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://www.fovoy.com/2015/05/11/jvm/" data-id="ciia6w0sk0037xqs6jmjxfp0z" class="article-share-link">分享到</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/jvm/">jvm</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-
-    
-      <article id="post-redis 使用" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2015/03/16/redis 使用/">redis 使用</a>
-    </h1>
-  
-
-        <div class="article-meta">
-          
-  <div class="article-date">
-    <i class="fa fa-calendar"></i>
-    <a href="/2015/03/16/redis 使用/">
-      <time datetime="2015-03-16T01:13:36.000Z" itemprop="datePublished">2015-03-16</time>
-    </a>
-  </div>
-
-
-          
-  <div class="article-category">
-  	<i class="fa fa-folder"></i>
-    <a class="article-category-link" href="/categories/redis/">redis</a>
-  </div>
-
-        </div>
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-                
-        <p><a href="http://blog.csdn.net/gaogaoshan/article/details/41039581" target="_blank" rel="external">redis</a></p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://www.fovoy.com/2015/03/16/redis 使用/" data-id="ciia6w0ru001txqs6g8hiiupv" class="article-share-link">分享到</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/redis/">redis</a></li></ul>
 
     </footer>
   </div>
@@ -576,10 +463,121 @@ location / {
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://www.fovoy.com/2015/03/16/es 动态修改配置/" data-id="ciia6w0tc004exqs6r3es06ix" class="article-share-link">分享到</a>
+      <a data-url="http://www.fovoy.com/2015/03/16/es 动态修改配置/" data-id="ciie89hir004db4s6qjiqafb7" class="article-share-link">分享到</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Elasticsearch/">Elasticsearch</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+    
+      <article id="post-redis 使用" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2015/03/16/redis 使用/">redis 使用</a>
+    </h1>
+  
+
+        <div class="article-meta">
+          
+  <div class="article-date">
+    <i class="fa fa-calendar"></i>
+    <a href="/2015/03/16/redis 使用/">
+      <time datetime="2015-03-16T01:13:36.000Z" itemprop="datePublished">2015-03-16</time>
+    </a>
+  </div>
+
+
+          
+  <div class="article-category">
+  	<i class="fa fa-folder"></i>
+    <a class="article-category-link" href="/categories/redis/">redis</a>
+  </div>
+
+        </div>
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+                
+        <p><a href="http://blog.csdn.net/gaogaoshan/article/details/41039581" target="_blank" rel="external">redis</a></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://www.fovoy.com/2015/03/16/redis 使用/" data-id="ciie89hha001tb4s61k378rn4" class="article-share-link">分享到</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/redis/">redis</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+    
+      <article id="post-Compound复合模式" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2015/01/27/Compound复合模式/">Compound复合模式</a>
+    </h1>
+  
+
+        <div class="article-meta">
+          
+  <div class="article-date">
+    <i class="fa fa-calendar"></i>
+    <a href="/2015/01/27/Compound复合模式/">
+      <time datetime="2015-01-27T12:23:15.000Z" itemprop="datePublished">2015-01-27</time>
+    </a>
+  </div>
+
+
+          
+  <div class="article-category">
+  	<i class="fa fa-folder"></i>
+    <a class="article-category-link" href="/categories/design-pattern/">design pattern</a>
+  </div>
+
+        </div>
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+                
+        <p><img src="/thumbnails/adapter.png" alt=""></p>
+<h4 id="混合模式">混合模式</h4><h5 id="描述">描述</h5><ul>
+<li>各种模式结合处理复杂的问题。形成了某一类问题。就形成了一种混合的模式，例如mvc复合模式。</li>
+</ul>
+<h5 id="代码如下">代码如下</h5><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>[TOC]</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://www.fovoy.com/2015/01/27/Compound复合模式/" data-id="ciie89hk30062b4s650balqxt" class="article-share-link">分享到</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/design-pattern/">design pattern</a></li></ul>
 
     </footer>
   </div>
@@ -640,65 +638,7 @@ location / {
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://www.fovoy.com/2015/01/27/Proxy代理模式/" data-id="ciia6w0uc005oxqs6dfalqzzv" class="article-share-link">分享到</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/design-pattern/">design pattern</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-
-    
-      <article id="post-Compound复合模式" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2015/01/27/Compound复合模式/">Compound复合模式</a>
-    </h1>
-  
-
-        <div class="article-meta">
-          
-  <div class="article-date">
-    <i class="fa fa-calendar"></i>
-    <a href="/2015/01/27/Compound复合模式/">
-      <time datetime="2015-01-27T12:23:15.000Z" itemprop="datePublished">2015-01-27</time>
-    </a>
-  </div>
-
-
-          
-  <div class="article-category">
-  	<i class="fa fa-folder"></i>
-    <a class="article-category-link" href="/categories/design-pattern/">design pattern</a>
-  </div>
-
-        </div>
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-                
-        <p><img src="/thumbnails/adapter.png" alt=""></p>
-<h4 id="混合模式">混合模式</h4><h5 id="描述">描述</h5><ul>
-<li>各种模式结合处理复杂的问题。形成了某一类问题。就形成了一种混合的模式，例如mvc复合模式。</li>
-</ul>
-<h5 id="代码如下">代码如下</h5><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
-<p>[TOC]</p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://www.fovoy.com/2015/01/27/Compound复合模式/" data-id="ciia6w0un0063xqs67mz7q6hb" class="article-share-link">分享到</a>
+      <a data-url="http://www.fovoy.com/2015/01/27/Proxy代理模式/" data-id="ciie89hjt005nb4s6bnb2dl0z" class="article-share-link">分享到</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/design-pattern/">design pattern</a></li></ul>
@@ -761,10 +701,75 @@ location / {
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://www.fovoy.com/2015/01/12/性能测试/" data-id="ciia6w0r20008xqs638x4r8lb" class="article-share-link">分享到</a>
+      <a data-url="http://www.fovoy.com/2015/01/12/性能测试/" data-id="ciie89hge0008b4s6159343n9" class="article-share-link">分享到</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/tools/">tools</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+    
+      <article id="post-es plugin" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2014/12/16/es plugin/">elasticsearch plugin</a>
+    </h1>
+  
+
+        <div class="article-meta">
+          
+  <div class="article-date">
+    <i class="fa fa-calendar"></i>
+    <a href="/2014/12/16/es plugin/">
+      <time datetime="2014-12-16T01:13:36.000Z" itemprop="datePublished">2014-12-16</time>
+    </a>
+  </div>
+
+
+          
+  <div class="article-category">
+  	<i class="fa fa-folder"></i>
+    <a class="article-category-link" href="/categories/Elasticsearch/">Elasticsearch</a><i class="fa fa-angle-right"></i><a class="article-category-link" href="/categories/Elasticsearch/config/">config</a>
+  </div>
+
+        </div>
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+                
+        <p><img src="/thumbnails/es.png" alt=""></p>
+<ul>
+<li>bin/plugin -install polyfractal/elasticsearch-inquisitor</li>
+<li>bin/plugin -install lmenezes/elasticsearch-kopf</li>
+<li>bin/plugin -install mobz/elasticsearch-head</li>
+<li>bin/plugin –install lukas-vlcek/bigdesk</li>
+<li>bin/plugin –install royrusso/elasticsearch-HQ</li>
+<li>bin/plugin -u <a href="http://maven.ansj.org/org/ansj/elasticsearch-analysis-ansj/1.x.1/elasticsearch-analysis-ansj-1.x.1-release.zip" target="_blank" rel="external">http://maven.ansj.org/org/ansj/elasticsearch-analysis-ansj/1.x.1/elasticsearch-analysis-ansj-1.x.1-release.zip</a></li>
+</ul>
+<hr>
+<p><a href="https://www.elastic.co/guide/en/elasticsearch/reference/current/setup-configuration.html#setup-configuration-memory" target="_blank" rel="external">https://www.elastic.co/guide/en/elasticsearch/reference/current/setup-configuration.html#setup-configuration-memory</a><br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">ulimit -l unlimited</span><br><span class="line">These can be adjusted by modifying /etc/security/limits.conf, for example:</span><br><span class="line">#allow user 'tomcat' mlockall</span><br><span class="line">tomcat soft memlock unlimited</span><br><span class="line">tomcat hard memlock unlimited</span><br><span class="line"></span><br><span class="line">bin/plugin <span class="operator"><span class="keyword">install</span> license</span><br><span class="line"><span class="keyword">bin</span>/<span class="keyword">plugin</span> <span class="keyword">install</span> marvel-<span class="keyword">agent</span></span><br><span class="line"><span class="keyword">bin</span>/kibana <span class="keyword">plugin</span> <span class="comment">--install elasticsearch/marvel/latest</span></span><br><span class="line"><span class="keyword">bin</span>/elasticsearch</span><br><span class="line"><span class="keyword">bin</span>/kibana</span><br><span class="line"><span class="keyword">http</span>://localhost:<span class="number">5601</span>/app/marvel</span></span><br></pre></td></tr></table></figure></p>
+<hr>
+<p><a href="http://mp.weixin.qq.com/s?__biz=MzAwMDU1MTE1OQ==&amp;mid=209488723&amp;idx=1&amp;sn=d60c0637d7a9f4a4b981a69f10c6b90a&amp;scene=5#rd" target="_blank" rel="external">相关blog</a></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://www.fovoy.com/2014/12/16/es plugin/" data-id="ciie89hiz004rb4s6lal1qdn4" class="article-share-link">分享到</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Elasticsearch/">Elasticsearch</a></li></ul>
 
     </footer>
   </div>
@@ -808,18 +813,18 @@ location / {
           <li>
             
             <div class="item-thumbnail">
-              <a href="/2015/12/15/git使用/" class="thumbnail">
+              <a href="/2015/12/12/node-express/" class="thumbnail">
   
-    <span style="background-image:url(/thumbnails/es.png
-)" alt="" class="thumbnail-image"></span>
+    <span style="background-image:url(/thumbnails/t1.png
+)" alt="node-express" class="thumbnail-image"></span>
   
 </a>
             </div>
             
             <div class="item-inner">
-              <p class="item-category"></p>
-              <p class="item-title"><a href="/2015/12/15/git使用/" class="title"></a></p>
-              <p class="item-date"><time datetime="2015-12-15T09:35:11.000Z" itemprop="datePublished">2015-12-15</time></p>
+              <p class="item-category"><a class="article-category-link" href="/categories/前端开发/">前端开发</a><i class="fa fa-angle-right"></i><a class="article-category-link" href="/categories/前端开发/nodejs/">nodejs</a></p>
+              <p class="item-title"><a href="/2015/12/12/node-express/" class="title">node-express</a></p>
+              <p class="item-date"><time datetime="2015-12-12T11:25:12.000Z" itemprop="datePublished">2015-12-12</time></p>
             </div>
           </li>
         
@@ -844,24 +849,6 @@ location / {
           <li>
             
             <div class="item-thumbnail">
-              <a href="/2015/12/12/node-express/" class="thumbnail">
-  
-    <span style="background-image:url(/thumbnails/t1.png
-)" alt="node-express" class="thumbnail-image"></span>
-  
-</a>
-            </div>
-            
-            <div class="item-inner">
-              <p class="item-category"><a class="article-category-link" href="/categories/前端开发/">前端开发</a><i class="fa fa-angle-right"></i><a class="article-category-link" href="/categories/前端开发/nodejs/">nodejs</a></p>
-              <p class="item-title"><a href="/2015/12/12/node-express/" class="title">node-express</a></p>
-              <p class="item-date"><time datetime="2015-12-12T11:25:12.000Z" itemprop="datePublished">2015-12-12</time></p>
-            </div>
-          </li>
-        
-          <li>
-            
-            <div class="item-thumbnail">
               <a href="/2015/11/24/延时队列方案/" class="thumbnail">
   
     <span style="background-image:url(/thumbnails/es.png
@@ -873,6 +860,24 @@ location / {
             <div class="item-inner">
               <p class="item-category"><a class="article-category-link" href="/categories/java/">java</a><i class="fa fa-angle-right"></i><a class="article-category-link" href="/categories/java/学习/">学习</a></p>
               <p class="item-title"><a href="/2015/11/24/延时队列方案/" class="title">延时队列方案</a></p>
+              <p class="item-date"><time datetime="2015-11-24T02:13:36.000Z" itemprop="datePublished">2015-11-24</time></p>
+            </div>
+          </li>
+        
+          <li>
+            
+            <div class="item-thumbnail">
+              <a href="/2015/11/24/前后端分离/" class="thumbnail">
+  
+    <span style="background-image:url(/thumbnails/t1.png
+)" alt="前后端分离" class="thumbnail-image"></span>
+  
+</a>
+            </div>
+            
+            <div class="item-inner">
+              <p class="item-category"><a class="article-category-link" href="/categories/前端开发/">前端开发</a><i class="fa fa-angle-right"></i><a class="article-category-link" href="/categories/前端开发/学习/">学习</a></p>
+              <p class="item-title"><a href="/2015/11/24/前后端分离/" class="title">前后端分离</a></p>
               <p class="item-date"><time datetime="2015-11-24T02:13:36.000Z" itemprop="datePublished">2015-11-24</time></p>
             </div>
           </li>
@@ -913,7 +918,7 @@ location / {
   <div class="widget-wrap">
     <h3 class="widget-title">归档</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/12/">十二月 2015</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/11/">十一月 2015</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/10/">十月 2015</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/08/">八月 2015</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/07/">七月 2015</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/05/">五月 2015</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/03/">三月 2015</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/01/">一月 2015</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/12/">十二月 2014</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/11/">十一月 2014</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/10/">十月 2014</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/07/">七月 2014</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/05/">五月 2014</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/04/">四月 2014</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/03/">三月 2014</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/10/">十月 2013</a><span class="archive-list-count">1</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/12/">十二月 2015</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/11/">十一月 2015</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/10/">十月 2015</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/08/">八月 2015</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/07/">七月 2015</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/05/">五月 2015</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/03/">三月 2015</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/01/">一月 2015</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/12/">十二月 2014</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/11/">十一月 2014</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/10/">十月 2014</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/07/">七月 2014</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/05/">五月 2014</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/04/">四月 2014</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/03/">三月 2014</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/10/">十月 2013</a><span class="archive-list-count">1</span></li></ul>
     </div>
   </div>
 
