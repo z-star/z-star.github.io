@@ -97,11 +97,11 @@
     </div>
     <div class="article-info profile-block">
       <div class="article-info-block">
-        57
+        65
         <span>文章</span>
       </div>
       <div class="article-info-block">
-        30
+        33
         <span>标签</span>
       </div>
     </div>
@@ -130,6 +130,30 @@
 
       
       <section id="main">
+      <article id="post-es-mapping" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+    
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+                
+        <p>{<br>  “order”: 4,<br>  “template”: “test<em>“,<br>  “settings”: {<br>    “index”: {<br>      “number_of_shards”: “10”,<br>      “number_of_replicas”: “1”<br>    }<br>  },<br>  “mappings”: {<br>    “orders”: {<br>      “_routing”: {<br>        “required”: true<br>      },<br>      “dynamic_templates”: [<br>        {<br>          “stringType”: {<br>            “mapping”: {<br>              “ignore_above”: 255,<br>              “index”: “not_analyzed”,<br>              “type”: “string”<br>            },<br>            “match_mapping_type”: “string”,<br>            “match”: “</em>“<br>          }<br>        },<br>        { “longType”: {<br>            “mapping”: {<br>              “type”: “long”,<br>              “doc_values”: false<br>            },<br>            “match_mapping_type”: “long”,<br>            “match”: “<em>“<br>          }<br>        },          {<br>        “integerType”: {<br>            “mapping”: {<br>              “type”: “integer”,<br>              “doc_values”: false<br>            },<br>            “match_mapping_type”: “long”,<br>            “match”: “</em>“<br>          }<br>        }<br>      ],<br>      “_parent”: {<br>        “fielddata”: {<br>          “loading”: “eager_global_ordinals”<br>        },<br>        “type”: “treecode”<br>      },<br>      “dynamic_date_formats”: [<br>        “yyyy-MM-dd”,<br>        “yyyy-MM-dd HH:mm:ss”,<br>        “date_optional_time”<br>      ],<br>      “properties”: {<br>        “check_out_date”: {<br>          “format”: “yyyy-MM-dd”,<br>          “type”: “date”<br>        },<br>        “invoice_create_time”: {<br>          “format”: “yyyy-MM-dd HH:mm:ss”,<br>          “type”: “date”<br>        },<br>        “from_time”: {<br>          “format”: “yyyy-MM-dd HH:mm:ss”,<br>          “type”: “date”<br>        },<br>        “room_no”: {<br>          “type”: “string”<br>        },<br>        “create_date”: {<br>          “fielddata”: {<br>            “loading”: “eager_global_ordinals”<br>          },<br>          “format”: “yyyy-MM-dd HH:mm:ss”,<br>          “type”: “date”,<br>          “doc_values”: false<br>        },<br>        “special_subject_id”: {<br>          “type”: “string”<br>        },<br>        “last_audit_checkout_date”: {<br>          “format”: “yyyy-MM-dd HH:mm:ss”,<br>          “type”: “date”<br>        },<br>        “hotel_name”: {<br>          “type”: “string”<br>        },<br>        “room_name”: {<br>          “type”: “string”<br>        },<br>        “booking_source”: {<br>          “type”: “string”<br>        },<br>        “to_time”: {<br>          “format”: “yyyy-MM-dd HH:mm:ss”,<br>          “type”: “date”<br>        },<br>        “order_id”: {<br>          “fielddata”: {<br>            “loading”: “eager_global_ordinals”<br>          },<br>          “type”: “long”,<br>          “doc_values”: false<br>        },<br>        “hotel_cityid”: {<br>          “type”: “string”<br>        },<br>        “update_time”: {<br>          “format”: “yyyy-MM-dd HH:mm:ss”,<br>          “type”: “date”<br>        },<br>        “audit_urgent_reason”: {<br>          “type”: “string”<br>        },<br>        “customer_names”: {<br>          “type”: “string”<br>        },<br>        “contact_name”: {<br>          “type”: “string”<br>        },<br>        “from_date”: {<br>          “fielddata”: {<br>            “loading”: “eager_global_ordinals”<br>          },<br>          “format”: “yyyy-MM-dd HH:mm:ss”,<br>          “type”: “date”,<br>          “doc_values”: false<br>        },<br>        “hotel_seq”: {<br>          “type”: “string”<br>        },<br>        “distributor_name”: {<br>          “type”: “string”<br>        },<br>        “order_update_time”: {<br>          “fielddata”: {<br>            “loading”: “eager_global_ordinals”<br>          },<br>          “format”: “yyyy-MM-dd HH:mm:ss”,<br>          “type”: “date”,<br>          “doc_values”: false<br>        },<br>        “cashback_close_date”: {<br>          “format”: “yyyy-MM-dd”,<br>          “type”: “date”<br>        }<br>      }<br>    },<br>    “treecode”: {<br>      “dynamic_date_formats”: [<br>        “yyyy-MM-dd”,<br>        “yyyy-MM-dd HH:mm:ss”,<br>        “date_optional_time”<br>      ],<br>      “properties”: {<br>        “supply_id”: {<br>          “type”: “long”<br>        },<br>        “biz_type”: {<br>          “index”: “not_analyzed”,<br>          “type”: “string”<br>        },<br>        “hotel_id”: {<br>          “fielddata”: {<br>            “loading”: “eager_global_ordinals”<br>          },<br>          “type”: “long”,<br>          “doc_values”: false<br>        },<br>        “treecode”: {<br>          “index”: “not_analyzed”,<br>          “type”: “string”<br>        }<br>      }<br>    }<br>  },<br>  “aliases”: {}<br>}</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://www.fovoy.com/2016/01/21/es-mapping/" data-id="ciln3npto005t1ms6jpflrw8q" class="article-share-link">分享到</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+
+    
       <article id="post-2016的我" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -178,7 +202,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://www.fovoy.com/2016/01/01/2016的我/" data-id="ciizfhlj30072qns6b2fv9ut5" class="article-share-link">分享到</a>
+      <a data-url="http://www.fovoy.com/2016/01/01/2016的我/" data-id="ciln3npuw007z1ms6zmt4hnm8" class="article-share-link">分享到</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/计划/">计划</a></li></ul>
@@ -227,12 +251,75 @@
       
                 
         <p><img src="/thumbnails/es.png" alt=""></p>
-<p><a href="https://www.elastic.co/guide/en/elasticsearch/reference/current/setup-configuration.html#vm-max-map-count" target="_blank" rel="external">es 配置事项</a><br><a href="https://www.elastic.co/guide/en/elasticsearch/reference/current/rolling-upgrades.html?q=upgr" target="_blank" rel="external">rolling upgrades</a><br><a href="https://www.elastic.co/guide/en/elasticsearch/reference/current/setup-upgrade.html" target="_blank" rel="external">full restart</a><br><a href="https://www.elastic.co/guide/en/elasticsearch/reference/current/breaking-changes-2.0.html#_elasticsearch_migration_plugin" target="_blank" rel="external">breaking changes 2.x</a><br><a href="https://www.elastic.co/blog/curator-tending-your-time-series-indices" target="_blank" rel="external">index delete</a></p>
+<p>54477160  2015-01-01 00:00:00 2015-12-01 00:00:00<br><a href="https://www.elastic.co/guide/en/elasticsearch/reference/current/setup-configuration.html#vm-max-map-count" target="_blank" rel="external">es 配置事项</a><br><a href="https://www.elastic.co/guide/en/elasticsearch/reference/current/rolling-upgrades.html?q=upgr" target="_blank" rel="external">rolling upgrades</a><br><a href="https://www.elastic.co/guide/en/elasticsearch/reference/current/setup-upgrade.html" target="_blank" rel="external">full restart</a><br><a href="https://www.elastic.co/guide/en/elasticsearch/reference/current/breaking-changes-2.0.html#_elasticsearch_migration_plugin" target="_blank" rel="external">breaking changes 2.x</a><br><a href="https://www.elastic.co/blog/curator-tending-your-time-series-indices" target="_blank" rel="external">index delete</a></p>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://www.fovoy.com/2015/12/16/es upgrad/" data-id="ciizfhlhw005aqns622fn9mck" class="article-share-link">分享到</a>
+      <a data-url="http://www.fovoy.com/2015/12/16/es upgrad/" data-id="ciln3nptw00631ms67zm7homm" class="article-share-link">分享到</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Elasticsearch/">Elasticsearch</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+    
+      <article id="post-es p-c问题汇总" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2015/12/13/es p-c问题汇总/">elasticsearch p-c问题汇总</a>
+    </h1>
+  
+
+        <div class="article-meta">
+          
+  <div class="article-date">
+    <i class="fa fa-calendar"></i>
+    <a href="/2015/12/13/es p-c问题汇总/">
+      <time datetime="2015-12-13T02:13:22.000Z" itemprop="datePublished">2015-12-13</time>
+    </a>
+  </div>
+
+
+          
+  <div class="article-category">
+  	<i class="fa fa-folder"></i>
+    <a class="article-category-link" href="/categories/Elasticsearch/">Elasticsearch</a><i class="fa fa-angle-right"></i><a class="article-category-link" href="/categories/Elasticsearch/学习/">学习</a>
+  </div>
+
+        </div>
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+                
+        <p><img src="/thumbnails/es.png" alt=""></p>
+<p>*IndexFieldDataService.getForField() pre14 v1.4之后fieldDataCaches 只支持node模式。soft和resident模式已经被取消。<br>这意味着没fieldDataCache会被一分钟清理一次。因为之前es在大数据分析应用中，索引的频繁构建很容易让fieldDataCache占满内存。<br><figure class="highlight lasso"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">旧版中的<span class="keyword">cache</span> FieldBased</span><br><span class="line">新版中的<span class="keyword">cache</span> IndexFieldCache</span><br><span class="line">每次hasparent 都会查询_parent字段的fielddata 的<span class="keyword">cache</span><span class="built_in">.</span>如果每次都从内存中区的话，速度会变快。但如果不是从内存中区这个_parent关系的话，就会变得很慢。</span><br></pre></td></tr></table></figure></p>
+<p><em>IndicesFieldDataCache 定时清理 可以用 indices.fielddata.cache.cleanup_interval 来设置清理时间默认是1分钟。
+</em>ParentConstantScoreQuery   中增加了。 ParentChildIndexFieldData 变更 来处理createWeight.<br><em>XFilteredQuery hasparent 下面的filter
+</em>WeightedFilterCache.getDocIdSet 包装filter<br><em>MappingUpdatedAction MasterMappingUpdater  中使用的独立线程消费。
+</em>pageCacheRecycler</p>
+<ul>
+<li>IndexFieldDataService  clear</li>
+</ul>
+<h2 id="config">config</h2><p>indices.queries.cache.size: 20%<br>indices.queries.cache.count: 2000<br>indices.fielddata.cache.cleanup_interval: 12m</p>
+<p>IndexShard.EngineRefresher<br>IndicesFieldDataCache.OnRemovel</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://www.fovoy.com/2015/12/13/es p-c问题汇总/" data-id="ciln3npu1006b1ms64sqp9a6g" class="article-share-link">分享到</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Elasticsearch/">Elasticsearch</a></li></ul>
@@ -303,7 +390,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://www.fovoy.com/2015/12/13/有趣/" data-id="ciizfhlet000gqns6x26kw0ir" class="article-share-link">分享到</a>
+      <a data-url="http://www.fovoy.com/2015/12/13/有趣/" data-id="ciln3npqi000g1ms65ju03005" class="article-share-link">分享到</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/fovoy/">fovoy</a></li></ul>
@@ -369,124 +456,10 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://www.fovoy.com/2015/12/13/客栈设计/" data-id="ciizfhlf40010qns62v8a7b30" class="article-share-link">分享到</a>
+      <a data-url="http://www.fovoy.com/2015/12/13/客栈设计/" data-id="ciln3npqu00101ms6st6b5xgp" class="article-share-link">分享到</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/fovoy/">fovoy</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-
-    
-      <article id="post-es p-c问题汇总" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2015/12/13/es p-c问题汇总/">elasticsearch p-c问题汇总</a>
-    </h1>
-  
-
-        <div class="article-meta">
-          
-  <div class="article-date">
-    <i class="fa fa-calendar"></i>
-    <a href="/2015/12/13/es p-c问题汇总/">
-      <time datetime="2015-12-13T02:13:22.000Z" itemprop="datePublished">2015-12-13</time>
-    </a>
-  </div>
-
-
-          
-  <div class="article-category">
-  	<i class="fa fa-folder"></i>
-    <a class="article-category-link" href="/categories/Elasticsearch/">Elasticsearch</a><i class="fa fa-angle-right"></i><a class="article-category-link" href="/categories/Elasticsearch/学习/">学习</a>
-  </div>
-
-        </div>
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-                
-        <p><img src="/thumbnails/es.png" alt=""></p>
-<p>*IndexFieldDataService.getForField() pre14 v1.4之后fieldDataCaches 只支持node模式。soft和resident模式已经被取消。<br>这意味着没fieldDataCache会被一分钟清理一次。因为之前es在大数据分析应用中，索引的频繁构建很容易让fieldDataCache占满内存。<br><figure class="highlight lasso"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">旧版中的<span class="keyword">cache</span> FieldBased</span><br><span class="line">新版中的<span class="keyword">cache</span> IndexFieldCache</span><br><span class="line">每次hasparent 都会查询_parent字段的fielddata 的<span class="keyword">cache</span><span class="built_in">.</span>如果每次都从内存中区的话，速度会变快。但如果不是从内存中区这个_parent关系的话，就会变得很慢。</span><br></pre></td></tr></table></figure></p>
-<p><em>IndicesFieldDataCache 定时清理 可以用 indices.fielddata.cache.cleanup_interval 来设置清理时间默认是1分钟。
-</em>ParentConstantScoreQuery   中增加了。 ParentChildIndexFieldData 变更 来处理createWeight.<br><em>WeightedFilterCache.getDocIdSet 包装filter
-</em>MappingUpdatedAction MasterMappingUpdater  中使用的独立线程消费。<br>*pageCacheRecycler</p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://www.fovoy.com/2015/12/13/es p-c问题汇总/" data-id="ciizfhli1005iqns6g8ll2wzl" class="article-share-link">分享到</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Elasticsearch/">Elasticsearch</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-
-    
-      <article id="post-node-express" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2015/12/12/node-express/">node-express</a>
-    </h1>
-  
-
-        <div class="article-meta">
-          
-  <div class="article-date">
-    <i class="fa fa-calendar"></i>
-    <a href="/2015/12/12/node-express/">
-      <time datetime="2015-12-12T11:25:12.000Z" itemprop="datePublished">2015-12-12</time>
-    </a>
-  </div>
-
-
-          
-  <div class="article-category">
-  	<i class="fa fa-folder"></i>
-    <a class="article-category-link" href="/categories/前端开发/">前端开发</a><i class="fa fa-angle-right"></i><a class="article-category-link" href="/categories/前端开发/nodejs/">nodejs</a>
-  </div>
-
-        </div>
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-                
-        <hr>
-<p><img src="/thumbnails/t1.png" alt=""></p>
-<h3 id="express">express</h3><hr>
-<p>cnpm install -g express-generator<br>express  project-name<br>cnpm install</p>
-<p>*koa<br>node -harmony  koa.js</p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://www.fovoy.com/2015/12/12/node-express/" data-id="ciizfhlg5002sqns653pmnsvw" class="article-share-link">分享到</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/nodejs/">nodejs</a></li></ul>
 
     </footer>
   </div>
@@ -542,7 +515,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://www.fovoy.com/2015/12/12/三体/" data-id="ciizfhlfn001sqns6re8tpmxv" class="article-share-link">分享到</a>
+      <a data-url="http://www.fovoy.com/2015/12/12/三体/" data-id="ciln3nprc001x1ms6no4vsvi8" class="article-share-link">分享到</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/小说/">小说</a></li></ul>
@@ -555,7 +528,7 @@
 
 
     
-      <article id="post-延时队列方案" class="article article-type-post" itemscope itemprop="blogPost">
+      <article id="post-node-express" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-inner">
     
     
@@ -564,7 +537,7 @@
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2015/11/24/延时队列方案/">延时队列方案</a>
+      <a class="article-title" href="/2015/12/12/node-express/">node-express</a>
     </h1>
   
 
@@ -572,8 +545,8 @@
           
   <div class="article-date">
     <i class="fa fa-calendar"></i>
-    <a href="/2015/11/24/延时队列方案/">
-      <time datetime="2015-11-24T02:13:36.000Z" itemprop="datePublished">2015-11-24</time>
+    <a href="/2015/12/12/node-express/">
+      <time datetime="2015-12-12T11:25:12.000Z" itemprop="datePublished">2015-12-12</time>
     </a>
   </div>
 
@@ -581,7 +554,7 @@
           
   <div class="article-category">
   	<i class="fa fa-folder"></i>
-    <a class="article-category-link" href="/categories/java/">java</a><i class="fa fa-angle-right"></i><a class="article-category-link" href="/categories/java/学习/">学习</a>
+    <a class="article-category-link" href="/categories/前端开发/">前端开发</a><i class="fa fa-angle-right"></i><a class="article-category-link" href="/categories/前端开发/nodejs/">nodejs</a>
   </div>
 
         </div>
@@ -590,17 +563,19 @@
     <div class="article-entry" itemprop="articleBody">
       
                 
-        <p><img src="/thumbnails/es.png" alt=""></p>
-<hr>
-<p>1.<a href="http://www.jiacheo.org/tag/%E5%BB%B6%E6%97%B6%E9%98%9F%E5%88%97" target="_blank" rel="external">mongodb设计延时队列</a><br>2.<a href="http://zhangyp.net/rabbitmq-delayqueue/" target="_blank" rel="external">分布式延时队列</a></p>
+        <hr>
+<p><img src="/thumbnails/t1.png" alt=""></p>
+<h3 id="express">express</h3><hr>
+<p>cnpm install -g express-generator<br>express  project-name<br>cnpm install</p>
+<p>*koa<br>node -harmony  koa.js</p>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://www.fovoy.com/2015/11/24/延时队列方案/" data-id="ciizfhlez000oqns69sorgw65" class="article-share-link">分享到</a>
+      <a data-url="http://www.fovoy.com/2015/12/12/node-express/" data-id="ciln3nprw00341ms66kpmcwlu" class="article-share-link">分享到</a>
       
       
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/java/">java</a></li></ul>
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/nodejs/">nodejs</a></li></ul>
 
     </footer>
   </div>
@@ -652,7 +627,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://www.fovoy.com/2015/11/24/前后端分离/" data-id="ciizfhlfe001aqns6oov2nvi5" class="article-share-link">分享到</a>
+      <a data-url="http://www.fovoy.com/2015/11/24/前后端分离/" data-id="ciln3npr0001a1ms6ysrfgcd1" class="article-share-link">分享到</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/前端开发/">前端开发</a></li></ul>
@@ -665,22 +640,53 @@
 
 
     
-      <article id="post-cmake" class="article article-type-post" itemscope itemprop="blogPost">
+      <article id="post-延时队列方案" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-inner">
     
     
     
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2015/11/24/延时队列方案/">延时队列方案</a>
+    </h1>
+  
+
+        <div class="article-meta">
+          
+  <div class="article-date">
+    <i class="fa fa-calendar"></i>
+    <a href="/2015/11/24/延时队列方案/">
+      <time datetime="2015-11-24T02:13:36.000Z" itemprop="datePublished">2015-11-24</time>
+    </a>
+  </div>
+
+
+          
+  <div class="article-category">
+  	<i class="fa fa-folder"></i>
+    <a class="article-category-link" href="/categories/java/">java</a><i class="fa fa-angle-right"></i><a class="article-category-link" href="/categories/java/学习/">学习</a>
+  </div>
+
+        </div>
+      </header>
+    
     <div class="article-entry" itemprop="articleBody">
       
                 
-        <p>cmake<br>-DCMAKE」NSTALL_PREFIX=/usr/local/mysql \<br>-D M YSQL_DATAD I R=/usr/loca l/mysq I/data/ \<br>-DDEFAULT_CHARSET=utf8 \<br>-DDEFAULT_C0LLATI0N=utf8_general_ci\<br>-D M YSQL_U N IX_AD DR=/usr/loca l/mysq l/mysq I .sock \<br>-DWITHJNNOBASE 一ST0RAGE_ENGINE=1 \<br>-DWITH_ARCHIVE_STORAGE_ENGINE=1 \<br>-DWITH_BLACKH0LE_ST0RAGE_ENGINE=1 \<br>-DWITH_PERFSCHEMA_ST0RAGE_ENGINE=1 \<br>-DWITH_BOOST=/usr/local/boost</p>
+        <p><img src="/thumbnails/es.png" alt=""></p>
+<hr>
+<p>1.<a href="http://www.jiacheo.org/tag/%E5%BB%B6%E6%97%B6%E9%98%9F%E5%88%97" target="_blank" rel="external">mongodb设计延时队列</a><br>2.<a href="http://zhangyp.net/rabbitmq-delayqueue/" target="_blank" rel="external">分布式延时队列</a></p>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://www.fovoy.com/2015/11/23/cmake/" data-id="ciizfhli6005qqns6kim0n2en" class="article-share-link">分享到</a>
+      <a data-url="http://www.fovoy.com/2015/11/24/延时队列方案/" data-id="ciln3npqn000o1ms6yzpgyile" class="article-share-link">分享到</a>
       
       
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/java/">java</a></li></ul>
+
     </footer>
   </div>
   
@@ -690,7 +696,7 @@
 
     
       <nav id="page-nav">
-        <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/6/">6</a><a class="extend next" rel="next" href="/page/2/">下一页 &raquo;</a>
+        <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/7/">7</a><a class="extend next" rel="next" href="/page/2/">下一页 &raquo;</a>
       </nav>
     </section>
       
@@ -701,6 +707,23 @@
     <h3 class="widget-title">最新文章</h3>
     <div class="widget">
       <ul id="recent-post" class="">
+        
+          <li>
+            
+            <div class="item-thumbnail">
+              <a href="/2016/01/21/es-mapping/" class="thumbnail">
+  
+    <span class="thumbnail-image thumbnail-none"></span>
+  
+</a>
+            </div>
+            
+            <div class="item-inner">
+              <p class="item-category"></p>
+              <p class="item-title"><a href="/2016/01/21/es-mapping/" class="title"></a></p>
+              <p class="item-date"><time datetime="2016-01-21T03:02:40.000Z" itemprop="datePublished">2016-01-21</time></p>
+            </div>
+          </li>
         
           <li>
             
@@ -741,42 +764,6 @@
           <li>
             
             <div class="item-thumbnail">
-              <a href="/2015/12/13/有趣/" class="thumbnail">
-  
-    <span style="background-image:url(/thumbnails/es.png
-)" alt="有趣.md" class="thumbnail-image"></span>
-  
-</a>
-            </div>
-            
-            <div class="item-inner">
-              <p class="item-category"><a class="article-category-link" href="/categories/fovoy/">fovoy</a></p>
-              <p class="item-title"><a href="/2015/12/13/有趣/" class="title">有趣.md</a></p>
-              <p class="item-date"><time datetime="2015-12-13T02:13:22.000Z" itemprop="datePublished">2015-12-13</time></p>
-            </div>
-          </li>
-        
-          <li>
-            
-            <div class="item-thumbnail">
-              <a href="/2015/12/13/客栈设计/" class="thumbnail">
-  
-    <span style="background-image:url(/thumbnails/es.png
-)" alt="客栈设计.md" class="thumbnail-image"></span>
-  
-</a>
-            </div>
-            
-            <div class="item-inner">
-              <p class="item-category"><a class="article-category-link" href="/categories/fovoy/">fovoy</a></p>
-              <p class="item-title"><a href="/2015/12/13/客栈设计/" class="title">客栈设计.md</a></p>
-              <p class="item-date"><time datetime="2015-12-13T02:13:22.000Z" itemprop="datePublished">2015-12-13</time></p>
-            </div>
-          </li>
-        
-          <li>
-            
-            <div class="item-thumbnail">
               <a href="/2015/12/13/es p-c问题汇总/" class="thumbnail">
   
     <span style="background-image:url(/thumbnails/es.png
@@ -792,6 +779,24 @@
             </div>
           </li>
         
+          <li>
+            
+            <div class="item-thumbnail">
+              <a href="/2015/12/13/有趣/" class="thumbnail">
+  
+    <span style="background-image:url(/thumbnails/es.png
+)" alt="有趣.md" class="thumbnail-image"></span>
+  
+</a>
+            </div>
+            
+            <div class="item-inner">
+              <p class="item-category"><a class="article-category-link" href="/categories/fovoy/">fovoy</a></p>
+              <p class="item-title"><a href="/2015/12/13/有趣/" class="title">有趣.md</a></p>
+              <p class="item-date"><time datetime="2015-12-13T02:13:22.000Z" itemprop="datePublished">2015-12-13</time></p>
+            </div>
+          </li>
+        
       </ul>
     </div>
   </div>
@@ -801,7 +806,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">分类</h3>
     <div class="widget">
-      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Elasticsearch/">Elasticsearch</a><span class="category-list-count">7</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Elasticsearch/config/">config</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Elasticsearch/performance/">performance</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Elasticsearch/学习/">学习</a><span class="category-list-count">2</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Framework/">Framework</a><span class="category-list-count">3</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Framework/spring/">spring</a><span class="category-list-count">3</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Mac/">Mac</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/design-pattern/">design pattern</a><span class="category-list-count">10</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/fovoy/">fovoy</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/java/">java</a><span class="category-list-count">5</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/java/gc/">gc</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/java/jvm/">jvm</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/java/学习/">学习</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/kibana/">kibana</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/redis/">redis</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/site/">site</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/tools/">tools</a><span class="category-list-count">13</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/tools/git/">git</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/tools/hexo/">hexo</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/tools/nginx/">nginx</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/tools/管理平台/">管理平台</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/中间件/">中间件</a><span class="category-list-count">2</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/中间件/kafka/">kafka</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/中间件/tomcat/">tomcat</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/前端开发/">前端开发</a><span class="category-list-count">6</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/前端开发/angularjs/">angularjs</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/前端开发/html5/">html5</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/前端开发/node-js/">node.js</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/前端开发/nodejs/">nodejs</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/前端开发/学习/">学习</a><span class="category-list-count">2</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/英语学习/">英语学习</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/计划/">计划</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/读书/">读书</a><span class="category-list-count">1</span></li></ul>
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Elasticsearch/">Elasticsearch</a><span class="category-list-count">9</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Elasticsearch/config/">config</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Elasticsearch/performance/">performance</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Elasticsearch/学习/">学习</a><span class="category-list-count">3</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Framework/">Framework</a><span class="category-list-count">3</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Framework/spring/">spring</a><span class="category-list-count">3</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Mac/">Mac</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/design-pattern/">design pattern</a><span class="category-list-count">10</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/fovoy/">fovoy</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/java/">java</a><span class="category-list-count">5</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/java/gc/">gc</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/java/jvm/">jvm</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/java/学习/">学习</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/kibana/">kibana</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/lucene/">lucene</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/mysql/">mysql</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/mysql/config/">config</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/netty/">netty</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/redis/">redis</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/site/">site</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/tools/">tools</a><span class="category-list-count">14</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/tools/git/">git</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/tools/hexo/">hexo</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/tools/nginx/">nginx</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/tools/管理平台/">管理平台</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/中间件/">中间件</a><span class="category-list-count">2</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/中间件/kafka/">kafka</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/中间件/tomcat/">tomcat</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/兴趣/">兴趣</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/前端开发/">前端开发</a><span class="category-list-count">6</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/前端开发/angularjs/">angularjs</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/前端开发/html5/">html5</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/前端开发/node-js/">node.js</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/前端开发/nodejs/">nodejs</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/前端开发/学习/">学习</a><span class="category-list-count">2</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/英语学习/">英语学习</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/计划/">计划</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/读书/">读书</a><span class="category-list-count">1</span></li></ul>
     </div>
   </div>
 
@@ -810,7 +815,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">标签</h3>
     <div class="widget">
-      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Elasticsearch/">Elasticsearch</a><span class="tag-list-count">7</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Mac/">Mac</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Quasar/">Quasar</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/angularjs/">angularjs</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/design-pattern/">design pattern</a><span class="tag-list-count">10</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/fovoy/">fovoy</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/gc/">gc</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/git/">git</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hexo/">hexo</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/html5/">html5</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/java/">java</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/jvm/">jvm</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/kafka/">kafka</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/kibana/">kibana</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mysql/">mysql</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/nginx/">nginx</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/node-js/">node.js</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/nodejs/">nodejs</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/play/">play</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/redis/">redis</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/reflect/">reflect</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/secureCRT/">secureCRT</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/site/">site</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/spring/">spring</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/tomcat/">tomcat</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/tools/">tools</a><span class="tag-list-count">8</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/前端开发/">前端开发</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/小说/">小说</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/英语学习/">英语学习</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/计划/">计划</a><span class="tag-list-count">1</span></li></ul>
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Elasticsearch/">Elasticsearch</a><span class="tag-list-count">9</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Mac/">Mac</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Quasar/">Quasar</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/angularjs/">angularjs</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/design-pattern/">design pattern</a><span class="tag-list-count">10</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/fovoy/">fovoy</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/gc/">gc</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/git/">git</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hexo/">hexo</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/html5/">html5</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/java/">java</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/jvm/">jvm</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/kafka/">kafka</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/kibana/">kibana</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/lucene/">lucene</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mysql/">mysql</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/netty/">netty</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/nginx/">nginx</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/node-js/">node.js</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/nodejs/">nodejs</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/play/">play</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/redis/">redis</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/reflect/">reflect</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/secureCRT/">secureCRT</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/site/">site</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/spring/">spring</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/tomcat/">tomcat</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/tools/">tools</a><span class="tag-list-count">9</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/人工智能/">人工智能</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/前端开发/">前端开发</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/小说/">小说</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/英语学习/">英语学习</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/计划/">计划</a><span class="tag-list-count">1</span></li></ul>
     </div>
   </div>
 
@@ -819,7 +824,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">标签云</h3>
     <div class="widget tagcloud">
-      <a href="/tags/Elasticsearch/" style="font-size: 16px;">Elasticsearch</a> <a href="/tags/Mac/" style="font-size: 10px;">Mac</a> <a href="/tags/Quasar/" style="font-size: 10px;">Quasar</a> <a href="/tags/angularjs/" style="font-size: 10px;">angularjs</a> <a href="/tags/design-pattern/" style="font-size: 20px;">design pattern</a> <a href="/tags/fovoy/" style="font-size: 12px;">fovoy</a> <a href="/tags/gc/" style="font-size: 10px;">gc</a> <a href="/tags/git/" style="font-size: 10px;">git</a> <a href="/tags/hexo/" style="font-size: 10px;">hexo</a> <a href="/tags/html5/" style="font-size: 10px;">html5</a> <a href="/tags/java/" style="font-size: 10px;">java</a> <a href="/tags/jvm/" style="font-size: 10px;">jvm</a> <a href="/tags/kafka/" style="font-size: 10px;">kafka</a> <a href="/tags/kibana/" style="font-size: 10px;">kibana</a> <a href="/tags/mysql/" style="font-size: 12px;">mysql</a> <a href="/tags/nginx/" style="font-size: 10px;">nginx</a> <a href="/tags/node-js/" style="font-size: 10px;">node.js</a> <a href="/tags/nodejs/" style="font-size: 10px;">nodejs</a> <a href="/tags/play/" style="font-size: 10px;">play</a> <a href="/tags/redis/" style="font-size: 10px;">redis</a> <a href="/tags/reflect/" style="font-size: 10px;">reflect</a> <a href="/tags/secureCRT/" style="font-size: 10px;">secureCRT</a> <a href="/tags/site/" style="font-size: 10px;">site</a> <a href="/tags/spring/" style="font-size: 14px;">spring</a> <a href="/tags/tomcat/" style="font-size: 10px;">tomcat</a> <a href="/tags/tools/" style="font-size: 18px;">tools</a> <a href="/tags/前端开发/" style="font-size: 10px;">前端开发</a> <a href="/tags/小说/" style="font-size: 10px;">小说</a> <a href="/tags/英语学习/" style="font-size: 10px;">英语学习</a> <a href="/tags/计划/" style="font-size: 10px;">计划</a>
+      <a href="/tags/Elasticsearch/" style="font-size: 17.5px;">Elasticsearch</a> <a href="/tags/Mac/" style="font-size: 10px;">Mac</a> <a href="/tags/Quasar/" style="font-size: 10px;">Quasar</a> <a href="/tags/angularjs/" style="font-size: 10px;">angularjs</a> <a href="/tags/design-pattern/" style="font-size: 20px;">design pattern</a> <a href="/tags/fovoy/" style="font-size: 12.5px;">fovoy</a> <a href="/tags/gc/" style="font-size: 10px;">gc</a> <a href="/tags/git/" style="font-size: 10px;">git</a> <a href="/tags/hexo/" style="font-size: 10px;">hexo</a> <a href="/tags/html5/" style="font-size: 10px;">html5</a> <a href="/tags/java/" style="font-size: 10px;">java</a> <a href="/tags/jvm/" style="font-size: 10px;">jvm</a> <a href="/tags/kafka/" style="font-size: 10px;">kafka</a> <a href="/tags/kibana/" style="font-size: 10px;">kibana</a> <a href="/tags/lucene/" style="font-size: 10px;">lucene</a> <a href="/tags/mysql/" style="font-size: 15px;">mysql</a> <a href="/tags/netty/" style="font-size: 10px;">netty</a> <a href="/tags/nginx/" style="font-size: 10px;">nginx</a> <a href="/tags/node-js/" style="font-size: 10px;">node.js</a> <a href="/tags/nodejs/" style="font-size: 10px;">nodejs</a> <a href="/tags/play/" style="font-size: 10px;">play</a> <a href="/tags/redis/" style="font-size: 10px;">redis</a> <a href="/tags/reflect/" style="font-size: 10px;">reflect</a> <a href="/tags/secureCRT/" style="font-size: 10px;">secureCRT</a> <a href="/tags/site/" style="font-size: 10px;">site</a> <a href="/tags/spring/" style="font-size: 15px;">spring</a> <a href="/tags/tomcat/" style="font-size: 10px;">tomcat</a> <a href="/tags/tools/" style="font-size: 17.5px;">tools</a> <a href="/tags/人工智能/" style="font-size: 10px;">人工智能</a> <a href="/tags/前端开发/" style="font-size: 10px;">前端开发</a> <a href="/tags/小说/" style="font-size: 10px;">小说</a> <a href="/tags/英语学习/" style="font-size: 10px;">英语学习</a> <a href="/tags/计划/" style="font-size: 10px;">计划</a>
     </div>
   </div>
 
@@ -828,7 +833,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">归档</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/01/">一月 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/12/">十二月 2015</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/11/">十一月 2015</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/10/">十月 2015</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/08/">八月 2015</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/07/">七月 2015</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/05/">五月 2015</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/03/">三月 2015</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/01/">一月 2015</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/12/">十二月 2014</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/11/">十一月 2014</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/10/">十月 2014</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/07/">七月 2014</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/05/">五月 2014</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/04/">四月 2014</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/03/">三月 2014</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/10/">十月 2013</a><span class="archive-list-count">1</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/01/">一月 2016</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/12/">十二月 2015</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/11/">十一月 2015</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/10/">十月 2015</a><span class="archive-list-count">11</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/08/">八月 2015</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/07/">七月 2015</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/05/">五月 2015</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/03/">三月 2015</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/01/">一月 2015</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/12/">十二月 2014</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/11/">十一月 2014</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/10/">十月 2014</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/07/">七月 2014</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/05/">五月 2014</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/04/">四月 2014</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/03/">三月 2014</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/10/">十月 2013</a><span class="archive-list-count">1</span></li></ul>
     </div>
   </div>
 

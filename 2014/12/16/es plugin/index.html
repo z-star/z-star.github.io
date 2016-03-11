@@ -20,7 +20,7 @@ bin/plugin -install mobz/elasticsearch-head
 bin/plugin –install lukas-vlcek/bigdesk
 bin/plugin">
 <meta property="og:image" content="http://www.fovoy.com/thumbnails/es.png">
-<meta property="og:updated_time" content="2016-01-04T03:15:04.000Z">
+<meta property="og:updated_time" content="2016-02-27T14:06:45.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="elasticsearch plugin">
 <meta name="twitter:description" content="bin/plugin -install polyfractal/elasticsearch-inquisitor
@@ -111,11 +111,11 @@ bin/plugin">
     </div>
     <div class="article-info profile-block">
       <div class="article-info-block">
-        57
+        65
         <span>文章</span>
       </div>
       <div class="article-info-block">
-        30
+        33
         <span>标签</span>
       </div>
     </div>
@@ -185,17 +185,19 @@ bin/plugin">
 <li>bin/plugin -install mobz/elasticsearch-head</li>
 <li>bin/plugin –install lukas-vlcek/bigdesk</li>
 <li>bin/plugin –install royrusso/elasticsearch-HQ</li>
-<li>bin/plugin -u <a href="http://maven.ansj.org/org/ansj/elasticsearch-analysis-ansj/1.x.1/elasticsearch-analysis-ansj-1.x.1-release.zip" target="_blank" rel="external">http://maven.ansj.org/org/ansj/elasticsearch-analysis-ansj/1.x.1/elasticsearch-analysis-ansj-1.x.1-release.zip</a></li>
+<li>bin/plugin -u <a href="http://maven.ansj.org/org/ansj/elasticsearch-analysis-ansj/1.x.1/elasticsearch-analysis-ansj-1.x.1-release.zip" target="_blank" rel="external">http://maven.ansj.org/org/ansj/elasticsearch-analysis-ansj/1.x.1/elasticsearch-analysis-ansj-1.x.1-release.zip</a><br>sudo wget <a href="https://download.elasticsearch.org/elasticsearch/release/org/elasticsearch/distribution/tar/elasticsearch/2.2.0/elasticsearch-2.2.0.tar.gz" target="_blank" rel="external">https://download.elasticsearch.org/elasticsearch/release/org/elasticsearch/distribution/tar/elasticsearch/2.2.0/elasticsearch-2.2.0.tar.gz</a></li>
 </ul>
 <hr>
-<p><a href="https://www.elastic.co/guide/en/elasticsearch/reference/current/setup-configuration.html#setup-configuration-memory" target="_blank" rel="external">https://www.elastic.co/guide/en/elasticsearch/reference/current/setup-configuration.html#setup-configuration-memory</a><br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">ulimit -l unlimited</span><br><span class="line">These can be adjusted by modifying /etc/security/limits.conf, for example:</span><br><span class="line">#allow user 'tomcat' mlockall</span><br><span class="line">tomcat soft memlock unlimited</span><br><span class="line">tomcat hard memlock unlimited</span><br><span class="line"></span><br><span class="line">bin/plugin <span class="operator"><span class="keyword">install</span> license</span><br><span class="line"><span class="keyword">bin</span>/<span class="keyword">plugin</span> <span class="keyword">install</span> marvel-<span class="keyword">agent</span></span><br><span class="line"><span class="keyword">bin</span>/kibana <span class="keyword">plugin</span> <span class="comment">--install elasticsearch/marvel/latest</span></span><br><span class="line"><span class="keyword">bin</span>/elasticsearch</span><br><span class="line"><span class="keyword">bin</span>/kibana</span><br><span class="line"><span class="keyword">http</span>://localhost:<span class="number">5601</span>/app/marvel</span></span><br></pre></td></tr></table></figure></p>
+<p><a href="https://www.elastic.co/guide/en/elasticsearch/reference/current/setup-configuration.html#setup-configuration-memory" target="_blank" rel="external">https://www.elastic.co/guide/en/elasticsearch/reference/current/setup-configuration.html#setup-configuration-memory</a><br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">ulimit -l unlimited</span><br><span class="line">These can be adjusted by modifying /etc/security/limits.conf, for example:</span><br><span class="line">#allow user 'tomcat' mlockall</span><br><span class="line">tomcat soft memlock unlimited</span><br><span class="line">tomcat hard memlock unlimited</span><br><span class="line">bin/plugin <span class="operator"><span class="keyword">install</span> license</span><br><span class="line"><span class="keyword">bin</span>/<span class="keyword">plugin</span> <span class="keyword">install</span> marvel-<span class="keyword">agent</span></span><br><span class="line"><span class="keyword">bin</span>/kibana <span class="keyword">plugin</span> <span class="comment">--install elasticsearch/marvel/latest</span></span><br><span class="line"><span class="keyword">bin</span>/elasticsearch</span><br><span class="line"><span class="keyword">bin</span>/kibana</span><br><span class="line"><span class="keyword">http</span>://localhost:<span class="number">5601</span>/app/marvel</span></span><br></pre></td></tr></table></figure></p>
+<p>过滤功能：<br>实现一个lucene端的filter，这个filter会有个bitset返回，自己要作的就是 再这个方法里取出skuNo，然后到再用，之前存储的插件里的方法查看是否有货，来填充返回的bitset<br>现在 filter和query合起来之后，其实也最终是用的bitset，只是要实现的方法变了，至于filter的cache，之前还以为会也有变动，，其实也不用关心，那都是之后的事了，其实还是实现bitset.</p>
+<p>自定义打分：<br>NativeScriptFactory 实现 newScript方法，<br>自定义打分那个官网，在scripting那一页，直接继承，实现newScript方法，，这个方法里，是从每个match到的doc里取出值.</p>
 <hr>
 <p><a href="http://mp.weixin.qq.com/s?__biz=MzAwMDU1MTE1OQ==&amp;mid=209488723&amp;idx=1&amp;sn=d60c0637d7a9f4a4b981a69f10c6b90a&amp;scene=5#rd" target="_blank" rel="external">相关blog</a></p>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://www.fovoy.com/2014/12/16/es plugin/" data-id="ciizfhlhy005eqns6k3eb05nx" class="article-share-link">分享到</a>
+      <a data-url="http://www.fovoy.com/2014/12/16/es plugin/" data-id="ciln3npty00671ms6qzfvmxtq" class="article-share-link">分享到</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Elasticsearch/">Elasticsearch</a></li></ul>
@@ -206,19 +208,19 @@ bin/plugin">
     
 <nav id="article-nav">
   
-    <a href="/2015/01/12/性能测试/" id="article-nav-newer" class="article-nav-link-wrap">
+    <a href="/2014/12/16/mysql索引原理/" id="article-nav-newer" class="article-nav-link-wrap">
       <strong class="article-nav-caption">上一篇</strong>
       <div class="article-nav-title">
         
-          性能测试
+          mysql索引原理
         
       </div>
     </a>
   
   
-    <a href="/2014/12/16/Quasar库/" id="article-nav-older" class="article-nav-link-wrap">
+    <a href="/2014/11/12/hexo报错/" id="article-nav-older" class="article-nav-link-wrap">
       <strong class="article-nav-caption">下一篇</strong>
-      <div class="article-nav-title">Quasar库</div>
+      <div class="article-nav-title">hexo报错</div>
     </a>
   
 </nav>
@@ -237,6 +239,23 @@ bin/plugin">
     <h3 class="widget-title">最新文章</h3>
     <div class="widget">
       <ul id="recent-post" class="">
+        
+          <li>
+            
+            <div class="item-thumbnail">
+              <a href="/2016/01/21/es-mapping/" class="thumbnail">
+  
+    <span class="thumbnail-image thumbnail-none"></span>
+  
+</a>
+            </div>
+            
+            <div class="item-inner">
+              <p class="item-category"></p>
+              <p class="item-title"><a href="/2016/01/21/es-mapping/" class="title"></a></p>
+              <p class="item-date"><time datetime="2016-01-21T03:02:40.000Z" itemprop="datePublished">2016-01-21</time></p>
+            </div>
+          </li>
         
           <li>
             
@@ -277,42 +296,6 @@ bin/plugin">
           <li>
             
             <div class="item-thumbnail">
-              <a href="/2015/12/13/有趣/" class="thumbnail">
-  
-    <span style="background-image:url(/thumbnails/es.png
-)" alt="有趣.md" class="thumbnail-image"></span>
-  
-</a>
-            </div>
-            
-            <div class="item-inner">
-              <p class="item-category"><a class="article-category-link" href="/categories/fovoy/">fovoy</a></p>
-              <p class="item-title"><a href="/2015/12/13/有趣/" class="title">有趣.md</a></p>
-              <p class="item-date"><time datetime="2015-12-13T02:13:22.000Z" itemprop="datePublished">2015-12-13</time></p>
-            </div>
-          </li>
-        
-          <li>
-            
-            <div class="item-thumbnail">
-              <a href="/2015/12/13/客栈设计/" class="thumbnail">
-  
-    <span style="background-image:url(/thumbnails/es.png
-)" alt="客栈设计.md" class="thumbnail-image"></span>
-  
-</a>
-            </div>
-            
-            <div class="item-inner">
-              <p class="item-category"><a class="article-category-link" href="/categories/fovoy/">fovoy</a></p>
-              <p class="item-title"><a href="/2015/12/13/客栈设计/" class="title">客栈设计.md</a></p>
-              <p class="item-date"><time datetime="2015-12-13T02:13:22.000Z" itemprop="datePublished">2015-12-13</time></p>
-            </div>
-          </li>
-        
-          <li>
-            
-            <div class="item-thumbnail">
               <a href="/2015/12/13/es p-c问题汇总/" class="thumbnail">
   
     <span style="background-image:url(/thumbnails/es.png
@@ -328,6 +311,24 @@ bin/plugin">
             </div>
           </li>
         
+          <li>
+            
+            <div class="item-thumbnail">
+              <a href="/2015/12/13/有趣/" class="thumbnail">
+  
+    <span style="background-image:url(/thumbnails/es.png
+)" alt="有趣.md" class="thumbnail-image"></span>
+  
+</a>
+            </div>
+            
+            <div class="item-inner">
+              <p class="item-category"><a class="article-category-link" href="/categories/fovoy/">fovoy</a></p>
+              <p class="item-title"><a href="/2015/12/13/有趣/" class="title">有趣.md</a></p>
+              <p class="item-date"><time datetime="2015-12-13T02:13:22.000Z" itemprop="datePublished">2015-12-13</time></p>
+            </div>
+          </li>
+        
       </ul>
     </div>
   </div>
@@ -337,7 +338,7 @@ bin/plugin">
   <div class="widget-wrap">
     <h3 class="widget-title">分类</h3>
     <div class="widget">
-      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Elasticsearch/">Elasticsearch</a><span class="category-list-count">7</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Elasticsearch/config/">config</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Elasticsearch/performance/">performance</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Elasticsearch/学习/">学习</a><span class="category-list-count">2</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Framework/">Framework</a><span class="category-list-count">3</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Framework/spring/">spring</a><span class="category-list-count">3</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Mac/">Mac</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/design-pattern/">design pattern</a><span class="category-list-count">10</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/fovoy/">fovoy</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/java/">java</a><span class="category-list-count">5</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/java/gc/">gc</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/java/jvm/">jvm</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/java/学习/">学习</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/kibana/">kibana</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/redis/">redis</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/site/">site</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/tools/">tools</a><span class="category-list-count">13</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/tools/git/">git</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/tools/hexo/">hexo</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/tools/nginx/">nginx</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/tools/管理平台/">管理平台</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/中间件/">中间件</a><span class="category-list-count">2</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/中间件/kafka/">kafka</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/中间件/tomcat/">tomcat</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/前端开发/">前端开发</a><span class="category-list-count">6</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/前端开发/angularjs/">angularjs</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/前端开发/html5/">html5</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/前端开发/node-js/">node.js</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/前端开发/nodejs/">nodejs</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/前端开发/学习/">学习</a><span class="category-list-count">2</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/英语学习/">英语学习</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/计划/">计划</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/读书/">读书</a><span class="category-list-count">1</span></li></ul>
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Elasticsearch/">Elasticsearch</a><span class="category-list-count">9</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Elasticsearch/config/">config</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Elasticsearch/performance/">performance</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Elasticsearch/学习/">学习</a><span class="category-list-count">3</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Framework/">Framework</a><span class="category-list-count">3</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Framework/spring/">spring</a><span class="category-list-count">3</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Mac/">Mac</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/design-pattern/">design pattern</a><span class="category-list-count">10</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/fovoy/">fovoy</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/java/">java</a><span class="category-list-count">5</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/java/gc/">gc</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/java/jvm/">jvm</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/java/学习/">学习</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/kibana/">kibana</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/lucene/">lucene</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/mysql/">mysql</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/mysql/config/">config</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/netty/">netty</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/redis/">redis</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/site/">site</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/tools/">tools</a><span class="category-list-count">14</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/tools/git/">git</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/tools/hexo/">hexo</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/tools/nginx/">nginx</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/tools/管理平台/">管理平台</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/中间件/">中间件</a><span class="category-list-count">2</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/中间件/kafka/">kafka</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/中间件/tomcat/">tomcat</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/兴趣/">兴趣</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/前端开发/">前端开发</a><span class="category-list-count">6</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/前端开发/angularjs/">angularjs</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/前端开发/html5/">html5</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/前端开发/node-js/">node.js</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/前端开发/nodejs/">nodejs</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/前端开发/学习/">学习</a><span class="category-list-count">2</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/英语学习/">英语学习</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/计划/">计划</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/读书/">读书</a><span class="category-list-count">1</span></li></ul>
     </div>
   </div>
 
@@ -346,7 +347,7 @@ bin/plugin">
   <div class="widget-wrap">
     <h3 class="widget-title">标签</h3>
     <div class="widget">
-      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Elasticsearch/">Elasticsearch</a><span class="tag-list-count">7</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Mac/">Mac</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Quasar/">Quasar</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/angularjs/">angularjs</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/design-pattern/">design pattern</a><span class="tag-list-count">10</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/fovoy/">fovoy</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/gc/">gc</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/git/">git</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hexo/">hexo</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/html5/">html5</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/java/">java</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/jvm/">jvm</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/kafka/">kafka</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/kibana/">kibana</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mysql/">mysql</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/nginx/">nginx</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/node-js/">node.js</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/nodejs/">nodejs</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/play/">play</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/redis/">redis</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/reflect/">reflect</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/secureCRT/">secureCRT</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/site/">site</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/spring/">spring</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/tomcat/">tomcat</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/tools/">tools</a><span class="tag-list-count">8</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/前端开发/">前端开发</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/小说/">小说</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/英语学习/">英语学习</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/计划/">计划</a><span class="tag-list-count">1</span></li></ul>
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Elasticsearch/">Elasticsearch</a><span class="tag-list-count">9</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Mac/">Mac</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Quasar/">Quasar</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/angularjs/">angularjs</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/design-pattern/">design pattern</a><span class="tag-list-count">10</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/fovoy/">fovoy</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/gc/">gc</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/git/">git</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hexo/">hexo</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/html5/">html5</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/java/">java</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/jvm/">jvm</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/kafka/">kafka</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/kibana/">kibana</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/lucene/">lucene</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mysql/">mysql</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/netty/">netty</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/nginx/">nginx</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/node-js/">node.js</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/nodejs/">nodejs</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/play/">play</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/redis/">redis</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/reflect/">reflect</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/secureCRT/">secureCRT</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/site/">site</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/spring/">spring</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/tomcat/">tomcat</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/tools/">tools</a><span class="tag-list-count">9</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/人工智能/">人工智能</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/前端开发/">前端开发</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/小说/">小说</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/英语学习/">英语学习</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/计划/">计划</a><span class="tag-list-count">1</span></li></ul>
     </div>
   </div>
 
@@ -355,7 +356,7 @@ bin/plugin">
   <div class="widget-wrap">
     <h3 class="widget-title">标签云</h3>
     <div class="widget tagcloud">
-      <a href="/tags/Elasticsearch/" style="font-size: 16px;">Elasticsearch</a> <a href="/tags/Mac/" style="font-size: 10px;">Mac</a> <a href="/tags/Quasar/" style="font-size: 10px;">Quasar</a> <a href="/tags/angularjs/" style="font-size: 10px;">angularjs</a> <a href="/tags/design-pattern/" style="font-size: 20px;">design pattern</a> <a href="/tags/fovoy/" style="font-size: 12px;">fovoy</a> <a href="/tags/gc/" style="font-size: 10px;">gc</a> <a href="/tags/git/" style="font-size: 10px;">git</a> <a href="/tags/hexo/" style="font-size: 10px;">hexo</a> <a href="/tags/html5/" style="font-size: 10px;">html5</a> <a href="/tags/java/" style="font-size: 10px;">java</a> <a href="/tags/jvm/" style="font-size: 10px;">jvm</a> <a href="/tags/kafka/" style="font-size: 10px;">kafka</a> <a href="/tags/kibana/" style="font-size: 10px;">kibana</a> <a href="/tags/mysql/" style="font-size: 12px;">mysql</a> <a href="/tags/nginx/" style="font-size: 10px;">nginx</a> <a href="/tags/node-js/" style="font-size: 10px;">node.js</a> <a href="/tags/nodejs/" style="font-size: 10px;">nodejs</a> <a href="/tags/play/" style="font-size: 10px;">play</a> <a href="/tags/redis/" style="font-size: 10px;">redis</a> <a href="/tags/reflect/" style="font-size: 10px;">reflect</a> <a href="/tags/secureCRT/" style="font-size: 10px;">secureCRT</a> <a href="/tags/site/" style="font-size: 10px;">site</a> <a href="/tags/spring/" style="font-size: 14px;">spring</a> <a href="/tags/tomcat/" style="font-size: 10px;">tomcat</a> <a href="/tags/tools/" style="font-size: 18px;">tools</a> <a href="/tags/前端开发/" style="font-size: 10px;">前端开发</a> <a href="/tags/小说/" style="font-size: 10px;">小说</a> <a href="/tags/英语学习/" style="font-size: 10px;">英语学习</a> <a href="/tags/计划/" style="font-size: 10px;">计划</a>
+      <a href="/tags/Elasticsearch/" style="font-size: 17.5px;">Elasticsearch</a> <a href="/tags/Mac/" style="font-size: 10px;">Mac</a> <a href="/tags/Quasar/" style="font-size: 10px;">Quasar</a> <a href="/tags/angularjs/" style="font-size: 10px;">angularjs</a> <a href="/tags/design-pattern/" style="font-size: 20px;">design pattern</a> <a href="/tags/fovoy/" style="font-size: 12.5px;">fovoy</a> <a href="/tags/gc/" style="font-size: 10px;">gc</a> <a href="/tags/git/" style="font-size: 10px;">git</a> <a href="/tags/hexo/" style="font-size: 10px;">hexo</a> <a href="/tags/html5/" style="font-size: 10px;">html5</a> <a href="/tags/java/" style="font-size: 10px;">java</a> <a href="/tags/jvm/" style="font-size: 10px;">jvm</a> <a href="/tags/kafka/" style="font-size: 10px;">kafka</a> <a href="/tags/kibana/" style="font-size: 10px;">kibana</a> <a href="/tags/lucene/" style="font-size: 10px;">lucene</a> <a href="/tags/mysql/" style="font-size: 15px;">mysql</a> <a href="/tags/netty/" style="font-size: 10px;">netty</a> <a href="/tags/nginx/" style="font-size: 10px;">nginx</a> <a href="/tags/node-js/" style="font-size: 10px;">node.js</a> <a href="/tags/nodejs/" style="font-size: 10px;">nodejs</a> <a href="/tags/play/" style="font-size: 10px;">play</a> <a href="/tags/redis/" style="font-size: 10px;">redis</a> <a href="/tags/reflect/" style="font-size: 10px;">reflect</a> <a href="/tags/secureCRT/" style="font-size: 10px;">secureCRT</a> <a href="/tags/site/" style="font-size: 10px;">site</a> <a href="/tags/spring/" style="font-size: 15px;">spring</a> <a href="/tags/tomcat/" style="font-size: 10px;">tomcat</a> <a href="/tags/tools/" style="font-size: 17.5px;">tools</a> <a href="/tags/人工智能/" style="font-size: 10px;">人工智能</a> <a href="/tags/前端开发/" style="font-size: 10px;">前端开发</a> <a href="/tags/小说/" style="font-size: 10px;">小说</a> <a href="/tags/英语学习/" style="font-size: 10px;">英语学习</a> <a href="/tags/计划/" style="font-size: 10px;">计划</a>
     </div>
   </div>
 
@@ -364,7 +365,7 @@ bin/plugin">
   <div class="widget-wrap">
     <h3 class="widget-title">归档</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/01/">一月 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/12/">十二月 2015</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/11/">十一月 2015</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/10/">十月 2015</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/08/">八月 2015</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/07/">七月 2015</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/05/">五月 2015</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/03/">三月 2015</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/01/">一月 2015</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/12/">十二月 2014</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/11/">十一月 2014</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/10/">十月 2014</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/07/">七月 2014</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/05/">五月 2014</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/04/">四月 2014</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/03/">三月 2014</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/10/">十月 2013</a><span class="archive-list-count">1</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/01/">一月 2016</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/12/">十二月 2015</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/11/">十一月 2015</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/10/">十月 2015</a><span class="archive-list-count">11</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/08/">八月 2015</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/07/">七月 2015</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/05/">五月 2015</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/03/">三月 2015</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/01/">一月 2015</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/12/">十二月 2014</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/11/">十一月 2014</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/10/">十月 2014</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/07/">七月 2014</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/05/">五月 2014</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/04/">四月 2014</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/03/">三月 2014</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/10/">十月 2013</a><span class="archive-list-count">1</span></li></ul>
     </div>
   </div>
 
