@@ -170,7 +170,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://www.fovoy.com/2016/07/12/idea-license/" data-id="cirzqeh9w00743rs6sm2gdprv" class="article-share-link">分享到</a>
+      <a data-url="http://www.fovoy.com/2016/07/12/idea-license/" data-id="cirzr1px100784xs6erk2z2rh" class="article-share-link">分享到</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/idea/">idea</a></li></ul>
@@ -223,7 +223,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://www.fovoy.com/2016/07/06/小记/" data-id="cirzqeh6k001o3rs6sbpgak3h" class="article-share-link">分享到</a>
+      <a data-url="http://www.fovoy.com/2016/07/06/小记/" data-id="cirzr1ptv001o4xs656nhnly0" class="article-share-link">分享到</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/专注/">专注</a></li></ul>
@@ -271,17 +271,17 @@
     <div class="article-entry" itemprop="articleBody">
       
                 
-        <h2 id="当你对一个集合，一边遍历，一边修改时候。因为遍历过程中游标不知道集合的修改遍历出来的数据会有问题。所以要提早检查错误，提前失败。其意义在于极端情况下如果集合数据很多，如果不快速失败，消耗了时间又没有好结果。"> 当你对一个集合，一边遍历，一边修改时候。因为遍历过程中游标不知道集合的修改遍历出来的数据会有问题。所以要提早检查错误，提前失败。其意义在于极端情况下如果集合数据很多，如果不快速失败，消耗了时间又没有好结果。</h2><p>   fail-fast机制<br>    “快速失败”也就是fail-fast，它是Java集合的一种错误检测机制。当多个线程对集合进行结构上的改变的操作时，有可能会产生fail-fast机制。记住是有可能，而不是一定。例如：假设存在两个线程（线程1、线程2），线程1通过Iterator在遍历集合A中的元素，在某个时候线程2修改了集合A的结构（是结构上面的修改，而不是简单的修改集合元素的内容），那么这个时候程序就会抛出 ConcurrentModificationException 异常，从而产生fail-fast机制。</p>
+        <h2 id="当你对一个集合，一边遍历，一边修改时候。因为遍历过程中游标不知道集合的修改遍历出来的数据会有问题。所以要提早检查错误，提前失败。其意义在于极端情况下如果集合数据很多，如果不快速失败，消耗了时间又没有好结果。">   当你对一个集合，一边遍历，一边修改时候。因为遍历过程中游标不知道集合的修改遍历出来的数据会有问题。所以要提早检查错误，提前失败。其意义在于极端情况下如果集合数据很多，如果不快速失败，消耗了时间又没有好结果。</h2><p>   fail-fast机制<br>    “快速失败”也就是fail-fast，它是Java集合的一种错误检测机制。当多个线程对集合进行结构上的改变的操作时，有可能会产生fail-fast机制。记住是有可能，而不是一定。例如：假设存在两个线程（线程1、线程2），线程1通过Iterator在遍历集合A中的元素，在某个时候线程2修改了集合A的结构（是结构上面的修改，而不是简单的修改集合元素的内容），那么这个时候程序就会抛出 ConcurrentModificationException 异常，从而产生fail-fast机制。</p>
 <p>  多线程情况下 一个遍历，一个修改，会出错。因此一般有2种解决办法：</p>
 <p>　　1）在使用iterator迭代的时候使用synchronized或者Lock进行同步，但这样的方式会让遍历操作堵塞。</p>
-<p>　　2）使用并发容器CopyOnWriteArrayList代替ArrayList和Vector。<br>   CopyOnWriterArrayList 源码 add重要的三行<br>      <figure class="highlight dns"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Object[] newElements = Arrays.copyOf(elements, len + 1)<span class="comment">;</span></span><br><span class="line">    newElements[len] = e<span class="comment">;</span></span><br><span class="line">    setArray(newElements)<span class="comment">;</span></span><br></pre></td></tr></table></figure></p>
-<pre><code>本质就是复制原来的<span class="built_in">array</span>,在新数组进行修改操作，所以不影响原来数组的遍历。但这样会生产很多对象，相当有损耗的。
-</code></pre><p>[TOC]</p>
+<p>　　2）使用并发容器CopyOnWriteArrayList代替ArrayList和Vector。<br>   CopyOnWriterArrayList 源码 add重要的三行<br>    <figure class="highlight dns"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Object[] newElements = Arrays.copyOf(elements, len + 1)<span class="comment">;</span></span><br><span class="line">    newElements[len] = e<span class="comment">;</span></span><br><span class="line">    setArray(newElements)<span class="comment">;</span></span><br></pre></td></tr></table></figure></p>
+<p>本质就是复制原来的array,在新数组进行修改操作，所以不影响原来数组的遍历。但这样会生产很多对象，相当有损耗的。</p>
+<p>[TOC]</p>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://www.fovoy.com/2016/05/12/ConcurrentModificationException异常解析/" data-id="cirzqehbs00ai3rs60ohkob7a" class="article-share-link">分享到</a>
+      <a data-url="http://www.fovoy.com/2016/05/12/ConcurrentModificationException异常解析/" data-id="cirzr1pyv00am4xs6mlq9hv72" class="article-share-link">分享到</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/ConcurrentModificationException/">ConcurrentModificationException</a></li></ul>
@@ -339,7 +339,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://www.fovoy.com/2016/05/12/并发编程/" data-id="cirzqeh6h001k3rs6fcu7whcj" class="article-share-link">分享到</a>
+      <a data-url="http://www.fovoy.com/2016/05/12/并发编程/" data-id="cirzr1pts001k4xs6pxge7ylv" class="article-share-link">分享到</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/并发编程/">并发编程</a></li></ul>
@@ -414,7 +414,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://www.fovoy.com/2016/05/12/java_volatile/" data-id="cirzqeh9u00703rs6po0y4o8r" class="article-share-link">分享到</a>
+      <a data-url="http://www.fovoy.com/2016/05/12/java_volatile/" data-id="cirzr1pwz00744xs6srtdhglx" class="article-share-link">分享到</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/volatite/">volatite</a></li></ul>
@@ -474,7 +474,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://www.fovoy.com/2016/05/12/内存模型/" data-id="cirzqeh70002m3rs689v0tk0t" class="article-share-link">分享到</a>
+      <a data-url="http://www.fovoy.com/2016/05/12/内存模型/" data-id="cirzr1pue002m4xs6un52zyew" class="article-share-link">分享到</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/内存模型/">内存模型</a></li></ul>
@@ -526,7 +526,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://www.fovoy.com/2016/03/10/es-mapping/" data-id="cirzqehag008c3rs63gim9816" class="article-share-link">分享到</a>
+      <a data-url="http://www.fovoy.com/2016/03/10/es-mapping/" data-id="cirzr1pxk008g4xs65i739d1h" class="article-share-link">分享到</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/elasticsearch/">elasticsearch</a></li></ul>
@@ -582,7 +582,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://www.fovoy.com/2016/02/17/主题模型/" data-id="cirzqeh7a00353rs6ktecph8k" class="article-share-link">分享到</a>
+      <a data-url="http://www.fovoy.com/2016/02/17/主题模型/" data-id="cirzr1puo00354xs6fqzd3gq2" class="article-share-link">分享到</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/主题模型/">主题模型</a></li></ul>
@@ -656,7 +656,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://www.fovoy.com/2016/02/17/推荐系统/" data-id="cirzqeh6700103rs6a8ro8e5d" class="article-share-link">分享到</a>
+      <a data-url="http://www.fovoy.com/2016/02/17/推荐系统/" data-id="cirzr1pti00104xs61lg3ygql" class="article-share-link">分享到</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/recommendation/">recommendation</a></li></ul>
@@ -753,7 +753,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://www.fovoy.com/2016/01/17/thread/" data-id="cirzqeh7o003o3rs608c42md4" class="article-share-link">分享到</a>
+      <a data-url="http://www.fovoy.com/2016/01/17/thread/" data-id="cirzr1pv0003o4xs6jum5n831" class="article-share-link">分享到</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/线程/">线程</a></li></ul>

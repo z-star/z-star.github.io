@@ -130,187 +130,6 @@
 
       
       <section id="main">
-      <article id="post-tomcat" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2015/08/16/tomcat/">tomcat remote </a>
-    </h1>
-  
-
-        <div class="article-meta">
-          
-  <div class="article-date">
-    <i class="fa fa-calendar"></i>
-    <a href="/2015/08/16/tomcat/">
-      <time datetime="2015-08-16T01:13:36.000Z" itemprop="datePublished">2015-08-16</time>
-    </a>
-  </div>
-
-
-          
-  <div class="article-category">
-  	<i class="fa fa-folder"></i>
-    <a class="article-category-link" href="/categories/中间件/">中间件</a><i class="fa fa-angle-right"></i><a class="article-category-link" href="/categories/中间件/tomcat/">tomcat</a>
-  </div>
-
-        </div>
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-                
-        <ol>
-<li>在tomcat目录的startenv.sh中配置</li>
-</ol>
-<p>export JAVA_OPTS=$JAVA_OPTS” -Xdebug -Xrunjdwp:transport=dt_socket,server=y,suspend=n,address=127.0.0.1:8145”<br>8145如果冲突, 换另一个端口</p>
-<ol>
-<li>重启服务</li>
-</ol>
-<p>[ze.liu@l-ttstw11.f.dev.cn0 /home/q/www/tts_lz/logs]$ sudo /home/q/tools/bin/restart_tomcat7.sh tts_lz</p>
-<ol>
-<li>开启端口映射</li>
-</ol>
-<p>[ze.liu@l-ttstw11.f.dev.cn0 /home/q/www/tts_lz]$ ~/debug.sh 10.86.144.79</p>
-<p>脚本内容<br>[ze.liu@l-ttstw11.f.dev.cn0 /home/q/www/tts_lz]$ cat ~/debug.sh</p>
-<p>#!/bin/bash</p>
-<p>socat TCP4-LISTEN:9999,fork,range=$1/32 TCP4:127.0.0.1:8145</p>
-<ol>
-<li>idea配置远程debug<br>ip为开发机ip, 端口为映射出来的端口, 这里是9999</li>
-</ol>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://www.fovoy.com/2015/08/16/tomcat/" data-id="cirzqeh7j003h3rs6ozbk7ilb" class="article-share-link">分享到</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/tomcat/">tomcat</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-
-    
-      <article id="post-es vs solr" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2015/08/16/es vs solr/">es vs solr</a>
-    </h1>
-  
-
-        <div class="article-meta">
-          
-  <div class="article-date">
-    <i class="fa fa-calendar"></i>
-    <a href="/2015/08/16/es vs solr/">
-      <time datetime="2015-08-16T01:13:36.000Z" itemprop="datePublished">2015-08-16</time>
-    </a>
-  </div>
-
-
-          
-  <div class="article-category">
-  	<i class="fa fa-folder"></i>
-    <a class="article-category-link" href="/categories/Elasticsearch/">Elasticsearch</a><i class="fa fa-angle-right"></i><a class="article-category-link" href="/categories/Elasticsearch/performance/">performance</a>
-  </div>
-
-        </div>
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-                
-        <p><img src="/thumbnails/es.png" alt=""></p>
-<h3 id="elasticsearch_性能对比">elasticsearch 性能对比</h3><hr>
-<p><a href="http://mp.weixin.qq.com/s?__biz=MzAwMDU1MTE1OQ==&amp;mid=209488723&amp;idx=1&amp;sn=d60c0637d7a9f4a4b981a69f10c6b90a&amp;scene=5#rd" target="_blank" rel="external">相关blog</a></p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://www.fovoy.com/2015/08/16/es vs solr/" data-id="cirzqehak008j3rs6jk37b52n" class="article-share-link">分享到</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Elasticsearch/">Elasticsearch</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-
-    
-      <article id="post-mysql密码重置" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2015/08/16/mysql密码重置/">mysql密码重置</a>
-    </h1>
-  
-
-        <div class="article-meta">
-          
-  <div class="article-date">
-    <i class="fa fa-calendar"></i>
-    <a href="/2015/08/16/mysql密码重置/">
-      <time datetime="2015-08-16T01:13:36.000Z" itemprop="datePublished">2015-08-16</time>
-    </a>
-  </div>
-
-
-          
-  <div class="article-category">
-  	<i class="fa fa-folder"></i>
-    <a class="article-category-link" href="/categories/tools/">tools</a>
-  </div>
-
-        </div>
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-                
-        <p><img src="/thumbnails/es.png" alt=""></p>
-<p>step 1:<br>vim /etc/my.cnf #在【mysqld]下加一行：skip-grant-tables<br>service mysqld restart</p>
-<p>step 2:<br>mysql<br>use mysql;<br>UPDATE user SET authentication_string=password(‘123456’) WHERE user=’root’ AND Host=’localhost’;<br>flush privileges;<br>quit;</p>
-<p>step 3:<br>vim /etc/my.cnf #注释掉skip-grant-tables<br>service mysqld restart<br>mysql -uroot -proot<br>ALTER USER ‘root’@’localhost’ IDENTIFIED BY ‘MyNewPass’;</p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://www.fovoy.com/2015/08/16/mysql密码重置/" data-id="cirzqeh8v005o3rs69sy69hn9" class="article-share-link">分享到</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/mysql/">mysql</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-
-    
       <article id="post-mysql安装" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -364,7 +183,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://www.fovoy.com/2015/08/16/mysql安装/" data-id="cirzqeh8x005r3rs6zmbjp7d6" class="article-share-link">分享到</a>
+      <a data-url="http://www.fovoy.com/2015/08/16/mysql安装/" data-id="cirzr1pw9005r4xs6alj0y393" class="article-share-link">分享到</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/mysql/">mysql</a></li></ul>
@@ -431,10 +250,191 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://www.fovoy.com/2015/08/16/kafka/" data-id="cirzqeh9g006j3rs6heehes4f" class="article-share-link">分享到</a>
+      <a data-url="http://www.fovoy.com/2015/08/16/kafka/" data-id="cirzr1pwo006j4xs6a7x7o64o" class="article-share-link">分享到</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/kafka/">kafka</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+    
+      <article id="post-es vs solr" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2015/08/16/es vs solr/">es vs solr</a>
+    </h1>
+  
+
+        <div class="article-meta">
+          
+  <div class="article-date">
+    <i class="fa fa-calendar"></i>
+    <a href="/2015/08/16/es vs solr/">
+      <time datetime="2015-08-16T01:13:36.000Z" itemprop="datePublished">2015-08-16</time>
+    </a>
+  </div>
+
+
+          
+  <div class="article-category">
+  	<i class="fa fa-folder"></i>
+    <a class="article-category-link" href="/categories/Elasticsearch/">Elasticsearch</a><i class="fa fa-angle-right"></i><a class="article-category-link" href="/categories/Elasticsearch/performance/">performance</a>
+  </div>
+
+        </div>
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+                
+        <p><img src="/thumbnails/es.png" alt=""></p>
+<h3 id="elasticsearch_性能对比">elasticsearch 性能对比</h3><hr>
+<p><a href="http://mp.weixin.qq.com/s?__biz=MzAwMDU1MTE1OQ==&amp;mid=209488723&amp;idx=1&amp;sn=d60c0637d7a9f4a4b981a69f10c6b90a&amp;scene=5#rd" target="_blank" rel="external">相关blog</a></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://www.fovoy.com/2015/08/16/es vs solr/" data-id="cirzr1pxp008n4xs6ygz8dg91" class="article-share-link">分享到</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Elasticsearch/">Elasticsearch</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+    
+      <article id="post-tomcat" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2015/08/16/tomcat/">tomcat remote </a>
+    </h1>
+  
+
+        <div class="article-meta">
+          
+  <div class="article-date">
+    <i class="fa fa-calendar"></i>
+    <a href="/2015/08/16/tomcat/">
+      <time datetime="2015-08-16T01:13:36.000Z" itemprop="datePublished">2015-08-16</time>
+    </a>
+  </div>
+
+
+          
+  <div class="article-category">
+  	<i class="fa fa-folder"></i>
+    <a class="article-category-link" href="/categories/中间件/">中间件</a><i class="fa fa-angle-right"></i><a class="article-category-link" href="/categories/中间件/tomcat/">tomcat</a>
+  </div>
+
+        </div>
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+                
+        <ol>
+<li>在tomcat目录的startenv.sh中配置</li>
+</ol>
+<p>export JAVA_OPTS=$JAVA_OPTS” -Xdebug -Xrunjdwp:transport=dt_socket,server=y,suspend=n,address=127.0.0.1:8145”<br>8145如果冲突, 换另一个端口</p>
+<ol>
+<li>重启服务</li>
+</ol>
+<p>[ze.liu@l-ttstw11.f.dev.cn0 /home/q/www/tts_lz/logs]$ sudo /home/q/tools/bin/restart_tomcat7.sh tts_lz</p>
+<ol>
+<li>开启端口映射</li>
+</ol>
+<p>[ze.liu@l-ttstw11.f.dev.cn0 /home/q/www/tts_lz]$ ~/debug.sh 10.86.144.79</p>
+<p>脚本内容<br>[ze.liu@l-ttstw11.f.dev.cn0 /home/q/www/tts_lz]$ cat ~/debug.sh</p>
+<p>#!/bin/bash</p>
+<p>socat TCP4-LISTEN:9999,fork,range=$1/32 TCP4:127.0.0.1:8145</p>
+<ol>
+<li>idea配置远程debug<br>ip为开发机ip, 端口为映射出来的端口, 这里是9999</li>
+</ol>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://www.fovoy.com/2015/08/16/tomcat/" data-id="cirzr1puu003h4xs6i31sidbu" class="article-share-link">分享到</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/tomcat/">tomcat</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+    
+      <article id="post-mysql密码重置" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2015/08/16/mysql密码重置/">mysql密码重置</a>
+    </h1>
+  
+
+        <div class="article-meta">
+          
+  <div class="article-date">
+    <i class="fa fa-calendar"></i>
+    <a href="/2015/08/16/mysql密码重置/">
+      <time datetime="2015-08-16T01:13:36.000Z" itemprop="datePublished">2015-08-16</time>
+    </a>
+  </div>
+
+
+          
+  <div class="article-category">
+  	<i class="fa fa-folder"></i>
+    <a class="article-category-link" href="/categories/tools/">tools</a>
+  </div>
+
+        </div>
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+                
+        <p><img src="/thumbnails/es.png" alt=""></p>
+<p>step 1:<br>vim /etc/my.cnf #在【mysqld]下加一行：skip-grant-tables<br>service mysqld restart</p>
+<p>step 2:<br>mysql<br>use mysql;<br>UPDATE user SET authentication_string=password(‘123456’) WHERE user=’root’ AND Host=’localhost’;<br>flush privileges;<br>quit;</p>
+<p>step 3:<br>vim /etc/my.cnf #注释掉skip-grant-tables<br>service mysqld restart<br>mysql -uroot -proot<br>ALTER USER ‘root’@’localhost’ IDENTIFIED BY ‘MyNewPass’;</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://www.fovoy.com/2015/08/16/mysql密码重置/" data-id="cirzr1pw6005o4xs6vp78njny" class="article-share-link">分享到</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/mysql/">mysql</a></li></ul>
 
     </footer>
   </div>
@@ -485,7 +485,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://www.fovoy.com/2015/07/12/linux/" data-id="cirzqeh9c006b3rs6aomds04j" class="article-share-link">分享到</a>
+      <a data-url="http://www.fovoy.com/2015/07/12/linux/" data-id="cirzr1pwk006b4xs607gezn8p" class="article-share-link">分享到</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/tools/">tools</a></li></ul>
@@ -547,7 +547,69 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://www.fovoy.com/2015/07/12/监控/" data-id="cirzqeh5y000n3rs6aumuenon" class="article-share-link">分享到</a>
+      <a data-url="http://www.fovoy.com/2015/07/12/监控/" data-id="cirzr1ptb000n4xs60kvjgn4r" class="article-share-link">分享到</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/tools/">tools</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+    
+      <article id="post-企业工具" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2015/07/12/企业工具/">企业级别工具</a>
+    </h1>
+  
+
+        <div class="article-meta">
+          
+  <div class="article-date">
+    <i class="fa fa-calendar"></i>
+    <a href="/2015/07/12/企业工具/">
+      <time datetime="2015-07-12T11:25:12.000Z" itemprop="datePublished">2015-07-12</time>
+    </a>
+  </div>
+
+
+          
+  <div class="article-category">
+  	<i class="fa fa-folder"></i>
+    <a class="article-category-link" href="/categories/tools/">tools</a>
+  </div>
+
+        </div>
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+                
+        <p><img src="/thumbnails/t1.png" alt=""></p>
+<ol>
+<li>wiki  Atlassian Confluence</li>
+<li>监控 nagios和cacti   </li>
+<li>collectd是部署在服务器上的一个daemon，用来收集系统级别监控数据，比如cpu、memory等指标。</li>
+<li>Graphite是一个开源项目，基于Python，专注做两个事情：存储数字时间序列，并支持以丰富的函数获取数据，以图片或者json的格式。由三个组件组成:<br>Carbon - 负责接收数据<br>Whisper - 将收到的数据存储成whisper文件（类似RRD文件）<br>graphite-api - 支持Restful的URL获取图片或JSON数据，URL里可以带各种有用的函数</li>
+<li>Watcher Dashboard 基于开源项目Grafana做二次开发，专注于以丰富的方式来实现对数字时间序列的可视化。</li>
+<li>发布Jenkins <a href="http://www.thinksaas.cn/group/topic/378471/" target="_blank" rel="external">发布安装</a></li>
+<li>PMO atlassian<br><a target="_blank" href="http://wpa.qq.com/msgrd?v=3&uin=2585449600&site=qq&menu=yes"><img border="0" src="http://wpa.qq.com/pa?p=2:2585449600:41" alt="点击这里给我发消息" title="点击这里给我发消息"></a></li>
+</ol>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://www.fovoy.com/2015/07/12/企业工具/" data-id="cirzr1pui002x4xs6k0kbmnpj" class="article-share-link">分享到</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/tools/">tools</a></li></ul>
@@ -613,72 +675,10 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://www.fovoy.com/2015/07/12/应用中心/" data-id="cirzqeh6f001g3rs6z09tvioc" class="article-share-link">分享到</a>
+      <a data-url="http://www.fovoy.com/2015/07/12/应用中心/" data-id="cirzr1ptq001g4xs6cpd4uzjj" class="article-share-link">分享到</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/应用中心/">应用中心</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-
-    
-      <article id="post-企业工具" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2015/07/12/企业工具/">企业级别工具</a>
-    </h1>
-  
-
-        <div class="article-meta">
-          
-  <div class="article-date">
-    <i class="fa fa-calendar"></i>
-    <a href="/2015/07/12/企业工具/">
-      <time datetime="2015-07-12T11:25:12.000Z" itemprop="datePublished">2015-07-12</time>
-    </a>
-  </div>
-
-
-          
-  <div class="article-category">
-  	<i class="fa fa-folder"></i>
-    <a class="article-category-link" href="/categories/tools/">tools</a>
-  </div>
-
-        </div>
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-                
-        <p><img src="/thumbnails/t1.png" alt=""></p>
-<ol>
-<li>wiki  Atlassian Confluence</li>
-<li>监控 nagios和cacti   </li>
-<li>collectd是部署在服务器上的一个daemon，用来收集系统级别监控数据，比如cpu、memory等指标。</li>
-<li>Graphite是一个开源项目，基于Python，专注做两个事情：存储数字时间序列，并支持以丰富的函数获取数据，以图片或者json的格式。由三个组件组成:<br>Carbon - 负责接收数据<br>Whisper - 将收到的数据存储成whisper文件（类似RRD文件）<br>graphite-api - 支持Restful的URL获取图片或JSON数据，URL里可以带各种有用的函数</li>
-<li>Watcher Dashboard 基于开源项目Grafana做二次开发，专注于以丰富的方式来实现对数字时间序列的可视化。</li>
-<li>发布Jenkins <a href="http://www.thinksaas.cn/group/topic/378471/" target="_blank" rel="external">发布安装</a></li>
-<li>PMO atlassian<br><a target="_blank" href="http://wpa.qq.com/msgrd?v=3&uin=2585449600&site=qq&menu=yes"><img border="0" src="http://wpa.qq.com/pa?p=2:2585449600:41" alt="点击这里给我发消息" title="点击这里给我发消息"></a></li>
-</ol>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://www.fovoy.com/2015/07/12/企业工具/" data-id="cirzqeh75002x3rs6ke7xgf2z" class="article-share-link">分享到</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/tools/">tools</a></li></ul>
 
     </footer>
   </div>
@@ -730,7 +730,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://www.fovoy.com/2015/07/12/nginx跨域转发/" data-id="cirzqeh8o00563rs6srp8odjy" class="article-share-link">分享到</a>
+      <a data-url="http://www.fovoy.com/2015/07/12/nginx跨域转发/" data-id="cirzr1pw000564xs6anskdo48" class="article-share-link">分享到</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/nginx/">nginx</a></li></ul>
