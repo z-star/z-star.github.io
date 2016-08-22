@@ -97,11 +97,11 @@
     </div>
     <div class="article-info profile-block">
       <div class="article-info-block">
-        90
+        92
         <span>文章</span>
       </div>
       <div class="article-info-block">
-        57
+        59
         <span>标签</span>
       </div>
     </div>
@@ -130,61 +130,6 @@
 
       
       <section id="main">
-      <article id="post-site" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2015/10/17/site/">网站要点</a>
-    </h1>
-  
-
-        <div class="article-meta">
-          
-  <div class="article-date">
-    <i class="fa fa-calendar"></i>
-    <a href="/2015/10/17/site/">
-      <time datetime="2015-10-17T01:13:36.000Z" itemprop="datePublished">2015-10-17</time>
-    </a>
-  </div>
-
-
-          
-  <div class="article-category">
-  	<i class="fa fa-folder"></i>
-    <a class="article-category-link" href="/categories/site/">site</a>
-  </div>
-
-        </div>
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-                
-        <p><img src="/thumbnails/es.png" alt=""></p>
-<hr>
-<p>1.加盟<br>2.提意见<br>3.互动。<br>4.网络教育。eq<br>5.时间成为一个维度，被记忆下来。<br>6.环境，自然条件成最重要的需求</p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://www.fovoy.com/2015/10/17/site/" data-id="cis1yeziz00452xs6km7vow0a" class="article-share-link">分享到</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/site/">site</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-
-    
       <article id="post-elasticsearch源码分析" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -237,10 +182,71 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://www.fovoy.com/2015/10/17/elasticsearch源码分析/" data-id="cis1yezlv009h2xs64xwmzfdx" class="article-share-link">分享到</a>
+      <a data-url="http://www.fovoy.com/2015/10/17/elasticsearch源码分析/" data-id="cis5osmoz009qyss6cct6b3jg" class="article-share-link">分享到</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Elasticsearch/">Elasticsearch</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+    
+      <article id="post-netty" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2015/10/17/netty/">netty</a>
+    </h1>
+  
+
+        <div class="article-meta">
+          
+  <div class="article-date">
+    <i class="fa fa-calendar"></i>
+    <a href="/2015/10/17/netty/">
+      <time datetime="2015-10-17T01:13:36.000Z" itemprop="datePublished">2015-10-17</time>
+    </a>
+  </div>
+
+
+          
+  <div class="article-category">
+  	<i class="fa fa-folder"></i>
+    <a class="article-category-link" href="/categories/netty/">netty</a>
+  </div>
+
+        </div>
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+                
+        <p><img src="/thumbnails/NIO.png" alt=""></p>
+<p>###BIO(同步阻塞式)<br>首先IO分两个阶段：<br>  1.查看数据是否接续<br>  2.进行拷贝<br>所以同步本身就代表，一个事务完成后才能完成下一个事务，是顺序性的进行，所以同步IO就是IO操作，要等到完成才能进行下一步动作。<br>而异步IO为 如果一个线程请求进行IO操作，IO操作不会导致请求线程被阻塞。<br>　对于同步IO：当用户发出IO请求操作之后，如果数据没有就绪，需要通过用户线程或者内核不断地去轮询数据是否就绪，当数据就绪时，再将数据从内核拷贝到用户线程；<br>　而异步IO：只有IO请求操作的发出是由用户线程来进行的，IO操作的两个阶段都是由内核自动完成，然后发送通知告知用户线程IO操作已经完成。也就是说在异步IO中，不会对用户线程产生任何阻塞。</p>
+<p>###五种IO模型<br> 1.阻塞模型：recvfrom之后一直等待数据，直到数据准备好，复制到用户空间之后才返回。阻塞IO会交出cpu,block住。等待内核拷贝数据到用户线程。<br> 2.非阻塞模型：的recvfrom之后一直轮询，直到数据到来。复制到用户空间返回。一直占用CPU。这样会导致CPU占用率非常高，所以一般少使用。<br> 3.I/O复用模型：Java NIO实际上就是多路复用IO。select/poll epoll事件选择器扫描，等待rollback。通过一个线程就可以管理多个socket，只有当socket真正有读写事件发生才会占用资源来进行实际的读写操作。因此，多路复用IO比较适合连接数比较多的情况。不过要注意的是，多路复用IO模型是通过轮询的方式来检测是否有事件到达，并且对到达的事件逐一进行响应。因此对于多路复用IO模型来说，一旦事件响应体很大，那么就会导致后续的事件迟迟得不到处理，并且会影响新的事件轮询。就好比一个餐厅只有一个服务员。<br> 4.信号驱动I/O模型：　在信号驱动IO模型中，当用户线程发起一个IO请求操作，会给对应的socket注册一个信号函数，然后用户线程会继续执行，当内核数据就绪时会发送一个信号给用户线程，用户线程接收到信号之后，便在信号函数中调用IO读写操作来进行实际的IO请求操作。<br> 5.异步I/O: 异步IO模型中，IO操作的两个阶段都不会阻塞用户线程，这两个阶段都是由内核自动完成，然后发送一个信号告知用户线程操作已完成。用户线程中不需要再次调用IO函数进行具体的读写。这点是和信号驱动模型有所不同的，信号模式要自己去取数据，异步模式收到通知时候，数据也已经装好了。<br>  前面四种IO模型实际上都属于同步IO，只有最后一种是真正的异步IO，因为无论是多路复用IO还是信号驱动模型，IO操作的第2个阶段都会引起用户线程阻塞，也就是内核进行数据拷贝的过程都会让用户线程阻塞。</p>
+<p>###两种高性能IO设计模式<br>1.Reactor<br>会先对每个client注册感兴趣的事件，然后有一个线程专门去轮询每个client是否有事件发生，当有事件发生时，便顺序处理每个事件，当所有事件处理完之后，便再转去继续轮询，如下图所示：<br><img src="/thumbnails/reactor.jpg" alt=""><br>2.Proactor: 就是reactor的高级版本，当检测到有事件发生时，会新起一个异步操作，然后交由内核线程去处理，当内核线程完成IO操作之后，发送一个通知告知操作已完成，可以得知，处理的另外新建线程。这就是异步IO模型采用的模式。</p>
+<p><img src="/thumbnails/netty.jpg" alt=""><br> 1.缓冲区Buffer<br>  新NIO中写入或者读出是到Buffer，而不是直接到stream中。可以理解为一个字节数组(ByteBuffer).每一种基本类型都会对应一种缓冲区除了boolean。<br>  　在NIO中，Buffer是一个顶层父类，它是一个抽象类，常用的Buffer的子类有：<br>        1)ByteBuffer<br>        2)IntBuffer<br>        3)CharBuffer<br>        4)LongBuffer<br>        5)DoubleBuffer<br>        6)FloatBuffer<br>        7)ShortBuffer<br>　　如果是对于文件读写，上面几种Buffer都可能会用到。但是对于网络读写来说，用的最多的是ByteBuffer。<br> 2.Channel<br>  通道与stream不同，通道是双向的既能读又能写。而InputStream,OutPutStream看命名就知道非双向。<br>  Channel子类中大概分两类一类网络读取，一类文件读取。一个多路选择器selector可以轮询注册在上门的channel的状态。<br>  　以下是常用的几种通道：<br>        1)FileChannel<br>        2)SocketChanel<br>        3)ServerSocketChannel<br>        4)DatagramChannel<br>　　通过使用FileChannel可以从文件读或者向文件写入数据；通过SocketChannel，以TCP来向网络连接的两端读写数据；通过ServerSocketChanel能够监听客户端发起的TCP连接，并为每个TCP连接创建一个新的SocketChannel来进行数据读写；通过DatagramChannel，以UDP协议来向网络连接的两端读写数据。<br>3.Selector<br> Selector类是NIO的核心类，Selector能够检测多个注册的通道上是否有事件发生，如果有事件发生，便获取事件然后针对每个事件进行相应的响应处理。这样一来，只是用一个单线程就可以管理多个通道，也就是管理多个连接。这样使得只有在连接真正有读写事件发生时，才会调用函数来进行读写，就大大地减少了系统开销，并且不必为每个连接都创建一个线程，不用去维护多个线程，并且避免了多线程之间的上下文切换导致的开销。</p>
+<hr>
+<p>BIO AIO 对比<br>BIO:传统BIO基本就是一个客户端请求得创建一个线程。高并发情况下，成千上万的请求，服务器资源根本不够。所以会进化出了伪异步IO<br>伪AIO：伪AIO，基本就是用线程池，或者队列来处理N个客户端请求的模型，但地城已让使用同步堵塞的机制，所以叫伪异步。当然这样的处理，必然会导致处理时间增加。<br>NIO：new I/O 或者none-blockI/O 非堵塞IO,NIO的特别就是上面说到的buffer,Channel,Selector。chanel注册在selector，所以会不断去轮询这些channel,s时候准备就绪，这是reactor模式，但在Preactor中，为了解决麻木轮询的问题，采用的是callback的方式，单channel装备好了，再叫selector去，处理。<br>AIO：NIO2.0 异步IO模型中，IO操作的两个阶段都不会阻塞用户线程，这两个阶段都是由内核自动完成，然后发送一个信号告知用户线程操作已完成,</p>
+<hr>
+<p>TCP 三次握手<br>这个是已经被问烂了的概念，本身概念非常简单，就是c发请求给S ACK=0 SYN=1 seq=x确认是否可能建立连接，s确认说可以建立连接，就会回答ACK=1,ack=y+1,seq=y，SYN=1,最后c收到确认之后，再次发出确认，并附带数据。ACK=1,seq=x+1,ack=y+1,建立连接时候进入Established状态。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://www.fovoy.com/2015/10/17/netty/" data-id="cis5osmmk005gyss6xh0oaz6j" class="article-share-link">分享到</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/netty/">netty</a></li></ul>
 
     </footer>
   </div>
@@ -296,7 +302,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://www.fovoy.com/2015/10/17/es待学习/" data-id="cis1yezlb008k2xs60g90wrnw" class="article-share-link">分享到</a>
+      <a data-url="http://www.fovoy.com/2015/10/17/es待学习/" data-id="cis5osmod008tyss6lznrgmqy" class="article-share-link">分享到</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Elasticsearch/">Elasticsearch</a></li></ul>
@@ -309,7 +315,7 @@
 
 
     
-      <article id="post-人工智能" class="article article-type-post" itemscope itemprop="blogPost">
+      <article id="post-英语学习" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-inner">
     
     
@@ -318,7 +324,7 @@
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2015/10/17/人工智能/">人工智能</a>
+      <a class="article-title" href="/2015/10/17/英语学习/">英语学习</a>
     </h1>
   
 
@@ -326,7 +332,7 @@
           
   <div class="article-date">
     <i class="fa fa-calendar"></i>
-    <a href="/2015/10/17/人工智能/">
+    <a href="/2015/10/17/英语学习/">
       <time datetime="2015-10-17T01:13:36.000Z" itemprop="datePublished">2015-10-17</time>
     </a>
   </div>
@@ -335,7 +341,7 @@
           
   <div class="article-category">
   	<i class="fa fa-folder"></i>
-    <a class="article-category-link" href="/categories/兴趣/">兴趣</a>
+    <a class="article-category-link" href="/categories/英语学习/">英语学习</a>
   </div>
 
         </div>
@@ -345,72 +351,16 @@
       
                 
         <p><img src="/thumbnails/es.png" alt=""></p>
-<h3 id="vicarious">vicarious</h3><p>###乔治。霍兹</p>
+<hr>
+<p>1.看图识音 2月  Rosetta Stone  猜<br>2.TPR total physical response   TPR WORD LIST 1月  猜</p>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://www.fovoy.com/2015/10/17/人工智能/" data-id="cis1yezi300302xs644n9uek5" class="article-share-link">分享到</a>
+      <a data-url="http://www.fovoy.com/2015/10/17/英语学习/" data-id="cis5osmjj000iyss6ivcbwy2p" class="article-share-link">分享到</a>
       
       
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/人工智能/">人工智能</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-
-    
-      <article id="post-netty" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2015/10/17/netty/">netty</a>
-    </h1>
-  
-
-        <div class="article-meta">
-          
-  <div class="article-date">
-    <i class="fa fa-calendar"></i>
-    <a href="/2015/10/17/netty/">
-      <time datetime="2015-10-17T01:13:36.000Z" itemprop="datePublished">2015-10-17</time>
-    </a>
-  </div>
-
-
-          
-  <div class="article-category">
-  	<i class="fa fa-folder"></i>
-    <a class="article-category-link" href="/categories/netty/">netty</a>
-  </div>
-
-        </div>
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-                
-        <p><img src="/thumbnails/NIO.png" alt=""></p>
-<p>###BIO(同步阻塞式)<br>首先IO分两个阶段：<br>  1.查看数据是否接续<br>  2.进行拷贝<br>所以同步本身就代表，一个事务完成后才能完成下一个事务，是顺序性的进行，所以同步IO就是IO操作，要等到完成才能进行下一步动作。<br>而异步IO为 如果一个线程请求进行IO操作，IO操作不会导致请求线程被阻塞。<br>　对于同步IO：当用户发出IO请求操作之后，如果数据没有就绪，需要通过用户线程或者内核不断地去轮询数据是否就绪，当数据就绪时，再将数据从内核拷贝到用户线程；<br>　而异步IO：只有IO请求操作的发出是由用户线程来进行的，IO操作的两个阶段都是由内核自动完成，然后发送通知告知用户线程IO操作已经完成。也就是说在异步IO中，不会对用户线程产生任何阻塞。</p>
-<p>###五种IO模型<br> 1.阻塞模型：recvfrom之后一直等待数据，直到数据准备好，复制到用户空间之后才返回。阻塞IO会交出cpu,block住。等待内核拷贝数据到用户线程。<br> 2.非阻塞模型：的recvfrom之后一直轮询，直到数据到来。复制到用户空间返回。一直占用CPU。这样会导致CPU占用率非常高，所以一般少使用。<br> 3.I/O复用模型：Java NIO实际上就是多路复用IO。select/poll epoll事件选择器扫描，等待rollback。通过一个线程就可以管理多个socket，只有当socket真正有读写事件发生才会占用资源来进行实际的读写操作。因此，多路复用IO比较适合连接数比较多的情况。不过要注意的是，多路复用IO模型是通过轮询的方式来检测是否有事件到达，并且对到达的事件逐一进行响应。因此对于多路复用IO模型来说，一旦事件响应体很大，那么就会导致后续的事件迟迟得不到处理，并且会影响新的事件轮询。就好比一个餐厅只有一个服务员。<br> 4.信号驱动I/O模型：　在信号驱动IO模型中，当用户线程发起一个IO请求操作，会给对应的socket注册一个信号函数，然后用户线程会继续执行，当内核数据就绪时会发送一个信号给用户线程，用户线程接收到信号之后，便在信号函数中调用IO读写操作来进行实际的IO请求操作。<br> 5.异步I/O: 异步IO模型中，IO操作的两个阶段都不会阻塞用户线程，这两个阶段都是由内核自动完成，然后发送一个信号告知用户线程操作已完成。用户线程中不需要再次调用IO函数进行具体的读写。这点是和信号驱动模型有所不同的，在信号驱动模型中，当用户线程接收到信号表示数据已经就绪，然后需要用户线程调用IO函数进行实际的读写操作；而在异步IO模型中，收到信号表示IO操作已经完成，不需要再在用户线程中调用iO函数进行实际的读写操作。<br>  前面四种IO模型实际上都属于同步IO，只有最后一种是真正的异步IO，因为无论是多路复用IO还是信号驱动模型，IO操作的第2个阶段都会引起用户线程阻塞，也就是内核进行数据拷贝的过程都会让用户线程阻塞。</p>
-<p>###两种高性能IO设计模式<br>1.Reactor<br>会先对每个client注册感兴趣的事件，然后有一个线程专门去轮询每个client是否有事件发生，当有事件发生时，便顺序处理每个事件，当所有事件处理完之后，便再转去继续轮询，如下图所示：<br><img src="/thumbnails/reactor.jpg" alt=""><br>2.Proactor: 就是reactor的高级版本，当检测到有事件发生时，会新起一个异步操作，然后交由内核线程去处理，当内核线程完成IO操作之后，发送一个通知告知操作已完成，可以得知，处理的另外新建线程。这就是异步IO模型采用的模式。</p>
-<p><img src="/thumbnails/netty.jpg" alt=""><br> 1.缓冲区Buffer<br>  新NIO中写入或者读出是到Buffer，而不是直接到stream中。可以理解为一个字节数组(ByteBuffer).每一种基本类型都会对应一种缓冲区除了boolean。<br> 2.Channel<br>  通道与stream不同，通道是双向的既能读又能写。而InputStream,OutPutStream看命名就知道非双向。<br>  Channel子类中大概分两类一类网络读取，一类文件读取。一个多路选择器selector可以轮询注册在上门的channel的状态。</p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://www.fovoy.com/2015/10/17/netty/" data-id="cis1yezjp005g2xs6ewhmtsvu" class="article-share-link">分享到</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/netty/">netty</a></li></ul>
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/英语学习/">英语学习</a></li></ul>
 
     </footer>
   </div>
@@ -465,7 +415,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://www.fovoy.com/2015/10/17/mac/" data-id="cis1yezk200612xs6cd52tyf7" class="article-share-link">分享到</a>
+      <a data-url="http://www.fovoy.com/2015/10/17/mac/" data-id="cis5osmmx0061yss6twule7gq" class="article-share-link">分享到</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Mac/">Mac</a></li></ul>
@@ -478,7 +428,7 @@
 
 
     
-      <article id="post-公积金" class="article article-type-post" itemscope itemprop="blogPost">
+      <article id="post-人工智能" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-inner">
     
     
@@ -487,7 +437,7 @@
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2015/10/12/公积金/">公积金</a>
+      <a class="article-title" href="/2015/10/17/人工智能/">人工智能</a>
     </h1>
   
 
@@ -495,8 +445,8 @@
           
   <div class="article-date">
     <i class="fa fa-calendar"></i>
-    <a href="/2015/10/12/公积金/">
-      <time datetime="2015-10-12T11:25:12.000Z" itemprop="datePublished">2015-10-12</time>
+    <a href="/2015/10/17/人工智能/">
+      <time datetime="2015-10-17T01:13:36.000Z" itemprop="datePublished">2015-10-17</time>
     </a>
   </div>
 
@@ -504,7 +454,7 @@
           
   <div class="article-category">
   	<i class="fa fa-folder"></i>
-    <a class="article-category-link" href="/categories/Framework/">Framework</a><i class="fa fa-angle-right"></i><a class="article-category-link" href="/categories/Framework/spring/">spring</a>
+    <a class="article-category-link" href="/categories/兴趣/">兴趣</a>
   </div>
 
         </div>
@@ -513,72 +463,16 @@
     <div class="article-entry" itemprop="articleBody">
       
                 
-        <p>1）购房合同原件及复印件（复印件需要的页码:1 合同封面页,2 开収商及购房人双<br>方信息页,3 房屋详细信息页,4 购房付款方式页,5 双方签字盖章页）<br>(如因贷款无购房合同原件,可提供加盖抵押章购房合同复印件作为原件使用.)<br>2）购房収票原件和复印件（全款或首付款，如只提供首付款収票则需提供商业贷<br>款合同原件，首付款収票金额不贷款合同金额相加需等亍购房合同房价款）<br>3）商业贷款原件及复印件（复印件需要的页码:1 合同封面页,2 银行及购房人双方<br>信息页,3 房屋详细信息页,4 购房付款方式页,5 双方签字盖章页）<br>4）身仹证原件、复印件（正反面复印在一张 A4 纸上）<br>5）公积金联名卡复印件（正反面复印在一张 A4 纸上）<br>6）住房公积金支叏记录单纸版一仹（可以在骆驼帮—人事支持—社保公积金篇—<br>公积金相关文档下载内找到,请填写您的个人信息，如有丌清楚的可咨询<br>gongjijin.bj）<br>7）异地购房办理支叏的同事，需要开具一仹住房公积金支叏的单位证明–《职工异<br>地购房证明》，模板在骆驼帮—人事支持—社保公积金篇—公积金相关文档下载内<br>找到，请下载填写完整后打印，交材料时由公司统一盖章后提交至管理部。<br>8）以下两种情况，还需开具现单位户下的社保证明，定制生成并打印。定制社保<br>证明网站为：<a href="http://www.bjld.gov.cn/csibiz/home/#，（该网站每月" target="_blank" rel="external">http://www.bjld.gov.cn/csibiz/home/#，（该网站每月</a> 25 日至次月<br>5 日维护）指南请参考骆驼帮–人事支持–社保公积金篇–公积金相关文档下载–<br>个人用户打印社保证明操作指南。<br>A．在京购房办理公积金支叏，且入职单位丌满一年的新员工。<br>B．异地购房办理公积金支叏的员工。</p>
+        <p><img src="/thumbnails/es.png" alt=""></p>
+<h3 id="vicarious">vicarious</h3><p>###乔治。霍兹</p>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://www.fovoy.com/2015/10/12/公积金/" data-id="cis1yezhy002q2xs6bfsny71b" class="article-share-link">分享到</a>
+      <a data-url="http://www.fovoy.com/2015/10/17/人工智能/" data-id="cis5osmkx0030yss6xeo3n0ib" class="article-share-link">分享到</a>
       
       
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/spring/">spring</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-
-    
-      <article id="post-hashcode" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2015/10/12/hashcode/">hashcode</a>
-    </h1>
-  
-
-        <div class="article-meta">
-          
-  <div class="article-date">
-    <i class="fa fa-calendar"></i>
-    <a href="/2015/10/12/hashcode/">
-      <time datetime="2015-10-12T11:25:12.000Z" itemprop="datePublished">2015-10-12</time>
-    </a>
-  </div>
-
-
-          
-  <div class="article-category">
-  	<i class="fa fa-folder"></i>
-    <a class="article-category-link" href="/categories/java/">java</a>
-  </div>
-
-        </div>
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-                
-        <h2 id="＊_hashcpde">＊ hashcpde</h2><h2 id=""><img src="/thumbnails/xxxx.png" alt=""></h2><p>＊hashcode<br>关系到对象的索引位置，对象的hash-relevant改变，不会重新计算hashcode,所以可变对象会有hash 冲突。<br>结论：所以最好不要使用可变字段来计算hashcode.</p>
-<ul>
-<li>hashcode计算时候选择31作为乘积，是因为31是素数，减少冲突，而且位数并不大，不会发生溢出。</li>
-<li>如果重写equals就 尽量重写hashcode,防止冲撞。</li>
-</ul>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://www.fovoy.com/2015/10/12/hashcode/" data-id="cis1yezl1007x2xs6x6ybcqxc" class="article-share-link">分享到</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/base/">base</a></li></ul>
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/人工智能/">人工智能</a></li></ul>
 
     </footer>
   </div>
@@ -627,7 +521,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://www.fovoy.com/2015/10/12/spring配置对比/" data-id="cis1yeziv003x2xs6trkdl9ho" class="article-share-link">分享到</a>
+      <a data-url="http://www.fovoy.com/2015/10/12/spring配置对比/" data-id="cis5osmlk003xyss6zrmmgstm" class="article-share-link">分享到</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/spring/">spring</a></li></ul>
@@ -684,7 +578,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://www.fovoy.com/2015/10/12/前端开发待学习/" data-id="cis1yezhl00202xs6xy5ttnej" class="article-share-link">分享到</a>
+      <a data-url="http://www.fovoy.com/2015/10/12/前端开发待学习/" data-id="cis5osmke0020yss6pjvrcjsx" class="article-share-link">分享到</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/play/">play</a></li></ul>
@@ -697,8 +591,118 @@
 
 
     
+      <article id="post-公积金" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2015/10/12/公积金/">公积金</a>
+    </h1>
+  
+
+        <div class="article-meta">
+          
+  <div class="article-date">
+    <i class="fa fa-calendar"></i>
+    <a href="/2015/10/12/公积金/">
+      <time datetime="2015-10-12T11:25:12.000Z" itemprop="datePublished">2015-10-12</time>
+    </a>
+  </div>
+
+
+          
+  <div class="article-category">
+  	<i class="fa fa-folder"></i>
+    <a class="article-category-link" href="/categories/Framework/">Framework</a><i class="fa fa-angle-right"></i><a class="article-category-link" href="/categories/Framework/spring/">spring</a>
+  </div>
+
+        </div>
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+                
+        <p>1）购房合同原件及复印件（复印件需要的页码:1 合同封面页,2 开収商及购房人双<br>方信息页,3 房屋详细信息页,4 购房付款方式页,5 双方签字盖章页）<br>(如因贷款无购房合同原件,可提供加盖抵押章购房合同复印件作为原件使用.)<br>2）购房収票原件和复印件（全款或首付款，如只提供首付款収票则需提供商业贷<br>款合同原件，首付款収票金额不贷款合同金额相加需等亍购房合同房价款）<br>3）商业贷款原件及复印件（复印件需要的页码:1 合同封面页,2 银行及购房人双方<br>信息页,3 房屋详细信息页,4 购房付款方式页,5 双方签字盖章页）<br>4）身仹证原件、复印件（正反面复印在一张 A4 纸上）<br>5）公积金联名卡复印件（正反面复印在一张 A4 纸上）<br>6）住房公积金支叏记录单纸版一仹（可以在骆驼帮—人事支持—社保公积金篇—<br>公积金相关文档下载内找到,请填写您的个人信息，如有丌清楚的可咨询<br>gongjijin.bj）<br>7）异地购房办理支叏的同事，需要开具一仹住房公积金支叏的单位证明–《职工异<br>地购房证明》，模板在骆驼帮—人事支持—社保公积金篇—公积金相关文档下载内<br>找到，请下载填写完整后打印，交材料时由公司统一盖章后提交至管理部。<br>8）以下两种情况，还需开具现单位户下的社保证明，定制生成并打印。定制社保<br>证明网站为：<a href="http://www.bjld.gov.cn/csibiz/home/#，（该网站每月" target="_blank" rel="external">http://www.bjld.gov.cn/csibiz/home/#，（该网站每月</a> 25 日至次月<br>5 日维护）指南请参考骆驼帮–人事支持–社保公积金篇–公积金相关文档下载–<br>个人用户打印社保证明操作指南。<br>A．在京购房办理公积金支叏，且入职单位丌满一年的新员工。<br>B．异地购房办理公积金支叏的员工。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://www.fovoy.com/2015/10/12/公积金/" data-id="cis5osmkq002qyss6bcr3mydf" class="article-share-link">分享到</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/spring/">spring</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+    
+      <article id="post-hashcode" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2015/10/12/hashcode/">hashcode</a>
+    </h1>
+  
+
+        <div class="article-meta">
+          
+  <div class="article-date">
+    <i class="fa fa-calendar"></i>
+    <a href="/2015/10/12/hashcode/">
+      <time datetime="2015-10-12T11:25:12.000Z" itemprop="datePublished">2015-10-12</time>
+    </a>
+  </div>
+
+
+          
+  <div class="article-category">
+  	<i class="fa fa-folder"></i>
+    <a class="article-category-link" href="/categories/java/">java</a>
+  </div>
+
+        </div>
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+                
+        <h2 id="＊_hashcpde">＊ hashcpde</h2><h2 id=""><img src="/thumbnails/xxxx.png" alt=""></h2><p>＊hashcode<br>关系到对象的索引位置，对象的hash-relevant改变，不会重新计算hashcode,所以可变对象会有hash 冲突。<br>结论：所以最好不要使用可变字段来计算hashcode.</p>
+<ul>
+<li>hashcode计算时候选择31作为乘积，是因为31是素数，减少冲突，而且位数并不大，不会发生溢出。</li>
+<li>如果重写equals就 尽量重写hashcode,防止冲撞。</li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://www.fovoy.com/2015/10/12/hashcode/" data-id="cis5osmo20086yss6f2atf2z5" class="article-share-link">分享到</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/base/">base</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+    
       <nav id="page-nav">
-        <a class="extend prev" rel="prev" href="/page/3/">&laquo; 上一页</a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><span class="page-number current">4</span><a class="page-number" href="/page/5/">5</a><a class="page-number" href="/page/6/">6</a><span class="space">&hellip;</span><a class="page-number" href="/page/9/">9</a><a class="extend next" rel="next" href="/page/5/">下一页 &raquo;</a>
+        <a class="extend prev" rel="prev" href="/page/3/">&laquo; 上一页</a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><span class="page-number current">4</span><a class="page-number" href="/page/5/">5</a><a class="page-number" href="/page/6/">6</a><span class="space">&hellip;</span><a class="page-number" href="/page/10/">10</a><a class="extend next" rel="next" href="/page/5/">下一页 &raquo;</a>
       </nav>
     </section>
       
@@ -804,7 +808,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">分类</h3>
     <div class="widget">
-      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Elasticsearch/">Elasticsearch</a><span class="category-list-count">9</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Elasticsearch/config/">config</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Elasticsearch/performance/">performance</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Elasticsearch/学习/">学习</a><span class="category-list-count">3</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Framework/">Framework</a><span class="category-list-count">3</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Framework/spring/">spring</a><span class="category-list-count">3</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Java/">Java</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Mac/">Mac</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Math/">Math</a><span class="category-list-count">2</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Math/Matrix/">Matrix</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Math/分布/">分布</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/design-pattern/">design pattern</a><span class="category-list-count">11</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/elasticsearch/">elasticsearch</a><span class="category-list-count">2</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/elasticsearch/运维/">运维</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/fovoy/">fovoy</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/java/">java</a><span class="category-list-count">15</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/java/gc/">gc</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/java/jvm/">jvm</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/java/学习/">学习</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/kibana/">kibana</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/lucene/">lucene</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/mysql/">mysql</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/mysql/config/">config</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/netty/">netty</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/recommendation/">recommendation</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/recommendation/协同过滤/">协同过滤</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/redis/">redis</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/scala/">scala</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/scala/基础/">基础</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/site/">site</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/tools/">tools</a><span class="category-list-count">14</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/tools/git/">git</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/tools/hexo/">hexo</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/tools/nginx/">nginx</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/中间件/">中间件</a><span class="category-list-count">2</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/中间件/kafka/">kafka</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/中间件/tomcat/">tomcat</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/主题模型/">主题模型</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/主题模型/主题抽取/">主题抽取</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/兴趣/">兴趣</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/前端开发/">前端开发</a><span class="category-list-count">6</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/前端开发/angularjs/">angularjs</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/前端开发/html5/">html5</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/前端开发/node-js/">node.js</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/前端开发/nodejs/">nodejs</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/前端开发/学习/">学习</a><span class="category-list-count">2</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/基础架构/">基础架构</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/小记/">小记</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/并发编程/">并发编程</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/数据结构/">数据结构</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/英语学习/">英语学习</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/计划/">计划</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/读书/">读书</a><span class="category-list-count">1</span></li></ul>
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Elasticsearch/">Elasticsearch</a><span class="category-list-count">9</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Elasticsearch/config/">config</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Elasticsearch/performance/">performance</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Elasticsearch/学习/">学习</a><span class="category-list-count">3</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Framework/">Framework</a><span class="category-list-count">3</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Framework/spring/">spring</a><span class="category-list-count">3</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Java/">Java</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Mac/">Mac</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Math/">Math</a><span class="category-list-count">2</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Math/Matrix/">Matrix</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Math/分布/">分布</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/design-pattern/">design pattern</a><span class="category-list-count">11</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/elasticsearch/">elasticsearch</a><span class="category-list-count">2</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/elasticsearch/运维/">运维</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/fovoy/">fovoy</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/java/">java</a><span class="category-list-count">15</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/java/gc/">gc</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/java/jvm/">jvm</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/java/学习/">学习</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/kibana/">kibana</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/lucene/">lucene</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/mysql/">mysql</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/mysql/config/">config</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/netty/">netty</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/recommendation/">recommendation</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/recommendation/协同过滤/">协同过滤</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/redis/">redis</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/scala/">scala</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/scala/基础/">基础</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/site/">site</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/tools/">tools</a><span class="category-list-count">14</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/tools/git/">git</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/tools/hexo/">hexo</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/tools/nginx/">nginx</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/中间件/">中间件</a><span class="category-list-count">2</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/中间件/kafka/">kafka</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/中间件/tomcat/">tomcat</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/主题模型/">主题模型</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/主题模型/主题抽取/">主题抽取</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/兴趣/">兴趣</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/前端开发/">前端开发</a><span class="category-list-count">6</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/前端开发/angularjs/">angularjs</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/前端开发/html5/">html5</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/前端开发/node-js/">node.js</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/前端开发/nodejs/">nodejs</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/前端开发/学习/">学习</a><span class="category-list-count">2</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/基础架构/">基础架构</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/小记/">小记</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/并发编程/">并发编程</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/数据结构/">数据结构</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/网络/">网络</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/英语学习/">英语学习</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/计划/">计划</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/读书/">读书</a><span class="category-list-count">1</span></li></ul>
     </div>
   </div>
 
@@ -813,7 +817,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">标签</h3>
     <div class="widget">
-      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/ConcurrentModificationException/">ConcurrentModificationException</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Elasticsearch/">Elasticsearch</a><span class="tag-list-count">9</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Future/">Future</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Mac/">Mac</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Math/">Math</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Quasar/">Quasar</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ThreadLocal/">ThreadLocal</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/angularjs/">angularjs</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/base/">base</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/design-pattern/">design pattern</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/elasticsearch/">elasticsearch</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/fovoy/">fovoy</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/gc/">gc</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/git/">git</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hexo/">hexo</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/html5/">html5</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/idea/">idea</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/java/">java</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/jvm/">jvm</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/kafka/">kafka</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/kibana/">kibana</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/lock/">lock</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/lucene/">lucene</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mysql/">mysql</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/netty/">netty</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/nginx/">nginx</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/node-js/">node.js</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/nodejs/">nodejs</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/play/">play</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/recommendation/">recommendation</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/redis/">redis</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/reflect/">reflect</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/scala/">scala</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/secureCRT/">secureCRT</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/site/">site</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/spring/">spring</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/tomcat/">tomcat</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/tools/">tools</a><span class="tag-list-count">8</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/tree/">tree</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/volatite/">volatite</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/专注/">专注</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/主题模型/">主题模型</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/人工智能/">人工智能</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/内存模型/">内存模型</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/前端开发/">前端开发</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/同步容器/">同步容器</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/堵塞队列/">堵塞队列</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/小说/">小说</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/并发编程/">并发编程</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/应用中心/">应用中心</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/线程/">线程</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/线程池/">线程池</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/英语学习/">英语学习</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/计划/">计划</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/进程和线程/">进程和线程</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/配置中心/">配置中心</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/问题/">问题</a><span class="tag-list-count">1</span></li></ul>
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/ConcurrentModificationException/">ConcurrentModificationException</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Elasticsearch/">Elasticsearch</a><span class="tag-list-count">9</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Future/">Future</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Mac/">Mac</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Math/">Math</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Quasar/">Quasar</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ThreadLocal/">ThreadLocal</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/angularjs/">angularjs</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/base/">base</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/design-pattern/">design pattern</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/elasticsearch/">elasticsearch</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/fovoy/">fovoy</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/gc/">gc</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/git/">git</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hexo/">hexo</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/html5/">html5</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/http/">http</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/idea/">idea</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ip/">ip</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/java/">java</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/jvm/">jvm</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/kafka/">kafka</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/kibana/">kibana</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/lock/">lock</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/lucene/">lucene</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mysql/">mysql</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/netty/">netty</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/nginx/">nginx</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/node-js/">node.js</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/nodejs/">nodejs</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/play/">play</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/recommendation/">recommendation</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/redis/">redis</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/reflect/">reflect</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/scala/">scala</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/secureCRT/">secureCRT</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/site/">site</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/spring/">spring</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/tomcat/">tomcat</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/tools/">tools</a><span class="tag-list-count">8</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/tree/">tree</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/volatite/">volatite</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/专注/">专注</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/主题模型/">主题模型</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/人工智能/">人工智能</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/内存模型/">内存模型</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/前端开发/">前端开发</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/同步容器/">同步容器</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/堵塞队列/">堵塞队列</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/小说/">小说</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/并发编程/">并发编程</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/应用中心/">应用中心</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/线程/">线程</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/线程池/">线程池</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/英语学习/">英语学习</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/计划/">计划</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/进程和线程/">进程和线程</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/配置中心/">配置中心</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/问题/">问题</a><span class="tag-list-count">1</span></li></ul>
     </div>
   </div>
 
@@ -822,7 +826,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">标签云</h3>
     <div class="widget tagcloud">
-      <a href="/tags/ConcurrentModificationException/" style="font-size: 10px;">ConcurrentModificationException</a> <a href="/tags/Elasticsearch/" style="font-size: 18px;">Elasticsearch</a> <a href="/tags/Future/" style="font-size: 10px;">Future</a> <a href="/tags/Mac/" style="font-size: 10px;">Mac</a> <a href="/tags/Math/" style="font-size: 12px;">Math</a> <a href="/tags/Quasar/" style="font-size: 10px;">Quasar</a> <a href="/tags/ThreadLocal/" style="font-size: 10px;">ThreadLocal</a> <a href="/tags/angularjs/" style="font-size: 10px;">angularjs</a> <a href="/tags/base/" style="font-size: 10px;">base</a> <a href="/tags/design-pattern/" style="font-size: 20px;">design pattern</a> <a href="/tags/elasticsearch/" style="font-size: 12px;">elasticsearch</a> <a href="/tags/fovoy/" style="font-size: 12px;">fovoy</a> <a href="/tags/gc/" style="font-size: 10px;">gc</a> <a href="/tags/git/" style="font-size: 10px;">git</a> <a href="/tags/hexo/" style="font-size: 10px;">hexo</a> <a href="/tags/html5/" style="font-size: 10px;">html5</a> <a href="/tags/idea/" style="font-size: 10px;">idea</a> <a href="/tags/java/" style="font-size: 10px;">java</a> <a href="/tags/jvm/" style="font-size: 10px;">jvm</a> <a href="/tags/kafka/" style="font-size: 10px;">kafka</a> <a href="/tags/kibana/" style="font-size: 10px;">kibana</a> <a href="/tags/lock/" style="font-size: 10px;">lock</a> <a href="/tags/lucene/" style="font-size: 10px;">lucene</a> <a href="/tags/mysql/" style="font-size: 14px;">mysql</a> <a href="/tags/netty/" style="font-size: 10px;">netty</a> <a href="/tags/nginx/" style="font-size: 10px;">nginx</a> <a href="/tags/node-js/" style="font-size: 10px;">node.js</a> <a href="/tags/nodejs/" style="font-size: 10px;">nodejs</a> <a href="/tags/play/" style="font-size: 10px;">play</a> <a href="/tags/recommendation/" style="font-size: 10px;">recommendation</a> <a href="/tags/redis/" style="font-size: 10px;">redis</a> <a href="/tags/reflect/" style="font-size: 10px;">reflect</a> <a href="/tags/scala/" style="font-size: 10px;">scala</a> <a href="/tags/secureCRT/" style="font-size: 10px;">secureCRT</a> <a href="/tags/site/" style="font-size: 10px;">site</a> <a href="/tags/spring/" style="font-size: 14px;">spring</a> <a href="/tags/tomcat/" style="font-size: 10px;">tomcat</a> <a href="/tags/tools/" style="font-size: 16px;">tools</a> <a href="/tags/tree/" style="font-size: 10px;">tree</a> <a href="/tags/volatite/" style="font-size: 10px;">volatite</a> <a href="/tags/专注/" style="font-size: 10px;">专注</a> <a href="/tags/主题模型/" style="font-size: 10px;">主题模型</a> <a href="/tags/人工智能/" style="font-size: 10px;">人工智能</a> <a href="/tags/内存模型/" style="font-size: 10px;">内存模型</a> <a href="/tags/前端开发/" style="font-size: 10px;">前端开发</a> <a href="/tags/同步容器/" style="font-size: 10px;">同步容器</a> <a href="/tags/堵塞队列/" style="font-size: 10px;">堵塞队列</a> <a href="/tags/小说/" style="font-size: 10px;">小说</a> <a href="/tags/并发编程/" style="font-size: 10px;">并发编程</a> <a href="/tags/应用中心/" style="font-size: 10px;">应用中心</a> <a href="/tags/线程/" style="font-size: 10px;">线程</a> <a href="/tags/线程池/" style="font-size: 10px;">线程池</a> <a href="/tags/英语学习/" style="font-size: 10px;">英语学习</a> <a href="/tags/计划/" style="font-size: 10px;">计划</a> <a href="/tags/进程和线程/" style="font-size: 10px;">进程和线程</a> <a href="/tags/配置中心/" style="font-size: 10px;">配置中心</a> <a href="/tags/问题/" style="font-size: 10px;">问题</a>
+      <a href="/tags/ConcurrentModificationException/" style="font-size: 10px;">ConcurrentModificationException</a> <a href="/tags/Elasticsearch/" style="font-size: 18px;">Elasticsearch</a> <a href="/tags/Future/" style="font-size: 10px;">Future</a> <a href="/tags/Mac/" style="font-size: 10px;">Mac</a> <a href="/tags/Math/" style="font-size: 12px;">Math</a> <a href="/tags/Quasar/" style="font-size: 10px;">Quasar</a> <a href="/tags/ThreadLocal/" style="font-size: 10px;">ThreadLocal</a> <a href="/tags/angularjs/" style="font-size: 10px;">angularjs</a> <a href="/tags/base/" style="font-size: 10px;">base</a> <a href="/tags/design-pattern/" style="font-size: 20px;">design pattern</a> <a href="/tags/elasticsearch/" style="font-size: 12px;">elasticsearch</a> <a href="/tags/fovoy/" style="font-size: 12px;">fovoy</a> <a href="/tags/gc/" style="font-size: 10px;">gc</a> <a href="/tags/git/" style="font-size: 10px;">git</a> <a href="/tags/hexo/" style="font-size: 10px;">hexo</a> <a href="/tags/html5/" style="font-size: 10px;">html5</a> <a href="/tags/http/" style="font-size: 10px;">http</a> <a href="/tags/idea/" style="font-size: 10px;">idea</a> <a href="/tags/ip/" style="font-size: 10px;">ip</a> <a href="/tags/java/" style="font-size: 10px;">java</a> <a href="/tags/jvm/" style="font-size: 10px;">jvm</a> <a href="/tags/kafka/" style="font-size: 10px;">kafka</a> <a href="/tags/kibana/" style="font-size: 10px;">kibana</a> <a href="/tags/lock/" style="font-size: 10px;">lock</a> <a href="/tags/lucene/" style="font-size: 10px;">lucene</a> <a href="/tags/mysql/" style="font-size: 14px;">mysql</a> <a href="/tags/netty/" style="font-size: 10px;">netty</a> <a href="/tags/nginx/" style="font-size: 10px;">nginx</a> <a href="/tags/node-js/" style="font-size: 10px;">node.js</a> <a href="/tags/nodejs/" style="font-size: 10px;">nodejs</a> <a href="/tags/play/" style="font-size: 10px;">play</a> <a href="/tags/recommendation/" style="font-size: 10px;">recommendation</a> <a href="/tags/redis/" style="font-size: 10px;">redis</a> <a href="/tags/reflect/" style="font-size: 10px;">reflect</a> <a href="/tags/scala/" style="font-size: 10px;">scala</a> <a href="/tags/secureCRT/" style="font-size: 10px;">secureCRT</a> <a href="/tags/site/" style="font-size: 10px;">site</a> <a href="/tags/spring/" style="font-size: 14px;">spring</a> <a href="/tags/tomcat/" style="font-size: 10px;">tomcat</a> <a href="/tags/tools/" style="font-size: 16px;">tools</a> <a href="/tags/tree/" style="font-size: 10px;">tree</a> <a href="/tags/volatite/" style="font-size: 10px;">volatite</a> <a href="/tags/专注/" style="font-size: 10px;">专注</a> <a href="/tags/主题模型/" style="font-size: 10px;">主题模型</a> <a href="/tags/人工智能/" style="font-size: 10px;">人工智能</a> <a href="/tags/内存模型/" style="font-size: 10px;">内存模型</a> <a href="/tags/前端开发/" style="font-size: 10px;">前端开发</a> <a href="/tags/同步容器/" style="font-size: 10px;">同步容器</a> <a href="/tags/堵塞队列/" style="font-size: 10px;">堵塞队列</a> <a href="/tags/小说/" style="font-size: 10px;">小说</a> <a href="/tags/并发编程/" style="font-size: 10px;">并发编程</a> <a href="/tags/应用中心/" style="font-size: 10px;">应用中心</a> <a href="/tags/线程/" style="font-size: 10px;">线程</a> <a href="/tags/线程池/" style="font-size: 10px;">线程池</a> <a href="/tags/英语学习/" style="font-size: 10px;">英语学习</a> <a href="/tags/计划/" style="font-size: 10px;">计划</a> <a href="/tags/进程和线程/" style="font-size: 10px;">进程和线程</a> <a href="/tags/配置中心/" style="font-size: 10px;">配置中心</a> <a href="/tags/问题/" style="font-size: 10px;">问题</a>
     </div>
   </div>
 
@@ -831,7 +835,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">归档</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/07/">七月 2016</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/05/">五月 2016</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/03/">三月 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/02/">二月 2016</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/01/">一月 2016</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/12/">十二月 2015</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/11/">十一月 2015</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/10/">十月 2015</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/08/">八月 2015</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/07/">七月 2015</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/05/">五月 2015</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/03/">三月 2015</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/01/">一月 2015</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/12/">十二月 2014</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/11/">十一月 2014</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/10/">十月 2014</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/07/">七月 2014</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/05/">五月 2014</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/04/">四月 2014</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/03/">三月 2014</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/01/">一月 2014</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/10/">十月 2013</a><span class="archive-list-count">1</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/07/">七月 2016</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/05/">五月 2016</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/03/">三月 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/02/">二月 2016</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/01/">一月 2016</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/12/">十二月 2015</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/11/">十一月 2015</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/10/">十月 2015</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/09/">九月 2015</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/08/">八月 2015</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/07/">七月 2015</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/05/">五月 2015</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/03/">三月 2015</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/01/">一月 2015</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/12/">十二月 2014</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/11/">十一月 2014</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/10/">十月 2014</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/07/">七月 2014</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/05/">五月 2014</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/04/">四月 2014</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/03/">三月 2014</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/01/">一月 2014</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/10/">十月 2013</a><span class="archive-list-count">1</span></li></ul>
     </div>
   </div>
 
