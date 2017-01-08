@@ -130,60 +130,6 @@
 
       
       <section id="main">
-      <article id="post-cache" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2015/11/12/cache/">cache</a>
-    </h1>
-  
-
-        <div class="article-meta">
-          
-  <div class="article-date">
-    <i class="fa fa-calendar"></i>
-    <a href="/2015/11/12/cache/">
-      <time datetime="2015-11-12T11:25:12.000Z" itemprop="datePublished">2015-11-12</time>
-    </a>
-  </div>
-
-
-          
-  <div class="article-category">
-  	<i class="fa fa-folder"></i>
-    <a class="article-category-link" href="/categories/系统/">系统</a>
-  </div>
-
-        </div>
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-                
-        <hr>
-<p>cpu 除寄存器以为还有三级缓存L1 32K L2 256K L3 12MB<br>缓存的最小单位是缓存行，64字节，所以如果加载一个8字节的long进来，你将无消耗地加载了另外7个. 所以你可以非常快地遍历数组.</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> L1CacheMiss &#123;</span><br><span class="line"> <span class="keyword">private</span> <span class="keyword">static</span> final <span class="keyword">int</span> RUNS = <span class="number">10</span>;</span><br><span class="line"> <span class="keyword">private</span> <span class="keyword">static</span> final <span class="keyword">int</span> DIMENSION_1 = <span class="number">1024</span> * <span class="number">1024</span>;</span><br><span class="line"> <span class="keyword">private</span> <span class="keyword">static</span> final <span class="keyword">int</span> DIMENSION_2 = <span class="number">62</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">long</span>[][] longs;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> throws Exception </span>&#123;</span><br><span class="line"> Thread.sleep(<span class="number">10000</span>);</span><br><span class="line"> longs = <span class="keyword">new</span> <span class="keyword">long</span>[DIMENSION_1][];</span><br><span class="line"> <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; DIMENSION_1; i++) &#123;</span><br><span class="line"> longs[i] = <span class="keyword">new</span> <span class="keyword">long</span>[DIMENSION_2];</span><br><span class="line"> <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; DIMENSION_2; j++) &#123;</span><br><span class="line"> longs[i][j] = <span class="number">0L</span>;</span><br><span class="line"> &#125;</span><br><span class="line"> &#125;</span><br><span class="line"> System.out.println(<span class="string">"starting...."</span>);</span><br><span class="line"></span><br><span class="line">final <span class="keyword">long</span> start = System.nanoTime();</span><br><span class="line"><span class="comment">//2维数组中，先轮询j 能加载L1Cache 避免 cache miss</span></span><br><span class="line"> <span class="keyword">long</span> sum = <span class="number">0L</span>;</span><br><span class="line"> <span class="keyword">for</span> (<span class="keyword">int</span> r = <span class="number">0</span>; r &lt; RUNS; r++) &#123;</span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; DIMENSION_2; j++) &#123;</span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; DIMENSION_1; i++) &#123;</span><br><span class="line">sum += longs[i][j];</span><br><span class="line"> &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; DIMENSION_1; i++) &#123;</span><br><span class="line"> <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; DIMENSION_2; j++) &#123;</span><br><span class="line"> sum += longs[i][j];</span><br><span class="line"> &#125;</span><br><span class="line"> &#125;</span><br><span class="line"> &#125;</span><br><span class="line"> System.out.println(<span class="string">"duration = "</span> + (System.nanoTime() - start));</span><br><span class="line"> &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<hr>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://www.fovoy.com/2015/11/12/cache/" data-id="cixo3b4xw00c7zes6t77egedc" class="article-share-link">分享到</a>
-      
-      
-    </footer>
-  </div>
-  
-</article>
-
-
-
-    
       <article id="post-java容器" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -244,63 +190,10 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://www.fovoy.com/2015/11/12/java容器/" data-id="cixo3b4w3008yzes6g1id9nzg" class="article-share-link">分享到</a>
+      <a data-url="http://www.fovoy.com/2015/11/12/java容器/" data-id="cixo3g89o008y2ls6nrz0dzwr" class="article-share-link">分享到</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/同步容器/">同步容器</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-
-    
-      <article id="post-Exception" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2015/11/12/Exception/">Exception</a>
-    </h1>
-  
-
-        <div class="article-meta">
-          
-  <div class="article-date">
-    <i class="fa fa-calendar"></i>
-    <a href="/2015/11/12/Exception/">
-      <time datetime="2015-11-12T11:25:12.000Z" itemprop="datePublished">2015-11-12</time>
-    </a>
-  </div>
-
-
-          
-  <div class="article-category">
-  	<i class="fa fa-folder"></i>
-    <a class="article-category-link" href="/categories/JAVA/">JAVA</a>
-  </div>
-
-        </div>
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-                
-        <p>RuntimeException ：运行时异常属于非检查异常，也就是编译阶段不会检查的异常，这样的异常需要某个阶段捕获要不，要么是线程中止，要么是主程序终止。队列里面出现异常数据了，正常的处理应该是把异常数据舍弃，然后记录日志。不应该由于异常数据而影响下面对正常数据的处理。</p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://www.fovoy.com/2015/11/12/Exception/" data-id="cixo3b4yr00dszes6oe7hnnp0" class="article-share-link">分享到</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/异常/">异常</a></li></ul>
 
     </footer>
   </div>
@@ -374,7 +267,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://www.fovoy.com/2015/11/12/lock/" data-id="cixo3b4vi007qzes6py2clu1i" class="article-share-link">分享到</a>
+      <a data-url="http://www.fovoy.com/2015/11/12/lock/" data-id="cixo3g88z007q2ls6c8nlhnfl" class="article-share-link">分享到</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/lock/">lock</a></li></ul>
@@ -457,7 +350,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://www.fovoy.com/2015/10/22/html5学习/" data-id="cixo3b4wo009tzes6wfq1ldcz" class="article-share-link">分享到</a>
+      <a data-url="http://www.fovoy.com/2015/10/22/html5学习/" data-id="cixo3g8a7009t2ls6x8ekh97z" class="article-share-link">分享到</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/html5/">html5</a></li></ul>
@@ -470,7 +363,7 @@
 
 
     
-      <article id="post-site" class="article article-type-post" itemscope itemprop="blogPost">
+      <article id="post-javaclassloader" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-inner">
     
     
@@ -479,7 +372,7 @@
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2015/10/17/site/">网站要点</a>
+      <a class="article-title" href="/2015/10/17/javaclassloader/">java classloader</a>
     </h1>
   
 
@@ -487,7 +380,7 @@
           
   <div class="article-date">
     <i class="fa fa-calendar"></i>
-    <a href="/2015/10/17/site/">
+    <a href="/2015/10/17/javaclassloader/">
       <time datetime="2015-10-17T01:13:36.000Z" itemprop="datePublished">2015-10-17</time>
     </a>
   </div>
@@ -496,7 +389,7 @@
           
   <div class="article-category">
   	<i class="fa fa-folder"></i>
-    <a class="article-category-link" href="/categories/site/">site</a>
+    <a class="article-category-link" href="/categories/java/">java</a>
   </div>
 
         </div>
@@ -505,17 +398,19 @@
     <div class="article-entry" itemprop="articleBody">
       
                 
-        <p><img src="/thumbnails/es.png" alt=""></p>
+        <p>java classloader</p>
+<p>一般如果我们想实现自己的classload 都会继承URLClassLoader这个子类，因为这个子类已经帮我们实现了大部分工作。</p>
+<p>1.Boosstrap ClassLoader 根加载器主要加载jvm基本类型.<br>2.ExtClassLoader 加载JVM以外的jar包.<br>3.AppClassLoader 加载的所有java.class.path里面的jar.</p>
 <hr>
-<p>1.加盟<br>2.提意见<br>3.互动。<br>4.网络教育。eq<br>5.时间成为一个维度，被记忆下来。<br>6.环境，自然条件成最重要的需求</p>
+<p>如何实现热部署<br>1.判断是够被加载的情况是findLoadedClass(),JVM表示是否是同一个类的两个条件，是看类名和ClassLoader是否相同，所以热部署主要现象不同的classloader实例来加载。<br>2.对象的状态不被保持的情况下，才适合热部署，比如jsp.</p>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://www.fovoy.com/2015/10/17/site/" data-id="cixo3b4uj0057zes6inrdfb84" class="article-share-link">分享到</a>
+      <a data-url="http://www.fovoy.com/2015/10/17/javaclassloader/" data-id="cixo3g89u00992ls617u0uvkz" class="article-share-link">分享到</a>
       
       
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/site/">site</a></li></ul>
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/java/">java</a></li></ul>
 
     </footer>
   </div>
@@ -567,143 +462,10 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://www.fovoy.com/2015/10/17/英语学习/" data-id="cixo3b4rx000nzes6yfy16gzd" class="article-share-link">分享到</a>
+      <a data-url="http://www.fovoy.com/2015/10/17/英语学习/" data-id="cixo3g84u000n2ls6ypbnjved" class="article-share-link">分享到</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/英语学习/">英语学习</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-
-    
-      <article id="post-mac" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2015/10/17/mac/">Mac</a>
-    </h1>
-  
-
-        <div class="article-meta">
-          
-  <div class="article-date">
-    <i class="fa fa-calendar"></i>
-    <a href="/2015/10/17/mac/">
-      <time datetime="2015-10-17T01:13:36.000Z" itemprop="datePublished">2015-10-17</time>
-    </a>
-  </div>
-
-
-          
-  <div class="article-category">
-  	<i class="fa fa-folder"></i>
-    <a class="article-category-link" href="/categories/Mac/">Mac</a>
-  </div>
-
-        </div>
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-                
-        <p><img src="/thumbnails/es.png" alt=""></p>
-<hr>
-<ul>
-<li>以前在Ubuntu上，直接sudo netstat -nap </li>
-<li>但是在mac 上这个命令还跑不通，sudo netstat  -nap  tcp 才行，结果还没有进程号。用lsof -Pn 解决了<br>mac 查看端口占用<br>sudo lsof -n -P| grep :8087<br>lsof -i tcp:8087<br>查看占用 nc -v -w 2 127.0.0.1 8809<br>appid Czy8388</li>
-</ul>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://www.fovoy.com/2015/10/17/mac/" data-id="cixo3b4vf007gzes65hvt2dlh" class="article-share-link">分享到</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Mac/">Mac</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-
-    
-      <article id="post-es待学习" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2015/10/17/es待学习/">elasticsearch 待学习</a>
-    </h1>
-  
-
-        <div class="article-meta">
-          
-  <div class="article-date">
-    <i class="fa fa-calendar"></i>
-    <a href="/2015/10/17/es待学习/">
-      <time datetime="2015-10-17T01:13:36.000Z" itemprop="datePublished">2015-10-17</time>
-    </a>
-  </div>
-
-
-          
-  <div class="article-category">
-  	<i class="fa fa-folder"></i>
-    <a class="article-category-link" href="/categories/Elasticsearch/">Elasticsearch</a><i class="fa fa-angle-right"></i><a class="article-category-link" href="/categories/Elasticsearch/学习/">学习</a>
-  </div>
-
-        </div>
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-                
-        <p><img src="/thumbnails/es.png" alt=""></p>
-<h3 id="elasticsearch_待学习">elasticsearch 待学习</h3><hr>
-<p> elasticsearch 源码和totem类似，都是目前比较流行的module,模块装配，但因为guice，的引入，代码显得更加的简洁。<br> 所有的都会按服务切分，一个分布式搜索引擎的业务切分模块。<br> 主函数启动时都会初始化所有的服务。setting,search,index,agg,cluster.等。</p>
-<hr>
-<p>InternalNode 节点</p>
-<p>###Module分析<br>CacheRecyclerModule-CacheRecycler 缓存服务。concurrencyLevel 类似concurrentMap中的级别服务。Delegate 给某一个concurrent。<br>默认SOFT_CONCURRENT,也就是软应用。</p>
-<p>PageCacheRecyclerModule-MockPageCacheRecycler 分页缓存服务<br>PageCacheRecycler 1.7默认情况下，默认的模式是CONCURRENT<br>limit默认10%heap pageSize 默认 16KB。maxPageCount=limit/pageSize; maxBytePageCount占比。</p>
-<p>CircuitBreakerModule-HierarchyCircuitBreakerService 熔断模块，阻止内存占用超过等（indices.breaker.total.limit：70%）<br>在内存使用中fileddata比较多。也比较复杂。 overhead 1.03,<br>ChildMemoryCircuitBreaker 主要的方法类，addEstimateBytesAndMaybeBreak判断是否过载。<br>ChildMemoryCircuitBreaker.addEstimateBytesAndMaybeBreak() 判断是否超过限制。PagedBytesIndexFieldData.loadDirect(加载fielddata时候判断，内存存储实例 OrdinalsStore。IndicesFieldDataCache.load()<br>BigArraysModule-BigArrays ，pageSize 16k/占用bit. 当要申请的空间大于pageSize的时候就需要使用到，bigArray了。bigArray使用的也是二维数组结构。底层都是Recycler。<br>PluginsService 两种plugin jvmPlugins 和 sitePlugins</p>
-<p>NodeModule–(InternalNode,NodeSettingsService 配置管理)<br>NodeSettingsService –节点动态更新配置的实现类.clusterChanged，去刷新setting.<br>NodeService 节点服务NodeStats，NodeInfo的Response,节点信息服务。</p>
-<p>NetworkModule–NetworkService() ip port 服务。</p>
-<p>ScriptModule-NativeScriptEngineService 解析各种script请求。主要用于search.<br>EnvironmentModule-Environment环境文件。<br>NodeEnvironmentModule-NodeEnvironment节点环境文件索引级别。索引lock 就在这个层次。<br>ClusterNameModule–ClusterName 集群名字(elasticsearch)。<br>ThreadPoolModule–ThreadPool 线程总管理。</p>
-<p>DiscoveryModule–<br>DiscoveryService–广播，集群状态。3秒ping一次  joinTimeOut 3*20秒 discovery.zen.fd.ping_interval 1秒 NodesFaultDetection retry三次<br>ZenDiscoveryModule<br>ElectMasterService(选举服务) master节点中，id最小的,选为master.<br>ZenPingService–UnicastZenPing-master节点的address管理，抽象为DiscoveryNode,NodeId为”#zen<em>unicast</em>“ + unicastNodeIdGenerator.incrementAndGet() + “#” configuredTargetNodes为配置文件中配置的地址,MulticastZenPing-,<br>ZenDiscovery(非本地发现) initial_join ClusterStateNonMasterUpdateTask task来做集群ping的操作。//NodesFaultDetection 位置节点之间的链接 NodeFD task 来具体操作ping消息。<br>LocalDiscovery(本地发现)</p>
-<p>ClusterModule–DynamicSettings(配置动态变更)cluster**大模块。</p>
-<p>RestModule–RestController注册<br>RestActionModule–自己的一些RestAction的加载，还有cat api 的加载，包括plugin的action加载。<br>自己写action只要继承BaseRestHandler写自己的RestAction。在里面完成controller的registerHandler注册handler，还可以registerFilter来写过滤层。dispatchRequest接受Http接受到的消息。来处理具体的action.条用相应的handler。</p>
-<p>TransportModule–<br>There are 4 types of connections per node, low/med/high/ping<br>connectedNodes .每一个集群上节点的channels的集合。<br>serverChannels 服务端的channel<br>NettyTransport 保证channel 发送请求。sendRequest(netty ServerBootstraps初始化）dispatcher为MessageChannelHandler，分发action.<br>netty.epollBugWorkaround.<br>workerCount 就是cpu核数*2,<br>scheduledPing 来监控 节点状态。<br>doStart()中来来开启了netty的clientBootstrap 没有bind 而只是connect 默认是NioClientSocketChannelFactory,还有另一个OIO也就是一个channel对一个线程 ClientChannelPipelineFactory 具体的pipeline中dispatcher的方法。MessageChannelHandler。<br>createServerBootstrap()创建ServerBootstrap. bindServerBootstrap ServerChannelPipelineFactory 具体的 dispatcher 也是 MessageChannelHandler  handleRequest处理请求。handler.messageReceived(); SearchServiceTransportAction  handleResponse 来接受响应。<br>transportService.registerHandler(); 注册tcp的Action. transportService.connectToNode 链接到每个节点。<br>HttpServerModule–NettyHttpServerTransport HttpRequestHandler.messageReceived 接受的，http消息。http 只有一个serverBootstrap<br>HttpServerAdapter.dispatchRequest().分发请求。</p>
-<p>IndicesModule–<br>OpenBitSet–使用的重要数据结构<br>OpenBitSet的原理<br><img src="/thumbnails/bitSet.png" alt=""><br>二进制下标表示数字所以得到<br>[0,63]之间的数 需要1个long类型串联起来<br>[0,127]之前的数，需要2个long串联起来<br>[0,64N-1]需要N个long串联起来。<br>所以OpenBisSet的核心就是long类型的数组bits.<br>long index = 64*N+m  其中 N就是在long数组中的坐标。m表示bit[N]的这个long中二进制的第m位。<br>set方法就4个操作，第一个<br>int wordNum = (int)(index &gt;&gt; 6); //计算出坐标所在的long数组的位置。<br>long bitmask = 1L &lt;&lt; (int)index; //计算出移动该坐标后的long的大小<br>this.bits[wordNum] |= bitmask; //和所在坐标的long进行或运算，也就是并集。</p>
-<p>最后总结一下OpenBitSet数据存储的特点：OpenBitSet无法存储重复的数据。数据存储到OpenBitSet中后就是有序的了。OpenBitSet适合存储密集程度高，且量大的数据。OpenBitSet中存储的数据适合位运算，比如取交集、并集、补集<br>核心模块，分三块（registerBuiltinQueryParsers，registerBuiltInMappers，registerBuiltInMetadataMappers）改写FunctionScoreQueryParser来实现打分.IndicesLifecycle(所以索引周期监听处理)<br>IndexShard 创建每一个shard对应一个实例。在shards里被引用。<br>indexService 创建每一个index对应一个实例。在indices里被引用。<br>IndicesService(所以创建删除等操作)是indexService的操作类。<br>RecoveryTarget recovery的具体操作类。startRecovery,获取恢复的node,把分片数据发送过去。doRecovery 获取metadataSnapshot.InternalClusterService updateTask 检测状态，来做recovery的处理。<br>IndicesStore（所以存储）<br>IndicesFilterCache(WeightedFilterCache 来存储,weight回收, 内存里存的DocISet,FixedBitSet)<br>IndicesFieldDataCache （load来加载fieldData缓存数据）<br>IndicesClusterStateService()<br>IndexingMemoryController（更新所有ShardBuffers）IndicesQueryCache(lucence中的LRUQueryCache)</p>
-<p>SearchModule–核心模块<br>SearchServiceTransportAction 注册。<br>search 过程。入口主要是SearchServiceTransportAction  完成一个shardTarget<br>TransportActionNodeProxy.execute.搜索遍历所有的节点。<br>TransportSearchAction 为入口，来区分不同的searchType.<br>TransportSearchQueryThenFetchAction </p>
-<p>refresh:刷到可搜索。<br>flush：内存刷到segment文件上。</p>
-<hr>
-<p>action 请求端的Action</p>
-<h2 id="searchAction为例子。先发送给TransportSearchAction，再由TransportSearchAction_中的registerRequestHandler_来注册，并用_TransportHandler_来分发，确定具体的search类型再发送给别的action。">searchAction为例子。先发送给TransportSearchAction，再由TransportSearchAction 中的registerRequestHandler 来注册，并用 TransportHandler 来分发，确定具体的search类型再发送给别的action。</h2><h2 id="消息的listener_还是依赖RequestHolder对象来存放listener对象，以requestId为key-每次收到消息都来处理response对应的requetId。">消息的listener 还是依赖RequestHolder对象来存放listener对象，以requestId为key.每次收到消息都来处理response对应的requetId。</h2><p>rest 最后会parse成action,只需要转化一道。</p>
-<p><a href="https://www.elastic.co/webinars/performance-and-scale" target="_blank" rel="external">proformance</a><br><a href="https://www.elastic.co/blog/support-in-the-wild-my-biggest-elasticsearch-problem-at-scale" target="_blank" rel="external">filter</a><br><a href="https://download.elastic.co/elasticsearch/elasticsearch/elasticsearch-1.7.3.tar.gz" target="_blank" rel="external">下载</a><br><a href="http://vdisk.weibo.com/u/1451057603" target="_blank" rel="external">学习</a><br><a href="http://www.infoq.com/cn/articles/database-timestamp-02" target="_blank" rel="external">es好文</a><br><a href="http://www.ttlsa.com/nginx/nginx-elasticsearch/" target="_blank" rel="external">nginx与Elasticsearch结合使用</a><br><a href="https://www.digitalocean.com/community/tutorials/how-to-install-elasticsearch-logstash-and-kibana-4-on-ubuntu-14-04" target="_blank" rel="external">kibana Ng 安全代理</a></p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://www.fovoy.com/2015/10/17/es待学习/" data-id="cixo3b4x000atzes6zsukhhj1" class="article-share-link">分享到</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Elasticsearch/">Elasticsearch</a></li></ul>
 
     </footer>
   </div>
@@ -771,10 +533,244 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://www.fovoy.com/2015/10/17/netty/" data-id="cixo3b4v6006qzes62ibfj02t" class="article-share-link">分享到</a>
+      <a data-url="http://www.fovoy.com/2015/10/17/netty/" data-id="cixo3g88j006q2ls6sri1wzgk" class="article-share-link">分享到</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/netty/">netty</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+    
+      <article id="post-elasticsearch源码分析" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2015/10/17/elasticsearch源码分析/">elasticsearch源码分析</a>
+    </h1>
+  
+
+        <div class="article-meta">
+          
+  <div class="article-date">
+    <i class="fa fa-calendar"></i>
+    <a href="/2015/10/17/elasticsearch源码分析/">
+      <time datetime="2015-10-17T01:13:36.000Z" itemprop="datePublished">2015-10-17</time>
+    </a>
+  </div>
+
+
+          
+  <div class="article-category">
+  	<i class="fa fa-folder"></i>
+    <a class="article-category-link" href="/categories/Elasticsearch/">Elasticsearch</a><i class="fa fa-angle-right"></i><a class="article-category-link" href="/categories/Elasticsearch/学习/">学习</a>
+  </div>
+
+        </div>
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+                
+        <p><img src="/thumbnails/es.png" alt=""></p>
+<h3 id="elasticsearch_待学习">elasticsearch 待学习</h3><hr>
+<p>1.tcp 消息通道</p>
+<figure class="highlight actionscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">channelPipeline.addLast(<span class="string">"dispatcher"</span>, <span class="keyword">new</span> MessageChannelHandler(nettyTransport, nettyTransport.logger, <span class="string">".client"</span>));</span><br></pre></td></tr></table></figure>
+<p>NettyTransport 中定义的接收消息时候的 handler MessageChannelHandler.messageReceived</p>
+<figure class="highlight lisp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">String action = handleRequest<span class="list">(<span class="keyword">ctx</span>.getChannel<span class="list">()</span>, streamIn, requestId, version)</span><span class="comment">;</span></span><br></pre></td></tr></table></figure>
+<p>MessageChannelHandler.handleRequest()处理action.<br><figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">threadPool.executor(<span class="keyword">reg</span>.getExecutor()).<span class="keyword">execute</span>(<span class="keyword">new</span> RequestHandler(<span class="keyword">reg</span>, request, transportChannel));</span><br></pre></td></tr></table></figure></p>
+<p>非same 需要getExecutor 有现成名字来指定处理相应的handle。</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">MessageChannelHandler</span><span class="class">.RequestHandler</span></span><br></pre></td></tr></table></figure>
+<p>action 处理线程。</p>
+<figure class="highlight crmsh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">TransportProxyClient.execute();</span><br><span class="line">TransportService.sendRequest();</span><br><span class="line">clientHandlers.put(requestId, new RequestHolder<span class="tag">&lt;&gt;</span>(handler, <span class="keyword">node</span><span class="identifier"></span><span class="title">, action</span>, timeoutHandler));</span><br><span class="line">``</span><br><span class="line">将TransportResponseHandler 推送到所有节点。用来返回结构。客户端会生成action request respone 和回调方法。所以action 的定义在客户端就完成了。</span><br></pre></td></tr></table></figure>
+<p>NettyTransport 中保存了 connectedNodes 节点之间的连接<br><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure></p>
+<p>ScriptScoreFunctionParser 自定义打分<br><figure class="highlight autohotkey"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="escape">``</span>`</span><br></pre></td></tr></table></figure></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://www.fovoy.com/2015/10/17/elasticsearch源码分析/" data-id="cixo3g8bf00by2ls6c78cvj01" class="article-share-link">分享到</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Elasticsearch/">Elasticsearch</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+    
+      <article id="post-elasticsearch集群" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2015/10/17/elasticsearch集群/">elasticsearch集群</a>
+    </h1>
+  
+
+        <div class="article-meta">
+          
+  <div class="article-date">
+    <i class="fa fa-calendar"></i>
+    <a href="/2015/10/17/elasticsearch集群/">
+      <time datetime="2015-10-17T01:13:36.000Z" itemprop="datePublished">2015-10-17</time>
+    </a>
+  </div>
+
+
+          
+  <div class="article-category">
+  	<i class="fa fa-folder"></i>
+    <a class="article-category-link" href="/categories/Elasticsearch/">Elasticsearch</a><i class="fa fa-angle-right"></i><a class="article-category-link" href="/categories/Elasticsearch/学习/">学习</a>
+  </div>
+
+        </div>
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+                
+        <p><img src="/thumbnails/es.png" alt=""></p>
+<hr>
+<p>节点ping设置:<br> 主节点会ping集群中的其他节点。其他节点也会ping主节点。<br> discovery.zen.fd.ping_interval：该属性默认为1s,指节点相互ping的时间间隔。<br> discovery.zen.fd.ping_timeout:默认30s,ping的超时时间。<br> discovery.zen.fd.ping_retries:默认为重试ping 3次。<br>gateway数据恢复:<br>gateway.recover_after_nodes:8 有8个节点正常启动之后才开始恢复数据。<br>gateway.recover_after_time:10m 有启动10分钟之后才开始恢复数据。<br>gateway.expected_nodes:10 期望有10个节点再开始恢复数据。<br>gateway.recover_after_master_node:8<br>gateway.recover_after_data_node:8</p>
+<p>索引刷新率:<br>index.refresh_interval:设置为-1.在建庞大的索引的时候，就是先不刷新索引。</p>
+<p>再平衡：<br> cluster.routing.allocation.allow_rebalance:indices_all_active 默认值，主副分片都初始化后再平衡才开始。<br> cluster.routing.allocation.node_concurrent_recoveries 单个节点上同时初始化的分片数。<br> cluster.routing.allocation.node_initial_primaries_recoveries：同时初始化的主分片数。<br> cluster.routing.alloction.enable: all默认值，所有类型的分片都能分配。primaries 只能分配主分片，new_primaries新建主分配。none 完全禁止分配。<br> indices.recovery.concurrent_streams:3 同时恢复放入流数量。</p>
+<p>控制分配：<br>  我们可以节点打上不同的tag,分片分配到不同的tag上去。在配置文件中，或者动态配置setting<br>  node.zone:zone_one<br>  index.routing.allocation.include.zone:”zone_one”, 有包含这些节点的分配<br>  index.routing.allocation.exclude.zone:”zone_one”, 当然也有排除这些节点的分配。<br>  index.routing.allocation.require.size:”big_node”<br>  index.routing.allocation.require.zone: “zone_one”<br>  index.routing.allocation.include._ip: “10.1.2.10,10.1.2.11”<br>  index.routing.allocation.disk.threahold_enabled:true:根据硬盘情况分配，不会耗尽硬盘。<br>  index.routing.allocation.total_shards_per_node:10。每个节点的分片数量。</p>
+<p>归并线程的限速<br>  indices.store.throttle.max_bytes_per_sec:20m</p>
+<hr>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://www.fovoy.com/2015/10/17/elasticsearch集群/" data-id="cixo3g8bb00bq2ls68kgd8lm2" class="article-share-link">分享到</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Elasticsearch/">Elasticsearch</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+    
+      <article id="post-人工智能" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2015/10/17/人工智能/">人工智能</a>
+    </h1>
+  
+
+        <div class="article-meta">
+          
+  <div class="article-date">
+    <i class="fa fa-calendar"></i>
+    <a href="/2015/10/17/人工智能/">
+      <time datetime="2015-10-17T01:13:36.000Z" itemprop="datePublished">2015-10-17</time>
+    </a>
+  </div>
+
+
+          
+  <div class="article-category">
+  	<i class="fa fa-folder"></i>
+    <a class="article-category-link" href="/categories/兴趣/">兴趣</a>
+  </div>
+
+        </div>
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+                
+        <p><img src="/thumbnails/es.png" alt=""></p>
+<h3 id="vicarious">vicarious</h3><p>###乔治。霍兹</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://www.fovoy.com/2015/10/17/人工智能/" data-id="cixo3g871003u2ls6zapo9bwo" class="article-share-link">分享到</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/人工智能/">人工智能</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+    
+      <article id="post-site" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2015/10/17/site/">网站要点</a>
+    </h1>
+  
+
+        <div class="article-meta">
+          
+  <div class="article-date">
+    <i class="fa fa-calendar"></i>
+    <a href="/2015/10/17/site/">
+      <time datetime="2015-10-17T01:13:36.000Z" itemprop="datePublished">2015-10-17</time>
+    </a>
+  </div>
+
+
+          
+  <div class="article-category">
+  	<i class="fa fa-folder"></i>
+    <a class="article-category-link" href="/categories/site/">site</a>
+  </div>
+
+        </div>
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+                
+        <p><img src="/thumbnails/es.png" alt=""></p>
+<hr>
+<p>1.加盟<br>2.提意见<br>3.互动。<br>4.网络教育。eq<br>5.时间成为一个维度，被记忆下来。<br>6.环境，自然条件成最重要的需求</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://www.fovoy.com/2015/10/17/site/" data-id="cixo3g87q00572ls6j0cend6b" class="article-share-link">分享到</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/site/">site</a></li></ul>
 
     </footer>
   </div>
@@ -919,7 +915,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">归档</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/01/">一月 2017</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/11/">十一月 2016</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/10/">十月 2016</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/07/">七月 2016</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/05/">五月 2016</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/04/">四月 2016</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/03/">三月 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/02/">二月 2016</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/01/">一月 2016</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/12/">十二月 2015</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/11/">十一月 2015</a><span class="archive-list-count">12</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/10/">十月 2015</a><span class="archive-list-count">14</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/09/">九月 2015</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/08/">八月 2015</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/07/">七月 2015</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/05/">五月 2015</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/04/">四月 2015</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/03/">三月 2015</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/02/">二月 2015</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/01/">一月 2015</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/12/">十二月 2014</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/11/">十一月 2014</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/10/">十月 2014</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/07/">七月 2014</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/06/">六月 2014</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/05/">五月 2014</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/04/">四月 2014</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/03/">三月 2014</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/01/">一月 2014</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/10/">十月 2013</a><span class="archive-list-count">1</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/01/">一月 2017</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/11/">十一月 2016</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/10/">十月 2016</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/07/">七月 2016</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/05/">五月 2016</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/04/">四月 2016</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/03/">三月 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/02/">二月 2016</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/01/">一月 2016</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/12/">十二月 2015</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/11/">十一月 2015</a><span class="archive-list-count">12</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/10/">十月 2015</a><span class="archive-list-count">16</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/09/">九月 2015</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/08/">八月 2015</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/07/">七月 2015</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/05/">五月 2015</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/04/">四月 2015</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/03/">三月 2015</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/02/">二月 2015</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/01/">一月 2015</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/12/">十二月 2014</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/11/">十一月 2014</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/10/">十月 2014</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/07/">七月 2014</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/06/">六月 2014</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/05/">五月 2014</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/04/">四月 2014</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/03/">三月 2014</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/01/">一月 2014</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/10/">十月 2013</a><span class="archive-list-count">1</span></li></ul>
     </div>
   </div>
 
