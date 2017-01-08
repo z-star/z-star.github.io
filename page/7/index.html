@@ -97,11 +97,11 @@
     </div>
     <div class="article-info profile-block">
       <div class="article-info-block">
-        101
+        119
         <span>文章</span>
       </div>
       <div class="article-info-block">
-        67
+        73
         <span>标签</span>
       </div>
     </div>
@@ -130,7 +130,7 @@
 
       
       <section id="main">
-      <article id="post-jvm" class="article article-type-post" itemscope itemprop="blogPost">
+      <article id="post-mysql密码重置" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-inner">
     
     
@@ -139,7 +139,7 @@
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2015/05/11/jvm/">jvm 调优</a>
+      <a class="article-title" href="/2015/08/16/mysql密码重置/">mysql密码重置</a>
     </h1>
   
 
@@ -147,175 +147,8 @@
           
   <div class="article-date">
     <i class="fa fa-calendar"></i>
-    <a href="/2015/05/11/jvm/">
-      <time datetime="2015-05-11T01:13:36.000Z" itemprop="datePublished">2015-05-11</time>
-    </a>
-  </div>
-
-
-          
-  <div class="article-category">
-  	<i class="fa fa-folder"></i>
-    <a class="article-category-link" href="/categories/java/">java</a><i class="fa fa-angle-right"></i><a class="article-category-link" href="/categories/java/jvm/">jvm</a>
-  </div>
-
-        </div>
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-                
-        <p><img src="/thumbnails/jvm.png" alt=""></p>
-<p>1.程序计算器:CPU切换时候保持了线程运行的环境上下文。线程私有.这也是JAVA虚拟机里唯一没有OOM的<br>2.Java虚拟机栈(Stack Frame):线程独有的局部变量表，操作数栈。生命周期和线程一样。也会OOM<br>3.本地方法栈(Native Method Stack):跟虚拟栈一样，只不过对应的是Native方法服务。<br>4.堆(java heap):jvm共享的内存区域，对分配对象实例的区域，垃圾回收的主要管理区域。所以从GC角度来看，还会分为新生代：Eden空间，From Survivor,To Survivor等，这个区域也会OOM。<br>5.方法区(Method Area):用于存储已被虚拟机机加载的类信息，常量，静态变量。是heap的一个逻辑部分。1.7之前方法区保持常量池所以需要限制大小MaxPermSize,后来这个参数可以取消了。<br>6.运行时常量池(RunTime Constant Pool):用处存储符号应用，String就存在这里。<br>7.直接内存(Direct Memory):主机的内存不属于JVM的内存,NIO中可以使用Native函数分配堆外内存。DirectByteBuffer。所以这个直接内存其实也会OOM</p>
-<hr>
-<p>OOM总结<br>1.java heap space:<br>大部分在heap正常大小的情况下是重复创建对象了。可能有循环创建对象的可能。内存泄漏，打开dump出来的错误文件快照。对象的GC Roots引用链信息定位泄漏代码。<br>2.StackOverflowError:虚拟机栈中，栈帧大于容量就会发生这样的情况，查看线程方法的代码。</p>
-<h2 id="3-堆外内存溢出:MaxDirectMemorySize,一边程序dump出来的文件很小，程序有可能使用了Native等。可以查看native方法的调用。">3.堆外内存溢出:MaxDirectMemorySize,一边程序dump出来的文件很小，程序有可能使用了Native等。可以查看native方法的调用。</h2><p>GC<br>1.判断对象是否可回收：<br>GC Roots,与GC ROOTS,没有连接的对象。可以被回收。GC Roots的对象包含下面几种：<br>    1）虚拟机栈中的引用对象。<br>    2）方法区中类静态属性引用对象<br>    3）方法区中常量引用的对象<br>    4）本地方法栈中JNI<br>应用对象强弱自分方便回收等级<br>     1）强引用(Strong Reference):Obejct obj = new Object() 这类的引用，只要强引用还存在，就不会被GC<br>     2) 软引用(soft Reference):SoftReference来实现软引用，在内存溢出之前回gc<br>     3) 弱引用(weak reference):weakReference来实现弱引用，比软应用更低，下一次垃圾回收就会被回收掉<br>     4) 虚引用(phantom Reference):PhantomReference来实现虚引用，最弱的引用，对一个对象设置虚引用是为了得到它被GC的系统通知。</p>
-<p> 对象回收要经过两次标记。<br> 回收方法区和常量池，常量池中的常量没有引用的情况下可以回收，这个简单，但方法区中对一个类的回收就比较复杂。在大量使用反射，动态代理，CGLIb等这类平凡自定义classloader的场景需要聚类类的卸载功能，保证方法区不OOM。参数-verbose:class 和-XX：+traceClassLoading</p>
-<hr>
-<p> GC算法<br> 1.标记-清除算法(mark-Sweep)标记清楚算法。<br> 最早的算法，后续算法都是对他的改进，主要就是标记处需要GC的区域，第二部就是清楚掉这些区域。步骤简单，主要有两个不足之处:一个是效率问题，标记清除两个过程效率都不高，另一个是空间问题，后续会产生大量的不连续碎片。空间碎片太多会导致大对象没有连续的空间分配而提前触发GC。<br> 2.复制算法(copying)<br> 复制算法就是讲内存分为两块，一块使用，一块用来放置没有被回收的对象。这样就不会出现不连续问题，但内存使用就只有一半。现在这种算法主要采用在新生代上。而比例不是1：1而是划分成eden空间和两块较小的Survivor空间。这样Eden和Survivor中存货下来的对象就会复制到剩下的一个survivor空间中。按照8：1的比例，空间就浪费了10%。但这个survivor区域放不下了，就需要放到老年代去。<br> 3.标记-整理算法(Mark-compact)<br> 标记整理算法第一步也是标记，但第二步是先让存活的对象往一端移动，让后直接清理掉端边界以外的内存，这样就解决了内存不连续的问题了。<br> 4.分代收集<br> 年轻代合适复制算法，因为大量对象中活下来的不多。所以只需要少量复制对象的成本就可以。老年存活率比较高。所以才有标记的两个算法。</p>
-<h2 id="SaftProint_Safe_region_到安全点再进行stop_the_world"> SaftProint Safe region 到安全点再进行stop the world</h2><p> 垃圾收集器<br> young Generation:Serial,ParNew,Parellel Scavenge,G1<br> old Generation:CMS,Serial Old(Msc),Parallel old,G1</p>
-<p> 1.Serial 最大的特点就是”Stop the World”,单线程收集器，新生代是复制算法，老年代是标记整理算法。都会采用暂停所有用户线程来进行回收。Serial用在客户端模式的虚拟机下是一个不错的选择，对响应比较敏感的就算了。<br> 2.ParNew 是Serial的对线程版本，使用多个线程进行回收，参数都有很多是共用的(-XX:SurvivorRatio,-XX:PretenureSizeThreshold,-XX:HandlePromotionFailur),他也会暂停所有用户线程来做GC，除了serial以外只有他能和CMS一起工作，所以为什么它一直存在的价值。-XX:ParallelGCThreads来限制垃圾收集的线程数量。<br> 3.Parellel Scavenge:目的不尽可能的减少停顿时间，而是提高吞吐量，也就是降低垃圾回收时间的比例。-XX：MaxGCPauseMillis -XX：GCTimeRatio来控制吞吐量的。所以他也叫做吞吐优先收集器。还可以设置-XX:+UseAdaptiveSizePolicy,这样虚拟机会收集运行情况动态调节，新生代大小，Eden，survivor区域，等，所以这是一种自适应的调节策略。自适应调节策略也是他与ParNew的对大区别<br> 4.Parellel Old:是Parellel的老年版，配合起来比较适合重视吞吐量和自适应的场景。<br> 5.CMS:以停顿时间最短为目的的回收器，主要和ParNew配合使用，很多Server端都用这样的回收组合。使用的是标记清除算法，前面的老年代的基本都是标记整理算法。但他使用的标记清除比较复杂。3个标记1个清除。<br>    1）初始标记(CMS initial mark)<br>    2) 并发标记(CMS concurrent mark)<br>    3) 重新标记(CMS remark)<br>    4) 并发清除(CMS sweep)<br> 三个确定，<br>   1.因为是有并发操作，所以线程数是 (cup+3)/4，但当CPU小于4个时候，基本就变成非并发了，所以需要在多核的情况下才能体现优点<br>   2.-XX:CMSInitiatingOccupancyFraction=75启动gc阈值设置。1.6默认是92%，如果gc期间预留的内存无法满足需需要就会报错“concurrent Mode Failure”;<br>   3.cms是标记清理，所以会有参数指定整理的过程-XX:+UseCMSCompactAtFullCollection这是默认开启的，还有-XX:+CMSFullGCsBeforeCompaction(默认是0，表示每次进入Full GC时都进行的碎片整理)<br> 6.G1：内存物理划分不再是新生代，老年代。而是划分成多个大小相等的独立区域(region),G1后台维护了一个优先列表，每次都回收价值最大的region.保证在有限的时间内可以获得尽可能的高效。</p>
-<hr>
-<p> GC日志解读<br>33.123：[GC[DefNew:3324K-&gt;152K(3712K),0.0025925 secs] 3324K-&gt;152K(11904K),0.0031680]</p>
-<h2 id="最前面的“33-123”虚拟机启动以来的时间,后面的“DefNew”表示发生的区域，这里是Serial的新生代收集器”Default_New_Generation”,如果是ParNew就变为”ParNew”,Parellel_Scavenge就是”PSYoungGen“,冒号右面的数字”3324K-&gt;152K(3712K)“3324K为GC前的内存使用箭头后面为GC后的内存使用括号内为该区域内存总量。后面的”3324K-&gt;152K(11904K)”就是整个heap中的情况。">最前面的“33.123”虚拟机启动以来的时间,后面的“DefNew”表示发生的区域，这里是Serial的新生代收集器”Default New Generation”,如果是ParNew就变为”ParNew”,Parellel Scavenge就是”PSYoungGen“,冒号右面的数字”3324K-&gt;152K(3712K)“3324K为GC前的内存使用箭头后面为GC后的内存使用括号内为该区域内存总量。后面的”3324K-&gt;152K(11904K)”就是整个heap中的情况。</h2><p>jps -v 查看jvm参数，<br>jstat -gccause pid 间隔 次数<br>jinfo -flag ”参数“<br>jstack -l -m -F</p>
-<p><img src="/thumbnails/thread.png" alt=""></p>
-<h5 id="Java_GC机制主要完成3件事：">Java GC机制主要完成3件事：</h5><ol>
-<li>确定哪些内存需要回收</li>
-<li>确定什么时候需要执行GC</li>
-<li>如何执行GC。</li>
-</ol>
-<h5 id="学习Java_GC机制">学习Java GC机制</h5><ol>
-<li>内存是如何分配的</li>
-<li>如何保证内存不被错误回收（即：哪些内存需要回收）</li>
-<li>在什么情况下执行GC以及执行GC的方式</li>
-<li>如何监控和优化GC机制。</li>
-</ol>
-<p>Java HotSpot(TM) 64-Bit Server VM warning: ignoring option MaxPermSize=384m; support was removed in 8.0<br>Java HotSpot(TM) 64-Bit Server VM warning: CMSFullGCsBeforeCompaction is deprecated and will likely be removed in a future release.</p>
-<p><a href="http://guojuanjun.blog.51cto.com/277646/268611/" target="_blank" rel="external">jvm</a></p>
-<ul>
-<li>如果我们的应用中使用了java nio中的direct memory，那么使用-XX:+DisableExplicitGC一定要小心，存在潜在的内存泄露风险。<br><a href="http://blog.sina.com.cn/s/blog_6940cab30101ghgj.html" target="_blank" rel="external">java nio 和 jvm 虚拟机参数的 XX:+DisableExplicitGC 的潜规则</a><br><a href="http://blog.csdn.net/aitangyong/article/details/39403031" target="_blank" rel="external">jvm 博文</a></li>
-</ul>
-<p>[TOC]</p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://www.fovoy.com/2015/05/11/jvm/" data-id="civx0qqxw007gwqs6oxjmnt1l" class="article-share-link">分享到</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/jvm/">jvm</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-
-    
-      <article id="post-es 动态修改配置" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2015/03/16/es 动态修改配置/">elasticsearch动态修改配置</a>
-    </h1>
-  
-
-        <div class="article-meta">
-          
-  <div class="article-date">
-    <i class="fa fa-calendar"></i>
-    <a href="/2015/03/16/es 动态修改配置/">
-      <time datetime="2015-03-16T01:13:36.000Z" itemprop="datePublished">2015-03-16</time>
-    </a>
-  </div>
-
-
-          
-  <div class="article-category">
-  	<i class="fa fa-folder"></i>
-    <a class="article-category-link" href="/categories/Elasticsearch/">Elasticsearch</a><i class="fa fa-angle-right"></i><a class="article-category-link" href="/categories/Elasticsearch/config/">config</a>
-  </div>
-
-        </div>
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-                
-        <p><img src="/thumbnails/es.png" alt=""></p>
-<h3 id="ClusterDynamicSettingsModule_IndexDynamicSettingsModule">ClusterDynamicSettingsModule   IndexDynamicSettingsModule</h3><hr>
-<ul>
-<li>修改slowlog</li>
-</ul>
-<figure class="highlight xquery"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">XPUT /test_index/_settings</span><br><span class="line">&#123; <span class="string">"index"</span>: &#123;</span><br><span class="line"><span class="string">"search.slowlog.level"</span>: <span class="string">"trace"</span>,</span><br><span class="line"><span class="string">"search.slowlog.threshold.query.trace"</span>:<span class="string">"100ms"</span>&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<hr>
-<ul>
-<li>修改filterCache</li>
-</ul>
-<figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//persistent</span></span><br><span class="line">curl -XPUT <span class="regexp">/_cluster/</span>settings -d </span><br><span class="line">  &#123; <span class="string">"persistent"</span> : &#123;</span><br><span class="line"><span class="string">"indices.cache.filter.type"</span>: <span class="string">"node"</span>,</span><br><span class="line"><span class="string">"indices.cache.filter.size"</span>: <span class="string">"20%"</span>,</span><br><span class="line"><span class="string">"indices.cache.filter.expire"</span>: <span class="string">"12h"</span>,</span><br><span class="line"><span class="string">"indices.fielddata.cache.size"</span>: <span class="string">"28%"</span>,</span><br><span class="line"><span class="string">"indices.breaker.fielddata.limit"</span>: <span class="string">"30%"</span>,</span><br><span class="line"><span class="string">"indices.queries.cache.size"</span>:<span class="string">""</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">   IndicesFilterCache</span><br></pre></td></tr></table></figure>
-<hr>
-<ul>
-<li>修改recovery</li>
-</ul>
-<figure class="highlight xquery"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">//transient</span><br><span class="line"> curl -XPUT /_cluster/settings -d </span><br><span class="line"> &#123;</span><br><span class="line">  <span class="string">"persistent"</span> : &#123;</span><br><span class="line">    <span class="string">"indices"</span> : &#123;</span><br><span class="line">      <span class="string">"recovery"</span> : &#123;</span><br><span class="line">        <span class="string">"concurrent_streams"</span> : <span class="string">"5"</span>,</span><br><span class="line">        <span class="string">"max_bytes_per_sec"</span> : <span class="string">"50mb"</span>&#125;&#125;&#125;</span><br><span class="line">&#125;<span class="string">'</span></span><br></pre></td></tr></table></figure>
-<hr>
-<ul>
-<li>暂停分片</li>
-</ul>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="preprocessor"># curl -XPUT http:<span class="comment">//127.0.0.1:9200/_cluster/settings -d '&#123;</span></span></span><br><span class="line">  <span class="string">"transient"</span> : &#123;</span><br><span class="line">    <span class="string">"cluster.routing.allocation.enable"</span> : <span class="string">"none"</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;'</span><br></pre></td></tr></table></figure>
-<hr>
-<ul>
-<li>加大恢复速度</li>
-</ul>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="preprocessor"># curl -XPUT http:<span class="comment">//127.0.0.1:9200/_cluster/settings -d '&#123;</span></span></span><br><span class="line">  <span class="string">"persistent"</span> : &#123;</span><br><span class="line">    <span class="string">"cluster"</span> : &#123;</span><br><span class="line">      <span class="string">"routing"</span> : &#123;</span><br><span class="line">        <span class="string">"allocation"</span> : &#123;</span><br><span class="line">          <span class="string">"disable_allocation"</span> : <span class="string">"false"</span>,</span><br><span class="line">          <span class="string">"cluster_concurrent_rebalance"</span> : <span class="string">"5"</span>,</span><br><span class="line">          <span class="string">"node_concurrent_recoveries"</span> : <span class="string">"5"</span>,</span><br><span class="line">          <span class="string">"enable"</span> : <span class="string">"all"</span></span><br><span class="line">        &#125;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="string">"indices"</span> : &#123;</span><br><span class="line">      <span class="string">"recovery"</span> : &#123;</span><br><span class="line">        <span class="string">"concurrent_streams"</span> : <span class="string">"30"</span>,</span><br><span class="line">        <span class="string">"max_bytes_per_sec"</span> : <span class="string">"2gb"</span></span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="string">"transient"</span> : &#123;</span><br><span class="line">    <span class="string">"cluster"</span> : &#123;</span><br><span class="line">      <span class="string">"routing"</span> : &#123;</span><br><span class="line">        <span class="string">"allocation"</span> : &#123;</span><br><span class="line">          <span class="string">"enable"</span> : <span class="string">"all"</span></span><br><span class="line">        &#125;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;'</span><br></pre></td></tr></table></figure>
-<p>{<br>    “transient” : {<br>        “indices.store.throttle.type” : “none”<br>    }<br>}</p>
-<p>{<br>    “transient” : {<br>        “indices.store.throttle.type” : “merge”<br>    }<br>}<br>gateway.recover_after_nodes: 8<br>gateway.expected_nodes: 10<br>gateway.recover_after_time: 5m</p>
-<p>curl -XPUT ‘localhost:9200/_settings’ -d ‘ {“index.routing.allocation.disable_allocation”: false}’</p>
-<figure class="highlight gherkin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Per-index</span></span><br><span class="line">GET /_stats/fielddata?human&amp;fields=_parent </span><br><span class="line">/_cat/fielddata?v&amp;fields=<span class="keyword">*</span>'</span><br><span class="line"></span><br><span class="line"><span class="comment"># Per-node per-indexa</span></span><br><span class="line">/_nodes/stats/indices/fielddata?human&amp;fields=<span class="keyword">*</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#查看field</span></span><br><span class="line">/_field_stats?fields=hotel_id</span><br></pre></td></tr></table></figure>
-<hr>
-<p>相关链接<br><a href="https://www.elastic.co/guide/en/elasticsearch/guide/current/_changing_settings_dynamically.html" target="_blank" rel="external">es官网文档</a><br><a href="https://www.elastic.co/blog/elasticsearch-logging-secrets" target="_blank" rel="external">相关blog</a></p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://www.fovoy.com/2015/03/16/es 动态修改配置/" data-id="civx0qqz6009wwqs6756ly0ua" class="article-share-link">分享到</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Elasticsearch/">Elasticsearch</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-
-    
-      <article id="post-计算" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2015/03/16/计算/">计算.md</a>
-    </h1>
-  
-
-        <div class="article-meta">
-          
-  <div class="article-date">
-    <i class="fa fa-calendar"></i>
-    <a href="/2015/03/16/计算/">
-      <time datetime="2015-03-16T01:13:36.000Z" itemprop="datePublished">2015-03-16</time>
+    <a href="/2015/08/16/mysql密码重置/">
+      <time datetime="2015-08-16T01:13:36.000Z" itemprop="datePublished">2015-08-16</time>
     </a>
   </div>
 
@@ -332,31 +165,341 @@
     <div class="article-entry" itemprop="articleBody">
       
                 
-        <p>*12月31日 673690<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">1</span>月<span class="number">13</span>日</span><br><span class="line">保盛:<span class="number">47578</span></span><br><span class="line">水单：<span class="number">19401</span>+<span class="number">54967</span>+<span class="number">23990</span>=<span class="number">98358</span></span><br><span class="line">美亚：<span class="number">19010</span></span><br><span class="line">工行：<span class="number">28500</span></span><br><span class="line">支付宝：<span class="number">235756</span></span><br><span class="line">信用卡：<span class="number">0</span></span><br><span class="line">co <span class="number">47578</span>+<span class="number">98358</span>+<span class="number">19010</span>+<span class="number">28500</span>+<span class="number">235756</span>=<span class="number">429202</span></span><br><span class="line"><span class="number">429202</span>+<span class="number">262000</span>=<span class="number">691202</span></span><br></pre></td></tr></table></figure></p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">保盛：<span class="number">35159</span></span><br><span class="line">水单：<span class="number">54967</span>+<span class="number">23990</span>=<span class="number">78957</span></span><br><span class="line">美亚：<span class="number">19010</span></span><br><span class="line">支付宝：<span class="number">254226</span></span><br><span class="line">焦 <span class="number">2440</span></span><br><span class="line"><span class="number">35159</span>+<span class="number">78957</span>+<span class="number">19010</span>+<span class="number">254226</span>=<span class="number">387352</span></span><br><span class="line"><span class="number">387352</span>+美金<span class="number">262000</span>+<span class="number">20000</span>微信＋<span class="number">2440</span>=<span class="number">671792</span></span><br><span class="line">月秋 －<span class="number">1000</span></span><br><span class="line">微信 －<span class="number">10000</span></span><br><span class="line"><span class="number">660792</span></span><br></pre></td></tr></table></figure>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">1</span>月<span class="number">22</span></span><br><span class="line">保盛:<span class="number">69685</span></span><br><span class="line">欠款：<span class="number">26500</span>焦+<span class="number">23800</span>寸</span><br><span class="line">支付宝：<span class="number">244313</span></span><br><span class="line">微信票款有：<span class="number">19401</span>+<span class="number">19010</span>+<span class="number">2440</span>=<span class="number">47273</span></span><br><span class="line">信用卡：<span class="number">0</span></span><br><span class="line">美金<span class="number">262000</span></span><br><span class="line">CO <span class="number">69685</span>+<span class="number">26500</span>+<span class="number">23800</span>+<span class="number">244313</span>+<span class="number">47273</span>+<span class="number">262000</span>=<span class="number">673571</span></span><br></pre></td></tr></table></figure>
-<figure class="highlight asciidoc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">co 122326保盛<span class="code">+432177支付宝+</span>11250邮政银行-6652信用卡+262000美金</span><br><span class="line"><span class="header">= 821101</span></span><br></pre></td></tr></table></figure>
-<p>452<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">3</span>月<span class="number">23</span>日</span><br><span class="line">CO <span class="number">431583</span>支付宝 +<span class="number">16546</span>保盛+（<span class="number">12150</span>+<span class="number">27946</span>）水单+<span class="number">51581</span>何雅婷欠+焦欠款<span class="number">7500</span>+国航退焦<span class="number">1950</span></span><br><span class="line">-退客户<span class="number">8664</span>-<span class="number">14022</span>信用卡+美金<span class="number">262000</span>= <span class="number">788570</span></span><br></pre></td></tr></table></figure></p>
-<p>3月31日<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">保盛<span class="number">99513</span>+保盛退<span class="number">2650</span>+<span class="number">45900</span>+<span class="number">3780</span>）欠款+支付宝<span class="number">427714</span>-退客户<span class="number">8664</span>-信用卡<span class="number">14022</span>+美金<span class="number">262000</span>=<span class="number">818871</span>元</span><br></pre></td></tr></table></figure></p>
-<p>4月18日</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">18298</span>农行+<span class="number">35900</span>工行-<span class="number">27551</span>保盛+<span class="number">2670</span>保盛退票-退何雅婷<span class="number">45500</span>+（<span class="number">19900</span>+<span class="number">19900</span>+<span class="number">17160</span>+<span class="number">46555</span>+<span class="number">2610</span>）水单 +（<span class="number">65081</span>+<span class="number">3780</span>）焦欠款</span><br><span class="line">-<span class="number">1100</span>退樊姐-<span class="number">2245</span>退李哥-<span class="number">8664</span>退李哥客人-信用卡<span class="number">25227</span>+美金<span class="number">262000</span></span><br><span class="line">=<span class="number">383567</span></span><br><span class="line"><span class="number">383567</span>+<span class="number">351301</span>(支付宝)= <span class="number">734868</span></span><br></pre></td></tr></table></figure>
-<p>4月26日</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">客栈 -<span class="number">10</span>万</span><br><span class="line"><span class="number">107530</span>保盛+<span class="number">283163</span>(支付宝)+<span class="number">260000</span>=<span class="number">650693</span></span><br></pre></td></tr></table></figure>
-<p>4月29 日<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">587506</span>+ <span class="number">238916</span>  = <span class="number">826422</span></span><br></pre></td></tr></table></figure></p>
-<p>6月1日<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">保盛：<span class="number">73370.5</span></span><br><span class="line">押金：<span class="number">15000</span></span><br><span class="line">焦欠款：<span class="number">17600</span></span><br><span class="line">信用卡：-<span class="number">60234.89</span></span><br><span class="line">支付宝：<span class="number">51820.10</span>+<span class="number">305812.37</span></span><br><span class="line">我微信：<span class="number">25501.9</span></span><br><span class="line">欠董元元：-<span class="number">5487</span>  </span><br><span class="line"></span><br><span class="line"> <span class="number">73370.5</span>+<span class="number">15000</span>+<span class="number">17600</span>-<span class="number">60234.89</span>+<span class="number">51820.10</span>+<span class="number">305812.37</span>+<span class="number">25501.9</span>-<span class="number">5487</span>               </span><br><span class="line">      = <span class="number">423382.9800</span></span><br></pre></td></tr></table></figure></p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">7</span>月<span class="number">7</span></span><br><span class="line">保盛：-<span class="number">147379.5</span>	</span><br><span class="line">押金：<span class="number">15000</span></span><br><span class="line">退客人：-<span class="number">67160</span></span><br><span class="line">水单：<span class="number">15870</span>+<span class="number">73422</span></span><br><span class="line">欠款：<span class="number">10916</span>+<span class="number">122442</span>+<span class="number">5620</span></span><br><span class="line">支付宝：<span class="number">431092</span>+<span class="number">2569</span></span><br><span class="line">寸招行：<span class="number">21100</span></span><br><span class="line">信用卡：-<span class="number">30900</span></span><br><span class="line">微信：<span class="number">25000</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">-<span class="number">147379.5</span>+<span class="number">15000</span>-<span class="number">67160</span>+<span class="number">15870</span>+<span class="number">73422</span>+<span class="number">10916</span>+<span class="number">122442</span>+<span class="number">5620</span></span><br><span class="line">+<span class="number">431092</span>+<span class="number">2569</span>+<span class="number">21100</span>-<span class="number">30900</span>+<span class="number">25000</span></span><br><span class="line">=<span class="number">477591.5000</span></span><br></pre></td></tr></table></figure>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">7</span>月<span class="number">13</span></span><br><span class="line">保盛：<span class="number">184277.5</span></span><br><span class="line">押金：<span class="number">15000</span></span><br><span class="line">水单：<span class="number">22437</span></span><br><span class="line">欠款：<span class="number">6600</span></span><br><span class="line">建行：<span class="number">46175</span></span><br><span class="line">招行：寸<span class="number">10000</span>+张 <span class="number">13000</span>	</span><br><span class="line">微信：寸<span class="number">18000</span>+张 <span class="number">20000</span></span><br><span class="line">支付宝：寸<span class="number">47194</span>+张<span class="number">139703</span></span><br><span class="line">信用卡：寸<span class="number">35000</span></span><br><span class="line"></span><br><span class="line">CO <span class="number">184277</span>+<span class="number">15000</span>+<span class="number">22437</span>+<span class="number">6600</span>+<span class="number">56175</span>+<span class="number">10000</span>+<span class="number">13000</span>+<span class="number">18000</span>+<span class="number">20000</span>+<span class="number">47194</span>+<span class="number">139703</span>-<span class="number">35000</span></span><br><span class="line">= <span class="number">487386</span></span><br></pre></td></tr></table></figure>
-<p>8月1日<br>43万<br><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">8&#26376;12&#26085;&#10;&#25903;&#20184;&#23453;  234155  &#24494;&#20449; 14000  &#25307;&#34892; 38400  &#20132;&#34892; 9&#19975;&#10;&#23544;&#25903;&#20184;&#23453;&#65306;15&#10;&#23544;&#25307;&#34892;&#65306;36900&#10;&#23544;&#24494;&#20449;&#65306;13117&#10;&#27700;&#21333;&#65306;36000+8284&#10;&#28966;&#27424;&#27454;&#65306;7200*3+9900&#9;&#10;&#20449;&#29992;&#21345;&#65306;0&#10;-48736.5+100000+15+36900+13117+36000+8284+7200*3+9900+0&#10;77079.5000 &#10;&#25105;77079+&#20320;376555=453634 -1&#19975; &#20309;&#38597;&#23159;&#10;443634</span><br></pre></td></tr></table></figure></p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">8</span>月<span class="number">26</span>日</span><br><span class="line"><span class="number">247000</span>+<span class="number">43000</span>+<span class="number">134464</span>= <span class="number">424464</span></span><br></pre></td></tr></table></figure>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">9</span>月<span class="number">14</span>日</span><br><span class="line">焦欠款：<span class="number">3550</span>+<span class="number">15000</span>+<span class="number">8200</span>+<span class="number">17400</span></span><br><span class="line">寸欠款：<span class="number">16451</span>+<span class="number">20861</span></span><br><span class="line">水单：<span class="number">41349</span></span><br><span class="line">保盛：-<span class="number">17664.5</span></span><br><span class="line">信用卡：<span class="number">0</span></span><br><span class="line">微信：<span class="number">1802</span></span><br><span class="line">支付宝：<span class="number">11522</span></span><br><span class="line">招行：<span class="number">3507</span></span><br><span class="line"></span><br><span class="line"><span class="number">3550</span>+<span class="number">15000</span>+<span class="number">8200</span>+<span class="number">17400</span>+<span class="number">16451</span>+<span class="number">20861</span>+<span class="number">41349</span>-<span class="number">17664.5</span>+<span class="number">1802</span>+<span class="number">11522</span>+<span class="number">3507</span></span><br><span class="line">= <span class="number">121977.5000</span></span><br><span class="line"></span><br><span class="line">支付宝：<span class="number">294130</span>+ 微信：<span class="number">9661</span>+ 招行<span class="number">22944</span></span><br><span class="line"></span><br><span class="line"><span class="number">121977.5</span>+<span class="number">326735</span>= <span class="number">448712</span></span><br></pre></td></tr></table></figure>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">9</span>月<span class="number">23</span>日</span><br><span class="line">保盛<span class="number">4272.5</span>+今通退<span class="number">4600</span>+欠款<span class="number">3588</span>+<span class="number">37310</span>+<span class="number">44150</span>+支付宝<span class="number">12338</span>+招行<span class="number">5604</span>+微信<span class="number">1764</span>=<span class="number">113626</span></span><br><span class="line">支付宝<span class="number">275218</span>+微信<span class="number">8897</span>+工行<span class="number">15029</span>+招行<span class="number">54713</span>=<span class="number">353857</span></span><br><span class="line"><span class="number">467483</span></span><br></pre></td></tr></table></figure>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">10</span>月<span class="number">9</span>号</span><br><span class="line">支付宝：<span class="number">3580</span></span><br><span class="line">微信：<span class="number">28</span></span><br><span class="line">招行：<span class="number">273</span></span><br><span class="line">信用卡：-<span class="number">54.8</span></span><br><span class="line">保盛：<span class="number">135526.5</span></span><br><span class="line">总：<span class="number">3580</span>+<span class="number">28</span>+<span class="number">273</span>-<span class="number">54</span>+<span class="number">135526.5</span>=<span class="number">139353</span>  </span><br><span class="line"><span class="number">139353</span> -何雅婷退票<span class="number">8658</span>-何雅婷<span class="number">10000</span>+焦立新欠款<span class="number">4440</span>=<span class="number">125135</span></span><br><span class="line"><span class="number">236307</span>+<span class="number">7859</span>+<span class="number">64405</span>=<span class="number">308571</span></span><br><span class="line"><span class="number">308571</span>+<span class="number">125135</span>=<span class="number">433706</span></span><br></pre></td></tr></table></figure>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">11</span>月<span class="number">1</span>号</span><br><span class="line"><span class="number">288000</span>+<span class="number">182122.5</span> -<span class="number">4550</span>                                                </span><br><span class="line">      = <span class="number">465572.5000</span></span><br></pre></td></tr></table></figure>
+        <p><img src="/thumbnails/es.png" alt=""></p>
+<p>初始化mysql 密码设置<br>step 1:<br>vim /etc/my.cnf #在【mysqld]下加一行：skip-grant-tables<br>service mysqld restart</p>
+<p>step 2:<br>mysql<br>use mysql;<br>UPDATE user SET authentication_string=password(‘123456’) WHERE user=’root’ AND Host=’localhost’;<br>flush privileges;<br>quit;</p>
+<p>step 3:<br>vim /etc/my.cnf #注释掉skip-grant-tables<br>service mysqld restart<br>mysql -uroot -proot<br>ALTER USER ‘root’@’localhost’ IDENTIFIED BY ‘MyNewPass’;</p>
+<p>mysqld_safe –user=mysql –skip-grant-tables –skip-networking &amp; mysql -u root mysql </p>
+<p>1、设置加密模式<br>mysql_config_editor set –login-path=local –host=localhost –user=db_user –password<br>红色部分是需要修改成我们自己数据库用户名的，回车之后会提示我们输入数据库密码，我们照样输入。</p>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://www.fovoy.com/2015/03/16/计算/" data-id="civx0qqty000dwqs6p6a92gg4" class="article-share-link">分享到</a>
+      <a data-url="http://www.fovoy.com/2015/08/16/mysql密码重置/" data-id="cixo35d2d0072vfs6uhtz355p" class="article-share-link">分享到</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/mysql/">mysql</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+    
+      <article id="post-kafka" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2015/08/16/kafka/">kafka </a>
+    </h1>
+  
+
+        <div class="article-meta">
+          
+  <div class="article-date">
+    <i class="fa fa-calendar"></i>
+    <a href="/2015/08/16/kafka/">
+      <time datetime="2015-08-16T01:13:36.000Z" itemprop="datePublished">2015-08-16</time>
+    </a>
+  </div>
+
+
+          
+  <div class="article-category">
+  	<i class="fa fa-folder"></i>
+    <a class="article-category-link" href="/categories/中间件/">中间件</a><i class="fa fa-angle-right"></i><a class="article-category-link" href="/categories/中间件/kafka/">kafka</a>
+  </div>
+
+        </div>
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+                
+        <h5 id="Kafka硬件优化">Kafka硬件优化</h5><p><img src="/thumbnails/kafka-1.png" alt=""></p>
+<hr>
+<h5 id="Kafka软件优化">Kafka软件优化</h5><p><img src="/thumbnails/kafka-2.png" alt=""></p>
+<hr>
+<h5 id="consumer">consumer</h5><p><img src="/thumbnails/consumer.png" alt=""></p>
+<hr>
+<h5 id="producer">producer</h5><p><img src="/thumbnails/producer.png" alt=""></p>
+<h4 id="kafka_分区">kafka 分区</h4><ol>
+<li>partition 为分区存储，本质更es的shard是一个概念。</li>
+<li>segment  是partition下面的一个分段，每个partition会有多个segment.</li>
+<li>index 与log 文件来构建这个索引的结构。</li>
+</ol>
+<h4 id="kafka_monitor">kafka monitor</h4><h2 id="kafka_offset_monitor">kafka offset monitor</h2><p><img src="/thumbnails/kafka-offset.png" alt=""></p>
+<h2 id="kafka_manager">kafka manager</h2><p><img src="/thumbnails/kafka-manager-1.png" alt=""><br><img src="/thumbnails/kafka-manager-2.png" alt=""><br><img src="/thumbnails/kafka-manager-3.png" alt=""></p>
+<p><a href="http://www.infoq.com/cn/articles/kafka-analysis-part-1/" target="_blank" rel="external">kafka 解析</a><br><a href="http://www.infoq.com/cn/articles/kafka-analysis-part-4/" target="_blank" rel="external">kafka consumer</a><br><a href="https://engineering.linkedin.com/kafka/benchmarking-apache-kafka-2-million-writes-second-three-cheap-machines" target="_blank" rel="external">kafka performance</a></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://www.fovoy.com/2015/08/16/kafka/" data-id="cixo35d2t0082vfs64g5p1l2k" class="article-share-link">分享到</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/kafka/">kafka</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+    
+      <article id="post-mysql安装" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2015/08/16/mysql安装/">mysql安装 </a>
+    </h1>
+  
+
+        <div class="article-meta">
+          
+  <div class="article-date">
+    <i class="fa fa-calendar"></i>
+    <a href="/2015/08/16/mysql安装/">
+      <time datetime="2015-08-16T01:13:36.000Z" itemprop="datePublished">2015-08-16</time>
+    </a>
+  </div>
+
+
+          
+  <div class="article-category">
+  	<i class="fa fa-folder"></i>
+    <a class="article-category-link" href="/categories/tools/">tools</a>
+  </div>
+
+        </div>
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+                
+        <p><img src="/thumbnails/es.png" alt=""></p>
+<hr>
+<p>Centos7安装MySQL5.7.9<br>介绍：MySQL的安装方法有多种，如yum安装，rpm包安装，rpm源码编译安装，源码编 译安装，通用预编译包安装。其中yum安装和rpm包安装比较简单，软件安装时会自动默 认设置，但可定制性弱版也较旧。源码包编译安装可定制性强版本也新。下面是通用预编译 包安装和源码编译安装的方法，MySQL的版本为最新的5.7.9版。在MySQL5.7.9中有一些新 的特性如：<br>1、    初始化数据库时不再使用”–mysql_install_db”而是使用了 “–initialize”或 是”–initialize-insecure 〃，区别在于”–initialize”会生成一个随机密码而”–initialize-insecure”不会<br>生成密码。<br>2、    不在生成.mysql_secret文件；<br>3、    不再创建匿名用户MySQL账户；<br>4、    不再创建测试数据库。<br>编译源码方式安装MySQL数据库<br>1、安装文件准备<br>.下载cmake-3.2.2.tar.gz    …新版的MySQL用CMAKE编译安装<br><a href="http://www.cmake.org/download/" target="_blank" rel="external">http://www.cmake.org/download/</a><br>.下载 ncurses-6.0.tar.gz    …安装 MySQL 时需要<br>ftp://ftp.gnu.org/gnu/ncurses/<br>.下载 bison-3.0.4.tar.gz    …安装 MySQL 时需要<br><a href="http://ftp.gnu.org/gnu/bison/" target="_blank" rel="external">http://ftp.gnu.org/gnu/bison/</a><br>.下载mysql-5.7.9.tar.gz    —MySQL的源码编译包不要下载错<br>ftp://ftp.mirrorservice.org/sites/ftp.mysql.com/Downloads/MySQL-5.7/mysql-5.7.9.tar.gz</p>
+<p>2、安装CMAKE及必要的软件<br>1).安装 CMAKE<br>cd /usr/local/src<br>tar -zxv -f cmake-3.2.2.tar.gz<br>cd cmake-3.2.2<br>./bootstrap<br>gmake<br>gmake install<br>vi /etc/profile    …修改环境变量在文件末尾追加以下两行代码<br>PATH=/usr/local/bin:$PATH export PATH<br>source /etc/profile    …使修改生效<br>cmake - version —查看 cmake 版本<br>2).安装 ncurses<br>cd /usr/local/src<br>tar -zxvf ncurses-6.0.tar.gz<br>cd ncurses-6.0<br>./configure<br>make<br>make install<br>3).安装 bison<br>cd /usr/local/src<br>tar -zxvf bison-3.0.4.tar.gz<br>cd bison-3.0.4<br>./configure<br>make<br>make install<br>注：也可以用 yum 安装比较省事：# yum-y install ncurses-devel cmake<br>3、    新建mysql用户、组及目录<br>groupadd mysql    —新建一个 msyql 组<br>useradd -r -g mysql mysql …新建 msyql 用户禁止登录 shell<br>mkdir /usr/local/mysql    …创建目录<br>mkdir/usr/local/mysql/data    …数据仓库目录<br>4、    编译安装mysql<br>cd /usr/local/src/<br>tar -zxvf mysql-5.7.9.tar.gz<br>cd mysql-5.7.9<br>cmake    …如果不指定下面的参数会默认安装<br>-DCMAKE」NSTALL_PREFIX=/usr/local/mysql \    —mysq丨的安装目录<br>-D M YSQL_DATAD I R=/usr/loca l/mysq I/data/ \    …数据库目录<br>-DDEFAULT_CHARSET=utf8 \    …字符集支持<br>-DDEFAULT_C0LLATI0N=utf8_general_ci\    …字符集支持<br>-D M YSQL_U N IX_AD DR=/usr/loca l/mysq l/mysq I .sock \    …指定 mysql.sock 位置<br>-DWITHJNNOBASE 一 ST0RAGE_ENGINE=1 \    -■添力口 IN NOBASE 不力口建表时报错<br>-DWITH_ARCHIVE_STORAGE_ENGINE=1 \    …添力口 ARCHIVE 不加建表时报错<br>-DWITH_BLACKH0LE_ST0RAGE_ENGINE=1\ —添力口 BLACKHOLE 不力口建表时报错 -DWITH_PERFSCHEMA_ST0RAGE_ENGINE=1    —添力卩 PERFSCHEMA 不力口建表时报错<br>报错：<br>CMake Error at cmake/boost.cmake:76 (MESSAGE):<br>You can download it with -DD0WNL0AD_B00ST=1 -DWITH_BOOST=<directory> This CMake script will look for boost in <directory>. If it is not there,it will download and unpack it (in that directory) for you.<br>If you are inside a firewall, you may need to use an http proxy: export http_p roxy=<a href="http://exam" target="_blank" rel="external">http://exam</a> ple.com :80 Call Stack (most recent call first): cmake/boost.cmake:228(COULD_NOT_FIND_BOOST) CMakeLists.txt:452 (INCLUDE)<br>incomplete, errors occurred!<br>解决：<br>从MySQL 5.7.5开始Boost库是必需的，下载Boost库并上传到/usr/local/src下，在解压后复制到 /usr/local/boost目录下，然后重新cmake并在后面的选项中加上选项-DWITH_BOOST=/usr/local/boost(下载： <a href="http://sourceforge.net/projects/boost/files/boost/" target="_blank" rel="external">http://sourceforge.net/projects/boost/files/boost/</a>)<br>cd /usr/local/src<br>tar-zxvf boost_l_57_0.tar.gz<br>cp -a /usr/local/src/boost_l_57_0 /usr/local/boost<br>cmake -DCMAKE_INSTALL_PREFIX=/usr/local/mysql -DMYSQL_DATADIR=/usr/local/mysql/data/ -DDEFAULT_CHARSET=utf8-DDEFAULT_COLLATION=utf8_general_ci-DWITH」NNOBASE_STORAGE_ENGINE=l -DWITH_ARCHIVE_ST0RAGE_ENGINE=1-DWITH_BLACKH0LE_ST0RAGE_ENGINE=1 -DWITH_PERFSCHEMA_STORAGE_ENGINE=l-DWITH_BOOST=/usr/local/boost<br>make…开始编译<br>make install    -…编译安装<br>出错后重新运行配置，需要删除CMakeCache.txt文件<br>make clean<br>rm -f CMakeCache.txt<br>5、设置权限并初始化MySQL系统授权表<br>cd /usr/local/mysql<br>chown -R mysql.    —更改所有者，注意是|^59丨.<br>chgrp -R mysql.    …改所属组，注意是mysql.<br>bin/mysqld –initialize -user=mysql -basedir=/usr/local/mysql -datadir=/usr/local/mysq I/data …以root初始化操作时要加–user=mysql参数，生成一个随机密码（注意保存登录时用）chown -R root.    …改所有者，注意是root.<br>chown -R mysql data …更改data目录所有者为mysql<br>6、    创建配置文件<br>mv /etc/my.cnf my.cnf.bak    …将默认生成my.cnf改名或删除否则启动服务会报错<br>cd /usr/local/mysql/support-files …进入MySQL安装目录支持文件目录<br>cp my-default.cnf/etc/my.cnf    …复制模板为新的配置文件，根据需要修改文件中配置选<br>项如不修改配置MySQL则按默认配置参数运行。</directory></directory></p>
+<p>#/usr/local/mysql/bin/mysqld_safe –user=mysql &amp;    …后台启动 mysql<br>7、    配置mysql自动启动<br>cp /usr/local/mysql/support-files/mysql.server /etc/init.d/mysql    …复制启动文件<br>chmod 755 /etc/init.d/mysql    …增加执行权限<br>chkconfig -add mysql    …加入自动启动项<br>chkconfig -level 345 mysql on    …设置 MySQL 在 345 等级自动启动<br><strong><em>把服务文件放到/etc/init.d/目录下面相当于改为了 rpm包安装的服务使用方式。<br>8、    配置Mysql系统环境变量<br>vi /etc/profile    …编辑/etc/profile文件在最后添加如下两行<br>PATH=/usr/local/mysql/bin:$PATH<br>export PATH    …不加登录 mysq丨时会报错 “-bash: mysql: command not found”<br>source /etc/profile    …使环境变量及时生效<br>9、    启动MySQL服务<br>/usr/local/mysql/support-files/mysql.server start    —启动 mysql 月艮务<br>/usr/local/mysql/support-files/mysql.server restart —重启 mysql<br>/usr/local/mysql/support-files/mysql.server stop    —停止 mysql 月艮务
+</em></strong>也可以用service mysql start或systemctl start mysql这样的rpm服务命令，还可以使用 绝对路径/etc/init.d/mysql start来启动mysql，因为上面己经把启动方式改为了 rpm服务 启动方式。<br>10、    访问MySQL数据库<br>mysql -u root -h 127.0.0.1 -p —连接mysql，输入初始化时生成的随机密码 mysql&gt; alter user ‘root^’localhost’ identified by ‘123456’; …修改 root 新密码 mysql&gt;quit; …退出也可用exit;<br>myslq -u root -p    …重新登录时输入新的密码回车<br>mysql&gt;use mysql;    …访问数据库 mysql<br>11、创建SSL/RSA文件<br>cd /usr/local/mysql/bin    …切换目录<br>mysql_ssl_rsa_setup -user=mysql -basedir=/usr/local/mysql -datadir=/usr/local/mysql/data<br>…创建新的SSL文件<br>通用预编译包方式安装MySQL数据库<br>MySQL通用编译包是已经编译好的只要解压后配置一下就可以使用了，不用安装。非常省 心省力。<br>1、增加用户名和用户组<br>groupadd mysql<br>useradd -r -g mysql mysql    …新建 msyql 用户禁止登录 shell<br>2、    下载、解压MySQL通用编译包<br>下载：<br>wget ftp://ftp.mirrorservice.org/sites/ftp.mysql.com/Downloads/MySQL-5.7/mysql-5.7.9-linux-glibc2.5-x86_64.tar.gz</p>
+<p>cd /usr/local/                                  …切换到存放源码包所在目录（这里也是安装目录）<br>tar -xvf mysql-5.7.9-linux-glibc2.5-x86_64.tar.gz    …在当前目录解压通用编译包<br>In -s /usr/local/ mysql-5.7.9-linux-glibc2.5-x86_64 mysql …建立软链接 mysql 方便操作<br>3、    设置权限并初始化MySQL系统授权表<br>cd mysql…进入软链接目录<br>mkdir data    …新建数据目录<br>chmod 770 data…更改data目录权限为770<br>chown -R mysql.    …更改所有者，注意是^^口丨.<br>chgrp -R mysql.    …改所属组，注意是mysql.<br>bin/mysqld —initialize -user=mysql -basedir=/usr/local/mysql –datadir=/usr/local/mysql/data …以root初始化操作时要加–user=mysql参数，生成一个随机的密码（保存登录时使用）<br>chown -R root.—更改所有者，注意是root.<br>chown -R mysql data …更改data目录所有者为mysql<br>3、创建配置文件并后台启动mysql<br>mv/etc/my.cnf /etc/my.cnf.bak —my.cnf 改名或删除（默认的 my.cnf 会影响 mysql 启动）<br>cd /usr/local/mysql/support-files    —进入 MySQL 安装目录支持文件目录<br>cp my-default.cnf/etc/my.cnf    …复制模板为新的配置文件，根据需要修改文件中配置选<br>项如不修改配置MySQL则按默认配置参数运行。</p>
+<p>#/usr/local/mysql/bin/mysqld_safe –user=mysql &amp;    —后台启动 mysql<br>4、配置mysql自动启动<br>cp /usr/local/mysql/support-files/mysql.server /etc/init.d/mysql    …复制启动文件<br>chmod 755 /etc/init.d/mysql    …增加执行权限<br>chkconfig -add mysql    …加入自动启动项<br>chkconfig –level 345 mysql on …设置 MySQL 在 345 等级自动启动<br><strong><em>把服务文件放到/etc/init.d/目录下面相当于改为了 rpm包安装的服务使用方式。<br>5、    配置Mysql系统环境变量<br>vi /etc/profile    …编辑/etc/profile文件在最后添加如下两行<br>PATH=/usr/local/mysql/bin:$PATH<br>export PATH    …不加登录 mysql 时会报错 “-bash: mysql: command not found”<br>source /etc/profile    …使环境变量及时生效<br>6、    启动MySQL服务<br>/usr/local/mysql/support-files/mysql.server start ——启动 mysql 月艮务<br>/usr/local/mysql/support-files/mysql.server restart    —重启 mysql<br>/usr/local/mysql/support-files/mysql.server stop    —停止 mysql 月艮务
+</em></strong>也可以用service mysql start或systemctl start mysql这样的rpm服务命令，还可以使用 绝对路径/etc/init.d/mysql start来启动mysql，因为上面己经把启动方式改为了 rpm服务 启动方式。<br>7、    访问MySQL数据库<br>mysql -u root-p    …连接mysql，输入初始化时生成的密码<br>mysql&gt; alter user ‘root^’localhost’ identified by ‘123456’;…修改 root 新密码 mysql&gt; quit; …退出也可用exit;<br>mysql -u root -p    …提示输入密码时输入新设置的密码登录<br>mysql&gt;use mysql;    …访问数据库 mysql<br>8、    创建SSL/RSA文件<br>cd /usr/local/mysql/bin …切换目录<br>mysql_ssl_rsa_setup -user=mysql -basedir=/usr/local/mysql –datadir=/usr/local/mysql/data<br>—创建新的SSL文件<br>9、报错及解决<br>1、登录时报错</p>
+<h1 id="myslq_-u_root_-p">myslq -u root -p</h1><p>报错：<br>ERROR 1045 (28000): Access denied for user ‘root’local host’ (using password: NO)—(不输入密码时） ERROR 1045 (28000): Access denied for user ,root,@,localhost, (using password: YES)—(输入密码时）</p>
+<p>解决:<br>/etc/init.d/mysql stop    …停止 mysql 服务<br>mysqld_safe -skip-grant-tables -skip-networking &amp; …跳过权限表控制，跳过 TCP/IP 协议在本机访问<br>mysql -u root -p mysql    —提示输入密码时直接到7丨（<br>mysql&gt;update user set authentication_string=password(‘123456,) where user=’root’; –修改密码，在<br>MySQL5.7.9 中密码字段名是 authentication_string 而不是原来的 password 了。<br>mysql&gt; flush privileges;    —刷新MySQL的系统权限相关表使其生效<br>mysql&gt; quit;    —退出 mysql</p>
+<p>#/etc/init.d/mysqld restart    …重启 mysql 服务<br>2、访问数据库时报错<br>myslq -u root -p —提示输入密码时输入新设置的密码<br>mysql&gt;use mysql;<br>报错：<br>ERROR 1820 (HY000): You must SET PASSWORD before executing this statement<br>mysql&gt; use mysql<br>ERROR 1820 (H^OQQ): You must SET PASSWORD before executing this statement mysql&gt; |<br>解决：<br>Mysql&gt;alter user user() identified by ,123456,;    …再重新设置下密码，注意方法与之前5.6版本的“SET<br>PASSWORD = PASSWORD(‘new_password’}/MH<br>3、启动MySQL服务报错</p>
+<h1 id="systemctl_start_mysql">systemctl start mysql</h1><p>报错：<br>Starting MySQL.. ERROR! The server quit without updating PID file (/usr/local/mysql/data/localhost.localdomain.pid).</p>
+<p>解决：<br>初始化没有指定路径参数造成的加上参数即可<br>cd /usr/local/mysql<br>bin/mysqld -initialize -user=mysql -basedir=/usr/local/mysql -datadir=/usr/local/mysql/data<br>4、可能提示有的软件包没有安装<br>解决： 到光盘中查找提示的软件包安装上即可，如光盘中没有可用yum安装，如果还没有可以到prmfind.net或是 到rpmseek.com网站上查找下载安装。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://www.fovoy.com/2015/08/16/mysql安装/" data-id="cixo35d2e0075vfs6xqjao3wk" class="article-share-link">分享到</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/mysql/">mysql</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+    
+      <article id="post-tomcat" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2015/08/16/tomcat/">tomcat remote </a>
+    </h1>
+  
+
+        <div class="article-meta">
+          
+  <div class="article-date">
+    <i class="fa fa-calendar"></i>
+    <a href="/2015/08/16/tomcat/">
+      <time datetime="2015-08-16T01:13:36.000Z" itemprop="datePublished">2015-08-16</time>
+    </a>
+  </div>
+
+
+          
+  <div class="article-category">
+  	<i class="fa fa-folder"></i>
+    <a class="article-category-link" href="/categories/中间件/">中间件</a><i class="fa fa-angle-right"></i><a class="article-category-link" href="/categories/中间件/tomcat/">tomcat</a>
+  </div>
+
+        </div>
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+                
+        <ol>
+<li>在tomcat目录的startenv.sh中配置</li>
+</ol>
+<p>export JAVA_OPTS=$JAVA_OPTS” -Xdebug -Xrunjdwp:transport=dt_socket,server=y,suspend=n,address=127.0.0.1:8145”<br>8145如果冲突, 换另一个端口</p>
+<ol>
+<li><p>重启服务</p>
+<p>sudo /home/q/tools/bin/restart_tomcat7.sh tts_lz</p>
+</li>
+<li><p>开启端口映射</p>
+<p>~/debug.sh 10.86.144.79</p>
+</li>
+</ol>
+<p>脚本内容<br> cat ~/debug.sh</p>
+<p>#!/bin/bash<br>socat TCP4-LISTEN:9999,fork,range=$1/32 TCP4:127.0.0.1:8145</p>
+<ol>
+<li>idea配置远程debug</li>
+</ol>
+<p>ip为开发机ip, 端口为映射出来的端口, 这里是9999</p>
+<hr>
+<p>参数<br><figure class="highlight haml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">-<span class="ruby"><span class="constant">XX</span><span class="symbol">:-DisableExplicitGC</span> -<span class="constant">Xms6000m</span> -<span class="constant">Xmx6000m</span> -<span class="constant">XX</span><span class="symbol">:NewSize=</span><span class="number">4524</span>m -<span class="constant">Xss256k</span> -<span class="constant">XX</span><span class="symbol">:PermSize=</span><span class="number">128</span>m -server -<span class="constant">XX</span><span class="symbol">:SurvivorRatio=</span><span class="number">2</span> -<span class="constant">XX</span><span class="symbol">:MaxTenuringThreshold=</span><span class="number">6</span> -<span class="constant">XX</span><span class="symbol">:StringTableSize=</span><span class="number">500000</span> -<span class="constant">XX</span><span class="symbol">:+DisableExplicitGC</span> -<span class="constant">Xverify</span><span class="symbol">:none</span> -<span class="constant">XX</span><span class="symbol">:+UseParNewGC</span> -<span class="constant">XX</span><span class="symbol">:+UseConcMarkSweepGC</span> -<span class="constant">XX</span><span class="symbol">:+CMSParallelRemarkEnabled</span> -<span class="constant">XX</span><span class="symbol">:+UseCMSCompactAtFullCollection</span> -<span class="constant">XX</span><span class="symbol">:+UseFastAccessorMethods</span> -<span class="constant">XX</span><span class="symbol">:+CMSPermGenSweepingEnabled</span> -<span class="constant">XX</span><span class="symbol">:+CMSClassUnloadingEnabled</span> -<span class="constant">XX</span><span class="symbol">:+UseCompressedOops</span> -<span class="constant">XX</span><span class="symbol">:CMSInitiatingOccupancyFraction=</span><span class="number">80</span> -<span class="constant">XX</span><span class="symbol">:+UseCMSInitiatingOccupancyOnly</span></span></span><br></pre></td></tr></table></figure></p>
+<hr>
+<p>startenv.sh</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="shebang">#!/bin/sh</span></span><br><span class="line"><span class="built_in">export</span> TOMCAT_USER=<span class="string">"tomcat"</span></span><br><span class="line"><span class="built_in">export</span> JAVA_OPTS=<span class="string">"-Xms6g -Xmx6g -XX:NewSize=2g -XX:PermSize=256m -server -XX:+DisableExplicitGC -Dfovoy.logs=<span class="variable">$CATALINA_BASE</span>/logs -Dfovoy.cache=<span class="variable">$CATALINA_BASE</span>/cache -verbose:gc -XX:+PrintGCDateStamps -XX:+PrintGCDetails -Xloggc:<span class="variable">$CATALINA_BASE</span>/logs/gc.log"</span></span><br><span class="line">chown -R tomcat:tomcat <span class="variable">$CATALINA_BASE</span>/logs</span><br><span class="line">chown -R tomcat:tomcat <span class="variable">$CATALINA_BASE</span>/cache</span><br><span class="line">chown -R tomcat:tomcat <span class="variable">$CATALINA_BASE</span>/conf</span><br><span class="line">chown -R tomcat:tomcat <span class="variable">$CATALINA_BASE</span>/work</span><br><span class="line">chown -R tomcat:tomcat <span class="variable">$CATALINA_BASE</span>/temp</span><br></pre></td></tr></table></figure>
+<p>start_tomcat.sh<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line"><span class="shebang">#!/bin/bash</span></span><br><span class="line"><span class="built_in">source</span> /etc/profile</span><br><span class="line"></span><br><span class="line"><span class="built_in">export</span> CATALINA_HOME=/home/q/tomcat</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> <span class="built_in">echo</span> <span class="variable">$1</span> | grep -q <span class="string">"/home/q/www"</span></span><br><span class="line"><span class="keyword">then</span></span><br><span class="line">    <span class="built_in">export</span> CATALINA_BASE=<span class="variable">$&#123;1%/&#125;</span></span><br><span class="line"><span class="keyword">else</span></span><br><span class="line">    <span class="built_in">export</span> CATALINA_BASE=/home/q/www/<span class="variable">$&#123;1%/&#125;</span></span><br><span class="line"><span class="keyword">fi</span></span><br><span class="line"></span><br><span class="line">instance=`ls /home/q/www/ | head -<span class="number">1</span>`;</span><br><span class="line"><span class="keyword">if</span> ! [ <span class="operator">-e</span> <span class="variable">$CATALINA_BASE</span>/conf/server.xml ]</span><br><span class="line"><span class="keyword">then</span></span><br><span class="line">    <span class="built_in">echo</span> <span class="operator">-e</span> <span class="string">" usage: <span class="variable">$0</span> home/q/www/<span class="variable">$instance</span>\n"</span></span><br><span class="line">    <span class="built_in">exit</span> <span class="number">1</span>;</span><br><span class="line"><span class="keyword">fi</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> [ -r <span class="string">"<span class="variable">$CATALINA_BASE</span>"</span>/startenv.sh ]; <span class="keyword">then</span></span><br><span class="line">  . <span class="string">"<span class="variable">$CATALINA_BASE</span>"</span>/startenv.sh</span><br><span class="line"><span class="keyword">fi</span></span><br><span class="line"></span><br><span class="line">TOMCAT_ID=`ps aux |grep <span class="string">"java"</span>|grep <span class="string">"Dcatalina.base=<span class="variable">$CATALINA_BASE</span> "</span>|grep -v <span class="string">"grep"</span>|awk <span class="string">'&#123; print $2&#125;'</span>`</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> [ -n <span class="string">"<span class="variable">$TOMCAT_ID</span>"</span> ] ; <span class="keyword">then</span></span><br><span class="line">    <span class="built_in">echo</span> <span class="string">"tomcat(<span class="variable">$&#123;TOMCAT_ITOMCAT_ID&#125;</span>) still running now , please shutdown it firest"</span>;</span><br><span class="line">    <span class="built_in">exit</span> <span class="number">2</span>;</span><br><span class="line"><span class="keyword">fi</span></span><br><span class="line"></span><br><span class="line">TOMCAT_START_LOG=`<span class="variable">$CATALINA_HOME</span>/bin/startup.sh`</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> [ <span class="string">"$?"</span> = <span class="string">"0"</span> ]; <span class="keyword">then</span></span><br><span class="line">    <span class="built_in">echo</span> <span class="string">"<span class="variable">$0</span> <span class="variable">$&#123;1%/&#125;</span> start succeed"</span></span><br><span class="line"><span class="keyword">else</span></span><br><span class="line">    <span class="built_in">echo</span> <span class="string">"<span class="variable">$0</span> <span class="variable">$&#123;1%/&#125;</span> start failed"</span></span><br><span class="line">    <span class="built_in">echo</span> <span class="variable">$TOMCAT_START_LOG</span></span><br><span class="line"><span class="keyword">fi</span></span><br></pre></td></tr></table></figure></p>
+<p>stop tomcat<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br></pre></td><td class="code"><pre><span class="line"><span class="shebang">#!/bin/bash</span></span><br><span class="line"><span class="built_in">source</span> /etc/profile</span><br><span class="line"></span><br><span class="line"><span class="built_in">export</span> CATALINA_HOME=/home/q/tomcat</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> <span class="built_in">echo</span> <span class="variable">$1</span> | grep -q <span class="string">"/home/q/www"</span></span><br><span class="line"><span class="keyword">then</span></span><br><span class="line">        <span class="built_in">export</span> CATALINA_BASE=<span class="variable">$&#123;1%/&#125;</span></span><br><span class="line"><span class="keyword">else</span></span><br><span class="line">        <span class="built_in">export</span> CATALINA_BASE=/home/q/www/<span class="variable">$&#123;1%/&#125;</span></span><br><span class="line"><span class="keyword">fi</span></span><br><span class="line"></span><br><span class="line">instance=`ls /home/q/www/ | head -<span class="number">1</span>`;</span><br><span class="line"><span class="keyword">if</span> ! [ <span class="operator">-e</span> <span class="variable">$CATALINA_BASE</span>/conf/server.xml ]</span><br><span class="line"><span class="keyword">then</span></span><br><span class="line">	<span class="built_in">echo</span> <span class="operator">-e</span> <span class="string">" usage: <span class="variable">$0</span> home/q/www/<span class="variable">$instance</span>\n"</span></span><br><span class="line">        <span class="built_in">exit</span> <span class="number">1</span>;</span><br><span class="line"><span class="keyword">fi</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">TOMCAT_ID=`ps aux |grep <span class="string">"java"</span>|grep <span class="string">"[D]catalina.base=<span class="variable">$CATALINA_BASE</span> "</span>|awk <span class="string">'&#123; print $2&#125;'</span>`</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> [ -n <span class="string">"<span class="variable">$TOMCAT_ID</span>"</span> ] ; <span class="keyword">then</span></span><br><span class="line">    TOMCAT_STOP_LOG=`<span class="variable">$CATALINA_HOME</span>/bin/shutdown.sh`</span><br><span class="line"><span class="keyword">else</span></span><br><span class="line">    <span class="built_in">echo</span> <span class="string">"Tomcat instance not found : <span class="variable">$&#123;1%/&#125;</span>"</span></span><br><span class="line">    <span class="built_in">exit</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">fi</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> &#123;<span class="number">1</span>..<span class="number">10</span>&#125;; <span class="keyword">do</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    TOMCAT_ID=`ps aux |grep <span class="string">"java"</span>|grep <span class="string">"Dcatalina.base=<span class="variable">$CATALINA_BASE</span> "</span>|grep -v <span class="string">"grep"</span>|awk <span class="string">'&#123; print $2&#125;'</span>`</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> [ -n <span class="string">"<span class="variable">$TOMCAT_ID</span>"</span> ]; <span class="keyword">then</span></span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> [ <span class="string">"<span class="variable">$i</span>"</span> = <span class="string">"1"</span> ]; <span class="keyword">then</span></span><br><span class="line">             <span class="built_in">echo</span> -n <span class="string">"trying stop (<span class="variable">$TOMCAT_ID</span>): <span class="variable">$i</span>"</span></span><br><span class="line">        <span class="keyword">else</span></span><br><span class="line">             <span class="built_in">echo</span> -n <span class="operator">-e</span> <span class="string">"\b<span class="variable">$i</span>"</span></span><br><span class="line">        <span class="keyword">fi</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> [ <span class="variable">$i</span> -ge <span class="number">5</span> ]; <span class="keyword">then</span></span><br><span class="line">             <span class="built_in">kill</span> <span class="string">"<span class="variable">$TOMCAT_ID</span>"</span></span><br><span class="line">        <span class="keyword">fi</span></span><br><span class="line"></span><br><span class="line">        sleep <span class="number">1</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">        <span class="keyword">if</span> [ <span class="variable">$i</span> <span class="operator">-gt</span> <span class="number">5</span> ]; <span class="keyword">then</span></span><br><span class="line">            <span class="built_in">echo</span> <span class="operator">-e</span> <span class="string">"\n<span class="variable">$TOMCAT_BASE</span> was killed(<span class="variable">$i</span>)"</span></span><br><span class="line">        <span class="keyword">else</span></span><br><span class="line">            <span class="built_in">echo</span> <span class="operator">-e</span> <span class="string">"\n<span class="variable">$TOMCAT_BASE</span> was stoped"</span></span><br><span class="line">        <span class="keyword">fi</span></span><br><span class="line"></span><br><span class="line">        <span class="built_in">exit</span>;</span><br><span class="line">    <span class="keyword">fi</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">done</span>;</span><br><span class="line"></span><br><span class="line"><span class="built_in">kill</span> -<span class="number">9</span> <span class="string">"<span class="variable">$TOMCAT_ID</span>"</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">echo</span> <span class="string">"<span class="variable">$TOMCAT_BASE</span> was force killed"</span></span><br></pre></td></tr></table></figure></p>
+<p>restart_tomcat.sh<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="shebang">#!/bin/bash</span><br><span class="line"></span></span><br><span class="line">/home/q/tools/bin/stop_tomcat.sh <span class="variable">$1</span></span><br><span class="line"></span><br><span class="line">/home/q/tools/bin/start_tomcat.sh <span class="variable">$1</span></span><br></pre></td></tr></table></figure></p>
+<p>startup.sh<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line"><span class="shebang">#!/bin/sh</span></span><br><span class="line">os400=<span class="literal">false</span></span><br><span class="line"><span class="keyword">case</span> <span class="string">"`uname`"</span> <span class="keyword">in</span></span><br><span class="line">OS400*) os400=<span class="literal">true</span>;;</span><br><span class="line"><span class="keyword">esac</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># resolve links - $0 may be a softlink</span></span><br><span class="line">PRG=<span class="string">"<span class="variable">$0</span>"</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">while</span> [ -h <span class="string">"<span class="variable">$PRG</span>"</span> ] ; <span class="keyword">do</span></span><br><span class="line">  ls=`ls -ld <span class="string">"<span class="variable">$PRG</span>"</span>`</span><br><span class="line">  link=`expr <span class="string">"<span class="variable">$ls</span>"</span> : <span class="string">'.*-&gt; \(.*\)$'</span>`</span><br><span class="line">  <span class="keyword">if</span> expr <span class="string">"<span class="variable">$link</span>"</span> : <span class="string">'/.*'</span> &gt; /dev/null; <span class="keyword">then</span></span><br><span class="line">    PRG=<span class="string">"<span class="variable">$link</span>"</span></span><br><span class="line">  <span class="keyword">else</span></span><br><span class="line">    PRG=`dirname <span class="string">"<span class="variable">$PRG</span>"</span>`/<span class="string">"<span class="variable">$link</span>"</span></span><br><span class="line">  <span class="keyword">fi</span></span><br><span class="line"><span class="keyword">done</span></span><br><span class="line"></span><br><span class="line">PRGDIR=`dirname <span class="string">"<span class="variable">$PRG</span>"</span>`</span><br><span class="line">EXECUTABLE=catalina.sh</span><br><span class="line"></span><br><span class="line"><span class="comment"># Check that target executable exists</span></span><br><span class="line"><span class="keyword">if</span> <span class="variable">$os400</span>; <span class="keyword">then</span></span><br><span class="line">  <span class="comment"># -x will Only work on the os400 if the files are:</span></span><br><span class="line">  <span class="comment"># 1. owned by the user</span></span><br><span class="line">  <span class="comment"># 2. owned by the PRIMARY group of the user</span></span><br><span class="line">  <span class="comment"># this will not work if the user belongs in secondary groups</span></span><br><span class="line">  <span class="built_in">eval</span></span><br><span class="line"><span class="keyword">else</span></span><br><span class="line">  <span class="keyword">if</span> [ ! -x <span class="string">"<span class="variable">$PRGDIR</span>"</span>/<span class="string">"<span class="variable">$EXECUTABLE</span>"</span> ]; <span class="keyword">then</span></span><br><span class="line">    <span class="built_in">echo</span> <span class="string">"Cannot find <span class="variable">$PRGDIR</span>/<span class="variable">$EXECUTABLE</span>"</span></span><br><span class="line">    <span class="built_in">echo</span> <span class="string">"The file is absent or does not have execute permission"</span></span><br><span class="line">    <span class="built_in">echo</span> <span class="string">"This file is needed to run this program"</span></span><br><span class="line">    <span class="built_in">exit</span> <span class="number">1</span></span><br><span class="line">  <span class="keyword">fi</span></span><br><span class="line"><span class="keyword">fi</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#exec "$PRGDIR"/"$EXECUTABLE" start "$@"</span></span><br><span class="line"><span class="keyword">if</span> [ -z <span class="string">"<span class="variable">$TOMCAT_USER</span>"</span> ]; <span class="keyword">then</span></span><br><span class="line">    <span class="built_in">exec</span> <span class="string">"<span class="variable">$PRGDIR</span>"</span>/<span class="string">"<span class="variable">$EXECUTABLE</span>"</span> start <span class="string">"<span class="variable">$@</span>"</span></span><br><span class="line"><span class="keyword">else</span></span><br><span class="line">    <span class="built_in">exec</span> /bin/su <span class="variable">$TOMCAT_USER</span> -c <span class="string">"<span class="variable">$PRGDIR</span>/<span class="variable">$EXECUTABLE</span> start <span class="variable">$@</span>"</span></span><br><span class="line"><span class="keyword">fi</span></span><br></pre></td></tr></table></figure></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://www.fovoy.com/2015/08/16/tomcat/" data-id="cixo35d11004gvfs6mj01oge4" class="article-share-link">分享到</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/tomcat/">tomcat</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+    
+      <article id="post-nginx跨域转发" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2015/07/12/nginx跨域转发/">nginx跨域转发</a>
+    </h1>
+  
+
+        <div class="article-meta">
+          
+  <div class="article-date">
+    <i class="fa fa-calendar"></i>
+    <a href="/2015/07/12/nginx跨域转发/">
+      <time datetime="2015-07-12T11:25:12.000Z" itemprop="datePublished">2015-07-12</time>
+    </a>
+  </div>
+
+
+          
+  <div class="article-category">
+  	<i class="fa fa-folder"></i>
+    <a class="article-category-link" href="/categories/tools/">tools</a><i class="fa fa-angle-right"></i><a class="article-category-link" href="/categories/tools/nginx/">nginx</a>
+  </div>
+
+        </div>
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+                
+        <p><img src="/thumbnails/t1.png" alt=""><br><figure class="highlight dust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="xml">upstream usergridcluster</span><br><span class="line"></span><span class="expression">&#123;</span><br><span class="line">    <span class="variable">server</span> <span class="variable">localhost</span>:8080  <span class="variable">max</span>_<span class="variable">fails</span>=5 ;</span><br><span class="line">    <span class="variable">keepalive</span> 32;</span><br><span class="line">&#125;</span><span class="xml"></span><br><span class="line"></span><br><span class="line">server</span><br><span class="line"></span><span class="expression">&#123;</span><br><span class="line">    <span class="variable">listen</span> 443 <span class="variable">ssl</span> <span class="variable">backlog</span>=4096;</span><br><span class="line">    <span class="variable">listen</span> 8088 <span class="variable"><span class="keyword">default</span></span> <span class="variable">backlog</span>=4096;</span><br><span class="line">    <span class="variable">charset</span> <span class="variable">UTF-</span>8;</span><br><span class="line"></span><br><span class="line">    <span class="variable">server</span>_<span class="variable">name</span> <span class="variable">localhost</span>;</span><br><span class="line">    <span class="variable">index</span> <span class="variable">index.html</span> <span class="variable">index.htm</span> <span class="variable">index.jsp</span> <span class="variable">index.do</span> <span class="variable"><span class="keyword">default</span>.jsp</span> <span class="variable"><span class="keyword">default</span>.do</span> <span class="variable">index.php</span>;</span><br><span class="line"></span><br><span class="line">    <span class="variable">root</span>  <span class="end-block">/home</span><span class="end-block">/kenshinn</span><span class="end-block">/apps</span><span class="end-block">/data</span><span class="end-block">/nginx</span>;</span><br><span class="line"></span><br><span class="line">    <span class="variable">access</span>_<span class="variable">log</span> <span class="end-block">/home</span><span class="end-block">/kenshinn</span><span class="end-block">/apps</span><span class="end-block">/logs</span><span class="end-block">/nginx</span><span class="end-block">/usergrid-access.log</span>;</span><br><span class="line">    <span class="variable">error</span>_<span class="variable">log</span> <span class="end-block">/home</span><span class="end-block">/kenshinn</span><span class="end-block">/apps</span><span class="end-block">/logs</span><span class="end-block">/nginx</span><span class="end-block">/usergrid-error.log</span>;</span><br><span class="line"></span><br><span class="line">    <span class="variable"><span class="keyword">if</span></span> ( $<span class="variable">request</span>_<span class="variable">uri</span> ~* '//' ) &#123;</span><br><span class="line">        <span class="variable">return</span> 404 '&#123;<span class="string">"error"</span>:<span class="string">"url is invalid"</span>&#125;</span><span class="xml">';</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    location /crossdomain.xml </span><span class="expression">&#123;</span><br><span class="line">       <span class="variable">alias</span> <span class="end-block">/home</span><span class="end-block">/kenshinn</span><span class="end-block">/crossdomain.xml</span>;</span><br><span class="line">    &#125;</span><span class="xml"></span><br><span class="line"></span><br><span class="line">    location / </span><span class="expression">&#123;</span><br><span class="line">        <span class="variable">include</span> <span class="variable">conf.d</span><span class="end-block">/usergrid-cross</span>;</span><br><span class="line">        <span class="variable">proxy</span>_<span class="variable">pass</span> <span class="variable">http</span>:/<span class="end-block">/usergridcluster</span>;</span><br><span class="line">    &#125;</span><span class="xml"></span><br><span class="line">&#125;</span></span><br></pre></td></tr></table></figure></p>
+<p>sudo /usr/local/bin/nginx</p>
+<p><a href="http://www.keyed.cn/archives-2015-14.html" target="_blank" rel="external">nginx日志收集</a></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://www.fovoy.com/2015/07/12/nginx跨域转发/" data-id="cixo35d25006kvfs63l9d7o32" class="article-share-link">分享到</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/nginx/">nginx</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+    
+      <article id="post-linux" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2015/07/12/linux/">linux.md</a>
+    </h1>
+  
+
+        <div class="article-meta">
+          
+  <div class="article-date">
+    <i class="fa fa-calendar"></i>
+    <a href="/2015/07/12/linux/">
+      <time datetime="2015-07-12T11:25:12.000Z" itemprop="datePublished">2015-07-12</time>
+    </a>
+  </div>
+
+
+          
+  <div class="article-category">
+  	<i class="fa fa-folder"></i>
+    <a class="article-category-link" href="/categories/tools/">tools</a>
+  </div>
+
+        </div>
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+                
+        <p><img src="/thumbnails/watcher.jpg" alt=""></p>
+<p>iostat -dx 1</p>
+<p>```<br>netstat -n | awk ‘/^tcp/ {++S[$NF]} END {for(a in S) print a, S[a]}’<br>netstat -utnlp<br>netstat -pan|grep 2809</p>
+<p>nc  l-host.com 12345 &gt; cacti.java.war  收<br>nc -l 12345 &lt; cacti.java.war  源<br>sudo vi   :sh<br>sudo sysctl -w vm.max_map_count=262144</p>
+<p>sysctl -w vm.max_map_count=262144<br>或者你可以在 /etc/sysctl.conf 通过修改 vm.max_map_count 永久设置它。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://www.fovoy.com/2015/07/12/linux/" data-id="cixo35d2p007uvfs6ih1d0io9" class="article-share-link">分享到</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/tools/">tools</a></li></ul>
@@ -369,7 +512,7 @@
 
 
     
-      <article id="post-rest" class="article article-type-post" itemscope itemprop="blogPost">
+      <article id="post-应用中心" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-inner">
     
     
@@ -378,7 +521,7 @@
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2015/03/16/rest/">rest</a>
+      <a class="article-title" href="/2015/07/12/应用中心/">应用中心</a>
     </h1>
   
 
@@ -386,8 +529,8 @@
           
   <div class="article-date">
     <i class="fa fa-calendar"></i>
-    <a href="/2015/03/16/rest/">
-      <time datetime="2015-03-16T01:13:36.000Z" itemprop="datePublished">2015-03-16</time>
+    <a href="/2015/07/12/应用中心/">
+      <time datetime="2015-07-12T11:25:12.000Z" itemprop="datePublished">2015-07-12</time>
     </a>
   </div>
 
@@ -395,7 +538,7 @@
           
   <div class="article-category">
   	<i class="fa fa-folder"></i>
-    <a class="article-category-link" href="/categories/http/">http</a>
+    <a class="article-category-link" href="/categories/基础架构/">基础架构</a>
   </div>
 
         </div>
@@ -404,232 +547,28 @@
     <div class="article-entry" itemprop="articleBody">
       
                 
-        <h2 id="REST架构中，每一个请求指向的路径都表示一个具体的对象，资源的位置-如/books/是一个图书馆中图书列表的引用。/books/1_，引用的就是ID为1的书。"> REST架构中，每一个请求指向的路径都表示一个具体的对象，资源的位置.如/books/是一个图书馆中图书列表的引用。/books/1 ，引用的就是ID为1的书。</h2><p>  REST在http协议给出的方法类型：<br>  GET:获得请求对象的当前状态。<br>  POST:改变对象的当前状态。<br>  PUT：创建一个对象。<br>  DELETE:销毁一个对象。<br>  HEAD:获取对象的基础信息。</p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://www.fovoy.com/2015/03/16/rest/" data-id="civx0qqwp004zwqs65crioynj" class="article-share-link">分享到</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/rest/">rest</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-
-    
-      <article id="post-es查询dsl" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2015/03/16/es查询dsl/">es DLS 查询</a>
-    </h1>
-  
-
-        <div class="article-meta">
-          
-  <div class="article-date">
-    <i class="fa fa-calendar"></i>
-    <a href="/2015/03/16/es查询dsl/">
-      <time datetime="2015-03-16T01:13:36.000Z" itemprop="datePublished">2015-03-16</time>
-    </a>
-  </div>
-
-
-          
-  <div class="article-category">
-  	<i class="fa fa-folder"></i>
-    <a class="article-category-link" href="/categories/Elasticsearch/">Elasticsearch</a><i class="fa fa-angle-right"></i><a class="article-category-link" href="/categories/Elasticsearch/config/">config</a>
-  </div>
-
-        </div>
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-                
-        <p><img src="/thumbnails/es.png" alt=""></p>
-<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    "<span class="attribute">bool</span>": <span class="value">&#123;</span><br><span class="line">        "<span class="attribute">must</span>": <span class="value">&#123; "<span class="attribute">match</span>":      <span class="value">&#123; "<span class="attribute">email</span>": <span class="value"><span class="string">"business opportunity"</span> </span>&#125;</span>&#125;</span>,</span><br><span class="line">        "<span class="attribute">should</span>": <span class="value">[</span><br><span class="line">             &#123; "<span class="attribute">match</span>":         <span class="value">&#123; "<span class="attribute">starred</span>": <span class="value"><span class="literal">true</span> </span>&#125;</span>&#125;,</span><br><span class="line">             &#123; "<span class="attribute">bool</span>": <span class="value">&#123;</span><br><span class="line">                   "<span class="attribute">must</span>":      <span class="value">&#123; "<span class="attribute">folder</span>": <span class="value"><span class="string">"inbox"</span> </span>&#125;</span>&#125;</span>,</span><br><span class="line">                   "<span class="attribute">must_not</span>":  <span class="value">&#123; "<span class="attribute">spam</span>": <span class="value"><span class="literal">true</span> </span>&#125;</span>&#125;</span><br><span class="line">             &#125;&#125;</span><br><span class="line">        ]</span>,</span><br><span class="line">        "<span class="attribute">minimum_should_match</span>": <span class="value"><span class="number">1</span></span><br><span class="line">    </span>&#125;</span><br><span class="line"></span>&#125;</span><br><span class="line"></span><br><span class="line">&#123;</span><br><span class="line">    "<span class="attribute">query</span>": <span class="value">&#123;</span><br><span class="line">        "<span class="attribute">match</span>": <span class="value">&#123;</span><br><span class="line">            "<span class="attribute">tweet</span>": <span class="value"><span class="string">"elasticsearch"</span></span><br><span class="line">        </span>&#125;</span><br><span class="line">    </span>&#125;</span><br><span class="line"></span>&#125;</span><br></pre></td></tr></table></figure>
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://www.fovoy.com/2015/03/16/es查询dsl/" data-id="civx0qqyv009dwqs6ns7ejyj7" class="article-share-link">分享到</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Elasticsearch/">Elasticsearch</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-
-    
-      <article id="post-redis 使用" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2015/03/16/redis 使用/">redis 使用</a>
-    </h1>
-  
-
-        <div class="article-meta">
-          
-  <div class="article-date">
-    <i class="fa fa-calendar"></i>
-    <a href="/2015/03/16/redis 使用/">
-      <time datetime="2015-03-16T01:13:36.000Z" itemprop="datePublished">2015-03-16</time>
-    </a>
-  </div>
-
-
-          
-  <div class="article-category">
-  	<i class="fa fa-folder"></i>
-    <a class="article-category-link" href="/categories/redis/">redis</a>
-  </div>
-
-        </div>
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-                
-        <p><a href="http://blog.csdn.net/gaogaoshan/article/details/41039581" target="_blank" rel="external">redis</a></p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://www.fovoy.com/2015/03/16/redis 使用/" data-id="civx0qqwr0054wqs6bvuf5ftb" class="article-share-link">分享到</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/redis/">redis</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-
-    
-      <article id="post-p-c mapping" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2015/03/16/p-c mapping/">p-c mapping</a>
-    </h1>
-  
-
-        <div class="article-meta">
-          
-  <div class="article-date">
-    <i class="fa fa-calendar"></i>
-    <a href="/2015/03/16/p-c mapping/">
-      <time datetime="2015-03-16T01:13:36.000Z" itemprop="datePublished">2015-03-16</time>
-    </a>
-  </div>
-
-
-          
-  <div class="article-category">
-  	<i class="fa fa-folder"></i>
-    <a class="article-category-link" href="/categories/Elasticsearch/">Elasticsearch</a><i class="fa fa-angle-right"></i><a class="article-category-link" href="/categories/Elasticsearch/config/">config</a>
-  </div>
-
-        </div>
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-                
-        <p><img src="/thumbnails/es.png" alt=""></p>
-<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  "<span class="attribute">order</span>": <span class="value"><span class="number">3</span></span>,</span><br><span class="line">  "<span class="attribute">template</span>": <span class="value"><span class="string">"test*"</span></span>,</span><br><span class="line">  "<span class="attribute">settings</span>": <span class="value">&#123;</span><br><span class="line">    "<span class="attribute">index</span>": <span class="value">&#123;</span><br><span class="line">      "<span class="attribute">number_of_shards</span>": <span class="value"><span class="string">"10"</span></span>,</span><br><span class="line">      "<span class="attribute">number_of_replicas</span>": <span class="value"><span class="string">"1"</span></span><br><span class="line">    </span>&#125;</span><br><span class="line">  </span>&#125;</span>,</span><br><span class="line">  "<span class="attribute">mappings</span>": <span class="value">&#123;</span><br><span class="line">    "<span class="attribute">child</span>": <span class="value">&#123;</span><br><span class="line">      "<span class="attribute">_parent</span>": <span class="value">&#123;</span><br><span class="line">        "<span class="attribute">fielddata</span>": <span class="value">&#123;</span><br><span class="line">          "<span class="attribute">loading</span>": <span class="value"><span class="string">"eager_global_ordinals"</span></span><br><span class="line">        </span>&#125;</span>,</span><br><span class="line">        "<span class="attribute">type</span>": <span class="value"><span class="string">"parent"</span></span><br><span class="line">      </span>&#125;</span>,</span><br><span class="line">      "<span class="attribute">dynamic_templates</span>": <span class="value">[</span><br><span class="line">        &#123;</span><br><span class="line">          "<span class="attribute">string_fields</span>": <span class="value">&#123;</span><br><span class="line">            "<span class="attribute">strings</span>": <span class="value">&#123;</span><br><span class="line">              "<span class="attribute">mapping</span>": <span class="value">&#123;</span><br><span class="line">                "<span class="attribute">fielddata</span>": <span class="value">&#123;</span><br><span class="line">                  "<span class="attribute">loading</span>": <span class="value"><span class="string">"eager_global_ordinals"</span></span><br><span class="line">                </span>&#125;</span>,</span><br><span class="line">                "<span class="attribute">index</span>": <span class="value"><span class="string">"not_analyzed"</span></span>,</span><br><span class="line">                "<span class="attribute">omit_norms</span>": <span class="value"><span class="literal">true</span></span>,</span><br><span class="line">                "<span class="attribute">type</span>": <span class="value"><span class="string">"string"</span></span><br><span class="line">              </span>&#125;</span>,</span><br><span class="line">              "<span class="attribute">match_mapping_type</span>": <span class="value"><span class="string">"string"</span></span>,</span><br><span class="line">               "<span class="attribute">match</span>":   <span class="value"><span class="string">"*"</span></span><br><span class="line">            </span>&#125;</span><br><span class="line">          </span>&#125;</span><br><span class="line">        </span>&#125;</span><br><span class="line">      ]</span>,</span><br><span class="line">      "<span class="attribute">properties</span>": <span class="value">&#123;</span><br><span class="line">        "<span class="attribute">price</span>": <span class="value">&#123;</span><br><span class="line">          "<span class="attribute">type</span>": <span class="value"><span class="string">"long"</span></span><br><span class="line">        </span>&#125;</span>,</span><br><span class="line">        "<span class="attribute">childField</span>": <span class="value">&#123;</span><br><span class="line">          "<span class="attribute">fielddata</span>": <span class="value">&#123;</span><br><span class="line">            "<span class="attribute">loading</span>": <span class="value"><span class="string">"eager"</span></span><br><span class="line">          </span>&#125;</span>,</span><br><span class="line">          "<span class="attribute">index</span>": <span class="value"><span class="string">"not_analyzed"</span></span>,</span><br><span class="line">          "<span class="attribute">type</span>": <span class="value"><span class="string">"string"</span></span><br><span class="line">        </span>&#125;</span><br><span class="line">      </span>&#125;</span><br><span class="line">    </span>&#125;</span>,</span><br><span class="line">    "<span class="attribute">_default_</span>": <span class="value">&#123;</span><br><span class="line">      "<span class="attribute">dynamic_templates</span>": <span class="value">[</span><br><span class="line">        &#123;</span><br><span class="line">          "<span class="attribute">strings</span>": <span class="value">&#123;</span><br><span class="line">            "<span class="attribute">mapping</span>": <span class="value">&#123;</span><br><span class="line">              "<span class="attribute">fielddata</span>": <span class="value">&#123;</span><br><span class="line">                "<span class="attribute">loading</span>": <span class="value"><span class="string">"eager_global_ordinals"</span></span><br><span class="line">              </span>&#125;</span>,</span><br><span class="line">              "<span class="attribute">index</span>": <span class="value"><span class="string">"not_analyzed"</span></span>,</span><br><span class="line">              "<span class="attribute">omit_norms</span>": <span class="value"><span class="literal">true</span></span>,</span><br><span class="line">              "<span class="attribute">type</span>": <span class="value"><span class="string">"string"</span></span><br><span class="line">            </span>&#125;</span>,</span><br><span class="line">            "<span class="attribute">match_mapping_type</span>": <span class="value"><span class="string">"string"</span></span><br><span class="line">          </span>&#125;</span><br><span class="line">        </span>&#125;</span><br><span class="line">      ]</span>,</span><br><span class="line">      "<span class="attribute">_all</span>": <span class="value">&#123;</span><br><span class="line">        "<span class="attribute">enabled</span>": <span class="value"><span class="literal">true</span></span><br><span class="line">      </span>&#125;</span><br><span class="line">    </span>&#125;</span>,</span><br><span class="line">    "<span class="attribute">parent</span>": <span class="value">&#123;</span><br><span class="line">      "<span class="attribute">properties</span>": <span class="value">&#123;</span><br><span class="line">        "<span class="attribute">price</span>": <span class="value">&#123;</span><br><span class="line">          "<span class="attribute">type</span>": <span class="value"><span class="string">"long"</span></span><br><span class="line">        </span>&#125;</span>,</span><br><span class="line">        "<span class="attribute">parentField</span>": <span class="value">&#123;</span><br><span class="line">          "<span class="attribute">fielddata</span>": <span class="value">&#123;</span><br><span class="line">            "<span class="attribute">loading</span>": <span class="value"><span class="string">"eager"</span></span><br><span class="line">          </span>&#125;</span>,</span><br><span class="line">          "<span class="attribute">index</span>": <span class="value"><span class="string">"not_analyzed"</span></span>,</span><br><span class="line">          "<span class="attribute">type</span>": <span class="value"><span class="string">"string"</span></span><br><span class="line">        </span>&#125;</span><br><span class="line">      </span>&#125;</span><br><span class="line">    </span>&#125;</span><br><span class="line">  </span>&#125;</span>,</span><br><span class="line">  "<span class="attribute">aliases</span>": <span class="value">&#123;&#125;</span><br><span class="line"></span>&#125;</span><br></pre></td></tr></table></figure>
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://www.fovoy.com/2015/03/16/p-c mapping/" data-id="civx0qqwt0059wqs6vmgcdm5f" class="article-share-link">分享到</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Elasticsearch/">Elasticsearch</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-
-    
-      <article id="post-Compound复合模式" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2015/01/27/Compound复合模式/">Compound复合模式</a>
-    </h1>
-  
-
-        <div class="article-meta">
-          
-  <div class="article-date">
-    <i class="fa fa-calendar"></i>
-    <a href="/2015/01/27/Compound复合模式/">
-      <time datetime="2015-01-27T12:23:15.000Z" itemprop="datePublished">2015-01-27</time>
-    </a>
-  </div>
-
-
-          
-  <div class="article-category">
-  	<i class="fa fa-folder"></i>
-    <a class="article-category-link" href="/categories/design-pattern/">design pattern</a>
-  </div>
-
-        </div>
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-                
-        <p><img src="/thumbnails/adapter.png" alt=""></p>
-<h4 id="混合模式">混合模式</h4><h5 id="描述">描述</h5><ul>
-<li>各种模式结合处理复杂的问题。形成了某一类问题。就形成了一种混合的模式，例如mvc复合模式。</li>
+        <hr>
+<p><img src="/thumbnails/t1.png" alt=""><br> 作为整体的应用管理中心,集中管理公司应用，能监控所有应用的状态，对应用统一管理。</p>
+<h5 id="应用中心">应用中心</h5><p>创建一个应用<br>1.应用代号<br>2.应用名称<br>3.组织<br>4.开发人员，负责人<br>4.邮件组<br>5.生成一个本地文件。token 文件</p>
+<p>#organization=部门</p>
+<p>#owner=xx</p>
+<p>#developer=xx</p>
+<p>#mailGroup=xxx<br>name=项目名字<br>token=xxxx</p>
+<ul>
+<li>维护应用/组织/人之间的关系</li>
+<li>基础系统交互 应用启动时，通知其他系统</li>
+<li>应用资源访问控制 如：维护应用与应用之间接口访问的HTTP和Dubbo接口白名单</li>
 </ul>
-<h5 id="代码如下">代码如下</h5><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
-<p>[TOC]</p>
+<p>App应用验证过程<br>发送app到应用中心进行验证；<br>验证通过后，返回识别出环境(dev/beta)、主机名等信息，并下发临时服务器令牌(server_token)<br>对于应用程序，可通过如下方法完成上述步骤。</p>
+<p>Web应用<br>在完成上述App验证过程后，注册服务器端口等信息<br>根据中心返回的环境类型，选定对应的(dev/beta/prod)应用中心；<br>发送web应用的服务端口号<br>应用中心接收请求后，（dev/beta环境从线上同步应用信息），注册主机信息<br>应用中心广播”应用启动”事件到消息系统<br>可通过在web.xml中配置ServletWatcher为Filter完成。</p>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://www.fovoy.com/2015/01/27/Compound复合模式/" data-id="civx0qr0q00cfwqs64fomjemd" class="article-share-link">分享到</a>
+      <a data-url="http://www.fovoy.com/2015/07/12/应用中心/" data-id="cixo35cza0021vfs6xh8g9dvm" class="article-share-link">分享到</a>
       
       
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/design-pattern/">design pattern</a></li></ul>
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/应用中心/">应用中心</a></li></ul>
 
     </footer>
   </div>
@@ -639,7 +578,7 @@
 
 
     
-      <article id="post-Proxy代理模式" class="article article-type-post" itemscope itemprop="blogPost">
+      <article id="post-分布式链路跟踪调度系统" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-inner">
     
     
@@ -648,7 +587,7 @@
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2015/01/27/Proxy代理模式/">Proxy代理模式</a>
+      <a class="article-title" href="/2015/07/12/分布式链路跟踪调度系统/">分布式链路跟踪调度系统</a>
     </h1>
   
 
@@ -656,8 +595,8 @@
           
   <div class="article-date">
     <i class="fa fa-calendar"></i>
-    <a href="/2015/01/27/Proxy代理模式/">
-      <time datetime="2015-01-27T12:23:15.000Z" itemprop="datePublished">2015-01-27</time>
+    <a href="/2015/07/12/分布式链路跟踪调度系统/">
+      <time datetime="2015-07-12T11:25:12.000Z" itemprop="datePublished">2015-07-12</time>
     </a>
   </div>
 
@@ -665,7 +604,7 @@
           
   <div class="article-category">
   	<i class="fa fa-folder"></i>
-    <a class="article-category-link" href="/categories/design-pattern/">design pattern</a>
+    <a class="article-category-link" href="/categories/tools/">tools</a>
   </div>
 
         </div>
@@ -674,81 +613,147 @@
     <div class="article-entry" itemprop="articleBody">
       
                 
-        <p><img src="/thumbnails/rmi.png" alt=""></p>
-<h4 id="代理模式">代理模式</h4><h5 id="描述">描述</h5><ul>
-<li>为对象提供一个替身，能通过替身来访问远程的或者不能直接调用的对象。能控制和管理对象访问。</li>
-</ul>
-<h5 id="代码如下">代码如下</h5><ol>
-<li>java RMI<br><img src="/thumbnails/rmi.png" alt=""></li>
-<li>虚拟代理<br>虚拟代理为创建开销大的对象提供代理，如：加载图片时候出现的转圈圈就是虚拟代理，加载玩之后再加载出真正的图片。</li>
-<li>动态代理<br><img src="/thumbnails/dynproxy.png" alt=""><br>动态创建代理类，方法的指定也是动态的。proxy invocationHandler.</li>
-<li>保护代理<br>动态代理实现，保护性代理</li>
+        <p><img src="/thumbnails/watcher.jpg" alt=""></p>
+<hr>
+<p>面对日益复杂的大规模分布式集群环境，入口流量涨了，不知道要升级扩容哪些后端服务；数据库撑不住了，不知道是哪些应用读写多了；订单不见了，付款成功出不了票了，grep n多台机器日志，联系n个运营团队也没找到答案；这些问题都可以交给分布式链路跟踪调度系统来解决。</p>
+<pre><code>分布式链路跟踪调度系统源于Google Dapper论文，继Twitter的ZipK<span class="keyword">in</span>，eBay的Centralized Activity Logging (CAL)，淘宝的鹰眼，京东商城的Hydra之后，它的强大之处在于能做到追踪每个请求的完整调用链路，收集调用链路上每个服务的性能数据，并与异常监控集成，在收到报警时能从监控峰值点关联上若干异常trace样本，快速定位问题。相信在不久的将来，它能通过计算和比对性能数据，分析系统瓶颈点，并最终反馈到服务治理中。
+</code></pre><p>想知道它是怎样在你的业务流程中悄无声息的埋点监控的吗？<br>想知道怎样使用它就能快速定位问题，轻松搞定线上环境各种疑难杂症吗？</p>
+<h2 id="想知道哪些业务线已经接入并从中收益吗？">想知道哪些业务线已经接入并从中收益吗？</h2>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://www.fovoy.com/2015/07/12/分布式链路跟踪调度系统/" data-id="cixo35d01002uvfs66f1yfwvb" class="article-share-link">分享到</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/tools/">tools</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+    
+      <article id="post-监控" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2015/07/12/监控/">监控</a>
+    </h1>
+  
+
+        <div class="article-meta">
+          
+  <div class="article-date">
+    <i class="fa fa-calendar"></i>
+    <a href="/2015/07/12/监控/">
+      <time datetime="2015-07-12T11:25:12.000Z" itemprop="datePublished">2015-07-12</time>
+    </a>
+  </div>
+
+
+          
+  <div class="article-category">
+  	<i class="fa fa-folder"></i>
+    <a class="article-category-link" href="/categories/tools/">tools</a>
+  </div>
+
+        </div>
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+                
+        <p><img src="/thumbnails/watcher.jpg" alt=""></p>
+<p>iostat -dx 1</p>
+<p>collectd</p>
+<p>collectd是部署在服务器上的一个daemon，用来收集系统级别监控数据，比如cpu、memory等指标。</p>
+<p>Graphite</p>
+<p>Graphite是一个开源项目，基于Python，专注做两个事情：存储数字时间序列，并支持以丰富的函数获取数据，以图片或者json的格式。由三个组件组成:</p>
+<p>Carbon - 负责接收数据<br>Whisper - 将收到的数据存储成whisper文件（类似RRD文件）<br>graphite-api - 支持Restful的URL获取图片或JSON数据，URL里可以带各种有用的函数</p>
+<p>Watcher Dashboard</p>
+<p>基于开源项目Grafana做二次开发，专注于以丰富的方式来实现对数字时间序列的可视化。</p>
+<p>大数据监控平台  ambari和cloudera manage</p>
+<hr>
+<hr>
+<p>内存中简单的收集指数，累加，纪录30分钟的数据，也就是一个30分支的队列，每分钟移动一位，也就是30位。每分钟抓取计算两个时间点的差值。</p>
+<p>监控系统<br><a href="http://opentsdb.net/" target="_blank" rel="external">openTsDB</a><br><a href="http://metrics.codahale.com/" target="_blank" rel="external">Metrics</a><br><a href="http://blog.mongodb.org/post/65517193370/schema-design-for-time-series-data-in-mongodb" target="_blank" rel="external">mongodb</a></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://www.fovoy.com/2015/07/12/监控/" data-id="cixo35cyo000xvfs6j1jfbtdz" class="article-share-link">分享到</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/tools/">tools</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+    
+      <article id="post-企业工具" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2015/07/12/企业工具/">企业级别工具</a>
+    </h1>
+  
+
+        <div class="article-meta">
+          
+  <div class="article-date">
+    <i class="fa fa-calendar"></i>
+    <a href="/2015/07/12/企业工具/">
+      <time datetime="2015-07-12T11:25:12.000Z" itemprop="datePublished">2015-07-12</time>
+    </a>
+  </div>
+
+
+          
+  <div class="article-category">
+  	<i class="fa fa-folder"></i>
+    <a class="article-category-link" href="/categories/tools/">tools</a>
+  </div>
+
+        </div>
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+                
+        <p><img src="/thumbnails/t1.png" alt=""></p>
+<ol>
+<li>wiki  Atlassian Confluence</li>
+<li>监控 nagios和cacti   </li>
+<li>collectd是部署在服务器上的一个daemon，用来收集系统级别监控数据，比如cpu、memory等指标。</li>
+<li>Graphite是一个开源项目，基于Python，专注做两个事情：存储数字时间序列，并支持以丰富的函数获取数据，以图片或者json的格式。由三个组件组成:<br>Carbon - 负责接收数据<br>Whisper - 将收到的数据存储成whisper文件（类似RRD文件）<br>graphite-api - 支持Restful的URL获取图片或JSON数据，URL里可以带各种有用的函数</li>
+<li>Watcher Dashboard 基于开源项目Grafana做二次开发，专注于以丰富的方式来实现对数字时间序列的可视化。</li>
+<li>发布Jenkins <a href="http://www.thinksaas.cn/group/topic/378471/" target="_blank" rel="external">发布安装</a></li>
+<li>PMO atlassian<br><a target="_blank" href="http://wpa.qq.com/msgrd?v=3&uin=2585449600&site=qq&menu=yes"><img border="0" src="http://wpa.qq.com/pa?p=2:2585449600:41" alt="点击这里给我发消息" title="点击这里给我发消息"></a></li>
 </ol>
-<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
-<p>[TOC]</p>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://www.fovoy.com/2015/01/27/Proxy代理模式/" data-id="civx0qqzy00bfwqs6n9ci7zu8" class="article-share-link">分享到</a>
+      <a data-url="http://www.fovoy.com/2015/07/12/企业工具/" data-id="cixo35d0o003rvfs6fx5nwwwy" class="article-share-link">分享到</a>
       
       
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/design-pattern/">design pattern</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-
-    
-      <article id="post-ip地址" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2015/01/17/ip地址/">ip地址</a>
-    </h1>
-  
-
-        <div class="article-meta">
-          
-  <div class="article-date">
-    <i class="fa fa-calendar"></i>
-    <a href="/2015/01/17/ip地址/">
-      <time datetime="2015-01-17T01:13:36.000Z" itemprop="datePublished">2015-01-17</time>
-    </a>
-  </div>
-
-
-          
-  <div class="article-category">
-  	<i class="fa fa-folder"></i>
-    <a class="article-category-link" href="/categories/网络/">网络</a>
-  </div>
-
-        </div>
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-                
-        <p>IP地址<br>1.IP地址有网络和主机两部分构成，IP地址唯一，所以只有43亿地址。网络标识和主机标识，现在基本以子网掩码来区分。以前以分类区分，也就是A类网，B类网等。</p>
-<p>IP地址分类<br>A类：首位0开头，从第一位到第八位是他的网络标识:用十进制表示就是0.0.0.0~127.0.0.0。所以A类网段可以容纳2的24次方，也就是16777214个主机地址。<br>B类：地址前两位是10，从1为到16位。网络标识十进制为:128.0.0.0~191.255.0.0.后面为主机标识，可容纳65534个地址。<br>C类: 地址前三位开头为110，从1-24位是网络标识，十进制为：192.0.0.0~239.255.255.0是C类地址。网段上线是254个。<br>D类：地址开头前4位是1110，从1-32位是网络标识，十进制为：244.0.0.0~239.255.255.255,D类地址没有主机地址，基本用语多播。<br>分配地址时候，不可能用全部为0或者全部为1，因为是全部为0在标识对应的网络地址或者IP地址不可能获知的情况下才使用，全部为1的地址通常作为广播地址。所以C类地址才有2的八次方-2个地址。</p>
-<p>子网掩码：<br>根据上面的IP地址分配，可以读出，确定了网络标识和主机标识以后子网掩码就可以确定用1代表网络标识，用0代表主机标识，所以子网掩码就是<br>A类：255.0.0.0(11111111.00000000.00000000.00000000)<br>B类：255.255.0.0(11111111.11111111.00000000.00000000)<br>C类：255.255.255.0(11111111.11111111.11111111.00000000)<br>由这里可以推断出不需要更具分类，来标识出网络和主机的方式，那就是直接子网掩码来标记：<br>比如：让前26位为网络地址，后6位为主机地址。<br>IP地址：  172.20.100.52<br>子网掩码： 255.255.255.192(11111111.11111111.11111111.11000000)前26位为1，后面为0<br>或者也可以这样写 172.20.100.52 /26   后面的26标识网络标识位数。</p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://www.fovoy.com/2015/01/17/ip地址/" data-id="civx0qqyb0088wqs6w9cejuiu" class="article-share-link">分享到</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/ip/">ip</a></li></ul>
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/tools/">tools</a></li></ul>
 
     </footer>
   </div>
@@ -759,7 +764,7 @@
 
     
       <nav id="page-nav">
-        <a class="extend prev" rel="prev" href="/page/6/">&laquo; 上一页</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/5/">5</a><a class="page-number" href="/page/6/">6</a><span class="page-number current">7</span><a class="page-number" href="/page/8/">8</a><a class="page-number" href="/page/9/">9</a><span class="space">&hellip;</span><a class="page-number" href="/page/11/">11</a><a class="extend next" rel="next" href="/page/8/">下一页 &raquo;</a>
+        <a class="extend prev" rel="prev" href="/page/6/">&laquo; 上一页</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/5/">5</a><a class="page-number" href="/page/6/">6</a><span class="page-number current">7</span><a class="page-number" href="/page/8/">8</a><a class="page-number" href="/page/9/">9</a><span class="space">&hellip;</span><a class="page-number" href="/page/12/">12</a><a class="extend next" rel="next" href="/page/8/">下一页 &raquo;</a>
       </nav>
     </section>
       
@@ -770,6 +775,24 @@
     <h3 class="widget-title">最新文章</h3>
     <div class="widget">
       <ul id="recent-post" class="">
+        
+          <li>
+            
+            <div class="item-thumbnail">
+              <a href="/2017/01/01/2016的我/" class="thumbnail">
+  
+    <span style="background-image:url(/thumbnails/es.png
+)" alt="2017" class="thumbnail-image"></span>
+  
+</a>
+            </div>
+            
+            <div class="item-inner">
+              <p class="item-category"><a class="article-category-link" href="/categories/计划/">计划</a></p>
+              <p class="item-title"><a href="/2017/01/01/2016的我/" class="title">2017</a></p>
+              <p class="item-date"><time datetime="2017-01-01T02:13:22.000Z" itemprop="datePublished">2017-01-01</time></p>
+            </div>
+          </li>
         
           <li>
             
@@ -785,6 +808,23 @@
               <p class="item-category"><a class="article-category-link" href="/categories/分布式/">分布式</a></p>
               <p class="item-title"><a href="/2016/11/24/分布式id生成器/" class="title">分布式ID生成器</a></p>
               <p class="item-date"><time datetime="2016-11-24T02:49:03.000Z" itemprop="datePublished">2016-11-24</time></p>
+            </div>
+          </li>
+        
+          <li>
+            
+            <div class="item-thumbnail">
+              <a href="/2016/11/12/异步化方案/" class="thumbnail">
+  
+    <span class="thumbnail-image thumbnail-none"></span>
+  
+</a>
+            </div>
+            
+            <div class="item-inner">
+              <p class="item-category"><a class="article-category-link" href="/categories/java/">java</a></p>
+              <p class="item-title"><a href="/2016/11/12/异步化方案/" class="title">异步化方案</a></p>
+              <p class="item-date"><time datetime="2016-11-12T05:22:01.000Z" itemprop="datePublished">2016-11-12</time></p>
             </div>
           </li>
         
@@ -822,40 +862,6 @@
             </div>
           </li>
         
-          <li>
-            
-            <div class="item-thumbnail">
-              <a href="/2016/10/17/LRU/" class="thumbnail">
-  
-    <span class="thumbnail-image thumbnail-none"></span>
-  
-</a>
-            </div>
-            
-            <div class="item-inner">
-              <p class="item-category"><a class="article-category-link" href="/categories/lucene/">lucene</a></p>
-              <p class="item-title"><a href="/2016/10/17/LRU/" class="title">LRU 算法</a></p>
-              <p class="item-date"><time datetime="2016-10-17T04:45:11.000Z" itemprop="datePublished">2016-10-17</time></p>
-            </div>
-          </li>
-        
-          <li>
-            
-            <div class="item-thumbnail">
-              <a href="/2016/07/12/idea-license/" class="thumbnail">
-  
-    <span class="thumbnail-image thumbnail-none"></span>
-  
-</a>
-            </div>
-            
-            <div class="item-inner">
-              <p class="item-category"><a class="article-category-link" href="/categories/tools/">tools</a></p>
-              <p class="item-title"><a href="/2016/07/12/idea-license/" class="title">idea-license</a></p>
-              <p class="item-date"><time datetime="2016-07-12T01:25:12.000Z" itemprop="datePublished">2016-07-12</time></p>
-            </div>
-          </li>
-        
       </ul>
     </div>
   </div>
@@ -865,7 +871,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">分类</h3>
     <div class="widget">
-      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Elasticsearch/">Elasticsearch</a><span class="category-list-count">10</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Elasticsearch/config/">config</a><span class="category-list-count">6</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Elasticsearch/performance/">performance</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Elasticsearch/学习/">学习</a><span class="category-list-count">3</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Framework/">Framework</a><span class="category-list-count">3</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Framework/spring/">spring</a><span class="category-list-count">3</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/JVM/">JVM</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Java/">Java</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Mac/">Mac</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Math/">Math</a><span class="category-list-count">2</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Math/Matrix/">Matrix</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Math/分布/">分布</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/design-pattern/">design pattern</a><span class="category-list-count">11</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/elasticsearch/">elasticsearch</a><span class="category-list-count">2</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/elasticsearch/运维/">运维</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/fovoy/">fovoy</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/http/">http</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/java/">java</a><span class="category-list-count">17</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/java/gc/">gc</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/java/jvm/">jvm</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/java/学习/">学习</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/kibana/">kibana</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/lucene/">lucene</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/mysql/">mysql</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/mysql/config/">config</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/netty/">netty</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/recommendation/">recommendation</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/recommendation/协同过滤/">协同过滤</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/redis/">redis</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/scala/">scala</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/scala/基础/">基础</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/site/">site</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/tools/">tools</a><span class="category-list-count">14</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/tools/git/">git</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/tools/hexo/">hexo</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/tools/nginx/">nginx</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/中间件/">中间件</a><span class="category-list-count">2</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/中间件/kafka/">kafka</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/中间件/tomcat/">tomcat</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/主题模型/">主题模型</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/主题模型/主题抽取/">主题抽取</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/兴趣/">兴趣</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/分布式/">分布式</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/前端开发/">前端开发</a><span class="category-list-count">6</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/前端开发/angularjs/">angularjs</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/前端开发/html5/">html5</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/前端开发/node-js/">node.js</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/前端开发/nodejs/">nodejs</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/前端开发/学习/">学习</a><span class="category-list-count">2</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/基础架构/">基础架构</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/并发编程/">并发编程</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/总结/">总结</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/数据结构/">数据结构</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/网络/">网络</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/英语学习/">英语学习</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/计划/">计划</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/读书/">读书</a><span class="category-list-count">1</span></li></ul>
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Elasticsearch/">Elasticsearch</a><span class="category-list-count">13</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Elasticsearch/config/">config</a><span class="category-list-count">6</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Elasticsearch/performance/">performance</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Elasticsearch/学习/">学习</a><span class="category-list-count">6</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Framework/">Framework</a><span class="category-list-count">3</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Framework/spring/">spring</a><span class="category-list-count">3</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/JAVA/">JAVA</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/JVM/">JVM</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Java/">Java</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Mac/">Mac</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Math/">Math</a><span class="category-list-count">2</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Math/Matrix/">Matrix</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Math/分布/">分布</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/design-pattern/">design pattern</a><span class="category-list-count">12</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/elasticsearch/">elasticsearch</a><span class="category-list-count">2</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/elasticsearch/运维/">运维</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/fovoy/">fovoy</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/gradle/">gradle</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/http/">http</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/java/">java</a><span class="category-list-count">22</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/java/gc/">gc</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/java/jvm/">jvm</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/java/学习/">学习</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/kibana/">kibana</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/lucene/">lucene</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/mysql/">mysql</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/mysql/config/">config</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/netty/">netty</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/recommendation/">recommendation</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/recommendation/协同过滤/">协同过滤</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/redis/">redis</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/scala/">scala</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/scala/基础/">基础</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/site/">site</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/tools/">tools</a><span class="category-list-count">14</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/tools/git/">git</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/tools/hexo/">hexo</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/tools/nginx/">nginx</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/中间件/">中间件</a><span class="category-list-count">3</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/中间件/kafka/">kafka</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/中间件/tomcat/">tomcat</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/主题模型/">主题模型</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/主题模型/主题抽取/">主题抽取</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/兴趣/">兴趣</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/分布式/">分布式</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/分布式消息队列/">分布式消息队列</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/分布式系统/">分布式系统</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/前端开发/">前端开发</a><span class="category-list-count">6</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/前端开发/angularjs/">angularjs</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/前端开发/html5/">html5</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/前端开发/node-js/">node.js</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/前端开发/nodejs/">nodejs</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/前端开发/学习/">学习</a><span class="category-list-count">2</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/基础架构/">基础架构</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/大数据/">大数据</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/并发编程/">并发编程</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/总结/">总结</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/数据结构/">数据结构</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/系统/">系统</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/网络/">网络</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/英语学习/">英语学习</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/计划/">计划</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/读书/">读书</a><span class="category-list-count">1</span></li></ul>
     </div>
   </div>
 
@@ -874,7 +880,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">标签</h3>
     <div class="widget">
-      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/ConcurrentModificationException/">ConcurrentModificationException</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Elasticsearch/">Elasticsearch</a><span class="tag-list-count">10</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Future/">Future</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JVM/">JVM</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/LRU/">LRU</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Mac/">Mac</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Math/">Math</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Quasar/">Quasar</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ThreadLocal/">ThreadLocal</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/angularjs/">angularjs</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/base/">base</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/design-pattern/">design pattern</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/elasticsearch/">elasticsearch</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/fovoy/">fovoy</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/gc/">gc</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/git/">git</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hexo/">hexo</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/html5/">html5</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/http/">http</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/idea/">idea</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/id生成器/">id生成器</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ip/">ip</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/java/">java</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/jvm/">jvm</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/kafka/">kafka</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/kibana/">kibana</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/lock/">lock</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/lucene/">lucene</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mysql/">mysql</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/netty/">netty</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/nginx/">nginx</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/node-js/">node.js</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/nodejs/">nodejs</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/play/">play</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/recommendation/">recommendation</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/redis/">redis</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/reflect/">reflect</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/rest/">rest</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/scala/">scala</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/secureCRT/">secureCRT</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/site/">site</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/spring/">spring</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/store/">store</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/tomcat/">tomcat</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/tools/">tools</a><span class="tag-list-count">8</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/tree/">tree</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/volatite/">volatite</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/专注/">专注</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/主题模型/">主题模型</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/人工智能/">人工智能</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/内存模型/">内存模型</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/前端开发/">前端开发</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/同步容器/">同步容器</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/基础/">基础</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/堵塞队列/">堵塞队列</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/小说/">小说</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/并发编程/">并发编程</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/应用中心/">应用中心</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/数据结构/">数据结构</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/线程/">线程</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/线程池/">线程池</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/网络/">网络</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/英语学习/">英语学习</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/计划/">计划</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/进程和线程/">进程和线程</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/配置中心/">配置中心</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/问题/">问题</a><span class="tag-list-count">1</span></li></ul>
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/ConcurrentModificationException/">ConcurrentModificationException</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Elasticsearch/">Elasticsearch</a><span class="tag-list-count">13</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Future/">Future</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JVM/">JVM</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/LRU/">LRU</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Mac/">Mac</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Math/">Math</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Quasar/">Quasar</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/RocketMQ/">RocketMQ</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ThreadLocal/">ThreadLocal</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/angularjs/">angularjs</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/base/">base</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/design-pattern/">design pattern</a><span class="tag-list-count">12</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/elasticsearch/">elasticsearch</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/fovoy/">fovoy</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/gc/">gc</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/git/">git</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hexo/">hexo</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/html5/">html5</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/http/">http</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/idea/">idea</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/id生成器/">id生成器</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ip/">ip</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/java/">java</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/jvm/">jvm</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/kafka/">kafka</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/kibana/">kibana</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/lock/">lock</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/lucene/">lucene</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mysql/">mysql</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/netty/">netty</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/nginx/">nginx</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/node-js/">node.js</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/nodejs/">nodejs</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/order/">order</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/play/">play</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/recommendation/">recommendation</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/redis/">redis</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/reflect/">reflect</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/rest/">rest</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/scala/">scala</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/secureCRT/">secureCRT</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/site/">site</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/spring/">spring</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/store/">store</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/tomcat/">tomcat</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/tools/">tools</a><span class="tag-list-count">8</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/tree/">tree</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/volatite/">volatite</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/专注/">专注</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/主题模型/">主题模型</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/人工智能/">人工智能</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/内存模型/">内存模型</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/分布式系统介绍/">分布式系统介绍</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/前端开发/">前端开发</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/同步容器/">同步容器</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/基础/">基础</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/堵塞队列/">堵塞队列</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/小说/">小说</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/并发编程/">并发编程</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/应用中心/">应用中心</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/异常/">异常</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/数据结构/">数据结构</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/消息中间件/">消息中间件</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/线程/">线程</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/线程池/">线程池</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/编码/">编码</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/网络/">网络</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/英语学习/">英语学习</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/计划/">计划</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/进程和线程/">进程和线程</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/配置中心/">配置中心</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/问题/">问题</a><span class="tag-list-count">1</span></li></ul>
     </div>
   </div>
 
@@ -883,7 +889,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">标签云</h3>
     <div class="widget tagcloud">
-      <a href="/tags/ConcurrentModificationException/" style="font-size: 10px;">ConcurrentModificationException</a> <a href="/tags/Elasticsearch/" style="font-size: 18px;">Elasticsearch</a> <a href="/tags/Future/" style="font-size: 10px;">Future</a> <a href="/tags/JVM/" style="font-size: 10px;">JVM</a> <a href="/tags/LRU/" style="font-size: 10px;">LRU</a> <a href="/tags/Mac/" style="font-size: 10px;">Mac</a> <a href="/tags/Math/" style="font-size: 12px;">Math</a> <a href="/tags/Quasar/" style="font-size: 10px;">Quasar</a> <a href="/tags/ThreadLocal/" style="font-size: 10px;">ThreadLocal</a> <a href="/tags/angularjs/" style="font-size: 10px;">angularjs</a> <a href="/tags/base/" style="font-size: 10px;">base</a> <a href="/tags/design-pattern/" style="font-size: 20px;">design pattern</a> <a href="/tags/elasticsearch/" style="font-size: 12px;">elasticsearch</a> <a href="/tags/fovoy/" style="font-size: 12px;">fovoy</a> <a href="/tags/gc/" style="font-size: 10px;">gc</a> <a href="/tags/git/" style="font-size: 10px;">git</a> <a href="/tags/hexo/" style="font-size: 10px;">hexo</a> <a href="/tags/html5/" style="font-size: 10px;">html5</a> <a href="/tags/http/" style="font-size: 10px;">http</a> <a href="/tags/idea/" style="font-size: 10px;">idea</a> <a href="/tags/id生成器/" style="font-size: 10px;">id生成器</a> <a href="/tags/ip/" style="font-size: 10px;">ip</a> <a href="/tags/java/" style="font-size: 10px;">java</a> <a href="/tags/jvm/" style="font-size: 10px;">jvm</a> <a href="/tags/kafka/" style="font-size: 10px;">kafka</a> <a href="/tags/kibana/" style="font-size: 10px;">kibana</a> <a href="/tags/lock/" style="font-size: 10px;">lock</a> <a href="/tags/lucene/" style="font-size: 10px;">lucene</a> <a href="/tags/mysql/" style="font-size: 14px;">mysql</a> <a href="/tags/netty/" style="font-size: 10px;">netty</a> <a href="/tags/nginx/" style="font-size: 10px;">nginx</a> <a href="/tags/node-js/" style="font-size: 10px;">node.js</a> <a href="/tags/nodejs/" style="font-size: 10px;">nodejs</a> <a href="/tags/play/" style="font-size: 10px;">play</a> <a href="/tags/recommendation/" style="font-size: 10px;">recommendation</a> <a href="/tags/redis/" style="font-size: 10px;">redis</a> <a href="/tags/reflect/" style="font-size: 10px;">reflect</a> <a href="/tags/rest/" style="font-size: 10px;">rest</a> <a href="/tags/scala/" style="font-size: 10px;">scala</a> <a href="/tags/secureCRT/" style="font-size: 10px;">secureCRT</a> <a href="/tags/site/" style="font-size: 10px;">site</a> <a href="/tags/spring/" style="font-size: 14px;">spring</a> <a href="/tags/store/" style="font-size: 10px;">store</a> <a href="/tags/tomcat/" style="font-size: 10px;">tomcat</a> <a href="/tags/tools/" style="font-size: 16px;">tools</a> <a href="/tags/tree/" style="font-size: 10px;">tree</a> <a href="/tags/volatite/" style="font-size: 10px;">volatite</a> <a href="/tags/专注/" style="font-size: 10px;">专注</a> <a href="/tags/主题模型/" style="font-size: 10px;">主题模型</a> <a href="/tags/人工智能/" style="font-size: 10px;">人工智能</a> <a href="/tags/内存模型/" style="font-size: 10px;">内存模型</a> <a href="/tags/前端开发/" style="font-size: 10px;">前端开发</a> <a href="/tags/同步容器/" style="font-size: 10px;">同步容器</a> <a href="/tags/基础/" style="font-size: 10px;">基础</a> <a href="/tags/堵塞队列/" style="font-size: 10px;">堵塞队列</a> <a href="/tags/小说/" style="font-size: 10px;">小说</a> <a href="/tags/并发编程/" style="font-size: 10px;">并发编程</a> <a href="/tags/应用中心/" style="font-size: 10px;">应用中心</a> <a href="/tags/数据结构/" style="font-size: 10px;">数据结构</a> <a href="/tags/线程/" style="font-size: 10px;">线程</a> <a href="/tags/线程池/" style="font-size: 10px;">线程池</a> <a href="/tags/网络/" style="font-size: 10px;">网络</a> <a href="/tags/英语学习/" style="font-size: 10px;">英语学习</a> <a href="/tags/计划/" style="font-size: 10px;">计划</a> <a href="/tags/进程和线程/" style="font-size: 10px;">进程和线程</a> <a href="/tags/配置中心/" style="font-size: 10px;">配置中心</a> <a href="/tags/问题/" style="font-size: 10px;">问题</a>
+      <a href="/tags/ConcurrentModificationException/" style="font-size: 10px;">ConcurrentModificationException</a> <a href="/tags/Elasticsearch/" style="font-size: 20px;">Elasticsearch</a> <a href="/tags/Future/" style="font-size: 10px;">Future</a> <a href="/tags/JVM/" style="font-size: 10px;">JVM</a> <a href="/tags/LRU/" style="font-size: 10px;">LRU</a> <a href="/tags/Mac/" style="font-size: 10px;">Mac</a> <a href="/tags/Math/" style="font-size: 12px;">Math</a> <a href="/tags/Quasar/" style="font-size: 10px;">Quasar</a> <a href="/tags/RocketMQ/" style="font-size: 10px;">RocketMQ</a> <a href="/tags/ThreadLocal/" style="font-size: 10px;">ThreadLocal</a> <a href="/tags/angularjs/" style="font-size: 10px;">angularjs</a> <a href="/tags/base/" style="font-size: 10px;">base</a> <a href="/tags/design-pattern/" style="font-size: 18px;">design pattern</a> <a href="/tags/elasticsearch/" style="font-size: 12px;">elasticsearch</a> <a href="/tags/fovoy/" style="font-size: 12px;">fovoy</a> <a href="/tags/gc/" style="font-size: 10px;">gc</a> <a href="/tags/git/" style="font-size: 10px;">git</a> <a href="/tags/hexo/" style="font-size: 10px;">hexo</a> <a href="/tags/html5/" style="font-size: 10px;">html5</a> <a href="/tags/http/" style="font-size: 10px;">http</a> <a href="/tags/idea/" style="font-size: 10px;">idea</a> <a href="/tags/id生成器/" style="font-size: 10px;">id生成器</a> <a href="/tags/ip/" style="font-size: 10px;">ip</a> <a href="/tags/java/" style="font-size: 14px;">java</a> <a href="/tags/jvm/" style="font-size: 10px;">jvm</a> <a href="/tags/kafka/" style="font-size: 10px;">kafka</a> <a href="/tags/kibana/" style="font-size: 10px;">kibana</a> <a href="/tags/lock/" style="font-size: 10px;">lock</a> <a href="/tags/lucene/" style="font-size: 10px;">lucene</a> <a href="/tags/mysql/" style="font-size: 14px;">mysql</a> <a href="/tags/netty/" style="font-size: 10px;">netty</a> <a href="/tags/nginx/" style="font-size: 10px;">nginx</a> <a href="/tags/node-js/" style="font-size: 10px;">node.js</a> <a href="/tags/nodejs/" style="font-size: 10px;">nodejs</a> <a href="/tags/order/" style="font-size: 10px;">order</a> <a href="/tags/play/" style="font-size: 10px;">play</a> <a href="/tags/recommendation/" style="font-size: 10px;">recommendation</a> <a href="/tags/redis/" style="font-size: 10px;">redis</a> <a href="/tags/reflect/" style="font-size: 10px;">reflect</a> <a href="/tags/rest/" style="font-size: 10px;">rest</a> <a href="/tags/scala/" style="font-size: 10px;">scala</a> <a href="/tags/secureCRT/" style="font-size: 10px;">secureCRT</a> <a href="/tags/site/" style="font-size: 10px;">site</a> <a href="/tags/spring/" style="font-size: 14px;">spring</a> <a href="/tags/store/" style="font-size: 10px;">store</a> <a href="/tags/tomcat/" style="font-size: 10px;">tomcat</a> <a href="/tags/tools/" style="font-size: 16px;">tools</a> <a href="/tags/tree/" style="font-size: 10px;">tree</a> <a href="/tags/volatite/" style="font-size: 10px;">volatite</a> <a href="/tags/专注/" style="font-size: 10px;">专注</a> <a href="/tags/主题模型/" style="font-size: 10px;">主题模型</a> <a href="/tags/人工智能/" style="font-size: 10px;">人工智能</a> <a href="/tags/内存模型/" style="font-size: 10px;">内存模型</a> <a href="/tags/分布式系统介绍/" style="font-size: 10px;">分布式系统介绍</a> <a href="/tags/前端开发/" style="font-size: 10px;">前端开发</a> <a href="/tags/同步容器/" style="font-size: 10px;">同步容器</a> <a href="/tags/基础/" style="font-size: 12px;">基础</a> <a href="/tags/堵塞队列/" style="font-size: 10px;">堵塞队列</a> <a href="/tags/小说/" style="font-size: 10px;">小说</a> <a href="/tags/并发编程/" style="font-size: 12px;">并发编程</a> <a href="/tags/应用中心/" style="font-size: 10px;">应用中心</a> <a href="/tags/异常/" style="font-size: 10px;">异常</a> <a href="/tags/数据结构/" style="font-size: 10px;">数据结构</a> <a href="/tags/消息中间件/" style="font-size: 10px;">消息中间件</a> <a href="/tags/线程/" style="font-size: 10px;">线程</a> <a href="/tags/线程池/" style="font-size: 10px;">线程池</a> <a href="/tags/编码/" style="font-size: 10px;">编码</a> <a href="/tags/网络/" style="font-size: 10px;">网络</a> <a href="/tags/英语学习/" style="font-size: 10px;">英语学习</a> <a href="/tags/计划/" style="font-size: 10px;">计划</a> <a href="/tags/进程和线程/" style="font-size: 10px;">进程和线程</a> <a href="/tags/配置中心/" style="font-size: 10px;">配置中心</a> <a href="/tags/问题/" style="font-size: 10px;">问题</a>
     </div>
   </div>
 
@@ -892,7 +898,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">归档</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/11/">十一月 2016</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/10/">十月 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/07/">七月 2016</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/05/">五月 2016</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/03/">三月 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/02/">二月 2016</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/01/">一月 2016</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/12/">十二月 2015</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/11/">十一月 2015</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/10/">十月 2015</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/09/">九月 2015</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/08/">八月 2015</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/07/">七月 2015</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/05/">五月 2015</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/03/">三月 2015</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/01/">一月 2015</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/12/">十二月 2014</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/11/">十一月 2014</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/10/">十月 2014</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/07/">七月 2014</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/06/">六月 2014</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/05/">五月 2014</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/04/">四月 2014</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/03/">三月 2014</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/01/">一月 2014</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/10/">十月 2013</a><span class="archive-list-count">1</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/01/">一月 2017</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/11/">十一月 2016</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/10/">十月 2016</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/07/">七月 2016</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/05/">五月 2016</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/04/">四月 2016</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/03/">三月 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/02/">二月 2016</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/01/">一月 2016</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/12/">十二月 2015</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/11/">十一月 2015</a><span class="archive-list-count">12</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/10/">十月 2015</a><span class="archive-list-count">14</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/09/">九月 2015</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/08/">八月 2015</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/07/">七月 2015</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/05/">五月 2015</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/04/">四月 2015</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/03/">三月 2015</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/02/">二月 2015</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/01/">一月 2015</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/12/">十二月 2014</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/11/">十一月 2014</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/10/">十月 2014</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/07/">七月 2014</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/06/">六月 2014</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/05/">五月 2014</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/04/">四月 2014</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/03/">三月 2014</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/01/">一月 2014</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/10/">十月 2013</a><span class="archive-list-count">1</span></li></ul>
     </div>
   </div>
 
@@ -905,7 +911,7 @@
   
   <div class="outer">
     <div id="footer-info" class="inner">
-      &copy; 2000 - 2016 z-star<br>
+      &copy; 2000 - 2017 z-star<br>
       github <a href="http://github.com/z-star">z-star</a>
     </div>
   </div>

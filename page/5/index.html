@@ -97,11 +97,11 @@
     </div>
     <div class="article-info profile-block">
       <div class="article-info-block">
-        101
+        119
         <span>文章</span>
       </div>
       <div class="article-info-block">
-        67
+        73
         <span>标签</span>
       </div>
     </div>
@@ -130,7 +130,7 @@
 
       
       <section id="main">
-      <article id="post-netty" class="article article-type-post" itemscope itemprop="blogPost">
+      <article id="post-cache" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-inner">
     
     
@@ -139,7 +139,7 @@
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2015/10/17/netty/">netty</a>
+      <a class="article-title" href="/2015/11/12/cache/">cache</a>
     </h1>
   
 
@@ -147,8 +147,8 @@
           
   <div class="article-date">
     <i class="fa fa-calendar"></i>
-    <a href="/2015/10/17/netty/">
-      <time datetime="2015-10-17T01:13:36.000Z" itemprop="datePublished">2015-10-17</time>
+    <a href="/2015/11/12/cache/">
+      <time datetime="2015-11-12T11:25:12.000Z" itemprop="datePublished">2015-11-12</time>
     </a>
   </div>
 
@@ -156,7 +156,7 @@
           
   <div class="article-category">
   	<i class="fa fa-folder"></i>
-    <a class="article-category-link" href="/categories/netty/">netty</a>
+    <a class="article-category-link" href="/categories/系统/">系统</a>
   </div>
 
         </div>
@@ -165,32 +165,470 @@
     <div class="article-entry" itemprop="articleBody">
       
                 
-        <p><img src="/thumbnails/NIO.png" alt=""></p>
-<p>###BIO(同步阻塞式)<br>首先IO分两个阶段：<br>  1.查看数据是否接续<br>  2.进行拷贝<br>所以同步本身就代表，一个事务完成后才能完成下一个事务，是顺序性的进行，所以同步IO就是IO操作，要等到完成才能进行下一步动作。<br>而异步IO为 如果一个线程请求进行IO操作，IO操作不会导致请求线程被阻塞。<br>　对于同步IO：当用户发出IO请求操作之后，如果数据没有就绪，需要通过用户线程或者内核不断地去轮询数据是否就绪，当数据就绪时，再将数据从内核拷贝到用户线程；<br>　而异步IO：只有IO请求操作的发出是由用户线程来进行的，IO操作的两个阶段都是由内核自动完成，然后发送通知告知用户线程IO操作已经完成。也就是说在异步IO中，不会对用户线程产生任何阻塞。</p>
-<p>###五种IO模型<br> 1.阻塞模型：recvfrom之后一直等待数据，直到数据准备好，复制到用户空间之后才返回。阻塞IO会交出cpu,block住。等待内核拷贝数据到用户线程。<br> 2.非阻塞模型：的recvfrom之后一直轮询，直到数据到来。复制到用户空间返回。一直占用CPU。这样会导致CPU占用率非常高，所以一般少使用。<br> 3.I/O复用模型：Java NIO实际上就是多路复用IO。select/poll epoll事件选择器扫描，等待rollback。通过一个线程就可以管理多个socket，只有当socket真正有读写事件发生才会占用资源来进行实际的读写操作。因此，多路复用IO比较适合连接数比较多的情况。不过要注意的是，多路复用IO模型是通过轮询的方式来检测是否有事件到达，并且对到达的事件逐一进行响应。因此对于多路复用IO模型来说，一旦事件响应体很大，那么就会导致后续的事件迟迟得不到处理，并且会影响新的事件轮询。就好比一个餐厅只有一个服务员。<br> 4.信号驱动I/O模型：　在信号驱动IO模型中，当用户线程发起一个IO请求操作，会给对应的socket注册一个信号函数，然后用户线程会继续执行，当内核数据就绪时会发送一个信号给用户线程，用户线程接收到信号之后，便在信号函数中调用IO读写操作来进行实际的IO请求操作。<br> 5.异步I/O: 异步IO模型中，IO操作的两个阶段都不会阻塞用户线程，这两个阶段都是由内核自动完成，然后发送一个信号告知用户线程操作已完成。用户线程中不需要再次调用IO函数进行具体的读写。这点是和信号驱动模型有所不同的，信号模式要自己去取数据，异步模式收到通知时候，数据也已经装好了。<br>  前面四种IO模型实际上都属于同步IO，只有最后一种是真正的异步IO，因为无论是多路复用IO还是信号驱动模型，IO操作的第2个阶段都会引起用户线程阻塞，也就是内核进行数据拷贝的过程都会让用户线程阻塞。select,poll,</p>
-<p>###select,poll epoll总结<br>select/poll的几大缺点：<br>（1）每次调用select，都需要把fd集合从用户态拷贝到内核态，这个开销在fd很多时会很大</p>
-<p>（2）同时每次调用select都需要在内核遍历传递进来的所有fd，这个开销在fd很多时也很大</p>
-<p>（3）select支持的文件描述符数量太小了，默认是1024<br>epoll是对poll和select的改进。</p>
-<p>epoll<br>　　epoll既然是对select和poll的改进，就应该能避免上述的三个缺点。那epoll都是怎么解决的呢？在此之前，我们先看一下epoll和select和poll的调用接口上的不同，select和poll都只提供了一个函数——select或者poll函数。而epoll提供了三个函数，epoll_create,epoll_ctl和epoll_wait，epoll_create是创建一个epoll句柄；epoll_ctl是注册要监听的事件类型；epoll_wait则是等待事件的产生。</p>
-<p>　　对于第一个缺点，epoll的解决方案在epoll_ctl函数中。每次注册新的事件到epoll句柄中时（在epoll_ctl中指定EPOLL_CTL_ADD），会把所有的fd拷贝进内核，而不是在epoll_wait的时候重复拷贝。epoll保证了每个fd在整个过程中只会拷贝一次。</p>
-<p>　　对于第二个缺点，epoll的解决方案不像select或poll一样每次都把current轮流加入fd对应的设备等待队列中，而只在epoll_ctl时把current挂一遍（这一遍必不可少）并为每个fd指定一个回调函数，当设备就绪，唤醒等待队列上的等待者时，就会调用这个回调函数，而这个回调函数会把就绪的fd加入一个就绪链表）。epoll_wait的工作实际上就是在这个就绪链表中查看有没有就绪的fd（利用schedule_timeout()实现睡一会，判断一会的效果，和select实现中的第7步是类似的）。</p>
-<p>　　对于第三个缺点，epoll没有这个限制，它所支持的FD上限是最大可以打开文件的数目，这个数字一般远大于2048,举个例子,在1GB内存的机器上大约是10万左右，具体数目可以cat /proc/sys/fs/file-max察看,一般来说这个数目和系统内存关系很大。</p>
-<p>总结：<br>（1）select，poll实现需要自己不断轮询所有fd集合，直到设备就绪，期间可能要睡眠和唤醒多次交替。而epoll其实也需要调用epoll_wait不断轮询就绪链表，期间也可能多次睡眠和唤醒交替，但是它是设备就绪时，调用回调函数，把就绪fd放入就绪链表中，并唤醒在epoll_wait中进入睡眠的进程。虽然都要睡眠和交替，但是select和poll在“醒着”的时候要遍历整个fd集合，而epoll在“醒着”的时候只要判断一下就绪链表是否为空就行了，这节省了大量的CPU时间。这就是回调机制带来的性能提升。</p>
-<p>（2）select，poll每次调用都要把fd集合从用户态往内核态拷贝一次，并且要把current往设备等待队列中挂一次，而epoll只要一次拷贝，而且把current往等待队列上挂也只挂一次（在epoll_wait的开始，注意这里的等待队列并不是设备等待队列，只是一个epoll内部定义的等待队列）。这也能节省不少的开销。</p>
-<p>###两种高性能IO设计模式<br>1.Reactor<br>会先对每个client注册感兴趣的事件，然后有一个线程专门去轮询每个client是否有事件发生，当有事件发生时，便顺序处理每个事件，当所有事件处理完之后，便再转去继续轮询，如下图所示：<br><img src="/thumbnails/reactor.jpg" alt=""><br>2.Proactor: 就是reactor的高级版本，当检测到有事件发生时，会新起一个异步操作，然后交由内核线程去处理，当内核线程完成IO操作之后，发送一个通知告知操作已完成，可以得知，处理的另外新建线程。</p>
-<p><img src="/thumbnails/netty.jpg" alt=""><br> 1.缓冲区Buffer<br>  新NIO中写入或者读出是到Buffer，而不是直接到stream中。可以理解为一个字节数组(ByteBuffer).每一种基本类型都会对应一种缓冲区除了boolean。<br>  　在NIO中，Buffer是一个顶层父类，它是一个抽象类，常用的Buffer的子类有：<br>        1)ByteBuffer<br>        2)IntBuffer<br>        3)CharBuffer<br>        4)LongBuffer<br>        5)DoubleBuffer<br>        6)FloatBuffer<br>        7)ShortBuffer<br>　　如果是对于文件读写，上面几种Buffer都可能会用到。但是对于网络读写来说，用的最多的是ByteBuffer。<br> 2.Channel<br>  通道与stream不同，通道是双向的既能读又能写。而InputStream,OutPutStream看命名就知道非双向。<br>  Channel子类中大概分两类一类网络读取，一类文件读取。一个多路选择器selector可以轮询注册在上门的channel的状态。<br>  　以下是常用的几种通道：<br>        1)FileChannel<br>        2)SocketChanel<br>        3)ServerSocketChannel<br>        4)DatagramChannel<br>　　通过使用FileChannel可以从文件读或者向文件写入数据；通过SocketChannel，以TCP来向网络连接的两端读写数据；通过ServerSocketChanel能够监听客户端发起的TCP连接，并为每个TCP连接创建一个新的SocketChannel来进行数据读写；通过DatagramChannel，以UDP协议来向网络连接的两端读写数据。<br>3.Selector<br> Selector类是NIO的核心类，Selector能够检测多个注册的通道上是否有事件发生，如果有事件发生，便获取事件然后针对每个事件进行相应的响应处理。这样一来，只是用一个单线程就可以管理多个通道，也就是管理多个连接。这样使得只有在连接真正有读写事件发生时，才会调用函数来进行读写，就大大地减少了系统开销，并且不必为每个连接都创建一个线程，不用去维护多个线程，并且避免了多线程之间的上下文切换导致的开销。</p>
+        <hr>
+<p>cpu 除寄存器以为还有三级缓存L1 32K L2 256K L3 12MB<br>缓存的最小单位是缓存行，64字节，所以如果加载一个8字节的long进来，你将无消耗地加载了另外7个. 所以你可以非常快地遍历数组.</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> L1CacheMiss &#123;</span><br><span class="line"> <span class="keyword">private</span> <span class="keyword">static</span> final <span class="keyword">int</span> RUNS = <span class="number">10</span>;</span><br><span class="line"> <span class="keyword">private</span> <span class="keyword">static</span> final <span class="keyword">int</span> DIMENSION_1 = <span class="number">1024</span> * <span class="number">1024</span>;</span><br><span class="line"> <span class="keyword">private</span> <span class="keyword">static</span> final <span class="keyword">int</span> DIMENSION_2 = <span class="number">62</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">long</span>[][] longs;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> throws Exception </span>&#123;</span><br><span class="line"> Thread.sleep(<span class="number">10000</span>);</span><br><span class="line"> longs = <span class="keyword">new</span> <span class="keyword">long</span>[DIMENSION_1][];</span><br><span class="line"> <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; DIMENSION_1; i++) &#123;</span><br><span class="line"> longs[i] = <span class="keyword">new</span> <span class="keyword">long</span>[DIMENSION_2];</span><br><span class="line"> <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; DIMENSION_2; j++) &#123;</span><br><span class="line"> longs[i][j] = <span class="number">0L</span>;</span><br><span class="line"> &#125;</span><br><span class="line"> &#125;</span><br><span class="line"> System.out.println(<span class="string">"starting...."</span>);</span><br><span class="line"></span><br><span class="line">final <span class="keyword">long</span> start = System.nanoTime();</span><br><span class="line"><span class="comment">//2维数组中，先轮询j 能加载L1Cache 避免 cache miss</span></span><br><span class="line"> <span class="keyword">long</span> sum = <span class="number">0L</span>;</span><br><span class="line"> <span class="keyword">for</span> (<span class="keyword">int</span> r = <span class="number">0</span>; r &lt; RUNS; r++) &#123;</span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; DIMENSION_2; j++) &#123;</span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; DIMENSION_1; i++) &#123;</span><br><span class="line">sum += longs[i][j];</span><br><span class="line"> &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; DIMENSION_1; i++) &#123;</span><br><span class="line"> <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; DIMENSION_2; j++) &#123;</span><br><span class="line"> sum += longs[i][j];</span><br><span class="line"> &#125;</span><br><span class="line"> &#125;</span><br><span class="line"> &#125;</span><br><span class="line"> System.out.println(<span class="string">"duration = "</span> + (System.nanoTime() - start));</span><br><span class="line"> &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <hr>
-<p>BIO AIO 对比<br>BIO:传统BIO基本就是一个客户端请求得创建一个线程。高并发情况下，成千上万的请求，服务器资源根本不够。所以会进化出了伪异步IO<br>伪AIO：伪AIO，基本就是用线程池，或者队列来处理N个客户端请求的模型，但地城已让使用同步堵塞的机制，所以叫伪异步。当然这样的处理，必然会导致处理时间增加。<br>NIO：new I/O 或者none-blockI/O 非堵塞IO,NIO的特别就是上面说到的buffer,Channel,Selector。chanel注册在selector，所以会不断去轮询这些channel,s时候准备就绪，这是reactor模式，但在Preactor中，为了解决麻木轮询的问题，采用的是callback的方式，单channel装备好了，再叫selector去，处理。<br>AIO：NIO2.0 异步IO模型中，IO操作的两个阶段都不会阻塞用户线程，这两个阶段都是由内核自动完成，然后发送一个信号告知用户线程操作已完成,<br>OIO–每个线程只能处理一个channel（同步的，该线程和该channel绑定）<br>NIO–每个线程可以处理多个channel</p>
-<hr>
-<p>TCP 三次握手<br>这个是已经被问烂了的概念，本身概念非常简单，就是c发请求给S ACK=0 SYN=1 seq=x确认是否可能建立连接，s确认说可以建立连接，就会回答ACK=1,ack=y+1,seq=y，SYN=1,最后c收到确认之后，再次发出确认，并附带数据。ACK=1,seq=x+1,ack=y+1,建立连接时候进入Established状态。<br>TCP 四次分手<br>假设Client端发起中断连接请求，也就是发送FIN报文。Server端接到FIN报文后，意思是说”我Client端没有数据要发给你了”，但是如果你还有数据没有发送完成，则不必急着关闭Socket，可以继续发送数据。所以你先发送ACK，”告诉Client端，你的请求我收到了，但是我还没准备好，请继续你等我的消息”。这个时候Client端就进入FIN_WAIT状态，继续等待Server端的FIN报文。当Server端确定数据已发送完成，则向Client端发送FIN报文，”告诉Client端，好了，我这边数据发完了，准备好关闭连接了”。Client端收到FIN报文后，”就知道可以关闭连接了，但是他还是不相信网络，怕Server端不知道要关闭，所以发送ACK后进入TIME_WAIT状态，如果Server端没有收到ACK则可以重传。“，Server端收到ACK后，”就知道可以断开连接了”。Client端等待了2MSL后依然没有收到回复，则证明Server端已正常关闭，那好，我Client端也可以关闭连接了。Ok，TCP连接就这样关闭了！<br>【问题1】为什么连接的时候是三次握手，关闭的时候却是四次握手？<br>答：因为当Server端收到Client端的SYN连接请求报文后，可以直接发送SYN+ACK报文。其中ACK报文是用来应答的，SYN报文是用来同步的。但是关闭连接时，当Server端收到FIN报文时，很可能并不会立即关闭SOCKET，所以只能先回复一个ACK报文，告诉Client端，”你发的FIN报文我收到了”。只有等到我Server端所有的报文都发送完了，我才能发送FIN报文，因此不能一起发送。故需要四步握手。</p>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://www.fovoy.com/2015/10/17/netty/" data-id="civx0qqx4005ywqs6vz7erdch" class="article-share-link">分享到</a>
+      <a data-url="http://www.fovoy.com/2015/11/12/cache/" data-id="cixo35d5600c7vfs6a3zgp646" class="article-share-link">分享到</a>
       
       
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/netty/">netty</a></li></ul>
+    </footer>
+  </div>
+  
+</article>
+
+
+
+    
+      <article id="post-java容器" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2015/11/12/java容器/">java同步容器</a>
+    </h1>
+  
+
+        <div class="article-meta">
+          
+  <div class="article-date">
+    <i class="fa fa-calendar"></i>
+    <a href="/2015/11/12/java容器/">
+      <time datetime="2015-11-12T11:25:12.000Z" itemprop="datePublished">2015-11-12</time>
+    </a>
+  </div>
+
+
+          
+  <div class="article-category">
+  	<i class="fa fa-folder"></i>
+    <a class="article-category-link" href="/categories/java/">java</a>
+  </div>
+
+        </div>
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+                
+        <p>在Java的集合容器框架中，主要有四大类别：List、Set、Queue、Map。</p>
+<p>　　List、Set、Queue接口分别继承了Collection接口，Map本身是一个接口。</p>
+<p>　　注意Collection和Map是一个顶层接口，而List、Set、Queue则继承了Collection接口，分别代表数组、集合和队列这三大类容器。</p>
+<p>　　像ArrayList、LinkedList都是实现了List接口，HashSet实现了Set接口，而Deque（双向队列，允许在队首、队尾进行入队和出队操作）继承了Queue接口，PriorityQueue实现了Queue接口。另外LinkedList（实际上是双向链表）实现了了Deque接口。</p>
+<p>　　像ArrayList、LinkedList、HashMap这些容器都是非线程安全的。</p>
+<hr>
+<p>Java中的同步容器</p>
+<p>　　在Java中，同步容器主要包括2类：</p>
+<p>　　1）Vector、Stack、HashTable</p>
+<p>　　2）Collections类中提供的静态工厂方法创建的类</p>
+<p>　　Vector实现了List接口，Vector实际上就是一个数组，和ArrayList类似，但是Vector中的方法都是synchronized方法，即进行了同步措施。</p>
+<p>　　Stack也是一个同步容器，它的方法也用synchronized进行了同步，它实际上是继承于Vector类。</p>
+<p>　　HashTable实现了Map接口，它和HashMap很相似，但是HashTable进行了同步处理，而HashMap没有。</p>
+<hr>
+<p>同步容器的缺陷<br>   总结就是性能差，串行处理。</p>
+<p>并发容器<br>  推荐使用并发容器，避免同步容器低效。<br>  util.concurrent中引入的并发容器主要解决了两个问题：<br>  1）根据具体场景进行设计，尽量避免synchronized，提供并发性。<br>  2）定义了一些并发安全的复合操作，并且保证并发环境下的迭代操作不会出错。 </p>
+<p><img src="/thumbnails/concurrentHashMap.png" alt=""><br>  ConcurrentHashMap是并发容器比较常见用的，我们知道HashMap从实现角度上来说是数组加链表的接口，也可以叫做哈希桶加链表，在代码中就是table和bucket.table对应key的HashCode,bucket对应,相同hashCode情况下的冲突。而在ConcurrentHashMap解决多线程问题中，巧妙使用了分段加锁的方式，也就相当于俩次hash,第一次hash为segment,在这里加锁，所以这样一来锁就变成小范围的了，增加了效率，这个思想其实在很多方面都用到，比如分布式中的shard,思路一样，基本就是大化小，分组，细化思维。<br>  JDK8对bucket进行改变，可以对hash冲突的数据有两种选择一种是链表，一种是红黑树。下面先看看红黑树</p>
+<hr>
+<p> I、红黑树的五个性质：<br>   1）每个结点要么是红的，要么是黑的。<br>   2）根结点是黑的。<br>   3）每个叶结点，即空结点（NIL）是黑的。<br>   4）如果一个结点是红的，那么它的俩个儿子都是黑的。<br>   5）对每个结点，从该结点到其子孙结点的所有路径上包含相同数目的黑结点。<br>   枯燥的概念，没关心来白话一下，就是俩红不能连续，两不能相互为父子节点。这个说法排除叶子节点。<br>   <img src="/thumbnails/br-tree.png" alt=""><br>  在了解红黑树之前，有一个很大的疑问，红黑树 和平衡二叉树的区别在哪里？<br>  红黑树使用红黑二色进行“着色”，目的是利用颜色值作为二叉树的平衡对称性的检查，只要插入的节点“着色”满足红黑二色的规定，最短路径与最长路径不会相差的太远，红黑树的节点分布就能大体上达至均衡。 所以红黑本身意义就是平衡时候使用的。其实他也可以叫做一种平衡二叉树失衡时候的平衡算法。</p>
+<hr>
+<p> 堵塞队列<br> 实现原理，notEmpty=lock=newCondition(); notFull=lock=newCondition(); 使用了ReentrantLock,底层是LockSupport()<br> ArrayBlockQueue:数组 组成的有界堵塞队列(FIFO)的原则。默认不公平访问队列。公平队列是有ReentrantLock来实现的，基本判断就是当前执行的不是不按lockQueue里的顺序来执行的。<br> LinkedBlockQueue:链表实现有限阻塞队列，head 和last 来实现各种的next.(FIFO).<br> LinkedBlockingDeque：链表实现的双向堵塞队列，可以从头尾来操作，可用于工作窃取算法<br> PriorityBlockQueue:优先级堵塞队列,堆排序，如果对象没有实现comparable接口的话，只能使用比较器Comparator来实现处理了。-1降序 1升序，0插入顺序。<br> DelayQueue:必须实现Delayed接口，创建元素时候可以指定多久才能获取元素。只有在延时期满的时候才能从队列中提取元素。可以用在缓存有效时间设计。定时任务，比如TimerQueue就使用了。等待delay时间wait()了。<br> SynchronousQueue 不存储元素的堵塞队列，put必须有一个take所以，效率比别的高，只能当一个传球手的角色<br> LinkedTransferQueue：transfer 如果有消费者在消费，可以离开transfer给消费者。如果没有消费者就放入队列。tail节点。tryTransfer和transfer的区别是立刻返回。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://www.fovoy.com/2015/11/12/java容器/" data-id="cixo35d3a008yvfs6errxxwk8" class="article-share-link">分享到</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/同步容器/">同步容器</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+    
+      <article id="post-Exception" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2015/11/12/Exception/">Exception</a>
+    </h1>
+  
+
+        <div class="article-meta">
+          
+  <div class="article-date">
+    <i class="fa fa-calendar"></i>
+    <a href="/2015/11/12/Exception/">
+      <time datetime="2015-11-12T11:25:12.000Z" itemprop="datePublished">2015-11-12</time>
+    </a>
+  </div>
+
+
+          
+  <div class="article-category">
+  	<i class="fa fa-folder"></i>
+    <a class="article-category-link" href="/categories/JAVA/">JAVA</a>
+  </div>
+
+        </div>
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+                
+        <p>RuntimeException ：运行时异常属于非检查异常，也就是编译阶段不会检查的异常，这样的异常需要某个阶段捕获要不，要么是线程中止，要么是主程序终止。队列里面出现异常数据了，正常的处理应该是把异常数据舍弃，然后记录日志。不应该由于异常数据而影响下面对正常数据的处理。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://www.fovoy.com/2015/11/12/Exception/" data-id="cixo35d6100dsvfs6kstymrzf" class="article-share-link">分享到</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/异常/">异常</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+    
+      <article id="post-lock" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2015/11/12/lock/">lock</a>
+    </h1>
+  
+
+        <div class="article-meta">
+          
+  <div class="article-date">
+    <i class="fa fa-calendar"></i>
+    <a href="/2015/11/12/lock/">
+      <time datetime="2015-11-12T04:10:22.000Z" itemprop="datePublished">2015-11-12</time>
+    </a>
+  </div>
+
+
+          
+  <div class="article-category">
+  	<i class="fa fa-folder"></i>
+    <a class="article-category-link" href="/categories/java/">java</a>
+  </div>
+
+        </div>
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+                
+        <p> Lock和synchronized的选择</p>
+<p>　　总结来说，Lock和synchronized有以下几点不同：</p>
+<p>　　1）Lock是一个接口，而synchronized是Java中的关键字，synchronized是内置的语言实现；</p>
+<p>　　2）synchronized在发生异常时，会自动释放线程占有的锁，因此不会导致死锁现象发生；而Lock在发生异常时，如果没有主动通过unLock()去释放锁，则很可能造成死锁现象，因此使用Lock时需要在finally块中释放锁；</p>
+<p>　　3）Lock可以让等待锁的线程响应中断，而synchronized却不行，使用synchronized时，等待的线程会一直等待下去，不能够响应中断；</p>
+<p>　　4）通过Lock可以知道有没有成功获取锁，而synchronized却无法办到。</p>
+<p>　　5）Lock可以提高多个线程进行读操作的效率。</p>
+<p>　　在性能上来说，如果竞争资源不激烈，两者的性能是差不多的，而当竞争资源非常激烈时（即有大量线程同时竞争），此时Lock的性能要远远优于synchronized。所以说，在具体使用时要根据适当情况选择。</p>
+<p>锁相关的几个概念</p>
+<p>   1.可重入锁<br>    如果锁具备可重入性，则称作为可重入锁。像synchronized和ReentrantLock都是可重入锁，可重入性在我看来实际上表明了锁的分配机制：基于线程的分配，而不是基于方法调用的分配。举个简单的例子，当一个线程执行到某个synchronized方法时，比如说method1，而在method1中会调用另外一个synchronized方法method2，此时线程不必重新去申请锁，而是可以直接执行方法method2。</p>
+<p>　　看下面这段代码就明白了：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">MyClass</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">synchronized</span> <span class="keyword">void</span> <span class="title">method1</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        method2();</span><br><span class="line">    &#125;</span><br><span class="line">     </span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">synchronized</span> <span class="keyword">void</span> <span class="title">method2</span><span class="params">()</span> </span>&#123;</span><br><span class="line">         </span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p> 　　上述代码中的两个方法method1和method2都用synchronized修饰了，假如某一时刻，线程A执行到了method1，此时线程A获取了这个对象的锁，而由于method2也是synchronized方法，假如synchronized不具备可重入性，此时线程A需要重新申请锁。但是这就会造成一个问题，因为线程A已经持有了该对象的锁，而又在申请获取该对象的锁，这样就会线程A一直等待永远不会获取到的锁。</p>
+<p>　　而由于synchronized和Lock都具备可重入性，所以不会发生上述现象。</p>
+<p>　 2.可中断锁</p>
+<p>　　可中断锁：顾名思义，就是可以相应中断的锁。</p>
+<p>　　在Java中，synchronized就不是可中断锁，而Lock是可中断锁。</p>
+<p>　　3.公平锁</p>
+<p>　　公平锁即尽量以请求锁的顺序来获取锁。比如同是有多个线程在等待一个锁，当这个锁被释放时，等待时间最久的线程（最先请求的线程）会获得该所，这种就是公平锁。</p>
+<p>　　非公平锁即无法保证锁的获取是按照请求锁的顺序进行的。这样就可能导致某个或者一些线程永远获取不到锁。</p>
+<p>　　在Java中，synchronized就是非公平锁，它无法保证等待的线程获取锁的顺序。</p>
+<p>　　而对于ReentrantLock和ReentrantReadWriteLock，它默认情况下是非公平锁，但是可以设置为公平锁。</p>
+<p>　  在ReentrantLock中定义了2个静态内部类，一个是NotFairSync，一个是FairSync，分别用来实现非公平锁和公平锁。</p>
+<p>　　我们可以在创建ReentrantLock对象时，通过以下方式来设置锁的公平性：<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ReentrantLock <span class="operator"><span class="keyword">lock</span> = <span class="keyword">new</span> ReentrantLock(<span class="literal">true</span>);</span></span><br></pre></td></tr></table></figure></p>
+<p>　　4.读写锁</p>
+<p>　　读写锁将对一个资源（比如文件）的访问分成了2个锁，一个读锁和一个写锁。读与读不互斥，但读与写是互斥的。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://www.fovoy.com/2015/11/12/lock/" data-id="cixo35d2o007qvfs6sqyfaelv" class="article-share-link">分享到</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/lock/">lock</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+    
+      <article id="post-html5学习" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2015/10/22/html5学习/">html5 学习</a>
+    </h1>
+  
+
+        <div class="article-meta">
+          
+  <div class="article-date">
+    <i class="fa fa-calendar"></i>
+    <a href="/2015/10/22/html5学习/">
+      <time datetime="2015-10-22T01:13:36.000Z" itemprop="datePublished">2015-10-22</time>
+    </a>
+  </div>
+
+
+          
+  <div class="article-category">
+  	<i class="fa fa-folder"></i>
+    <a class="article-category-link" href="/categories/前端开发/">前端开发</a><i class="fa fa-angle-right"></i><a class="article-category-link" href="/categories/前端开发/html5/">html5</a>
+  </div>
+
+        </div>
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+                
+        <p><img src="/thumbnails/html5.jpg" alt=""></p>
+<h4 id="元素学习">元素学习</h4><h2 id=""><img src="/thumbnails/headr.png" alt=""></h2><ol>
+<li>article  </li>
+</ol>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&lt;article&gt;</span><br><span class="line">    <span class="xml"><span class="tag">&lt;<span class="title">header</span>&gt;</span>HEADER<span class="tag">&lt;/<span class="title">header</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="title">p</span>&gt;</span>ARTICLE<span class="tag">&lt;/<span class="title">p</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="title">footer</span>&gt;</span>FOOTER<span class="tag">&lt;/<span class="title">footer</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="title">object</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="title">embed</span> <span class="attribute">src</span>=<span class="value">"#"</span> <span class="attribute">width</span>=<span class="value">"800"</span>&gt;</span><span class="tag">&lt;/<span class="title">embed</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="title">object</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="title">article</span>&gt;</span></span></span><br></pre></td></tr></table></figure>
+<p>*效果如下</p>
+<article><br>    <header>HEADER</header><br>    <p>ARTICLE</p><br>    <footer>FOOTER</footer><br>    <object><br>        <embed src="#" width="800"><br>    </object><br></article>
+
+<ol>
+<li><p>section 区域化块，不能替换div做css操作。 aside 标注元素</p>
+</li>
+<li><p>nav 导航元素，不要用menu元素替代nav</p>
+</li>
+</ol>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&lt;nav&gt;</span><br><span class="line">   <span class="xml"><span class="tag">&lt;<span class="title">ul</span>&gt;</span>open1<span class="tag">&lt;/<span class="title">ul</span>&gt;</span></span><br><span class="line">   <span class="tag">&lt;<span class="title">ul</span>&gt;</span>open2<span class="tag">&lt;/<span class="title">ul</span>&gt;</span></span><br><span class="line">   <span class="tag">&lt;<span class="title">ul</span>&gt;</span>open3<span class="tag">&lt;/<span class="title">ul</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="title">nav</span>&gt;</span></span></span><br></pre></td></tr></table></figure>
+<p>*效果如下</p>
+<nav><br>    <ul>open1</ul><br>    <ul>open2</ul><br>    <ul>open3</ul><br></nav> 
+
+<ol>
+<li>form 元素 formaction formmethod  formenctype formtarget autofocus requird labels 表单相关属性。</li>
+<li>form 元素 control placeholder  autocomplete pattern selectionDirection</li>
+</ol>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&lt;form novalidate=<span class="string">"ture"</span> onsubmit=<span class="string">"check()"</span> id=<span class="string">"testform"</span> &gt;<span class="xml"><span class="tag">&lt;/<span class="title">form</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="title">input</span>  <span class="attribute">type</span>=<span class="value">"text"</span> <span class="attribute">name</span>=<span class="value">"greet"</span> <span class="attribute">list</span> =<span class="value">"greets"</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="title">datalist</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="title">option</span> <span class="attribute">value</span>=<span class="value">"html5"</span>&gt;</span>Html5学习<span class="tag">&lt;/<span class="title">option</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="title">option</span> <span class="attribute">value</span>=<span class="value">"java"</span>&gt;</span>java学习<span class="tag">&lt;/<span class="title">option</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="title">datalist</span>&gt;</span></span></span><br></pre></td></tr></table></figure>
+<ol>
+<li><p>input 元素  url email data time datatime datatime-local month  week  number range search tel color</p>
+</li>
+<li><p>figure figcaption 标记 detail summary 拉伸效果 mark 注视 progress meter 百分比条 ol 排序数字 dl cite 斜体 small</p>
+</li>
+</ol>
+<p>8 .FFmpeg <a href="www.fffmpeg.org">视频编解码工具</a></p>
+<p>9.拖放本地文件。drop drag</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://www.fovoy.com/2015/10/22/html5学习/" data-id="cixo35d3s009tvfs6n2ckuqrn" class="article-share-link">分享到</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/html5/">html5</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+    
+      <article id="post-site" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2015/10/17/site/">网站要点</a>
+    </h1>
+  
+
+        <div class="article-meta">
+          
+  <div class="article-date">
+    <i class="fa fa-calendar"></i>
+    <a href="/2015/10/17/site/">
+      <time datetime="2015-10-17T01:13:36.000Z" itemprop="datePublished">2015-10-17</time>
+    </a>
+  </div>
+
+
+          
+  <div class="article-category">
+  	<i class="fa fa-folder"></i>
+    <a class="article-category-link" href="/categories/site/">site</a>
+  </div>
+
+        </div>
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+                
+        <p><img src="/thumbnails/es.png" alt=""></p>
+<hr>
+<p>1.加盟<br>2.提意见<br>3.互动。<br>4.网络教育。eq<br>5.时间成为一个维度，被记忆下来。<br>6.环境，自然条件成最重要的需求</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://www.fovoy.com/2015/10/17/site/" data-id="cixo35d1e0057vfs6l4g4kb9z" class="article-share-link">分享到</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/site/">site</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+    
+      <article id="post-英语学习" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2015/10/17/英语学习/">英语学习</a>
+    </h1>
+  
+
+        <div class="article-meta">
+          
+  <div class="article-date">
+    <i class="fa fa-calendar"></i>
+    <a href="/2015/10/17/英语学习/">
+      <time datetime="2015-10-17T01:13:36.000Z" itemprop="datePublished">2015-10-17</time>
+    </a>
+  </div>
+
+
+          
+  <div class="article-category">
+  	<i class="fa fa-folder"></i>
+    <a class="article-category-link" href="/categories/英语学习/">英语学习</a>
+  </div>
+
+        </div>
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+                
+        <p><img src="/thumbnails/es.png" alt=""></p>
+<hr>
+<p>1.看图识音 2月  Rosetta Stone  猜<br>2.TPR total physical response   TPR WORD LIST 1月  猜</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://www.fovoy.com/2015/10/17/英语学习/" data-id="cixo35cyj000nvfs6s1jutpa7" class="article-share-link">分享到</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/英语学习/">英语学习</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+    
+      <article id="post-mac" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2015/10/17/mac/">Mac</a>
+    </h1>
+  
+
+        <div class="article-meta">
+          
+  <div class="article-date">
+    <i class="fa fa-calendar"></i>
+    <a href="/2015/10/17/mac/">
+      <time datetime="2015-10-17T01:13:36.000Z" itemprop="datePublished">2015-10-17</time>
+    </a>
+  </div>
+
+
+          
+  <div class="article-category">
+  	<i class="fa fa-folder"></i>
+    <a class="article-category-link" href="/categories/Mac/">Mac</a>
+  </div>
+
+        </div>
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+                
+        <p><img src="/thumbnails/es.png" alt=""></p>
+<hr>
+<ul>
+<li>以前在Ubuntu上，直接sudo netstat -nap </li>
+<li>但是在mac 上这个命令还跑不通，sudo netstat  -nap  tcp 才行，结果还没有进程号。用lsof -Pn 解决了<br>mac 查看端口占用<br>sudo lsof -n -P| grep :8087<br>lsof -i tcp:8087<br>查看占用 nc -v -w 2 127.0.0.1 8809<br>appid Czy8388</li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://www.fovoy.com/2015/10/17/mac/" data-id="cixo35d2k007gvfs6eqllodrb" class="article-share-link">分享到</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Mac/">Mac</a></li></ul>
 
     </footer>
   </div>
@@ -252,15 +690,17 @@
 <p>TransportModule–<br>There are 4 types of connections per node, low/med/high/ping<br>connectedNodes .每一个集群上节点的channels的集合。<br>serverChannels 服务端的channel<br>NettyTransport 保证channel 发送请求。sendRequest(netty ServerBootstraps初始化）dispatcher为MessageChannelHandler，分发action.<br>netty.epollBugWorkaround.<br>workerCount 就是cpu核数*2,<br>scheduledPing 来监控 节点状态。<br>doStart()中来来开启了netty的clientBootstrap 没有bind 而只是connect 默认是NioClientSocketChannelFactory,还有另一个OIO也就是一个channel对一个线程 ClientChannelPipelineFactory 具体的pipeline中dispatcher的方法。MessageChannelHandler。<br>createServerBootstrap()创建ServerBootstrap. bindServerBootstrap ServerChannelPipelineFactory 具体的 dispatcher 也是 MessageChannelHandler  handleRequest处理请求。handler.messageReceived(); SearchServiceTransportAction  handleResponse 来接受响应。<br>transportService.registerHandler(); 注册tcp的Action. transportService.connectToNode 链接到每个节点。<br>HttpServerModule–NettyHttpServerTransport HttpRequestHandler.messageReceived 接受的，http消息。http 只有一个serverBootstrap<br>HttpServerAdapter.dispatchRequest().分发请求。</p>
 <p>IndicesModule–<br>OpenBitSet–使用的重要数据结构<br>OpenBitSet的原理<br><img src="/thumbnails/bitSet.png" alt=""><br>二进制下标表示数字所以得到<br>[0,63]之间的数 需要1个long类型串联起来<br>[0,127]之前的数，需要2个long串联起来<br>[0,64N-1]需要N个long串联起来。<br>所以OpenBisSet的核心就是long类型的数组bits.<br>long index = 64*N+m  其中 N就是在long数组中的坐标。m表示bit[N]的这个long中二进制的第m位。<br>set方法就4个操作，第一个<br>int wordNum = (int)(index &gt;&gt; 6); //计算出坐标所在的long数组的位置。<br>long bitmask = 1L &lt;&lt; (int)index; //计算出移动该坐标后的long的大小<br>this.bits[wordNum] |= bitmask; //和所在坐标的long进行或运算，也就是并集。</p>
 <p>最后总结一下OpenBitSet数据存储的特点：OpenBitSet无法存储重复的数据。数据存储到OpenBitSet中后就是有序的了。OpenBitSet适合存储密集程度高，且量大的数据。OpenBitSet中存储的数据适合位运算，比如取交集、并集、补集<br>核心模块，分三块（registerBuiltinQueryParsers，registerBuiltInMappers，registerBuiltInMetadataMappers）改写FunctionScoreQueryParser来实现打分.IndicesLifecycle(所以索引周期监听处理)<br>IndexShard 创建每一个shard对应一个实例。在shards里被引用。<br>indexService 创建每一个index对应一个实例。在indices里被引用。<br>IndicesService(所以创建删除等操作)是indexService的操作类。<br>RecoveryTarget recovery的具体操作类。startRecovery,获取恢复的node,把分片数据发送过去。doRecovery 获取metadataSnapshot.InternalClusterService updateTask 检测状态，来做recovery的处理。<br>IndicesStore（所以存储）<br>IndicesFilterCache(WeightedFilterCache 来存储,weight回收, 内存里存的DocISet,FixedBitSet)<br>IndicesFieldDataCache （load来加载fieldData缓存数据）<br>IndicesClusterStateService()<br>IndexingMemoryController（更新所有ShardBuffers）IndicesQueryCache(lucence中的LRUQueryCache)</p>
-<p>SearchModule–核心模块</p>
-<p>search 过程。入口主要是SearchServiceTransportAction  完成一个shardTarget<br>TransportActionNodeProxy.execute.搜索遍历所有的节点。<br>TransportSearchAction 为入口，来区分不同的searchType.<br>TransportSearchQueryThenFetchAction </p>
+<p>SearchModule–核心模块<br>SearchServiceTransportAction 注册。<br>search 过程。入口主要是SearchServiceTransportAction  完成一个shardTarget<br>TransportActionNodeProxy.execute.搜索遍历所有的节点。<br>TransportSearchAction 为入口，来区分不同的searchType.<br>TransportSearchQueryThenFetchAction </p>
 <p>refresh:刷到可搜索。<br>flush：内存刷到segment文件上。</p>
+<hr>
+<p>action 请求端的Action</p>
+<h2 id="searchAction为例子。先发送给TransportSearchAction，再由TransportSearchAction_中的registerRequestHandler_来注册，并用_TransportHandler_来分发，确定具体的search类型再发送给别的action。">searchAction为例子。先发送给TransportSearchAction，再由TransportSearchAction 中的registerRequestHandler 来注册，并用 TransportHandler 来分发，确定具体的search类型再发送给别的action。</h2><h2 id="消息的listener_还是依赖RequestHolder对象来存放listener对象，以requestId为key-每次收到消息都来处理response对应的requetId。">消息的listener 还是依赖RequestHolder对象来存放listener对象，以requestId为key.每次收到消息都来处理response对应的requetId。</h2><p>rest 最后会parse成action,只需要转化一道。</p>
 <p><a href="https://www.elastic.co/webinars/performance-and-scale" target="_blank" rel="external">proformance</a><br><a href="https://www.elastic.co/blog/support-in-the-wild-my-biggest-elasticsearch-problem-at-scale" target="_blank" rel="external">filter</a><br><a href="https://download.elastic.co/elasticsearch/elasticsearch/elasticsearch-1.7.3.tar.gz" target="_blank" rel="external">下载</a><br><a href="http://vdisk.weibo.com/u/1451057603" target="_blank" rel="external">学习</a><br><a href="http://www.infoq.com/cn/articles/database-timestamp-02" target="_blank" rel="external">es好文</a><br><a href="http://www.ttlsa.com/nginx/nginx-elasticsearch/" target="_blank" rel="external">nginx与Elasticsearch结合使用</a><br><a href="https://www.digitalocean.com/community/tutorials/how-to-install-elasticsearch-logstash-and-kibana-4-on-ubuntu-14-04" target="_blank" rel="external">kibana Ng 安全代理</a></p>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://www.fovoy.com/2015/10/17/es待学习/" data-id="civx0qqz0009owqs6t0ut9b2l" class="article-share-link">分享到</a>
+      <a data-url="http://www.fovoy.com/2015/10/17/es待学习/" data-id="cixo35d4700atvfs6w9adptpz" class="article-share-link">分享到</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Elasticsearch/">Elasticsearch</a></li></ul>
@@ -273,7 +713,7 @@
 
 
     
-      <article id="post-前端开发待学习" class="article article-type-post" itemscope itemprop="blogPost">
+      <article id="post-netty" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-inner">
     
     
@@ -282,7 +722,7 @@
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2015/10/12/前端开发待学习/">前端开发待学习</a>
+      <a class="article-title" href="/2015/10/17/netty/">netty</a>
     </h1>
   
 
@@ -290,8 +730,8 @@
           
   <div class="article-date">
     <i class="fa fa-calendar"></i>
-    <a href="/2015/10/12/前端开发待学习/">
-      <time datetime="2015-10-12T11:25:12.000Z" itemprop="datePublished">2015-10-12</time>
+    <a href="/2015/10/17/netty/">
+      <time datetime="2015-10-17T01:13:36.000Z" itemprop="datePublished">2015-10-17</time>
     </a>
   </div>
 
@@ -299,7 +739,7 @@
           
   <div class="article-category">
   	<i class="fa fa-folder"></i>
-    <a class="article-category-link" href="/categories/前端开发/">前端开发</a><i class="fa fa-angle-right"></i><a class="article-category-link" href="/categories/前端开发/学习/">学习</a>
+    <a class="article-category-link" href="/categories/netty/">netty</a>
   </div>
 
         </div>
@@ -308,412 +748,33 @@
     <div class="article-entry" itemprop="articleBody">
       
                 
-        <p><img src="/thumbnails/td.jpg" alt=""></p>
-<h3 id="学习框架">学习框架</h3><p>===</p>
-<ul>
-<li><a href="https://www.playframework.com/documentation/2.4.x/Home\" target="_blank" rel="external">play</a></li>
-</ul>
+        <p><img src="/thumbnails/NIO.png" alt=""></p>
+<p>###BIO(同步阻塞式)<br>首先IO分两个阶段：<br>  1.查看数据是否接续<br>  2.进行拷贝<br>所以同步本身就代表，一个事务完成后才能完成下一个事务，是顺序性的进行，所以同步IO就是IO操作，要等到完成才能进行下一步动作。<br>而异步IO为 如果一个线程请求进行IO操作，IO操作不会导致请求线程被阻塞。<br>　对于同步IO：当用户发出IO请求操作之后，如果数据没有就绪，需要通过用户线程或者内核不断地去轮询数据是否就绪，当数据就绪时，再将数据从内核拷贝到用户线程；<br>　而异步IO：只有IO请求操作的发出是由用户线程来进行的，IO操作的两个阶段都是由内核自动完成，然后发送通知告知用户线程IO操作已经完成。也就是说在异步IO中，不会对用户线程产生任何阻塞。</p>
+<p>###五种IO模型<br> 1.阻塞模型：recvfrom之后一直等待数据，直到数据准备好，复制到用户空间之后才返回。阻塞IO会交出cpu,block住。等待内核拷贝数据到用户线程。<br> 2.非阻塞模型：的recvfrom之后一直轮询，直到数据到来。复制到用户空间返回。一直占用CPU。这样会导致CPU占用率非常高，所以一般少使用。<br> 3.I/O复用模型：Java NIO实际上就是多路复用IO。select/poll epoll事件选择器扫描，等待rollback。通过一个线程就可以管理多个socket，只有当socket真正有读写事件发生才会占用资源来进行实际的读写操作。因此，多路复用IO比较适合连接数比较多的情况。不过要注意的是，多路复用IO模型是通过轮询的方式来检测是否有事件到达，并且对到达的事件逐一进行响应。因此对于多路复用IO模型来说，一旦事件响应体很大，那么就会导致后续的事件迟迟得不到处理，并且会影响新的事件轮询。就好比一个餐厅只有一个服务员。<br> 4.信号驱动I/O模型：　在信号驱动IO模型中，当用户线程发起一个IO请求操作，会给对应的socket注册一个信号函数，然后用户线程会继续执行，当内核数据就绪时会发送一个信号给用户线程，用户线程接收到信号之后，便在信号函数中调用IO读写操作来进行实际的IO请求操作。<br> 5.异步I/O: 异步IO模型中，IO操作的两个阶段都不会阻塞用户线程，这两个阶段都是由内核自动完成，然后发送一个信号告知用户线程操作已完成。用户线程中不需要再次调用IO函数进行具体的读写。这点是和信号驱动模型有所不同的，信号模式要自己去取数据，异步模式收到通知时候，数据也已经装好了。<br>  前面四种IO模型实际上都属于同步IO，只有最后一种是真正的异步IO，因为无论是多路复用IO还是信号驱动模型，IO操作的第2个阶段都会引起用户线程阻塞，也就是内核进行数据拷贝的过程都会让用户线程阻塞。select,poll,</p>
+<p>###select,poll epoll总结<br>select/poll的几大缺点：<br>（1）每次调用select，都需要把fd集合从用户态拷贝到内核态，这个开销在fd很多时会很大</p>
+<p>（2）同时每次调用select都需要在内核遍历传递进来的所有fd，这个开销在fd很多时也很大</p>
+<p>（3）select支持的文件描述符数量太小了，默认是1024<br>epoll是对poll和select的改进。</p>
+<p>epoll<br>　　epoll既然是对select和poll的改进，就应该能避免上述的三个缺点。那epoll都是怎么解决的呢？在此之前，我们先看一下epoll和select和poll的调用接口上的不同，select和poll都只提供了一个函数——select或者poll函数。而epoll提供了三个函数，epoll_create,epoll_ctl和epoll_wait，epoll_create是创建一个epoll句柄；epoll_ctl是注册要监听的事件类型；epoll_wait则是等待事件的产生。</p>
+<p>　　对于第一个缺点，epoll的解决方案在epoll_ctl函数中。每次注册新的事件到epoll句柄中时（在epoll_ctl中指定EPOLL_CTL_ADD），会把所有的fd拷贝进内核，而不是在epoll_wait的时候重复拷贝。epoll保证了每个fd在整个过程中只会拷贝一次。</p>
+<p>　　对于第二个缺点，epoll的解决方案不像select或poll一样每次都把current轮流加入fd对应的设备等待队列中，而只在epoll_ctl时把current挂一遍（这一遍必不可少）并为每个fd指定一个回调函数，当设备就绪，唤醒等待队列上的等待者时，就会调用这个回调函数，而这个回调函数会把就绪的fd加入一个就绪链表）。epoll_wait的工作实际上就是在这个就绪链表中查看有没有就绪的fd（利用schedule_timeout()实现睡一会，判断一会的效果，和select实现中的第7步是类似的）。</p>
+<p>　　对于第三个缺点，epoll没有这个限制，它所支持的FD上限是最大可以打开文件的数目，这个数字一般远大于2048,举个例子,在1GB内存的机器上大约是10万左右，具体数目可以cat /proc/sys/fs/file-max察看,一般来说这个数目和系统内存关系很大。</p>
+<p>总结：<br>（1）select，poll实现需要自己不断轮询所有fd集合，直到设备就绪，期间可能要睡眠和唤醒多次交替。而epoll其实也需要调用epoll_wait不断轮询就绪链表，期间也可能多次睡眠和唤醒交替，但是它是设备就绪时，调用回调函数，把就绪fd放入就绪链表中，并唤醒在epoll_wait中进入睡眠的进程。虽然都要睡眠和交替，但是select和poll在“醒着”的时候要遍历整个fd集合，而epoll在“醒着”的时候只要判断一下就绪链表是否为空就行了，这节省了大量的CPU时间。这就是回调机制带来的性能提升。</p>
+<p>（2）select，poll每次调用都要把fd集合从用户态往内核态拷贝一次，并且要把current往设备等待队列中挂一次，而epoll只要一次拷贝，而且把current往等待队列上挂也只挂一次（在epoll_wait的开始，注意这里的等待队列并不是设备等待队列，只是一个epoll内部定义的等待队列）。这也能节省不少的开销。</p>
+<p>###两种高性能IO设计模式<br>1.Reactor<br>会先对每个client注册感兴趣的事件，然后有一个线程专门去轮询每个client是否有事件发生，当有事件发生时，便顺序处理每个事件，当所有事件处理完之后，便再转去继续轮询，如下图所示：<br><img src="/thumbnails/reactor.jpg" alt=""><br>2.Proactor: 就是reactor的高级版本，当检测到有事件发生时，会新起一个异步操作，然后交由内核线程去处理，当内核线程完成IO操作之后，发送一个通知告知操作已完成，可以得知，处理的另外新建线程。</p>
+<p><img src="/thumbnails/netty.jpg" alt=""><br> 1.缓冲区Buffer<br>  新NIO中写入或者读出是到Buffer，而不是直接到stream中。可以理解为一个字节数组(ByteBuffer).每一种基本类型都会对应一种缓冲区除了boolean。<br>  　在NIO中，Buffer是一个顶层父类，它是一个抽象类，常用的Buffer的子类有：<br>        1)ByteBuffer<br>        2)IntBuffer<br>        3)CharBuffer<br>        4)LongBuffer<br>        5)DoubleBuffer<br>        6)FloatBuffer<br>        7)ShortBuffer<br>　　如果是对于文件读写，上面几种Buffer都可能会用到。但是对于网络读写来说，用的最多的是ByteBuffer。<br> 2.Channel<br>  通道与stream不同，通道是双向的既能读又能写。而InputStream,OutPutStream看命名就知道非双向。<br>  Channel子类中大概分两类一类网络读取，一类文件读取。一个多路选择器selector可以轮询注册在上门的channel的状态。<br>  　以下是常用的几种通道：<br>        1)FileChannel<br>        2)SocketChanel<br>        3)ServerSocketChannel<br>        4)DatagramChannel<br>　　通过使用FileChannel可以从文件读或者向文件写入数据；通过SocketChannel，以TCP来向网络连接的两端读写数据；通过ServerSocketChanel能够监听客户端发起的TCP连接，并为每个TCP连接创建一个新的SocketChannel来进行数据读写；通过DatagramChannel，以UDP协议来向网络连接的两端读写数据。<br>3.Selector<br> Selector类是NIO的核心类，Selector能够检测多个注册的通道上是否有事件发生，如果有事件发生，便获取事件然后针对每个事件进行相应的响应处理。这样一来，只是用一个单线程就可以管理多个通道，也就是管理多个连接。这样使得只有在连接真正有读写事件发生时，才会调用函数来进行读写，就大大地减少了系统开销，并且不必为每个连接都创建一个线程，不用去维护多个线程，并且避免了多线程之间的上下文切换导致的开销。</p>
+<hr>
+<p>BIO AIO 对比<br>BIO:传统BIO基本就是一个客户端请求得创建一个线程。高并发情况下，成千上万的请求，服务器资源根本不够。所以会进化出了伪异步IO<br>伪AIO：伪AIO，基本就是用线程池，或者队列来处理N个客户端请求的模型，但地城已让使用同步堵塞的机制，所以叫伪异步。当然这样的处理，必然会导致处理时间增加。<br>NIO：none-blockingI/O 非堵塞IO,不断的轮询检查，new I/O 在java中基本指的io复用。NIO的特别就是上面说到的buffer,Channel,Selector。chanel注册在selector，所以会不断去轮询这些channel,这是reactor模式，但在Preactor中，为了解决麻木轮询的问题，采用的是callback的方式，当channel准备好了，再叫selector去，处理。<br>AIO：NIO2.0 异步IO模型中，IO操作的两个阶段都不会阻塞用户线程，这两个阶段都是由内核自动完成，然后发送一个信号告知用户线程操作已完成,<br>OIO–每个线程只能处理一个channel（同步的，该线程和该channel绑定）<br>NIO–每个线程可以处理多个channel</p>
+<p>NIO 同步方式时候的调用：io 线程，增加了数据队列，和通信对象队列，和定时任务。4个部分。io线程主要跟socket打交道。也就是复用socket.通信对象的主要处理的是对请求线程的堵塞和通知。定时任务会作为超时检查的存在。同步的堵塞由一个通信对象完成，而socket的复用交给了io线程。<br>one way ：只管调用而不关心结果。要不同步调用简单很多。只要把数据发送出去，但不关心处理结果。<br>callback:与同步方式大致一样，就是不需要等待。而是由回调函数来执行完成的回调。callback执行不在原请求线程中。<br>future:非常便利的方式，future来获响应。执行在原线程中。futrue还可以优化很多没有相互依赖的并行调用。节省很多时间。<br>异步io:数据等待和拷贝都不需要线程来完成。</p>
+<hr>
+<p>TCP 三次握手<br>这个是已经被问烂了的概念，本身概念非常简单，就是c发请求给S ACK=0 SYN=1 seq=x确认是否可能建立连接，s确认说可以建立连接，就会回答ACK=1,ack=y+1,seq=y，SYN=1,最后c收到确认之后，再次发出确认，并附带数据。ACK=1,seq=x+1,ack=y+1,建立连接时候进入Established状态。<br>TCP 四次分手<br>假设Client端发起中断连接请求，也就是发送FIN报文。Server端接到FIN报文后，意思是说”我Client端没有数据要发给你了”，但是如果你还有数据没有发送完成，则不必急着关闭Socket，可以继续发送数据。所以你先发送ACK，”告诉Client端，你的请求我收到了，但是我还没准备好，请继续你等我的消息”。这个时候Client端就进入FIN_WAIT状态，继续等待Server端的FIN报文。当Server端确定数据已发送完成，则向Client端发送FIN报文，”告诉Client端，好了，我这边数据发完了，准备好关闭连接了”。Client端收到FIN报文后，”就知道可以关闭连接了，但是他还是不相信网络，怕Server端不知道要关闭，所以发送ACK后进入TIME_WAIT状态，如果Server端没有收到ACK则可以重传。“，Server端收到ACK后，”就知道可以断开连接了”。Client端等待了2MSL后依然没有收到回复，则证明Server端已正常关闭，那好，我Client端也可以关闭连接了。Ok，TCP连接就这样关闭了！<br>【问题1】为什么连接的时候是三次握手，关闭的时候却是四次握手？<br>答：因为当Server端收到Client端的SYN连接请求报文后，可以直接发送SYN+ACK报文。其中ACK报文是用来应答的，SYN报文是用来同步的。但是关闭连接时，当Server端收到FIN报文时，很可能并不会立即关闭SOCKET，所以只能先回复一个ACK报文，告诉Client端，”你发的FIN报文我收到了”。只有等到我Server端所有的报文都发送完了，我才能发送FIN报文，因此不能一起发送。故需要四步握手。</p>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://www.fovoy.com/2015/10/12/前端开发待学习/" data-id="civx0qquy0024wqs65m8bfvjt" class="article-share-link">分享到</a>
+      <a data-url="http://www.fovoy.com/2015/10/17/netty/" data-id="cixo35d28006qvfs6yhlpa3x1" class="article-share-link">分享到</a>
       
       
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/play/">play</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-
-    
-      <article id="post-公积金" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2015/10/12/公积金/">公积金</a>
-    </h1>
-  
-
-        <div class="article-meta">
-          
-  <div class="article-date">
-    <i class="fa fa-calendar"></i>
-    <a href="/2015/10/12/公积金/">
-      <time datetime="2015-10-12T11:25:12.000Z" itemprop="datePublished">2015-10-12</time>
-    </a>
-  </div>
-
-
-          
-  <div class="article-category">
-  	<i class="fa fa-folder"></i>
-    <a class="article-category-link" href="/categories/Framework/">Framework</a><i class="fa fa-angle-right"></i><a class="article-category-link" href="/categories/Framework/spring/">spring</a>
-  </div>
-
-        </div>
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-                
-        <p>1）购房合同原件及复印件（复印件需要的页码:1 合同封面页,2 开収商及购房人双<br>方信息页,3 房屋详细信息页,4 购房付款方式页,5 双方签字盖章页）<br>(如因贷款无购房合同原件,可提供加盖抵押章购房合同复印件作为原件使用.)<br>2）购房収票原件和复印件（全款或首付款，如只提供首付款収票则需提供商业贷<br>款合同原件，首付款収票金额不贷款合同金额相加需等亍购房合同房价款）<br>3）商业贷款原件及复印件（复印件需要的页码:1 合同封面页,2 银行及购房人双方<br>信息页,3 房屋详细信息页,4 购房付款方式页,5 双方签字盖章页）<br>4）身仹证原件、复印件（正反面复印在一张 A4 纸上）<br>5）公积金联名卡复印件（正反面复印在一张 A4 纸上）<br>6）住房公积金支叏记录单纸版一仹（可以在骆驼帮—人事支持—社保公积金篇—<br>公积金相关文档下载内找到,请填写您的个人信息，如有丌清楚的可咨询<br>gongjijin.bj）<br>7）异地购房办理支叏的同事，需要开具一仹住房公积金支叏的单位证明–《职工异<br>地购房证明》，模板在骆驼帮—人事支持—社保公积金篇—公积金相关文档下载内<br>找到，请下载填写完整后打印，交材料时由公司统一盖章后提交至管理部。<br>8）以下两种情况，还需开具现单位户下的社保证明，定制生成并打印。定制社保<br>证明网站为：<a href="http://www.bjld.gov.cn/csibiz/home/#，（该网站每月" target="_blank" rel="external">http://www.bjld.gov.cn/csibiz/home/#，（该网站每月</a> 25 日至次月<br>5 日维护）指南请参考骆驼帮–人事支持–社保公积金篇–公积金相关文档下载–<br>个人用户打印社保证明操作指南。<br>A．在京购房办理公积金支叏，且入职单位丌满一年的新员工。<br>B．异地购房办理公积金支叏的员工。</p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://www.fovoy.com/2015/10/12/公积金/" data-id="civx0qqvd002zwqs6c33fvd17" class="article-share-link">分享到</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/spring/">spring</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-
-    
-      <article id="post-spring配置对比" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2015/10/12/spring配置对比/">spring配置对比</a>
-    </h1>
-  
-
-        <div class="article-meta">
-          
-  <div class="article-date">
-    <i class="fa fa-calendar"></i>
-    <a href="/2015/10/12/spring配置对比/">
-      <time datetime="2015-10-12T11:25:12.000Z" itemprop="datePublished">2015-10-12</time>
-    </a>
-  </div>
-
-
-          
-  <div class="article-category">
-  	<i class="fa fa-folder"></i>
-    <a class="article-category-link" href="/categories/Framework/">Framework</a><i class="fa fa-angle-right"></i><a class="article-category-link" href="/categories/Framework/spring/">spring</a>
-  </div>
-
-        </div>
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-                
-        <h2 id="＊_spring_配置的三种方式对">＊ spring 配置的三种方式对</h2><h2 id=""><img src="/thumbnails/t3.png" alt=""></h2>
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://www.fovoy.com/2015/10/12/spring配置对比/" data-id="civx0qqwc004awqs6ns8z4anc" class="article-share-link">分享到</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/spring/">spring</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-
-    
-      <article id="post-hashcode" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2015/10/12/hashcode/">hashcode</a>
-    </h1>
-  
-
-        <div class="article-meta">
-          
-  <div class="article-date">
-    <i class="fa fa-calendar"></i>
-    <a href="/2015/10/12/hashcode/">
-      <time datetime="2015-10-12T11:25:12.000Z" itemprop="datePublished">2015-10-12</time>
-    </a>
-  </div>
-
-
-          
-  <div class="article-category">
-  	<i class="fa fa-folder"></i>
-    <a class="article-category-link" href="/categories/java/">java</a>
-  </div>
-
-        </div>
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-                
-        <h2 id="＊_hashcpde">＊ hashcpde</h2><h2 id=""><img src="/thumbnails/xxxx.png" alt=""></h2><p>＊hashcode<br>关系到对象的索引位置，对象的hash-relevant改变，不会重新计算hashcode,所以可变对象会有hash 冲突。<br>结论：所以最好不要使用可变字段来计算hashcode.</p>
-<ul>
-<li>hashcode计算时候选择31作为乘积，是因为31是素数，减少冲突，而且位数并不大，不会发生溢出。</li>
-<li>如果重写equals就 尽量重写hashcode,防止冲撞。</li>
-</ul>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://www.fovoy.com/2015/10/12/hashcode/" data-id="civx0qqyo008xwqs6gcd1cgee" class="article-share-link">分享到</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/base/">base</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-
-    
-      <article id="post-进程和线程" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2015/10/12/进程和线程/">进程和线程</a>
-    </h1>
-  
-
-        <div class="article-meta">
-          
-  <div class="article-date">
-    <i class="fa fa-calendar"></i>
-    <a href="/2015/10/12/进程和线程/">
-      <time datetime="2015-10-12T05:10:21.000Z" itemprop="datePublished">2015-10-12</time>
-    </a>
-  </div>
-
-
-          
-  <div class="article-category">
-  	<i class="fa fa-folder"></i>
-    <a class="article-category-link" href="/categories/java/">java</a>
-  </div>
-
-        </div>
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-                
-        <p>1.为什么要有进程</p>
-<p>  进程是为了解决，cpu的使用效率，让系统能够并发操作。这样才能在单台计算机，丰富的体验。因为进程分割内存，并交替使用cpu来运算。才能做到cpu使用率提高。在程序IO的情况下，cpu是闲置的，io时间越长闲置时间越长，多个程序并发操作。切换非常快，人根本没法感知，所以才能让如今的操作系统有很好的体验。</p>
-<p>2.为什么要有线程<br>   在出现了进程之后，操作系统的性能得到了大大的提升。虽然进程的出现解决了操作系统的并发问题，但是人们仍然不满足，人们逐渐对实时性有了要求。<br>   换句话说，进程让操作系统的并发性成为可能，而线程让进程的内部并发成为可能。但是要注意，一个进程虽然包括多个线程，但是这些线程是共同享有进程占有的资源和地址空间的。进程是操作系统进行资源分配的基本单位，而线程是操作系统进行调度的基本单位。</p>
-<p>3.多线程并发</p>
-<p>　　由于多个线程是共同占有所属进程的资源和地址空间的，那么就会存在一个问题：如果多个线程要同时访问某个资源，怎么处理？线程安全问题就这样产生。</p>
-<p>[TOC]</p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://www.fovoy.com/2015/10/12/进程和线程/" data-id="civx0qqtw0008wqs6k1sth1or" class="article-share-link">分享到</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/进程和线程/">进程和线程</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-
-    
-      <article id="post-http" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2015/09/12/http/">http</a>
-    </h1>
-  
-
-        <div class="article-meta">
-          
-  <div class="article-date">
-    <i class="fa fa-calendar"></i>
-    <a href="/2015/09/12/http/">
-      <time datetime="2015-09-12T01:25:12.000Z" itemprop="datePublished">2015-09-12</time>
-    </a>
-  </div>
-
-
-          
-  <div class="article-category">
-  	<i class="fa fa-folder"></i>
-    <a class="article-category-link" href="/categories/网络/">网络</a>
-  </div>
-
-        </div>
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-                
-        <p><img src="/thumbnails/TIME_WAIT.png" alt=""><br>查看状态<br><figure class="highlight stata"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">netstat -<span class="keyword">n</span> | awk '/^tcp/ &#123;++S[<span class="label">$NF</span>]&#125; END &#123;<span class="keyword">for</span>(a <span class="keyword">in</span> S) <span class="keyword">print</span> a, S[a]&#125;'</span><br></pre></td></tr></table></figure></p>
-<p>讲讲TIME_WAIT和CLOSE_WAIT</p>
-<h2 id="1-服务器保持了大量TIME_WAIT状态">1.服务器保持了大量TIME_WAIT状态</h2><p>这样的情况比较常见，大量的并发访问，入爬虫，抢购等就会出现，尤其是内核参数没有优化，socket保持时间过长。<br>发现系统存在大量TIME_WAIT状态的连接，通过调整内核参数解决，<br>vi /etc/sysctl.conf</p>
-<p>编辑文件，加入以下内容：<br><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">net<span class="class">.ipv4</span><span class="class">.tcp_syncookies</span> = <span class="number">1</span></span><br><span class="line">net<span class="class">.ipv4</span><span class="class">.tcp_tw_reuse</span> = <span class="number">1</span></span><br><span class="line">net<span class="class">.ipv4</span><span class="class">.tcp_tw_recycle</span> = <span class="number">1</span></span><br><span class="line">net<span class="class">.ipv4</span><span class="class">.tcp_fin_timeout</span> = <span class="number">30</span></span><br></pre></td></tr></table></figure></p>
-<p>然后执行 /sbin/sysctl -p 让参数生效。<br>net.ipv4.tcp_syncookies = 1 表示开启SYN Cookies。当出现SYN等待队列溢出时，启用cookies来处理，可防范少量SYN攻击，默认为0，表示关闭；<br>net.ipv4.tcp_tw_reuse = 1 表示开启重用。允许将TIME-WAIT sockets重新用于新的TCP连接，默认为0，表示关闭；<br>net.ipv4.tcp_tw_recycle = 1 表示开启TCP连接中TIME-WAIT sockets的快速回收，默认为0，表示关闭。<br>net.ipv4.tcp_fin_timeout 修改系統默认的 TIMEOUT 时间。<br>为什么TCP/IP要设计成保持资源一段时间，主要出于以下两个方面：<br>  1) 防止上一次连接中的包，迷路后重新出现。<br>  2) 可靠的tcp链接，在主动关闭方发送最后一个ack(fin),有可能丢失，这时被动方会重新发送fin,如果主动方出于closed状态，就会响应rst而不是ack.TIME_WAIT会定时回收，除非短时间内大量请求，或者攻击。<br> 也就是说HTTP的交互跟上面画的那个图是不一样的，关闭连接的不是客户端，而是服务器，所以web服务器也是会出现大量的TIME_WAIT的情况的。<br> 下面来看一下我们网管对/etc/sysctl.conf文件的修改：<br> <figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">#对于一个新建连接，内核要发送多少个 SYN 连接请求才决定放弃,不应该大于<span class="number">255</span>，默认值是<span class="number">5</span>，对应于<span class="number">180</span>秒左右时间   </span><br><span class="line">net<span class="class">.ipv4</span><span class="class">.tcp_syn_retries</span>=<span class="number">2</span>  </span><br><span class="line"><span class="id">#net</span><span class="class">.ipv4</span><span class="class">.tcp_synack_retries</span>=<span class="number">2</span>  </span><br><span class="line">#表示当keepalive起用的时候，TCP发送keepalive消息的频度。缺省是<span class="number">2</span>小时，改为<span class="number">300</span>秒  </span><br><span class="line">net<span class="class">.ipv4</span><span class="class">.tcp_keepalive_time</span>=<span class="number">1200</span>  </span><br><span class="line">net<span class="class">.ipv4</span><span class="class">.tcp_orphan_retries</span>=<span class="number">3</span>  </span><br><span class="line">#表示如果套接字由本端要求关闭，这个参数决定了它保持在FIN-WAIT-<span class="number">2</span>状态的时间  </span><br><span class="line">net<span class="class">.ipv4</span><span class="class">.tcp_fin_timeout</span>=<span class="number">30</span>    </span><br><span class="line">#表示SYN队列的长度，默认为<span class="number">1024</span>，加大队列长度为<span class="number">8192</span>，可以容纳更多等待连接的网络连接数。  </span><br><span class="line">net<span class="class">.ipv4</span><span class="class">.tcp_max_syn_backlog</span> = <span class="number">4096</span>  </span><br><span class="line">#表示开启SYN Cookies。当出现SYN等待队列溢出时，启用cookies来处理，可防范少量SYN攻击，默认为<span class="number">0</span>，表示关闭  </span><br><span class="line">net<span class="class">.ipv4</span><span class="class">.tcp_syncookies</span> = <span class="number">1</span>  </span><br><span class="line">  </span><br><span class="line">#表示开启重用。允许将TIME-WAIT sockets重新用于新的TCP连接，默认为<span class="number">0</span>，表示关闭  </span><br><span class="line">net<span class="class">.ipv4</span><span class="class">.tcp_tw_reuse</span> = <span class="number">1</span>  </span><br><span class="line">#表示开启TCP连接中TIME-WAIT sockets的快速回收，默认为<span class="number">0</span>，表示关闭  </span><br><span class="line">net<span class="class">.ipv4</span><span class="class">.tcp_tw_recycle</span> = <span class="number">1</span>  </span><br><span class="line">  </span><br><span class="line">##减少超时前的探测次数   </span><br><span class="line">net<span class="class">.ipv4</span><span class="class">.tcp_keepalive_probes</span>=<span class="number">5</span>   </span><br><span class="line">##优化网络设备接收队列   </span><br><span class="line">net<span class="class">.core</span><span class="class">.netdev_max_backlog</span>=<span class="number">3000</span></span><br></pre></td></tr></table></figure></p>
-<p>修改完之后执行/sbin/sysctl -p让参数生效。<br>这里头主要注意到的是<br><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">net<span class="class">.ipv4</span><span class="class">.tcp_tw_reuse</span>    </span><br><span class="line">net<span class="class">.ipv4</span><span class="class">.tcp_tw_recycle</span> </span><br><span class="line">net<span class="class">.ipv4</span><span class="class">.tcp_fin_timeout</span> </span><br><span class="line">net<span class="class">.ipv4</span><span class="class">.tcp_keepalive_</span>*</span><br></pre></td></tr></table></figure></p>
-<p>这几个参数。</p>
-<h2 id="2-服务器保持了大量CLOSE_WAIT状态">2.服务器保持了大量CLOSE_WAIT状态</h2><p>  一般情况下都是代码写错了。<br>   1) httpClient举例子：请求异常，非200得情况下，服务方方发出关闭连接的请求，请求方就是被动关闭连接，也就是CLOSE_WAIT。如果请求方自己没有释放连接，那就造成CLOSE_WAIT堆积。<br>   2) Nginx上面的产生原因还是因为Nagle’s算法加Nginx本身EPOLL的ET触发模式导致。ET出发模式在数据就绪的时候会触发一次回调操作，Nagle’s算法会累积TCP包，如果最后的数据包和FIN包被Nagle’s算法合并，会导致EPOLL的ET模式只出发一次，然而在应用层的SOCKET是读取返回0才代表链接关闭，而读取这次合并的数据包时是不返回0的，然后SOCKET以后都不会触发事件，所以导致应用层没有关闭SOCKET，从而产生大量的CLOSE_WAIT状态链接。</p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://www.fovoy.com/2015/09/12/http/" data-id="civx0qqyg008hwqs629gjbfl8" class="article-share-link">分享到</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/http/">http</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-
-    
-      <article id="post-mysql密码重置" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2015/08/16/mysql密码重置/">mysql密码重置</a>
-    </h1>
-  
-
-        <div class="article-meta">
-          
-  <div class="article-date">
-    <i class="fa fa-calendar"></i>
-    <a href="/2015/08/16/mysql密码重置/">
-      <time datetime="2015-08-16T01:13:36.000Z" itemprop="datePublished">2015-08-16</time>
-    </a>
-  </div>
-
-
-          
-  <div class="article-category">
-  	<i class="fa fa-folder"></i>
-    <a class="article-category-link" href="/categories/tools/">tools</a>
-  </div>
-
-        </div>
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-                
-        <p><img src="/thumbnails/es.png" alt=""></p>
-<p>初始化mysql 密码设置<br>step 1:<br>vim /etc/my.cnf #在【mysqld]下加一行：skip-grant-tables<br>service mysqld restart</p>
-<p>step 2:<br>mysql<br>use mysql;<br>UPDATE user SET authentication_string=password(‘123456’) WHERE user=’root’ AND Host=’localhost’;<br>flush privileges;<br>quit;</p>
-<p>step 3:<br>vim /etc/my.cnf #注释掉skip-grant-tables<br>service mysqld restart<br>mysql -uroot -proot<br>ALTER USER ‘root’@’localhost’ IDENTIFIED BY ‘MyNewPass’;</p>
-<p>mysqld_safe –user=mysql –skip-grant-tables –skip-networking &amp; mysql -u root mysql </p>
-<p>1、设置加密模式<br>mysql_config_editor set –login-path=local –host=localhost –user=db_user –password<br>红色部分是需要修改成我们自己数据库用户名的，回车之后会提示我们输入数据库密码，我们照样输入。</p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://www.fovoy.com/2015/08/16/mysql密码重置/" data-id="civx0qqx9006awqs6lg7o5onl" class="article-share-link">分享到</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/mysql/">mysql</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-
-    
-      <article id="post-es vs solr" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2015/08/16/es vs solr/">es vs solr</a>
-    </h1>
-  
-
-        <div class="article-meta">
-          
-  <div class="article-date">
-    <i class="fa fa-calendar"></i>
-    <a href="/2015/08/16/es vs solr/">
-      <time datetime="2015-08-16T01:13:36.000Z" itemprop="datePublished">2015-08-16</time>
-    </a>
-  </div>
-
-
-          
-  <div class="article-category">
-  	<i class="fa fa-folder"></i>
-    <a class="article-category-link" href="/categories/Elasticsearch/">Elasticsearch</a><i class="fa fa-angle-right"></i><a class="article-category-link" href="/categories/Elasticsearch/performance/">performance</a>
-  </div>
-
-        </div>
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-                
-        <p><img src="/thumbnails/es.png" alt=""></p>
-<h3 id="elasticsearch_性能对比">elasticsearch 性能对比</h3><hr>
-<p><a href="http://mp.weixin.qq.com/s?__biz=MzAwMDU1MTE1OQ==&amp;mid=209488723&amp;idx=1&amp;sn=d60c0637d7a9f4a4b981a69f10c6b90a&amp;scene=5#rd" target="_blank" rel="external">相关blog</a></p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://www.fovoy.com/2015/08/16/es vs solr/" data-id="civx0qqz900a0wqs64alq3m3a" class="article-share-link">分享到</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Elasticsearch/">Elasticsearch</a></li></ul>
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/netty/">netty</a></li></ul>
 
     </footer>
   </div>
@@ -724,7 +785,7 @@
 
     
       <nav id="page-nav">
-        <a class="extend prev" rel="prev" href="/page/4/">&laquo; 上一页</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><span class="page-number current">5</span><a class="page-number" href="/page/6/">6</a><a class="page-number" href="/page/7/">7</a><span class="space">&hellip;</span><a class="page-number" href="/page/11/">11</a><a class="extend next" rel="next" href="/page/6/">下一页 &raquo;</a>
+        <a class="extend prev" rel="prev" href="/page/4/">&laquo; 上一页</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><span class="page-number current">5</span><a class="page-number" href="/page/6/">6</a><a class="page-number" href="/page/7/">7</a><span class="space">&hellip;</span><a class="page-number" href="/page/12/">12</a><a class="extend next" rel="next" href="/page/6/">下一页 &raquo;</a>
       </nav>
     </section>
       
@@ -735,6 +796,24 @@
     <h3 class="widget-title">最新文章</h3>
     <div class="widget">
       <ul id="recent-post" class="">
+        
+          <li>
+            
+            <div class="item-thumbnail">
+              <a href="/2017/01/01/2016的我/" class="thumbnail">
+  
+    <span style="background-image:url(/thumbnails/es.png
+)" alt="2017" class="thumbnail-image"></span>
+  
+</a>
+            </div>
+            
+            <div class="item-inner">
+              <p class="item-category"><a class="article-category-link" href="/categories/计划/">计划</a></p>
+              <p class="item-title"><a href="/2017/01/01/2016的我/" class="title">2017</a></p>
+              <p class="item-date"><time datetime="2017-01-01T02:13:22.000Z" itemprop="datePublished">2017-01-01</time></p>
+            </div>
+          </li>
         
           <li>
             
@@ -750,6 +829,23 @@
               <p class="item-category"><a class="article-category-link" href="/categories/分布式/">分布式</a></p>
               <p class="item-title"><a href="/2016/11/24/分布式id生成器/" class="title">分布式ID生成器</a></p>
               <p class="item-date"><time datetime="2016-11-24T02:49:03.000Z" itemprop="datePublished">2016-11-24</time></p>
+            </div>
+          </li>
+        
+          <li>
+            
+            <div class="item-thumbnail">
+              <a href="/2016/11/12/异步化方案/" class="thumbnail">
+  
+    <span class="thumbnail-image thumbnail-none"></span>
+  
+</a>
+            </div>
+            
+            <div class="item-inner">
+              <p class="item-category"><a class="article-category-link" href="/categories/java/">java</a></p>
+              <p class="item-title"><a href="/2016/11/12/异步化方案/" class="title">异步化方案</a></p>
+              <p class="item-date"><time datetime="2016-11-12T05:22:01.000Z" itemprop="datePublished">2016-11-12</time></p>
             </div>
           </li>
         
@@ -787,40 +883,6 @@
             </div>
           </li>
         
-          <li>
-            
-            <div class="item-thumbnail">
-              <a href="/2016/10/17/LRU/" class="thumbnail">
-  
-    <span class="thumbnail-image thumbnail-none"></span>
-  
-</a>
-            </div>
-            
-            <div class="item-inner">
-              <p class="item-category"><a class="article-category-link" href="/categories/lucene/">lucene</a></p>
-              <p class="item-title"><a href="/2016/10/17/LRU/" class="title">LRU 算法</a></p>
-              <p class="item-date"><time datetime="2016-10-17T04:45:11.000Z" itemprop="datePublished">2016-10-17</time></p>
-            </div>
-          </li>
-        
-          <li>
-            
-            <div class="item-thumbnail">
-              <a href="/2016/07/12/idea-license/" class="thumbnail">
-  
-    <span class="thumbnail-image thumbnail-none"></span>
-  
-</a>
-            </div>
-            
-            <div class="item-inner">
-              <p class="item-category"><a class="article-category-link" href="/categories/tools/">tools</a></p>
-              <p class="item-title"><a href="/2016/07/12/idea-license/" class="title">idea-license</a></p>
-              <p class="item-date"><time datetime="2016-07-12T01:25:12.000Z" itemprop="datePublished">2016-07-12</time></p>
-            </div>
-          </li>
-        
       </ul>
     </div>
   </div>
@@ -830,7 +892,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">分类</h3>
     <div class="widget">
-      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Elasticsearch/">Elasticsearch</a><span class="category-list-count">10</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Elasticsearch/config/">config</a><span class="category-list-count">6</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Elasticsearch/performance/">performance</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Elasticsearch/学习/">学习</a><span class="category-list-count">3</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Framework/">Framework</a><span class="category-list-count">3</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Framework/spring/">spring</a><span class="category-list-count">3</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/JVM/">JVM</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Java/">Java</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Mac/">Mac</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Math/">Math</a><span class="category-list-count">2</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Math/Matrix/">Matrix</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Math/分布/">分布</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/design-pattern/">design pattern</a><span class="category-list-count">11</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/elasticsearch/">elasticsearch</a><span class="category-list-count">2</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/elasticsearch/运维/">运维</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/fovoy/">fovoy</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/http/">http</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/java/">java</a><span class="category-list-count">17</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/java/gc/">gc</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/java/jvm/">jvm</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/java/学习/">学习</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/kibana/">kibana</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/lucene/">lucene</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/mysql/">mysql</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/mysql/config/">config</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/netty/">netty</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/recommendation/">recommendation</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/recommendation/协同过滤/">协同过滤</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/redis/">redis</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/scala/">scala</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/scala/基础/">基础</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/site/">site</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/tools/">tools</a><span class="category-list-count">14</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/tools/git/">git</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/tools/hexo/">hexo</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/tools/nginx/">nginx</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/中间件/">中间件</a><span class="category-list-count">2</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/中间件/kafka/">kafka</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/中间件/tomcat/">tomcat</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/主题模型/">主题模型</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/主题模型/主题抽取/">主题抽取</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/兴趣/">兴趣</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/分布式/">分布式</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/前端开发/">前端开发</a><span class="category-list-count">6</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/前端开发/angularjs/">angularjs</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/前端开发/html5/">html5</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/前端开发/node-js/">node.js</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/前端开发/nodejs/">nodejs</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/前端开发/学习/">学习</a><span class="category-list-count">2</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/基础架构/">基础架构</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/并发编程/">并发编程</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/总结/">总结</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/数据结构/">数据结构</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/网络/">网络</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/英语学习/">英语学习</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/计划/">计划</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/读书/">读书</a><span class="category-list-count">1</span></li></ul>
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Elasticsearch/">Elasticsearch</a><span class="category-list-count">13</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Elasticsearch/config/">config</a><span class="category-list-count">6</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Elasticsearch/performance/">performance</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Elasticsearch/学习/">学习</a><span class="category-list-count">6</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Framework/">Framework</a><span class="category-list-count">3</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Framework/spring/">spring</a><span class="category-list-count">3</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/JAVA/">JAVA</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/JVM/">JVM</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Java/">Java</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Mac/">Mac</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Math/">Math</a><span class="category-list-count">2</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Math/Matrix/">Matrix</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Math/分布/">分布</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/design-pattern/">design pattern</a><span class="category-list-count">12</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/elasticsearch/">elasticsearch</a><span class="category-list-count">2</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/elasticsearch/运维/">运维</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/fovoy/">fovoy</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/gradle/">gradle</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/http/">http</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/java/">java</a><span class="category-list-count">22</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/java/gc/">gc</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/java/jvm/">jvm</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/java/学习/">学习</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/kibana/">kibana</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/lucene/">lucene</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/mysql/">mysql</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/mysql/config/">config</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/netty/">netty</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/recommendation/">recommendation</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/recommendation/协同过滤/">协同过滤</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/redis/">redis</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/scala/">scala</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/scala/基础/">基础</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/site/">site</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/tools/">tools</a><span class="category-list-count">14</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/tools/git/">git</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/tools/hexo/">hexo</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/tools/nginx/">nginx</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/中间件/">中间件</a><span class="category-list-count">3</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/中间件/kafka/">kafka</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/中间件/tomcat/">tomcat</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/主题模型/">主题模型</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/主题模型/主题抽取/">主题抽取</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/兴趣/">兴趣</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/分布式/">分布式</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/分布式消息队列/">分布式消息队列</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/分布式系统/">分布式系统</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/前端开发/">前端开发</a><span class="category-list-count">6</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/前端开发/angularjs/">angularjs</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/前端开发/html5/">html5</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/前端开发/node-js/">node.js</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/前端开发/nodejs/">nodejs</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/前端开发/学习/">学习</a><span class="category-list-count">2</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/基础架构/">基础架构</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/大数据/">大数据</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/并发编程/">并发编程</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/总结/">总结</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/数据结构/">数据结构</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/系统/">系统</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/网络/">网络</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/英语学习/">英语学习</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/计划/">计划</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/读书/">读书</a><span class="category-list-count">1</span></li></ul>
     </div>
   </div>
 
@@ -839,7 +901,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">标签</h3>
     <div class="widget">
-      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/ConcurrentModificationException/">ConcurrentModificationException</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Elasticsearch/">Elasticsearch</a><span class="tag-list-count">10</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Future/">Future</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JVM/">JVM</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/LRU/">LRU</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Mac/">Mac</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Math/">Math</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Quasar/">Quasar</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ThreadLocal/">ThreadLocal</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/angularjs/">angularjs</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/base/">base</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/design-pattern/">design pattern</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/elasticsearch/">elasticsearch</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/fovoy/">fovoy</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/gc/">gc</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/git/">git</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hexo/">hexo</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/html5/">html5</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/http/">http</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/idea/">idea</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/id生成器/">id生成器</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ip/">ip</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/java/">java</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/jvm/">jvm</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/kafka/">kafka</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/kibana/">kibana</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/lock/">lock</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/lucene/">lucene</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mysql/">mysql</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/netty/">netty</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/nginx/">nginx</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/node-js/">node.js</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/nodejs/">nodejs</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/play/">play</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/recommendation/">recommendation</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/redis/">redis</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/reflect/">reflect</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/rest/">rest</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/scala/">scala</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/secureCRT/">secureCRT</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/site/">site</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/spring/">spring</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/store/">store</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/tomcat/">tomcat</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/tools/">tools</a><span class="tag-list-count">8</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/tree/">tree</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/volatite/">volatite</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/专注/">专注</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/主题模型/">主题模型</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/人工智能/">人工智能</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/内存模型/">内存模型</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/前端开发/">前端开发</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/同步容器/">同步容器</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/基础/">基础</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/堵塞队列/">堵塞队列</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/小说/">小说</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/并发编程/">并发编程</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/应用中心/">应用中心</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/数据结构/">数据结构</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/线程/">线程</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/线程池/">线程池</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/网络/">网络</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/英语学习/">英语学习</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/计划/">计划</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/进程和线程/">进程和线程</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/配置中心/">配置中心</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/问题/">问题</a><span class="tag-list-count">1</span></li></ul>
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/ConcurrentModificationException/">ConcurrentModificationException</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Elasticsearch/">Elasticsearch</a><span class="tag-list-count">13</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Future/">Future</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JVM/">JVM</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/LRU/">LRU</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Mac/">Mac</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Math/">Math</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Quasar/">Quasar</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/RocketMQ/">RocketMQ</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ThreadLocal/">ThreadLocal</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/angularjs/">angularjs</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/base/">base</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/design-pattern/">design pattern</a><span class="tag-list-count">12</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/elasticsearch/">elasticsearch</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/fovoy/">fovoy</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/gc/">gc</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/git/">git</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hexo/">hexo</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/html5/">html5</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/http/">http</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/idea/">idea</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/id生成器/">id生成器</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ip/">ip</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/java/">java</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/jvm/">jvm</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/kafka/">kafka</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/kibana/">kibana</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/lock/">lock</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/lucene/">lucene</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mysql/">mysql</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/netty/">netty</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/nginx/">nginx</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/node-js/">node.js</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/nodejs/">nodejs</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/order/">order</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/play/">play</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/recommendation/">recommendation</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/redis/">redis</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/reflect/">reflect</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/rest/">rest</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/scala/">scala</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/secureCRT/">secureCRT</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/site/">site</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/spring/">spring</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/store/">store</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/tomcat/">tomcat</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/tools/">tools</a><span class="tag-list-count">8</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/tree/">tree</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/volatite/">volatite</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/专注/">专注</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/主题模型/">主题模型</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/人工智能/">人工智能</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/内存模型/">内存模型</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/分布式系统介绍/">分布式系统介绍</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/前端开发/">前端开发</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/同步容器/">同步容器</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/基础/">基础</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/堵塞队列/">堵塞队列</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/小说/">小说</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/并发编程/">并发编程</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/应用中心/">应用中心</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/异常/">异常</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/数据结构/">数据结构</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/消息中间件/">消息中间件</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/线程/">线程</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/线程池/">线程池</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/编码/">编码</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/网络/">网络</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/英语学习/">英语学习</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/计划/">计划</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/进程和线程/">进程和线程</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/配置中心/">配置中心</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/问题/">问题</a><span class="tag-list-count">1</span></li></ul>
     </div>
   </div>
 
@@ -848,7 +910,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">标签云</h3>
     <div class="widget tagcloud">
-      <a href="/tags/ConcurrentModificationException/" style="font-size: 10px;">ConcurrentModificationException</a> <a href="/tags/Elasticsearch/" style="font-size: 18px;">Elasticsearch</a> <a href="/tags/Future/" style="font-size: 10px;">Future</a> <a href="/tags/JVM/" style="font-size: 10px;">JVM</a> <a href="/tags/LRU/" style="font-size: 10px;">LRU</a> <a href="/tags/Mac/" style="font-size: 10px;">Mac</a> <a href="/tags/Math/" style="font-size: 12px;">Math</a> <a href="/tags/Quasar/" style="font-size: 10px;">Quasar</a> <a href="/tags/ThreadLocal/" style="font-size: 10px;">ThreadLocal</a> <a href="/tags/angularjs/" style="font-size: 10px;">angularjs</a> <a href="/tags/base/" style="font-size: 10px;">base</a> <a href="/tags/design-pattern/" style="font-size: 20px;">design pattern</a> <a href="/tags/elasticsearch/" style="font-size: 12px;">elasticsearch</a> <a href="/tags/fovoy/" style="font-size: 12px;">fovoy</a> <a href="/tags/gc/" style="font-size: 10px;">gc</a> <a href="/tags/git/" style="font-size: 10px;">git</a> <a href="/tags/hexo/" style="font-size: 10px;">hexo</a> <a href="/tags/html5/" style="font-size: 10px;">html5</a> <a href="/tags/http/" style="font-size: 10px;">http</a> <a href="/tags/idea/" style="font-size: 10px;">idea</a> <a href="/tags/id生成器/" style="font-size: 10px;">id生成器</a> <a href="/tags/ip/" style="font-size: 10px;">ip</a> <a href="/tags/java/" style="font-size: 10px;">java</a> <a href="/tags/jvm/" style="font-size: 10px;">jvm</a> <a href="/tags/kafka/" style="font-size: 10px;">kafka</a> <a href="/tags/kibana/" style="font-size: 10px;">kibana</a> <a href="/tags/lock/" style="font-size: 10px;">lock</a> <a href="/tags/lucene/" style="font-size: 10px;">lucene</a> <a href="/tags/mysql/" style="font-size: 14px;">mysql</a> <a href="/tags/netty/" style="font-size: 10px;">netty</a> <a href="/tags/nginx/" style="font-size: 10px;">nginx</a> <a href="/tags/node-js/" style="font-size: 10px;">node.js</a> <a href="/tags/nodejs/" style="font-size: 10px;">nodejs</a> <a href="/tags/play/" style="font-size: 10px;">play</a> <a href="/tags/recommendation/" style="font-size: 10px;">recommendation</a> <a href="/tags/redis/" style="font-size: 10px;">redis</a> <a href="/tags/reflect/" style="font-size: 10px;">reflect</a> <a href="/tags/rest/" style="font-size: 10px;">rest</a> <a href="/tags/scala/" style="font-size: 10px;">scala</a> <a href="/tags/secureCRT/" style="font-size: 10px;">secureCRT</a> <a href="/tags/site/" style="font-size: 10px;">site</a> <a href="/tags/spring/" style="font-size: 14px;">spring</a> <a href="/tags/store/" style="font-size: 10px;">store</a> <a href="/tags/tomcat/" style="font-size: 10px;">tomcat</a> <a href="/tags/tools/" style="font-size: 16px;">tools</a> <a href="/tags/tree/" style="font-size: 10px;">tree</a> <a href="/tags/volatite/" style="font-size: 10px;">volatite</a> <a href="/tags/专注/" style="font-size: 10px;">专注</a> <a href="/tags/主题模型/" style="font-size: 10px;">主题模型</a> <a href="/tags/人工智能/" style="font-size: 10px;">人工智能</a> <a href="/tags/内存模型/" style="font-size: 10px;">内存模型</a> <a href="/tags/前端开发/" style="font-size: 10px;">前端开发</a> <a href="/tags/同步容器/" style="font-size: 10px;">同步容器</a> <a href="/tags/基础/" style="font-size: 10px;">基础</a> <a href="/tags/堵塞队列/" style="font-size: 10px;">堵塞队列</a> <a href="/tags/小说/" style="font-size: 10px;">小说</a> <a href="/tags/并发编程/" style="font-size: 10px;">并发编程</a> <a href="/tags/应用中心/" style="font-size: 10px;">应用中心</a> <a href="/tags/数据结构/" style="font-size: 10px;">数据结构</a> <a href="/tags/线程/" style="font-size: 10px;">线程</a> <a href="/tags/线程池/" style="font-size: 10px;">线程池</a> <a href="/tags/网络/" style="font-size: 10px;">网络</a> <a href="/tags/英语学习/" style="font-size: 10px;">英语学习</a> <a href="/tags/计划/" style="font-size: 10px;">计划</a> <a href="/tags/进程和线程/" style="font-size: 10px;">进程和线程</a> <a href="/tags/配置中心/" style="font-size: 10px;">配置中心</a> <a href="/tags/问题/" style="font-size: 10px;">问题</a>
+      <a href="/tags/ConcurrentModificationException/" style="font-size: 10px;">ConcurrentModificationException</a> <a href="/tags/Elasticsearch/" style="font-size: 20px;">Elasticsearch</a> <a href="/tags/Future/" style="font-size: 10px;">Future</a> <a href="/tags/JVM/" style="font-size: 10px;">JVM</a> <a href="/tags/LRU/" style="font-size: 10px;">LRU</a> <a href="/tags/Mac/" style="font-size: 10px;">Mac</a> <a href="/tags/Math/" style="font-size: 12px;">Math</a> <a href="/tags/Quasar/" style="font-size: 10px;">Quasar</a> <a href="/tags/RocketMQ/" style="font-size: 10px;">RocketMQ</a> <a href="/tags/ThreadLocal/" style="font-size: 10px;">ThreadLocal</a> <a href="/tags/angularjs/" style="font-size: 10px;">angularjs</a> <a href="/tags/base/" style="font-size: 10px;">base</a> <a href="/tags/design-pattern/" style="font-size: 18px;">design pattern</a> <a href="/tags/elasticsearch/" style="font-size: 12px;">elasticsearch</a> <a href="/tags/fovoy/" style="font-size: 12px;">fovoy</a> <a href="/tags/gc/" style="font-size: 10px;">gc</a> <a href="/tags/git/" style="font-size: 10px;">git</a> <a href="/tags/hexo/" style="font-size: 10px;">hexo</a> <a href="/tags/html5/" style="font-size: 10px;">html5</a> <a href="/tags/http/" style="font-size: 10px;">http</a> <a href="/tags/idea/" style="font-size: 10px;">idea</a> <a href="/tags/id生成器/" style="font-size: 10px;">id生成器</a> <a href="/tags/ip/" style="font-size: 10px;">ip</a> <a href="/tags/java/" style="font-size: 14px;">java</a> <a href="/tags/jvm/" style="font-size: 10px;">jvm</a> <a href="/tags/kafka/" style="font-size: 10px;">kafka</a> <a href="/tags/kibana/" style="font-size: 10px;">kibana</a> <a href="/tags/lock/" style="font-size: 10px;">lock</a> <a href="/tags/lucene/" style="font-size: 10px;">lucene</a> <a href="/tags/mysql/" style="font-size: 14px;">mysql</a> <a href="/tags/netty/" style="font-size: 10px;">netty</a> <a href="/tags/nginx/" style="font-size: 10px;">nginx</a> <a href="/tags/node-js/" style="font-size: 10px;">node.js</a> <a href="/tags/nodejs/" style="font-size: 10px;">nodejs</a> <a href="/tags/order/" style="font-size: 10px;">order</a> <a href="/tags/play/" style="font-size: 10px;">play</a> <a href="/tags/recommendation/" style="font-size: 10px;">recommendation</a> <a href="/tags/redis/" style="font-size: 10px;">redis</a> <a href="/tags/reflect/" style="font-size: 10px;">reflect</a> <a href="/tags/rest/" style="font-size: 10px;">rest</a> <a href="/tags/scala/" style="font-size: 10px;">scala</a> <a href="/tags/secureCRT/" style="font-size: 10px;">secureCRT</a> <a href="/tags/site/" style="font-size: 10px;">site</a> <a href="/tags/spring/" style="font-size: 14px;">spring</a> <a href="/tags/store/" style="font-size: 10px;">store</a> <a href="/tags/tomcat/" style="font-size: 10px;">tomcat</a> <a href="/tags/tools/" style="font-size: 16px;">tools</a> <a href="/tags/tree/" style="font-size: 10px;">tree</a> <a href="/tags/volatite/" style="font-size: 10px;">volatite</a> <a href="/tags/专注/" style="font-size: 10px;">专注</a> <a href="/tags/主题模型/" style="font-size: 10px;">主题模型</a> <a href="/tags/人工智能/" style="font-size: 10px;">人工智能</a> <a href="/tags/内存模型/" style="font-size: 10px;">内存模型</a> <a href="/tags/分布式系统介绍/" style="font-size: 10px;">分布式系统介绍</a> <a href="/tags/前端开发/" style="font-size: 10px;">前端开发</a> <a href="/tags/同步容器/" style="font-size: 10px;">同步容器</a> <a href="/tags/基础/" style="font-size: 12px;">基础</a> <a href="/tags/堵塞队列/" style="font-size: 10px;">堵塞队列</a> <a href="/tags/小说/" style="font-size: 10px;">小说</a> <a href="/tags/并发编程/" style="font-size: 12px;">并发编程</a> <a href="/tags/应用中心/" style="font-size: 10px;">应用中心</a> <a href="/tags/异常/" style="font-size: 10px;">异常</a> <a href="/tags/数据结构/" style="font-size: 10px;">数据结构</a> <a href="/tags/消息中间件/" style="font-size: 10px;">消息中间件</a> <a href="/tags/线程/" style="font-size: 10px;">线程</a> <a href="/tags/线程池/" style="font-size: 10px;">线程池</a> <a href="/tags/编码/" style="font-size: 10px;">编码</a> <a href="/tags/网络/" style="font-size: 10px;">网络</a> <a href="/tags/英语学习/" style="font-size: 10px;">英语学习</a> <a href="/tags/计划/" style="font-size: 10px;">计划</a> <a href="/tags/进程和线程/" style="font-size: 10px;">进程和线程</a> <a href="/tags/配置中心/" style="font-size: 10px;">配置中心</a> <a href="/tags/问题/" style="font-size: 10px;">问题</a>
     </div>
   </div>
 
@@ -857,7 +919,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">归档</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/11/">十一月 2016</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/10/">十月 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/07/">七月 2016</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/05/">五月 2016</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/03/">三月 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/02/">二月 2016</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/01/">一月 2016</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/12/">十二月 2015</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/11/">十一月 2015</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/10/">十月 2015</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/09/">九月 2015</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/08/">八月 2015</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/07/">七月 2015</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/05/">五月 2015</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/03/">三月 2015</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/01/">一月 2015</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/12/">十二月 2014</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/11/">十一月 2014</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/10/">十月 2014</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/07/">七月 2014</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/06/">六月 2014</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/05/">五月 2014</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/04/">四月 2014</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/03/">三月 2014</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/01/">一月 2014</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/10/">十月 2013</a><span class="archive-list-count">1</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/01/">一月 2017</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/11/">十一月 2016</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/10/">十月 2016</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/07/">七月 2016</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/05/">五月 2016</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/04/">四月 2016</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/03/">三月 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/02/">二月 2016</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/01/">一月 2016</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/12/">十二月 2015</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/11/">十一月 2015</a><span class="archive-list-count">12</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/10/">十月 2015</a><span class="archive-list-count">14</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/09/">九月 2015</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/08/">八月 2015</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/07/">七月 2015</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/05/">五月 2015</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/04/">四月 2015</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/03/">三月 2015</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/02/">二月 2015</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/01/">一月 2015</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/12/">十二月 2014</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/11/">十一月 2014</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/10/">十月 2014</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/07/">七月 2014</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/06/">六月 2014</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/05/">五月 2014</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/04/">四月 2014</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/03/">三月 2014</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/01/">一月 2014</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/10/">十月 2013</a><span class="archive-list-count">1</span></li></ul>
     </div>
   </div>
 
@@ -870,7 +932,7 @@
   
   <div class="outer">
     <div id="footer-info" class="inner">
-      &copy; 2000 - 2016 z-star<br>
+      &copy; 2000 - 2017 z-star<br>
       github <a href="http://github.com/z-star">z-star</a>
     </div>
   </div>
