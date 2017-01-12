@@ -97,7 +97,7 @@
     </div>
     <div class="article-info profile-block">
       <div class="article-info-block">
-        119
+        120
         <span>文章</span>
       </div>
       <div class="article-info-block">
@@ -130,6 +130,191 @@
 
       
       <section id="main">
+      <article id="post-分布式系统一致性" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/04/20/分布式系统一致性/">分布式系统一致性</a>
+    </h1>
+  
+
+        <div class="article-meta">
+          
+  <div class="article-date">
+    <i class="fa fa-calendar"></i>
+    <a href="/2016/04/20/分布式系统一致性/">
+      <time datetime="2016-04-20T04:13:36.000Z" itemprop="datePublished">2016-04-20</time>
+    </a>
+  </div>
+
+
+          
+  <div class="article-category">
+  	<i class="fa fa-folder"></i>
+    <a class="article-category-link" href="/categories/分布式/">分布式</a>
+  </div>
+
+        </div>
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+                
+        <p>CAP(consistency Availability Partition tolerance)<br>一致性：数据，状态一致。很容易理解<br>可用性：高性能，在处理状态修改是，性能很高。不会出现逆转，不可用。<br>分区隔离性：但一部分出现问题断线了，也可以继续使用。</p>
+<p>强一致：就是用户上一次写什么，下一次就保证能读到什么。也就是要么一起成功要么一起失败，统一结果，同一时刻的原子性，根据 CAP 理论，这种实现需要牺牲可用性。就是慢慢慢。强一致就不可能高可用。因为强一致，的复杂校验确认就不可能高可用。<br>弱一致：系统无法保证写入成功以后，不承若立刻读到最新写入的数据。也不保证多久能读到。<br>最终一致性：保证最终是一致的，但这个时间取决于网络，系统负债，副本数等。DNS就是最终一致性系统。es 也算是最终一致性系统。工程实际用这个最多，为保证可用性。</p>
+<hr>
+<p>ACID(Atomicity,concisitency,Isolation,Durability)<br>传统关系型数据库的事务模型必须遵守 ACID 原则。 分区隔离性，比较难实现。</p>
+<hr>
+<p>BASE(Basically Available,Soft state,Eventually consistent)</p>
+<hr>
+<p>分布式一致性解决方案。<br>1.避免分布式事务。从业务上吧多个服务整合成本地服务。<br>2.把多个分布式事务，分解成多个小事务，本地事务，并异步消息队列来处理，达到最终一致性。为保证可用性，还是最终一致性靠谱。<br>3.DTS 方案 2PC 的基础上改进而来，业务活动管理器控制业务活动的一致性,tcc(try confirm cancel) 操作来控制业务活动。和2pc相比，减少了Prepare.优点就是有专门的模块来处理，确认和回滚。不需要调用业务来处理。这是和2pc的区别。<br>4.分布式服务对衍生的配套系统要求比较多，特别是我们基于消息、日志的最终一致性方案，需要考虑消息的积压、消费情况、监控、报警等。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://www.fovoy.com/2016/04/20/分布式系统一致性/" data-id="cixts84tp003257s66tulgiu9" class="article-share-link">分享到</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+
+    
+      <article id="post-es-mapping" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/03/10/es-mapping/">Es Mapping.md</a>
+    </h1>
+  
+
+        <div class="article-meta">
+          
+  <div class="article-date">
+    <i class="fa fa-calendar"></i>
+    <a href="/2016/03/10/es-mapping/">
+      <time datetime="2016-03-10T01:13:36.000Z" itemprop="datePublished">2016-03-10</time>
+    </a>
+  </div>
+
+
+          
+  <div class="article-category">
+  	<i class="fa fa-folder"></i>
+    <a class="article-category-link" href="/categories/elasticsearch/">elasticsearch</a>
+  </div>
+
+        </div>
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+                
+        <figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  "<span class="attribute">order</span>": <span class="value"><span class="number">4</span></span>,</span><br><span class="line">  "<span class="attribute">template</span>": <span class="value"><span class="string">"test*"</span></span>,</span><br><span class="line">  "<span class="attribute">settings</span>": <span class="value">&#123;</span><br><span class="line">    "<span class="attribute">index</span>": <span class="value">&#123;</span><br><span class="line">      "<span class="attribute">number_of_shards</span>": <span class="value"><span class="string">"10"</span></span>,</span><br><span class="line">      "<span class="attribute">number_of_replicas</span>": <span class="value"><span class="string">"1"</span></span><br><span class="line">    </span>&#125;</span><br><span class="line">  </span>&#125;</span>,</span><br><span class="line">  "<span class="attribute">mappings</span>": <span class="value">&#123;</span><br><span class="line">    "<span class="attribute">orders</span>": <span class="value">&#123;</span><br><span class="line">      "<span class="attribute">_routing</span>": <span class="value">&#123;</span><br><span class="line">        "<span class="attribute">required</span>": <span class="value"><span class="literal">true</span></span><br><span class="line">      </span>&#125;</span>,</span><br><span class="line">      "<span class="attribute">dynamic_templates</span>": <span class="value">[</span><br><span class="line">        &#123;</span><br><span class="line">          "<span class="attribute">stringType</span>": <span class="value">&#123;</span><br><span class="line">            "<span class="attribute">mapping</span>": <span class="value">&#123;</span><br><span class="line">              "<span class="attribute">index</span>": <span class="value"><span class="string">"analyzed"</span></span>,</span><br><span class="line">              "<span class="attribute">type</span>": <span class="value"><span class="string">"string"</span></span>,</span><br><span class="line">              "<span class="attribute">fields</span>": <span class="value">&#123;</span><br><span class="line">                "<span class="attribute">raw</span>": <span class="value">&#123;</span><br><span class="line">                  "<span class="attribute">index</span>": <span class="value"><span class="string">"not_analyzed"</span></span>,</span><br><span class="line">                  "<span class="attribute">type</span>": <span class="value"><span class="string">"string"</span></span><br><span class="line">                </span>&#125;</span><br><span class="line">              </span>&#125;</span><br><span class="line">            </span>&#125;</span>,</span><br><span class="line">            "<span class="attribute">match_mapping_type</span>": <span class="value"><span class="string">"string"</span></span>,</span><br><span class="line">            "<span class="attribute">match</span>": <span class="value"><span class="string">"*"</span></span><br><span class="line">          </span>&#125;</span><br><span class="line">        </span>&#125;,</span><br><span class="line">        &#123; "<span class="attribute">longType</span>": <span class="value">&#123;</span><br><span class="line">            "<span class="attribute">mapping</span>": <span class="value">&#123;</span><br><span class="line">              "<span class="attribute">type</span>": <span class="value"><span class="string">"long"</span></span>,</span><br><span class="line">              "<span class="attribute">doc_values</span>": <span class="value"><span class="literal">false</span></span><br><span class="line">            </span>&#125;</span>,</span><br><span class="line">            "<span class="attribute">match_mapping_type</span>": <span class="value"><span class="string">"long"</span></span>,</span><br><span class="line">            "<span class="attribute">match</span>": <span class="value"><span class="string">"*"</span></span><br><span class="line">          </span>&#125;</span><br><span class="line">        </span>&#125;,          &#123;</span><br><span class="line">        "<span class="attribute">integerType</span>": <span class="value">&#123;</span><br><span class="line">            "<span class="attribute">mapping</span>": <span class="value">&#123;</span><br><span class="line">              "<span class="attribute">type</span>": <span class="value"><span class="string">"integer"</span></span>,</span><br><span class="line">              "<span class="attribute">doc_values</span>": <span class="value"><span class="literal">false</span></span><br><span class="line">            </span>&#125;</span>,</span><br><span class="line">            "<span class="attribute">match_mapping_type</span>": <span class="value"><span class="string">"long"</span></span>,</span><br><span class="line">            "<span class="attribute">match</span>": <span class="value"><span class="string">"*"</span></span><br><span class="line">          </span>&#125;</span><br><span class="line">        </span>&#125;</span><br><span class="line">      ]</span>,</span><br><span class="line">      "<span class="attribute">_parent</span>": <span class="value">&#123;</span><br><span class="line">        "<span class="attribute">fielddata</span>": <span class="value">&#123;</span><br><span class="line">          "<span class="attribute">loading</span>": <span class="value"><span class="string">"eager_global_ordinals"</span></span><br><span class="line">        </span>&#125;</span>,</span><br><span class="line">        "<span class="attribute">type</span>": <span class="value"><span class="string">"treecode"</span></span><br><span class="line">      </span>&#125;</span>,</span><br><span class="line">      "<span class="attribute">dynamic_date_formats</span>": <span class="value">[</span><br><span class="line">        <span class="string">"yyyy-MM-dd"</span>,</span><br><span class="line">        <span class="string">"yyyy-MM-dd HH:mm:ss"</span>,</span><br><span class="line">        <span class="string">"date_optional_time"</span></span><br><span class="line">      ]</span>,</span><br><span class="line">      "<span class="attribute">properties</span>": <span class="value">&#123;</span><br><span class="line">      &#125;</span><br><span class="line">    </span>&#125;</span>,</span><br><span class="line">    "<span class="attribute">treecode</span>": <span class="value">&#123;</span><br><span class="line">      "<span class="attribute">dynamic_date_formats</span>": <span class="value">[</span><br><span class="line">        <span class="string">"yyyy-MM-dd"</span>,</span><br><span class="line">        <span class="string">"yyyy-MM-dd HH:mm:ss"</span>,</span><br><span class="line">        <span class="string">"date_optional_time"</span></span><br><span class="line">      ]</span>,</span><br><span class="line">      "<span class="attribute">properties</span>": <span class="value">&#123;</span><br><span class="line">      &#125;</span><br><span class="line">    </span>&#125;</span><br><span class="line">  </span>&#125;</span>,</span><br><span class="line">  "<span class="attribute">aliases</span>": <span class="value">&#123;&#125;</span></span><br></pre></td></tr></table></figure>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://www.fovoy.com/2016/03/10/es-mapping/" data-id="cixts84xt00ay57s64vrv8p2h" class="article-share-link">分享到</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/elasticsearch/">elasticsearch</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+    
+      <article id="post-推荐系统" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/02/17/推荐系统/">recommendation system</a>
+    </h1>
+  
+
+        <div class="article-meta">
+          
+  <div class="article-date">
+    <i class="fa fa-calendar"></i>
+    <a href="/2016/02/17/推荐系统/">
+      <time datetime="2016-02-17T11:22:09.000Z" itemprop="datePublished">2016-02-17</time>
+    </a>
+  </div>
+
+
+          
+  <div class="article-category">
+  	<i class="fa fa-folder"></i>
+    <a class="article-category-link" href="/categories/recommendation/">recommendation</a><i class="fa fa-angle-right"></i><a class="article-category-link" href="/categories/recommendation/协同过滤/">协同过滤</a>
+  </div>
+
+        </div>
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+                
+        <p>1.基于用户分类统计推荐</p>
+<p>好处 1.不基于历史。2.不与商品相关<br>缺点 1.过于粗糙</p>
+<p>2.基于内容推荐</p>
+<p>利弊 1.需要商品建模负责 2.需要用户有历史浏览行为，有“冷启动”问题</p>
+<p>3.基于用户的推荐</p>
+<p>对于用户的分类 是浏览记录来分组的</p>
+<p>4.基于项目的协同过滤<br>基于用户和基于内容的协同过滤。从两个角度来看这个问题。本质就是把用户聚类，还是吧物品聚类。</p>
+<p>同时协同过滤，在基于用户和基于项目两个策略中应该如何选择呢？其实基于项目的协同过滤推荐机制是 Amazon 在基于用户的机制上改良的一种策略，因为在大部分的 Web 站点中，物品的个数是远远小于用户的数量的，而且物品的个数和相似度相对比较稳定，同时基于项目的机制比基于用户的实时性更好一些。但也不是所有的场景都是这样的情况，可以设想一下在一些新闻推荐系统中，也许物品，也就是新闻的个数可能大于用户的个数，而且新闻的更新程度也有很快，所以它的形似度依然不稳定。所以，其实可以看出，推荐策略的选择其实和具体的应用场景有很大的关系。</p>
+<p>异常推荐：喜欢电影A的人有59人推荐了B，而B的推荐总数才80次。</p>
+<p>5.基于模型的协同过滤拓建</p>
+<p>基于模型的协同过滤推荐就是基于样本的用户喜好信息，训练一个推荐模型，然后根据实时的用户喜好的信息进行预测，计算推荐。</p>
+<p>基于协同过滤的推荐机制是现今应用最为广泛的推荐机制，它有以下几个显著的优点：<br>    1.它不需要对物品或者用户进行严格的建模，而且不要求物品的描述是机器可理解的，所以这种方法也是领域无关的。<br>    2.这种方法计算出来的推荐是开放的，可以共用他人的经验，很好的支持用户发现潜在的兴趣偏好<br>而它也存在以下几个问题：<br>    1方法的核心是基于历史数据，所以对新物品和新用户都有“冷启动”的问题。<br>    2.推荐的效果依赖于用户历史偏好数据的多少和准确性。<br>    3.在大部分的实现中，用户历史偏好是用稀疏矩阵进行存储的，而稀疏矩阵上的计算有些明显的问题，包括可能少部分人的错误偏好会对推荐的准确度有很大的影响等等。<br>    4.对于一些特殊品味的用户不能给予很好的推荐。<br>    5.由于以历史数据为基础，抓取和建模用户的偏好后，很难修改或者根据用户的使用演变，从而导致这个方法不够灵活。</p>
+<p>5.混合策略</p>
+<pre><code>加权的混合（Weighted Hybridization）:    用线性公式（linformula）将几种不同的推荐按照一定权重组合起来，具体权重的值需要在测试数据集上反复实验，从而达到最好的推荐效果。 
+
+切换的混合（<span class="keyword">Switching </span>Hybridization）：
+前面也讲到，其实对于不同的情况（数据量，系统运行状况，用户和物品的数目等），推荐策略可能有很大的不同，那么切换式，就是允许在不同的情况下，选择最为合适的推荐机制计算推荐。   
+
+分区的混合（Mixed Hybridization）：采用多种推荐机制，并将不同的推荐结果分不同的区显示给用户。其实，Amazon，当当网等很多电子商务网站都是采用这样的方式以得到很全面的推荐，也更容易找到他们想要的东西。   
+
+分层的混合（Meta-Level Hybridization）: 采用多种推荐机制，并将一个推荐机制的结果作为另一个的输入，从而综合各个推荐机制的优缺点，得到更加准确的推荐。    
+</code></pre><p>I have implemented a recommendation system, which include k-nearest neigh- bors algorithm, k-NN with clustering by k-Means and k-NN with a tree of clusters. It includes also Alternating Least Squares method (ALS) from Spark’s MLlib which was used for comparsion.<br>The experiments using Netflix Prize dataset showed, that recommending by k-NN is faster than recommending by ALS on any number of cores. When more than one core is used, k-NN is faster at least by 40 %. k-NN has also better scalability, but it is very sublinear though. Recommendations of ALS and k-NN are different – k-NN has better hitrate but ALS has better RMSE on hits.<br>Clustering can decrease the needed time for a recommendation. It works<br>even for small number of clusters – with five clusters the average time of<br>recommendation decreased to less than half of the time that was needed by<br>version without clustering. Unfortunately with increasing number of clusters<br>the time didn’t decrease much, because the k-Means algorithm created a lot<br>of small clusters, but most of users kept in few largest clusters. This problem<br>was partly solved by using a tree of clusters, which was created by recursive<br>splitting of the biggest cluster. With this improvement time decreased with<br>every increase of number of clusters, but it is still far from being propor-tional to time without clustering . It would be interesting to try different clustering number of clusters<br>algorithm in a future version.The basic clustering didn’t harm the quality of the recommendation, be-<br>cause the similar users stayed together – it even made the recommendation hitrate a little bit better. The recommendation hitrate of the version with cluster tree was lower by few percents, because the tree is created by splitting the biggest cluster into two smaller, no matter what is the structure of data in that cluster.<br>The average time of a recommendation on Storm cluster (which consists of 40 CPUs, 60 GB RAM) with Netflix Prize dataset was 1.53 seconds when k-NN with cosine distance and 10 neighbors was used, and 0.51 second using k-NN with users clustered into 80 clusters in leafs of a tree and the same distance metric and number of neighbors. This amount of time is still too high for online recommendations, but it is sufficient for recommending using following scenario: When the first request for recommendation for a given user is received, system returns a default non-personalized list of products (for example current best-sellers) and compute the real recommendation. This recommendation will be returned when next request for this user arrives (which will be usually soon – for example when the user reloads the page or change the category in an e-shop).<br>The Spark framework is very easy to use (for example when compared to OpenMP) and the code has good readability, but the speed and scalability of algorithms built on this system is not as good as if a lower level solu- tion was used. Therefore I would recommend to use Spark for projects that require parallel solution but the scalability can be sublinear, and very im- portant characteristics are readability, easy deployment on many operating systems and mantainability. It is also good for creating proofs of concepts, because creating a parallel program with Spark is nearly as easy as writing a sequential one.</p>
+<p><a href="http://blog.163.com/lnhenrylee@126/blog/static/2414832520123269713813/" target="_blank" rel="external">入门</a><br><a href="http://blog.sina.com.cn/s/blog_73de143c010153vp.html" target="_blank" rel="external">推荐</a></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://www.fovoy.com/2016/02/17/推荐系统/" data-id="cixts84sj001e57s6l18txe82" class="article-share-link">分享到</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/recommendation/">recommendation</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+    
       <article id="post-主题模型" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -173,7 +358,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://www.fovoy.com/2016/02/17/主题模型/" data-id="cixo3g874003z2ls6bf2jte3o" class="article-share-link">分享到</a>
+      <a data-url="http://www.fovoy.com/2016/02/17/主题模型/" data-id="cixts84ua003z57s6fpcr8qyq" class="article-share-link">分享到</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/主题模型/">主题模型</a></li></ul>
@@ -269,7 +454,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://www.fovoy.com/2016/01/17/threadpool/" data-id="cixo3g87e004m2ls6gqu9mvr4" class="article-share-link">分享到</a>
+      <a data-url="http://www.fovoy.com/2016/01/17/threadpool/" data-id="cixts84ul004m57s67xpjv310" class="article-share-link">分享到</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/线程池/">线程池</a></li></ul>
@@ -369,7 +554,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://www.fovoy.com/2016/01/17/thread/" data-id="cixo3g87h004r2ls6ovqcg7iq" class="article-share-link">分享到</a>
+      <a data-url="http://www.fovoy.com/2016/01/17/thread/" data-id="cixts84uo004r57s6huakmdof" class="article-share-link">分享到</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/线程/">线程</a></li></ul>
@@ -422,7 +607,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://www.fovoy.com/2015/12/17/scala/" data-id="cixo3g87w005f2ls6k0ygypl0" class="article-share-link">分享到</a>
+      <a data-url="http://www.fovoy.com/2015/12/17/scala/" data-id="cixts84v3005f57s6894wn8i5" class="article-share-link">分享到</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/scala/">scala</a></li></ul>
@@ -476,7 +661,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://www.fovoy.com/2015/12/16/es upgrad/" data-id="cixo3g8ax00ba2ls658itp23c" class="article-share-link">分享到</a>
+      <a data-url="http://www.fovoy.com/2015/12/16/es upgrad/" data-id="cixts84xz00ba57s6oyymgvv4" class="article-share-link">分享到</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Elasticsearch/">Elasticsearch</a></li></ul>
@@ -548,73 +733,10 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://www.fovoy.com/2015/12/13/有趣/" data-id="cixo3g85700192ls611qjxuh7" class="article-share-link">分享到</a>
+      <a data-url="http://www.fovoy.com/2015/12/13/有趣/" data-id="cixts84sh001957s6unmpy1rh" class="article-share-link">分享到</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/fovoy/">fovoy</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-
-    
-      <article id="post-es p-c问题汇总" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2015/12/13/es p-c问题汇总/">elasticsearch p-c问题汇总</a>
-    </h1>
-  
-
-        <div class="article-meta">
-          
-  <div class="article-date">
-    <i class="fa fa-calendar"></i>
-    <a href="/2015/12/13/es p-c问题汇总/">
-      <time datetime="2015-12-13T02:13:22.000Z" itemprop="datePublished">2015-12-13</time>
-    </a>
-  </div>
-
-
-          
-  <div class="article-category">
-  	<i class="fa fa-folder"></i>
-    <a class="article-category-link" href="/categories/Elasticsearch/">Elasticsearch</a><i class="fa fa-angle-right"></i><a class="article-category-link" href="/categories/Elasticsearch/学习/">学习</a>
-  </div>
-
-        </div>
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-                
-        <p><img src="/thumbnails/es.png" alt=""></p>
-<p>*IndexFieldDataService.getForField() pre14 v1.4之后fieldDataCaches 只支持node模式。soft和resident模式已经被取消。<br>这意味着没fieldDataCache会被一分钟清理一次。因为之前es在大数据分析应用中，索引的频繁构建很容易让fieldDataCache占满内存。<br><figure class="highlight lasso"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">旧版中的<span class="keyword">cache</span> FieldBased</span><br><span class="line">新版中的<span class="keyword">cache</span> IndexFieldCache</span><br><span class="line">每次hasparent 都会查询_parent字段的fielddata 的<span class="keyword">cache</span><span class="built_in">.</span>如果每次都从内存中区的话，速度会变快。但如果不是从内存中区这个_parent关系的话，就会变得很慢。</span><br></pre></td></tr></table></figure></p>
-<p><em>IndicesFieldDataCache 定时清理 可以用 indices.fielddata.cache.cleanup_interval 来设置清理时间默认是1分钟。
-</em>ParentConstantScoreQuery   中增加了。 ParentChildIndexFieldData 变更 来处理createWeight.<br><em>XFilteredQuery hasparent 下面的filter
-</em>WeightedFilterCache.getDocIdSet 包装filter<br><em>MappingUpdatedAction MasterMappingUpdater  中使用的独立线程消费。
-</em>pageCacheRecycler</p>
-<ul>
-<li>IndexFieldDataService  clear</li>
-</ul>
-<h2 id="config">config</h2><p>indices.queries.cache.size: 20%<br>indices.queries.cache.count: 2000<br>indices.fielddata.cache.cleanup_interval: 12m</p>
-<p>IndexShard.EngineRefresher<br>IndicesFieldDataCache.OnRemovel</p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://www.fovoy.com/2015/12/13/es p-c问题汇总/" data-id="cixo3g8b700bi2ls6jyofd3ot" class="article-share-link">分享到</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Elasticsearch/">Elasticsearch</a></li></ul>
 
     </footer>
   </div>
@@ -677,126 +799,10 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://www.fovoy.com/2015/12/13/客栈设计/" data-id="cixo3g85r00282ls6g6avy09d" class="article-share-link">分享到</a>
+      <a data-url="http://www.fovoy.com/2015/12/13/客栈设计/" data-id="cixts84sz002857s69gg66ut4" class="article-share-link">分享到</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/fovoy/">fovoy</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-
-    
-      <article id="post-三体" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2015/12/12/三体/">三体观后感</a>
-    </h1>
-  
-
-        <div class="article-meta">
-          
-  <div class="article-date">
-    <i class="fa fa-calendar"></i>
-    <a href="/2015/12/12/三体/">
-      <time datetime="2015-12-12T11:25:12.000Z" itemprop="datePublished">2015-12-12</time>
-    </a>
-  </div>
-
-
-          
-  <div class="article-category">
-  	<i class="fa fa-folder"></i>
-    <a class="article-category-link" href="/categories/读书/">读书</a>
-  </div>
-
-        </div>
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-                
-        <hr>
-<p><img src="/thumbnails/t1.png" alt=""></p>
-<h3 id="三体">三体</h3><hr>
-<ul>
-<li>在很多朋友的强烈推荐下，我开始阅读小说《三体》</li>
-<li>前面五章几本都是故事铺垫，并没有特别的，几本都是一些超自然想象的描述，但中间穿插的描述文革时代的段落，让我很亢奋，可能我对这些文字都比较抗拒，这是一个悲情的时代，毁坏的文化，自然，等。无法再重生的东西。我很想看看在那之前的建筑，在那之前几百年的古树。但这一切都在我来到这个时间之前就已经注定没有机会看到了。这种遗憾，感觉就像一位博学的老朋友在你没有机会遇到的时候就被人杀死了。那一代人心里已经埋下了恶的种子，无法净化的一代人。但新一代的人们在治愈这个社会，这是希望。</li>
-</ul>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://www.fovoy.com/2015/12/12/三体/" data-id="cixo3g87600462ls693pxd1x4" class="article-share-link">分享到</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/小说/">小说</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-
-    
-      <article id="post-node-express" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2015/12/12/node-express/">node-express</a>
-    </h1>
-  
-
-        <div class="article-meta">
-          
-  <div class="article-date">
-    <i class="fa fa-calendar"></i>
-    <a href="/2015/12/12/node-express/">
-      <time datetime="2015-12-12T11:25:12.000Z" itemprop="datePublished">2015-12-12</time>
-    </a>
-  </div>
-
-
-          
-  <div class="article-category">
-  	<i class="fa fa-folder"></i>
-    <a class="article-category-link" href="/categories/前端开发/">前端开发</a><i class="fa fa-angle-right"></i><a class="article-category-link" href="/categories/前端开发/nodejs/">nodejs</a>
-  </div>
-
-        </div>
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-                
-        <hr>
-<p><img src="/thumbnails/t1.png" alt=""></p>
-<h3 id="express">express</h3><hr>
-<p>cnpm install -g express-generator<br>express  project-name<br>cnpm install</p>
-<p>*koa<br>node -harmony  koa.js</p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://www.fovoy.com/2015/12/12/node-express/" data-id="cixo3g88d006e2ls6jl346vab" class="article-share-link">分享到</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/nodejs/">nodejs</a></li></ul>
 
     </footer>
   </div>
@@ -818,6 +824,40 @@
     <h3 class="widget-title">最新文章</h3>
     <div class="widget">
       <ul id="recent-post" class="">
+        
+          <li>
+            
+            <div class="item-thumbnail">
+              <a href="/2017/01/12/cmake/" class="thumbnail">
+  
+    <span class="thumbnail-image thumbnail-none"></span>
+  
+</a>
+            </div>
+            
+            <div class="item-inner">
+              <p class="item-category"></p>
+              <p class="item-title"><a href="/2017/01/12/cmake/" class="title"></a></p>
+              <p class="item-date"><time datetime="2017-01-12T02:51:57.000Z" itemprop="datePublished">2017-01-12</time></p>
+            </div>
+          </li>
+        
+          <li>
+            
+            <div class="item-thumbnail">
+              <a href="/2017/01/12/jenkins脚本/" class="thumbnail">
+  
+    <span class="thumbnail-image thumbnail-none"></span>
+  
+</a>
+            </div>
+            
+            <div class="item-inner">
+              <p class="item-category"></p>
+              <p class="item-title"><a href="/2017/01/12/jenkins脚本/" class="title"></a></p>
+              <p class="item-date"><time datetime="2017-01-12T02:51:26.000Z" itemprop="datePublished">2017-01-12</time></p>
+            </div>
+          </li>
         
           <li>
             
@@ -857,7 +897,7 @@
           <li>
             
             <div class="item-thumbnail">
-              <a href="/2016/11/12/异步化方案/" class="thumbnail">
+              <a href="/2016/11/12/cache/" class="thumbnail">
   
     <span class="thumbnail-image thumbnail-none"></span>
   
@@ -865,43 +905,9 @@
             </div>
             
             <div class="item-inner">
-              <p class="item-category"><a class="article-category-link" href="/categories/java/">java</a></p>
-              <p class="item-title"><a href="/2016/11/12/异步化方案/" class="title">异步化方案</a></p>
-              <p class="item-date"><time datetime="2016-11-12T05:22:01.000Z" itemprop="datePublished">2016-11-12</time></p>
-            </div>
-          </li>
-        
-          <li>
-            
-            <div class="item-thumbnail">
-              <a href="/2016/11/07/metaspace/" class="thumbnail">
-  
-    <span class="thumbnail-image thumbnail-none"></span>
-  
-</a>
-            </div>
-            
-            <div class="item-inner">
-              <p class="item-category"><a class="article-category-link" href="/categories/JVM/">JVM</a></p>
-              <p class="item-title"><a href="/2016/11/07/metaspace/" class="title">metaspace</a></p>
-              <p class="item-date"><time datetime="2016-11-07T01:13:36.000Z" itemprop="datePublished">2016-11-07</time></p>
-            </div>
-          </li>
-        
-          <li>
-            
-            <div class="item-thumbnail">
-              <a href="/2016/11/05/红黑树/" class="thumbnail">
-  
-    <span class="thumbnail-image thumbnail-none"></span>
-  
-</a>
-            </div>
-            
-            <div class="item-inner">
-              <p class="item-category"><a class="article-category-link" href="/categories/数据结构/">数据结构</a></p>
-              <p class="item-title"><a href="/2016/11/05/红黑树/" class="title">红黑树</a></p>
-              <p class="item-date"><time datetime="2016-11-05T01:13:36.000Z" itemprop="datePublished">2016-11-05</time></p>
+              <p class="item-category"><a class="article-category-link" href="/categories/系统/">系统</a></p>
+              <p class="item-title"><a href="/2016/11/12/cache/" class="title">cache</a></p>
+              <p class="item-date"><time datetime="2016-11-12T12:22:31.000Z" itemprop="datePublished">2016-11-12</time></p>
             </div>
           </li>
         
@@ -914,7 +920,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">分类</h3>
     <div class="widget">
-      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Elasticsearch/">Elasticsearch</a><span class="category-list-count">13</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Elasticsearch/config/">config</a><span class="category-list-count">6</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Elasticsearch/performance/">performance</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Elasticsearch/学习/">学习</a><span class="category-list-count">6</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Framework/">Framework</a><span class="category-list-count">3</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Framework/spring/">spring</a><span class="category-list-count">3</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/JAVA/">JAVA</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/JVM/">JVM</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Java/">Java</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Mac/">Mac</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Math/">Math</a><span class="category-list-count">2</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Math/Matrix/">Matrix</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Math/分布/">分布</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/design-pattern/">design pattern</a><span class="category-list-count">12</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/elasticsearch/">elasticsearch</a><span class="category-list-count">2</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/elasticsearch/运维/">运维</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/fovoy/">fovoy</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/gradle/">gradle</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/http/">http</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/java/">java</a><span class="category-list-count">22</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/java/gc/">gc</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/java/jvm/">jvm</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/java/学习/">学习</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/kibana/">kibana</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/lucene/">lucene</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/mysql/">mysql</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/mysql/config/">config</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/netty/">netty</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/recommendation/">recommendation</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/recommendation/协同过滤/">协同过滤</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/redis/">redis</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/scala/">scala</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/scala/基础/">基础</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/site/">site</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/tools/">tools</a><span class="category-list-count">14</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/tools/git/">git</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/tools/hexo/">hexo</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/tools/nginx/">nginx</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/中间件/">中间件</a><span class="category-list-count">3</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/中间件/kafka/">kafka</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/中间件/tomcat/">tomcat</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/主题模型/">主题模型</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/主题模型/主题抽取/">主题抽取</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/兴趣/">兴趣</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/分布式/">分布式</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/分布式消息队列/">分布式消息队列</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/分布式系统/">分布式系统</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/前端开发/">前端开发</a><span class="category-list-count">6</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/前端开发/angularjs/">angularjs</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/前端开发/html5/">html5</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/前端开发/node-js/">node.js</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/前端开发/nodejs/">nodejs</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/前端开发/学习/">学习</a><span class="category-list-count">2</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/基础架构/">基础架构</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/大数据/">大数据</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/并发编程/">并发编程</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/总结/">总结</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/数据结构/">数据结构</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/系统/">系统</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/网络/">网络</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/英语学习/">英语学习</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/计划/">计划</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/读书/">读书</a><span class="category-list-count">1</span></li></ul>
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Elasticsearch/">Elasticsearch</a><span class="category-list-count">13</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Elasticsearch/config/">config</a><span class="category-list-count">6</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Elasticsearch/performance/">performance</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Elasticsearch/学习/">学习</a><span class="category-list-count">6</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Framework/">Framework</a><span class="category-list-count">3</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Framework/spring/">spring</a><span class="category-list-count">3</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/JAVA/">JAVA</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/JVM/">JVM</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Java/">Java</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Mac/">Mac</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Math/">Math</a><span class="category-list-count">2</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Math/Matrix/">Matrix</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Math/分布/">分布</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/design-pattern/">design pattern</a><span class="category-list-count">12</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/elasticsearch/">elasticsearch</a><span class="category-list-count">2</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/elasticsearch/运维/">运维</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/fovoy/">fovoy</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/gradle/">gradle</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/http/">http</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/java/">java</a><span class="category-list-count">22</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/java/gc/">gc</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/java/jvm/">jvm</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/java/学习/">学习</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/kibana/">kibana</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/lucene/">lucene</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/mysql/">mysql</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/mysql/config/">config</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/netty/">netty</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/recommendation/">recommendation</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/recommendation/协同过滤/">协同过滤</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/redis/">redis</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/scala/">scala</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/scala/基础/">基础</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/site/">site</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/tools/">tools</a><span class="category-list-count">14</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/tools/git/">git</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/tools/hexo/">hexo</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/tools/nginx/">nginx</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/中间件/">中间件</a><span class="category-list-count">3</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/中间件/kafka/">kafka</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/中间件/tomcat/">tomcat</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/主题模型/">主题模型</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/主题模型/主题抽取/">主题抽取</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/兴趣/">兴趣</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/分布式/">分布式</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/分布式消息队列/">分布式消息队列</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/分布式系统/">分布式系统</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/前端开发/">前端开发</a><span class="category-list-count">6</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/前端开发/angularjs/">angularjs</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/前端开发/html5/">html5</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/前端开发/node-js/">node.js</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/前端开发/nodejs/">nodejs</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/前端开发/学习/">学习</a><span class="category-list-count">2</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/基础架构/">基础架构</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/大数据/">大数据</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/并发编程/">并发编程</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/总结/">总结</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/数据结构/">数据结构</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/系统/">系统</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/网络/">网络</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/英语学习/">英语学习</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/计划/">计划</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/读书/">读书</a><span class="category-list-count">1</span></li></ul>
     </div>
   </div>
 
@@ -941,7 +947,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">归档</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/01/">一月 2017</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/11/">十一月 2016</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/10/">十月 2016</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/07/">七月 2016</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/05/">五月 2016</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/04/">四月 2016</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/03/">三月 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/02/">二月 2016</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/01/">一月 2016</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/12/">十二月 2015</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/11/">十一月 2015</a><span class="archive-list-count">12</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/10/">十月 2015</a><span class="archive-list-count">16</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/09/">九月 2015</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/08/">八月 2015</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/07/">七月 2015</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/05/">五月 2015</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/04/">四月 2015</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/03/">三月 2015</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/02/">二月 2015</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/01/">一月 2015</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/12/">十二月 2014</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/11/">十一月 2014</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/10/">十月 2014</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/07/">七月 2014</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/06/">六月 2014</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/05/">五月 2014</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/04/">四月 2014</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/03/">三月 2014</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/01/">一月 2014</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/10/">十月 2013</a><span class="archive-list-count">1</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/01/">一月 2017</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/11/">十一月 2016</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/10/">十月 2016</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/07/">七月 2016</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/05/">五月 2016</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/04/">四月 2016</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/03/">三月 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/02/">二月 2016</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/01/">一月 2016</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/12/">十二月 2015</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/11/">十一月 2015</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/10/">十月 2015</a><span class="archive-list-count">16</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/09/">九月 2015</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/08/">八月 2015</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/07/">七月 2015</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/06/">六月 2015</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/05/">五月 2015</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/04/">四月 2015</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/03/">三月 2015</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/02/">二月 2015</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/01/">一月 2015</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/12/">十二月 2014</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/11/">十一月 2014</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/10/">十月 2014</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/07/">七月 2014</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/06/">六月 2014</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/05/">五月 2014</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/04/">四月 2014</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/03/">三月 2014</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/01/">一月 2014</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/10/">十月 2013</a><span class="archive-list-count">1</span></li></ul>
     </div>
   </div>
 

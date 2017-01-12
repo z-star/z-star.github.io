@@ -97,7 +97,7 @@
     </div>
     <div class="article-info profile-block">
       <div class="article-info-block">
-        119
+        120
         <span>文章</span>
       </div>
       <div class="article-info-block">
@@ -130,7 +130,7 @@
 
       
       <section id="main">
-      <article id="post-java容器" class="article article-type-post" itemscope itemprop="blogPost">
+      <article id="post-DNS" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-inner">
     
     
@@ -139,7 +139,7 @@
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2015/11/12/java容器/">java同步容器</a>
+      <a class="article-title" href="/2015/11/12/DNS/">DNS基础</a>
     </h1>
   
 
@@ -147,7 +147,7 @@
           
   <div class="article-date">
     <i class="fa fa-calendar"></i>
-    <a href="/2015/11/12/java容器/">
+    <a href="/2015/11/12/DNS/">
       <time datetime="2015-11-12T11:25:12.000Z" itemprop="datePublished">2015-11-12</time>
     </a>
   </div>
@@ -156,7 +156,7 @@
           
   <div class="article-category">
   	<i class="fa fa-folder"></i>
-    <a class="article-category-link" href="/categories/java/">java</a>
+    <a class="article-category-link" href="/categories/网络/">网络</a>
   </div>
 
         </div>
@@ -165,35 +165,17 @@
     <div class="article-entry" itemprop="articleBody">
       
                 
-        <p>在Java的集合容器框架中，主要有四大类别：List、Set、Queue、Map。</p>
-<p>　　List、Set、Queue接口分别继承了Collection接口，Map本身是一个接口。</p>
-<p>　　注意Collection和Map是一个顶层接口，而List、Set、Queue则继承了Collection接口，分别代表数组、集合和队列这三大类容器。</p>
-<p>　　像ArrayList、LinkedList都是实现了List接口，HashSet实现了Set接口，而Deque（双向队列，允许在队首、队尾进行入队和出队操作）继承了Queue接口，PriorityQueue实现了Queue接口。另外LinkedList（实际上是双向链表）实现了了Deque接口。</p>
-<p>　　像ArrayList、LinkedList、HashMap这些容器都是非线程安全的。</p>
-<hr>
-<p>Java中的同步容器</p>
-<p>　　在Java中，同步容器主要包括2类：</p>
-<p>　　1）Vector、Stack、HashTable</p>
-<p>　　2）Collections类中提供的静态工厂方法创建的类</p>
-<p>　　Vector实现了List接口，Vector实际上就是一个数组，和ArrayList类似，但是Vector中的方法都是synchronized方法，即进行了同步措施。</p>
-<p>　　Stack也是一个同步容器，它的方法也用synchronized进行了同步，它实际上是继承于Vector类。</p>
-<p>　　HashTable实现了Map接口，它和HashMap很相似，但是HashTable进行了同步处理，而HashMap没有。</p>
-<hr>
-<p>同步容器的缺陷<br>   总结就是性能差，串行处理。</p>
-<p>并发容器<br>  推荐使用并发容器，避免同步容器低效。<br>  util.concurrent中引入的并发容器主要解决了两个问题：<br>  1）根据具体场景进行设计，尽量避免synchronized，提供并发性。<br>  2）定义了一些并发安全的复合操作，并且保证并发环境下的迭代操作不会出错。 </p>
-<p><img src="/thumbnails/concurrentHashMap.png" alt=""><br>  ConcurrentHashMap是并发容器比较常见用的，我们知道HashMap从实现角度上来说是数组加链表的接口，也可以叫做哈希桶加链表，在代码中就是table和bucket.table对应key的HashCode,bucket对应,相同hashCode情况下的冲突。而在ConcurrentHashMap解决多线程问题中，巧妙使用了分段加锁的方式，也就相当于俩次hash,第一次hash为segment,在这里加锁，所以这样一来锁就变成小范围的了，增加了效率，这个思想其实在很多方面都用到，比如分布式中的shard,思路一样，基本就是大化小，分组，细化思维。<br>  JDK8对bucket进行改变，可以对hash冲突的数据有两种选择一种是链表，一种是红黑树。下面先看看红黑树</p>
-<hr>
-<p> I、红黑树的五个性质：<br>   1）每个结点要么是红的，要么是黑的。<br>   2）根结点是黑的。<br>   3）每个叶结点，即空结点（NIL）是黑的。<br>   4）如果一个结点是红的，那么它的俩个儿子都是黑的。<br>   5）对每个结点，从该结点到其子孙结点的所有路径上包含相同数目的黑结点。<br>   枯燥的概念，没关心来白话一下，就是俩红不能连续，两不能相互为父子节点。这个说法排除叶子节点。<br>   <img src="/thumbnails/br-tree.png" alt=""><br>  在了解红黑树之前，有一个很大的疑问，红黑树 和平衡二叉树的区别在哪里？<br>  红黑树使用红黑二色进行“着色”，目的是利用颜色值作为二叉树的平衡对称性的检查，只要插入的节点“着色”满足红黑二色的规定，最短路径与最长路径不会相差的太远，红黑树的节点分布就能大体上达至均衡。 所以红黑本身意义就是平衡时候使用的。其实他也可以叫做一种平衡二叉树失衡时候的平衡算法。</p>
-<hr>
-<p> 堵塞队列<br> 实现原理，notEmpty=lock=newCondition(); notFull=lock=newCondition(); 使用了ReentrantLock,底层是LockSupport()<br> ArrayBlockQueue:数组 组成的有界堵塞队列(FIFO)的原则。默认不公平访问队列。公平队列是有ReentrantLock来实现的，基本判断就是当前执行的不是不按lockQueue里的顺序来执行的。<br> LinkedBlockQueue:链表实现有限阻塞队列，head 和last 来实现各种的next.(FIFO).<br> LinkedBlockingDeque：链表实现的双向堵塞队列，可以从头尾来操作，可用于工作窃取算法<br> PriorityBlockQueue:优先级堵塞队列,堆排序，如果对象没有实现comparable接口的话，只能使用比较器Comparator来实现处理了。-1降序 1升序，0插入顺序。<br> DelayQueue:必须实现Delayed接口，创建元素时候可以指定多久才能获取元素。只有在延时期满的时候才能从队列中提取元素。可以用在缓存有效时间设计。定时任务，比如TimerQueue就使用了。等待delay时间wait()了。<br> SynchronousQueue 不存储元素的堵塞队列，put必须有一个take所以，效率比别的高，只能当一个传球手的角色<br> LinkedTransferQueue：transfer 如果有消费者在消费，可以离开transfer给消费者。如果没有消费者就放入队列。tail节点。tryTransfer和transfer的区别是立刻返回。</p>
+        <p>host.sld.tld.root<br>主机名.次级域名.顶级域名.根域名<br>www.taobao.com.root //这就是一个域名解析</p>
+<p>DNS分级查询这个思想在大数据量查询下，就像构成了一棵查询树。每一级域名都有自己的NS记录。<br>从根域名开始依次查询每一级域名的NS。最终查到IP。<br>根域名-&gt;顶级域名-&gt;次级域名-&gt;主机名 。从右往左反着查询。</p>
+<p>DNS服务内置了根域名的主机地址。TTL(time to live)1000小时。世界上有十三组根域名服务器。A.ROOT-SERVERS.NET-M.ROOT-SERVERS.NET<br>逐级往下请求，直到主机名。得到最先返回的主机地址。</p>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://www.fovoy.com/2015/11/12/java容器/" data-id="cixo3g89o008y2ls6nrz0dzwr" class="article-share-link">分享到</a>
+      <a data-url="http://www.fovoy.com/2015/11/12/DNS/" data-id="cixts84zp00e257s6e46uxyz4" class="article-share-link">分享到</a>
       
       
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/同步容器/">同步容器</a></li></ul>
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/网络/">网络</a></li></ul>
 
     </footer>
   </div>
@@ -267,7 +249,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://www.fovoy.com/2015/11/12/lock/" data-id="cixo3g88z007q2ls6c8nlhnfl" class="article-share-link">分享到</a>
+      <a data-url="http://www.fovoy.com/2015/11/12/lock/" data-id="cixts84w3007q57s61xdi5lz7" class="article-share-link">分享到</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/lock/">lock</a></li></ul>
@@ -350,7 +332,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://www.fovoy.com/2015/10/22/html5学习/" data-id="cixo3g8a7009t2ls6x8ekh97z" class="article-share-link">分享到</a>
+      <a data-url="http://www.fovoy.com/2015/10/22/html5学习/" data-id="cixts84xa009t57s6pjzcqvub" class="article-share-link">分享到</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/html5/">html5</a></li></ul>
@@ -407,7 +389,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://www.fovoy.com/2015/10/17/javaclassloader/" data-id="cixo3g89u00992ls617u0uvkz" class="article-share-link">分享到</a>
+      <a data-url="http://www.fovoy.com/2015/10/17/javaclassloader/" data-id="cixts84wy009957s6jx3kdxz5" class="article-share-link">分享到</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/java/">java</a></li></ul>
@@ -420,7 +402,7 @@
 
 
     
-      <article id="post-英语学习" class="article article-type-post" itemscope itemprop="blogPost">
+      <article id="post-es待学习" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-inner">
     
     
@@ -429,7 +411,7 @@
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2015/10/17/英语学习/">英语学习</a>
+      <a class="article-title" href="/2015/10/17/es待学习/">elasticsearch 待学习</a>
     </h1>
   
 
@@ -437,7 +419,7 @@
           
   <div class="article-date">
     <i class="fa fa-calendar"></i>
-    <a href="/2015/10/17/英语学习/">
+    <a href="/2015/10/17/es待学习/">
       <time datetime="2015-10-17T01:13:36.000Z" itemprop="datePublished">2015-10-17</time>
     </a>
   </div>
@@ -446,7 +428,82 @@
           
   <div class="article-category">
   	<i class="fa fa-folder"></i>
-    <a class="article-category-link" href="/categories/英语学习/">英语学习</a>
+    <a class="article-category-link" href="/categories/Elasticsearch/">Elasticsearch</a><i class="fa fa-angle-right"></i><a class="article-category-link" href="/categories/Elasticsearch/学习/">学习</a>
+  </div>
+
+        </div>
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+                
+        <p><img src="/thumbnails/es.png" alt=""></p>
+<h3 id="elasticsearch_待学习">elasticsearch 待学习</h3><hr>
+<p> elasticsearch 源码和totem类似，都是目前比较流行的module,模块装配，但因为guice，的引入，代码显得更加的简洁。<br> 所有的都会按服务切分，一个分布式搜索引擎的业务切分模块。<br> 主函数启动时都会初始化所有的服务。setting,search,index,agg,cluster.等。</p>
+<hr>
+<p>InternalNode 节点</p>
+<p>###Module分析<br>CacheRecyclerModule-CacheRecycler 缓存服务。concurrencyLevel 类似concurrentMap中的级别服务。Delegate 给某一个concurrent。<br>默认SOFT_CONCURRENT,也就是软应用。</p>
+<p>PageCacheRecyclerModule-MockPageCacheRecycler 分页缓存服务<br>PageCacheRecycler 1.7默认情况下，默认的模式是CONCURRENT<br>limit默认10%heap pageSize 默认 16KB。maxPageCount=limit/pageSize; maxBytePageCount占比。</p>
+<p>CircuitBreakerModule-HierarchyCircuitBreakerService 熔断模块，阻止内存占用超过等（indices.breaker.total.limit：70%）<br>在内存使用中fileddata比较多。也比较复杂。 overhead 1.03,<br>ChildMemoryCircuitBreaker 主要的方法类，addEstimateBytesAndMaybeBreak判断是否过载。<br>ChildMemoryCircuitBreaker.addEstimateBytesAndMaybeBreak() 判断是否超过限制。PagedBytesIndexFieldData.loadDirect(加载fielddata时候判断，内存存储实例 OrdinalsStore。IndicesFieldDataCache.load()<br>BigArraysModule-BigArrays ，pageSize 16k/占用bit. 当要申请的空间大于pageSize的时候就需要使用到，bigArray了。bigArray使用的也是二维数组结构。底层都是Recycler。<br>PluginsService 两种plugin jvmPlugins 和 sitePlugins</p>
+<p>NodeModule–(InternalNode,NodeSettingsService 配置管理)<br>NodeSettingsService –节点动态更新配置的实现类.clusterChanged，去刷新setting.<br>NodeService 节点服务NodeStats，NodeInfo的Response,节点信息服务。</p>
+<p>NetworkModule–NetworkService() ip port 服务。</p>
+<p>ScriptModule-NativeScriptEngineService 解析各种script请求。主要用于search.<br>EnvironmentModule-Environment环境文件。<br>NodeEnvironmentModule-NodeEnvironment节点环境文件索引级别。索引lock 就在这个层次。<br>ClusterNameModule–ClusterName 集群名字(elasticsearch)。<br>ThreadPoolModule–ThreadPool 线程总管理。</p>
+<p>DiscoveryModule–<br>DiscoveryService–广播，集群状态。3秒ping一次  joinTimeOut 3*20秒 discovery.zen.fd.ping_interval 1秒 NodesFaultDetection retry三次<br>ZenDiscoveryModule<br>ElectMasterService(选举服务) master节点中，id最小的,选为master.<br>ZenPingService–UnicastZenPing-master节点的address管理，抽象为DiscoveryNode,NodeId为”#zen<em>unicast</em>“ + unicastNodeIdGenerator.incrementAndGet() + “#” configuredTargetNodes为配置文件中配置的地址,MulticastZenPing-,<br>ZenDiscovery(非本地发现) initial_join ClusterStateNonMasterUpdateTask task来做集群ping的操作。//NodesFaultDetection 位置节点之间的链接 NodeFD task 来具体操作ping消息。<br>LocalDiscovery(本地发现)</p>
+<p>ClusterModule–DynamicSettings(配置动态变更)cluster**大模块。</p>
+<p>RestModule–RestController注册<br>RestActionModule–自己的一些RestAction的加载，还有cat api 的加载，包括plugin的action加载。<br>自己写action只要继承BaseRestHandler写自己的RestAction。在里面完成controller的registerHandler注册handler，还可以registerFilter来写过滤层。dispatchRequest接受Http接受到的消息。来处理具体的action.条用相应的handler。</p>
+<p>TransportModule–<br>There are 4 types of connections per node, low/med/high/ping<br>connectedNodes .每一个集群上节点的channels的集合。<br>serverChannels 服务端的channel<br>NettyTransport 保证channel 发送请求。sendRequest(netty ServerBootstraps初始化）dispatcher为MessageChannelHandler，分发action.<br>netty.epollBugWorkaround.<br>workerCount 就是cpu核数*2,<br>scheduledPing 来监控 节点状态。<br>doStart()中来来开启了netty的clientBootstrap 没有bind 而只是connect 默认是NioClientSocketChannelFactory,还有另一个OIO也就是一个channel对一个线程 ClientChannelPipelineFactory 具体的pipeline中dispatcher的方法。MessageChannelHandler。<br>createServerBootstrap()创建ServerBootstrap. bindServerBootstrap ServerChannelPipelineFactory 具体的 dispatcher 也是 MessageChannelHandler  handleRequest处理请求。handler.messageReceived(); SearchServiceTransportAction  handleResponse 来接受响应。<br>transportService.registerHandler(); 注册tcp的Action. transportService.connectToNode 链接到每个节点。<br>HttpServerModule–NettyHttpServerTransport HttpRequestHandler.messageReceived 接受的，http消息。http 只有一个serverBootstrap<br>HttpServerAdapter.dispatchRequest().分发请求。</p>
+<p>IndicesModule–<br>OpenBitSet–使用的重要数据结构<br>OpenBitSet的原理<br><img src="/thumbnails/bitSet.png" alt=""><br>二进制下标表示数字所以得到<br>[0,63]之间的数 需要1个long类型串联起来<br>[0,127]之前的数，需要2个long串联起来<br>[0,64N-1]需要N个long串联起来。<br>所以OpenBisSet的核心就是long类型的数组bits.<br>long index = 64*N+m  其中 N就是在long数组中的坐标。m表示bit[N]的这个long中二进制的第m位。<br>set方法就4个操作，第一个<br>int wordNum = (int)(index &gt;&gt; 6); //计算出坐标所在的long数组的位置。<br>long bitmask = 1L &lt;&lt; (int)index; //计算出移动该坐标后的long的大小<br>this.bits[wordNum] |= bitmask; //和所在坐标的long进行或运算，也就是并集。</p>
+<p>最后总结一下OpenBitSet数据存储的特点：OpenBitSet无法存储重复的数据。数据存储到OpenBitSet中后就是有序的了。OpenBitSet适合存储密集程度高，且量大的数据。OpenBitSet中存储的数据适合位运算，比如取交集、并集、补集<br>核心模块，分三块（registerBuiltinQueryParsers，registerBuiltInMappers，registerBuiltInMetadataMappers）改写FunctionScoreQueryParser来实现打分.IndicesLifecycle(所以索引周期监听处理)<br>IndexShard 创建每一个shard对应一个实例。在shards里被引用。<br>indexService 创建每一个index对应一个实例。在indices里被引用。<br>IndicesService(所以创建删除等操作)是indexService的操作类。<br>RecoveryTarget recovery的具体操作类。startRecovery,获取恢复的node,把分片数据发送过去。doRecovery 获取metadataSnapshot.InternalClusterService updateTask 检测状态，来做recovery的处理。<br>IndicesStore（所以存储）<br>IndicesFilterCache(WeightedFilterCache 来存储,weight回收, 内存里存的DocISet,FixedBitSet)<br>IndicesFieldDataCache （load来加载fieldData缓存数据）<br>IndicesClusterStateService()<br>IndexingMemoryController（更新所有ShardBuffers）IndicesQueryCache(lucence中的LRUQueryCache)</p>
+<p>SearchModule–核心模块<br>SearchServiceTransportAction 注册。<br>search 过程。入口主要是SearchServiceTransportAction  完成一个shardTarget<br>TransportActionNodeProxy.execute.搜索遍历所有的节点。<br>TransportSearchAction 为入口，来区分不同的searchType.<br>TransportSearchQueryThenFetchAction </p>
+<p>refresh:刷到可搜索。<br>flush：内存刷到segment文件上。</p>
+<hr>
+<p>action 请求端的Action</p>
+<h2 id="searchAction为例子。先发送给TransportSearchAction，再由TransportSearchAction_中的registerRequestHandler_来注册，并用_TransportHandler_来分发，确定具体的search类型再发送给别的action。">searchAction为例子。先发送给TransportSearchAction，再由TransportSearchAction 中的registerRequestHandler 来注册，并用 TransportHandler 来分发，确定具体的search类型再发送给别的action。</h2><h2 id="消息的listener_还是依赖RequestHolder对象来存放listener对象，以requestId为key-每次收到消息都来处理response对应的requetId。">消息的listener 还是依赖RequestHolder对象来存放listener对象，以requestId为key.每次收到消息都来处理response对应的requetId。</h2><p>rest 最后会parse成action,只需要转化一道。</p>
+<p><a href="https://www.elastic.co/webinars/performance-and-scale" target="_blank" rel="external">proformance</a><br><a href="https://www.elastic.co/blog/support-in-the-wild-my-biggest-elasticsearch-problem-at-scale" target="_blank" rel="external">filter</a><br><a href="https://download.elastic.co/elasticsearch/elasticsearch/elasticsearch-1.7.3.tar.gz" target="_blank" rel="external">下载</a><br><a href="http://vdisk.weibo.com/u/1451057603" target="_blank" rel="external">学习</a><br><a href="http://www.infoq.com/cn/articles/database-timestamp-02" target="_blank" rel="external">es好文</a><br><a href="http://www.ttlsa.com/nginx/nginx-elasticsearch/" target="_blank" rel="external">nginx与Elasticsearch结合使用</a><br><a href="https://www.digitalocean.com/community/tutorials/how-to-install-elasticsearch-logstash-and-kibana-4-on-ubuntu-14-04" target="_blank" rel="external">kibana Ng 安全代理</a></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://www.fovoy.com/2015/10/17/es待学习/" data-id="cixts84xq00at57s6m5sntmf8" class="article-share-link">分享到</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Elasticsearch/">Elasticsearch</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+    
+      <article id="post-elasticsearch集群" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2015/10/17/elasticsearch集群/">elasticsearch集群</a>
+    </h1>
+  
+
+        <div class="article-meta">
+          
+  <div class="article-date">
+    <i class="fa fa-calendar"></i>
+    <a href="/2015/10/17/elasticsearch集群/">
+      <time datetime="2015-10-17T01:13:36.000Z" itemprop="datePublished">2015-10-17</time>
+    </a>
+  </div>
+
+
+          
+  <div class="article-category">
+  	<i class="fa fa-folder"></i>
+    <a class="article-category-link" href="/categories/Elasticsearch/">Elasticsearch</a><i class="fa fa-angle-right"></i><a class="article-category-link" href="/categories/Elasticsearch/学习/">学习</a>
   </div>
 
         </div>
@@ -457,15 +514,75 @@
                 
         <p><img src="/thumbnails/es.png" alt=""></p>
 <hr>
-<p>1.看图识音 2月  Rosetta Stone  猜<br>2.TPR total physical response   TPR WORD LIST 1月  猜</p>
+<p>节点ping设置:<br> 主节点会ping集群中的其他节点。其他节点也会ping主节点。<br> discovery.zen.fd.ping_interval：该属性默认为1s,指节点相互ping的时间间隔。<br> discovery.zen.fd.ping_timeout:默认30s,ping的超时时间。<br> discovery.zen.fd.ping_retries:默认为重试ping 3次。<br>gateway数据恢复:<br>gateway.recover_after_nodes:8 有8个节点正常启动之后才开始恢复数据。<br>gateway.recover_after_time:10m 有启动10分钟之后才开始恢复数据。<br>gateway.expected_nodes:10 期望有10个节点再开始恢复数据。<br>gateway.recover_after_master_node:8<br>gateway.recover_after_data_node:8</p>
+<p>索引刷新率:<br>index.refresh_interval:设置为-1.在建庞大的索引的时候，就是先不刷新索引。</p>
+<p>再平衡：<br> cluster.routing.allocation.allow_rebalance:indices_all_active 默认值，主副分片都初始化后再平衡才开始。<br> cluster.routing.allocation.node_concurrent_recoveries 单个节点上同时初始化的分片数。<br> cluster.routing.allocation.node_initial_primaries_recoveries：同时初始化的主分片数。<br> cluster.routing.alloction.enable: all默认值，所有类型的分片都能分配。primaries 只能分配主分片，new_primaries新建主分配。none 完全禁止分配。<br> indices.recovery.concurrent_streams:3 同时恢复放入流数量。</p>
+<p>控制分配：<br>  我们可以节点打上不同的tag,分片分配到不同的tag上去。在配置文件中，或者动态配置setting<br>  node.zone:zone_one<br>  index.routing.allocation.include.zone:”zone_one”, 有包含这些节点的分配<br>  index.routing.allocation.exclude.zone:”zone_one”, 当然也有排除这些节点的分配。<br>  index.routing.allocation.require.size:”big_node”<br>  index.routing.allocation.require.zone: “zone_one”<br>  index.routing.allocation.include._ip: “10.1.2.10,10.1.2.11”<br>  index.routing.allocation.disk.threahold_enabled:true:根据硬盘情况分配，不会耗尽硬盘。<br>  index.routing.allocation.total_shards_per_node:10。每个节点的分片数量。</p>
+<p>归并线程的限速<br>  indices.store.throttle.max_bytes_per_sec:20m</p>
+<hr>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://www.fovoy.com/2015/10/17/英语学习/" data-id="cixo3g84u000n2ls6ypbnjved" class="article-share-link">分享到</a>
+      <a data-url="http://www.fovoy.com/2015/10/17/elasticsearch集群/" data-id="cixts84yd00bq57s62l350p3p" class="article-share-link">分享到</a>
       
       
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/英语学习/">英语学习</a></li></ul>
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Elasticsearch/">Elasticsearch</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+    
+      <article id="post-site" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2015/10/17/site/">网站要点</a>
+    </h1>
+  
+
+        <div class="article-meta">
+          
+  <div class="article-date">
+    <i class="fa fa-calendar"></i>
+    <a href="/2015/10/17/site/">
+      <time datetime="2015-10-17T01:13:36.000Z" itemprop="datePublished">2015-10-17</time>
+    </a>
+  </div>
+
+
+          
+  <div class="article-category">
+  	<i class="fa fa-folder"></i>
+    <a class="article-category-link" href="/categories/site/">site</a>
+  </div>
+
+        </div>
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+                
+        <p><img src="/thumbnails/es.png" alt=""></p>
+<hr>
+<p>1.加盟<br>2.提意见<br>3.互动。<br>4.网络教育。eq<br>5.时间成为一个维度，被记忆下来。<br>6.环境，自然条件成最重要的需求</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://www.fovoy.com/2015/10/17/site/" data-id="cixts84ux005757s6s46ml072" class="article-share-link">分享到</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/site/">site</a></li></ul>
 
     </footer>
   </div>
@@ -533,135 +650,10 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://www.fovoy.com/2015/10/17/netty/" data-id="cixo3g88j006q2ls6sri1wzgk" class="article-share-link">分享到</a>
+      <a data-url="http://www.fovoy.com/2015/10/17/netty/" data-id="cixts84vn006q57s6vtayfxcp" class="article-share-link">分享到</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/netty/">netty</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-
-    
-      <article id="post-elasticsearch源码分析" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2015/10/17/elasticsearch源码分析/">elasticsearch源码分析</a>
-    </h1>
-  
-
-        <div class="article-meta">
-          
-  <div class="article-date">
-    <i class="fa fa-calendar"></i>
-    <a href="/2015/10/17/elasticsearch源码分析/">
-      <time datetime="2015-10-17T01:13:36.000Z" itemprop="datePublished">2015-10-17</time>
-    </a>
-  </div>
-
-
-          
-  <div class="article-category">
-  	<i class="fa fa-folder"></i>
-    <a class="article-category-link" href="/categories/Elasticsearch/">Elasticsearch</a><i class="fa fa-angle-right"></i><a class="article-category-link" href="/categories/Elasticsearch/学习/">学习</a>
-  </div>
-
-        </div>
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-                
-        <p><img src="/thumbnails/es.png" alt=""></p>
-<h3 id="elasticsearch_待学习">elasticsearch 待学习</h3><hr>
-<p>1.tcp 消息通道</p>
-<figure class="highlight actionscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">channelPipeline.addLast(<span class="string">"dispatcher"</span>, <span class="keyword">new</span> MessageChannelHandler(nettyTransport, nettyTransport.logger, <span class="string">".client"</span>));</span><br></pre></td></tr></table></figure>
-<p>NettyTransport 中定义的接收消息时候的 handler MessageChannelHandler.messageReceived</p>
-<figure class="highlight lisp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">String action = handleRequest<span class="list">(<span class="keyword">ctx</span>.getChannel<span class="list">()</span>, streamIn, requestId, version)</span><span class="comment">;</span></span><br></pre></td></tr></table></figure>
-<p>MessageChannelHandler.handleRequest()处理action.<br><figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">threadPool.executor(<span class="keyword">reg</span>.getExecutor()).<span class="keyword">execute</span>(<span class="keyword">new</span> RequestHandler(<span class="keyword">reg</span>, request, transportChannel));</span><br></pre></td></tr></table></figure></p>
-<p>非same 需要getExecutor 有现成名字来指定处理相应的handle。</p>
-<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">MessageChannelHandler</span><span class="class">.RequestHandler</span></span><br></pre></td></tr></table></figure>
-<p>action 处理线程。</p>
-<figure class="highlight crmsh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">TransportProxyClient.execute();</span><br><span class="line">TransportService.sendRequest();</span><br><span class="line">clientHandlers.put(requestId, new RequestHolder<span class="tag">&lt;&gt;</span>(handler, <span class="keyword">node</span><span class="identifier"></span><span class="title">, action</span>, timeoutHandler));</span><br><span class="line">``</span><br><span class="line">将TransportResponseHandler 推送到所有节点。用来返回结构。客户端会生成action request respone 和回调方法。所以action 的定义在客户端就完成了。</span><br></pre></td></tr></table></figure>
-<p>NettyTransport 中保存了 connectedNodes 节点之间的连接<br><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure></p>
-<p>ScriptScoreFunctionParser 自定义打分<br><figure class="highlight autohotkey"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="escape">``</span>`</span><br></pre></td></tr></table></figure></p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://www.fovoy.com/2015/10/17/elasticsearch源码分析/" data-id="cixo3g8bf00by2ls6c78cvj01" class="article-share-link">分享到</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Elasticsearch/">Elasticsearch</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-
-    
-      <article id="post-elasticsearch集群" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2015/10/17/elasticsearch集群/">elasticsearch集群</a>
-    </h1>
-  
-
-        <div class="article-meta">
-          
-  <div class="article-date">
-    <i class="fa fa-calendar"></i>
-    <a href="/2015/10/17/elasticsearch集群/">
-      <time datetime="2015-10-17T01:13:36.000Z" itemprop="datePublished">2015-10-17</time>
-    </a>
-  </div>
-
-
-          
-  <div class="article-category">
-  	<i class="fa fa-folder"></i>
-    <a class="article-category-link" href="/categories/Elasticsearch/">Elasticsearch</a><i class="fa fa-angle-right"></i><a class="article-category-link" href="/categories/Elasticsearch/学习/">学习</a>
-  </div>
-
-        </div>
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-                
-        <p><img src="/thumbnails/es.png" alt=""></p>
-<hr>
-<p>节点ping设置:<br> 主节点会ping集群中的其他节点。其他节点也会ping主节点。<br> discovery.zen.fd.ping_interval：该属性默认为1s,指节点相互ping的时间间隔。<br> discovery.zen.fd.ping_timeout:默认30s,ping的超时时间。<br> discovery.zen.fd.ping_retries:默认为重试ping 3次。<br>gateway数据恢复:<br>gateway.recover_after_nodes:8 有8个节点正常启动之后才开始恢复数据。<br>gateway.recover_after_time:10m 有启动10分钟之后才开始恢复数据。<br>gateway.expected_nodes:10 期望有10个节点再开始恢复数据。<br>gateway.recover_after_master_node:8<br>gateway.recover_after_data_node:8</p>
-<p>索引刷新率:<br>index.refresh_interval:设置为-1.在建庞大的索引的时候，就是先不刷新索引。</p>
-<p>再平衡：<br> cluster.routing.allocation.allow_rebalance:indices_all_active 默认值，主副分片都初始化后再平衡才开始。<br> cluster.routing.allocation.node_concurrent_recoveries 单个节点上同时初始化的分片数。<br> cluster.routing.allocation.node_initial_primaries_recoveries：同时初始化的主分片数。<br> cluster.routing.alloction.enable: all默认值，所有类型的分片都能分配。primaries 只能分配主分片，new_primaries新建主分配。none 完全禁止分配。<br> indices.recovery.concurrent_streams:3 同时恢复放入流数量。</p>
-<p>控制分配：<br>  我们可以节点打上不同的tag,分片分配到不同的tag上去。在配置文件中，或者动态配置setting<br>  node.zone:zone_one<br>  index.routing.allocation.include.zone:”zone_one”, 有包含这些节点的分配<br>  index.routing.allocation.exclude.zone:”zone_one”, 当然也有排除这些节点的分配。<br>  index.routing.allocation.require.size:”big_node”<br>  index.routing.allocation.require.zone: “zone_one”<br>  index.routing.allocation.include._ip: “10.1.2.10,10.1.2.11”<br>  index.routing.allocation.disk.threahold_enabled:true:根据硬盘情况分配，不会耗尽硬盘。<br>  index.routing.allocation.total_shards_per_node:10。每个节点的分片数量。</p>
-<p>归并线程的限速<br>  indices.store.throttle.max_bytes_per_sec:20m</p>
-<hr>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://www.fovoy.com/2015/10/17/elasticsearch集群/" data-id="cixo3g8bb00bq2ls68kgd8lm2" class="article-share-link">分享到</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Elasticsearch/">Elasticsearch</a></li></ul>
 
     </footer>
   </div>
@@ -712,7 +704,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://www.fovoy.com/2015/10/17/人工智能/" data-id="cixo3g871003u2ls6zapo9bwo" class="article-share-link">分享到</a>
+      <a data-url="http://www.fovoy.com/2015/10/17/人工智能/" data-id="cixts84u8003u57s6yshcnyjc" class="article-share-link">分享到</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/人工智能/">人工智能</a></li></ul>
@@ -725,7 +717,7 @@
 
 
     
-      <article id="post-site" class="article article-type-post" itemscope itemprop="blogPost">
+      <article id="post-elasticsearch查询类型" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-inner">
     
     
@@ -734,7 +726,7 @@
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2015/10/17/site/">网站要点</a>
+      <a class="article-title" href="/2015/10/17/elasticsearch查询类型/">elasticsearch查询类型</a>
     </h1>
   
 
@@ -742,7 +734,7 @@
           
   <div class="article-date">
     <i class="fa fa-calendar"></i>
-    <a href="/2015/10/17/site/">
+    <a href="/2015/10/17/elasticsearch查询类型/">
       <time datetime="2015-10-17T01:13:36.000Z" itemprop="datePublished">2015-10-17</time>
     </a>
   </div>
@@ -751,7 +743,7 @@
           
   <div class="article-category">
   	<i class="fa fa-folder"></i>
-    <a class="article-category-link" href="/categories/site/">site</a>
+    <a class="article-category-link" href="/categories/Elasticsearch/">Elasticsearch</a><i class="fa fa-angle-right"></i><a class="article-category-link" href="/categories/Elasticsearch/学习/">学习</a>
   </div>
 
         </div>
@@ -761,16 +753,28 @@
       
                 
         <p><img src="/thumbnails/es.png" alt=""></p>
-<hr>
-<p>1.加盟<br>2.提意见<br>3.互动。<br>4.网络教育。eq<br>5.时间成为一个维度，被记忆下来。<br>6.环境，自然条件成最重要的需求</p>
+<p>1.TermQuery:最基础的词条查询。对每一个term的匹配。<br><figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">"<span class="attribute">query</span>":<span class="value">&#123;</span><br><span class="line">	"<span class="attribute">term</span>":<span class="value">&#123;</span><br><span class="line">        "<span class="attribute">title</span>":<span class="value"><span class="string">"test"</span></span><br><span class="line">    </span>&#125;</span><br><span class="line">   </span>&#125;</span><br><span class="line"></span>&#125;</span><br></pre></td></tr></table></figure></p>
+<p>2.TermsQuery:多词条查询，相当于多个term的bool查询，默认为or操作。<br><figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">"<span class="attribute">query</span>":<span class="value">&#123;</span><br><span class="line">	"<span class="attribute">terms</span>":<span class="value">&#123;</span><br><span class="line">        "<span class="attribute">title</span>":<span class="value">[<span class="string">"test"</span>,<span class="string">"test1"</span>]</span><br><span class="line">    </span>&#125;</span><br><span class="line">   </span>&#125;</span><br><span class="line"></span>&#125;</span><br></pre></td></tr></table></figure></p>
+<p>3.match_all:匹配所有文档<br><figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line"> "<span class="attribute">query</span>":<span class="value">&#123;</span><br><span class="line">     "<span class="attribute">match_all</span>":<span class="value">&#123;&#125;;</span><br><span class="line"> </span>&#125;</span><br><span class="line"></span>&#125;</span><br></pre></td></tr></table></figure></p>
+<p>4.commonQuery:常用词查询,把查询词分成两组，一种常用词，另一个非常用的次.只对非常用词，也就是频率较低，比较重要的词进行查询。高频词，也就是不重要的次，只作为第一次低频词查询结果后打分使用。这样实现了高效率。<br><figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">&#123;"<span class="attribute">query</span>":<span class="value">&#123;</span><br><span class="line">    "<span class="attribute">common</span>":<span class="value">&#123;</span><br><span class="line">    "<span class="attribute">title</span>":<span class="value">&#123;</span><br><span class="line">       "<span class="attribute">query</span>":<span class="value"><span class="string">"test"</span></span>,</span><br><span class="line">       "<span class="attribute">cutoff_frequency</span>":<span class="value"><span class="number">0.001</span> //比较在<span class="number">0.001</span>一下的就为非常用词</span><br><span class="line">        </span>&#125;</span><br><span class="line">     </span>&#125;   </span><br><span class="line">    </span>&#125;</span><br><span class="line"></span>&#125;</span><br></pre></td></tr></table></figure></p>
+<p>5.match:布尔值匹配查询,分词的情况下可以使用这个查询,匹配多种情况下的，他也有cutoff_frequency这个选项，也就像常用词查询一样是高低频词的分组情况。<br><figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  "<span class="attribute">query</span>":<span class="value">&#123;</span><br><span class="line">     "<span class="attribute">match</span>":<span class="value">&#123;</span><br><span class="line">        "<span class="attribute">title</span>":<span class="value">&#123;</span><br><span class="line">          "<span class="attribute">query</span>":<span class="value"><span class="string">"test"</span></span>,"<span class="attribute">operator</span>":<span class="value"><span class="string">"and"</span></span><br><span class="line">    </span>&#125;</span><br><span class="line">     </span>&#125;</span><br><span class="line">  </span>&#125;</span><br><span class="line"></span>&#125;</span><br></pre></td></tr></table></figure></p>
+<p>6.match_phrase:布尔短语查询，他与布尔查询最重要的区别在查询词的顺序需要和文本一致的。也就是布尔查询的query 是无序的,phrase是有序的，在slop设置的情况下才允许中间词语有遗漏。<br><figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">"<span class="attribute">query</span>":<span class="value">&#123;</span><br><span class="line">	"<span class="attribute">match_phrase</span>":<span class="value">&#123;</span><br><span class="line">	"<span class="attribute">title</span>":<span class="value">&#123;</span><br><span class="line">	  "<span class="attribute">query</span>":<span class="value"><span class="string">"crime and punishment"</span></span>,</span><br><span class="line">	  "<span class="attribute">slop</span>":<span class="value"><span class="number">1</span></span><br><span class="line">      </span>&#125;</span><br><span class="line">    </span>&#125;</span><br><span class="line">    </span>&#125;</span><br><span class="line"></span>&#125;</span><br></pre></td></tr></table></figure></p>
+<p>7.match_phrase_prefix:布尔短语前缀查询，跟上一个查询的区别就是query的最后一个词可以只有前缀。感觉使用场景并不多。还可以使用disable_coord来减少查询时间。<br>8.multi_match:多布尔匹配查询，与match 不用的是可以指定有个字段，来做查询field.<br><figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">"<span class="attribute">query</span>":<span class="value">&#123;</span><br><span class="line">	"<span class="attribute">multi_match</span>":<span class="value">&#123;</span><br><span class="line">	 "<span class="attribute">query</span>":<span class="value"><span class="string">"crime punishment"</span></span>,</span><br><span class="line">     "<span class="attribute">fields</span>":<span class="value">[<span class="string">"title"</span>,<span class="string">"otitle"</span>]       </span><br><span class="line">     </span>&#125;</span><br><span class="line">   </span>&#125;</span><br><span class="line"></span>&#125;</span><br></pre></td></tr></table></figure></p>
+<p>9.query_string:支持lucene DLS查询语法的一个查询.</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">"<span class="attribute">query</span>":<span class="value">&#123;</span><br><span class="line">	"<span class="attribute">query_string</span>":<span class="value">&#123;</span><br><span class="line">	"<span class="attribute">query</span>":<span class="value"><span class="string">"test*"</span></span><br><span class="line">      </span>&#125;</span><br><span class="line">   </span>&#125;</span><br><span class="line"></span>&#125;</span><br></pre></td></tr></table></figure>
+<p>10.IdsQuery标识符查询:也就是查询id的。</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  "<span class="attribute">query</span>":<span class="value">&#123;</span><br><span class="line">     "<span class="attribute">ids</span>":<span class="value">&#123;</span><br><span class="line">       "<span class="attribute">type</span>":<span class="value"><span class="string">"books"</span></span>,</span><br><span class="line">       "<span class="attribute">values</span>":<span class="value">[<span class="string">"1"</span>,<span class="string">"10"</span>]</span><br><span class="line">    </span>&#125;</span><br><span class="line">  </span>&#125;</span><br><span class="line"></span>&#125;</span><br></pre></td></tr></table></figure>
+<p>11.PrefixQuery:前缀查询</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">"<span class="attribute">query</span>":<span class="value">&#123;</span><br><span class="line">	"<span class="attribute">prefix</span>":<span class="value">&#123;</span><br><span class="line">	 "<span class="attribute">title</span>":<span class="value"><span class="string">"cri"</span></span><br><span class="line">    </span>&#125;</span><br><span class="line">    </span>&#125;</span><br><span class="line"></span>&#125;</span><br></pre></td></tr></table></figure>
+<p>12.FuzzyQuery:模糊查询,编辑距离查出相近的term 再把这些term进行布尔查询。<br>13.RangQuery:范围查询<br>14.dismaxQuery:最大分查询，大分越大。小分越小。<br>15.RegexpQuery:正则表达式查询<br>16.constant_score:不计算打分的查询.<br>17.indicesQuery:索引查询,多个索引之间的条件查询。<br>18.过滤查询。post查询和非post查询之间的区别。post查询是对每一个query结果的过滤。而非post查询是，先过滤再查询。所以非post查询要更高效。<br>19.父子查询需要加载标识符，所以有一个预热warm过程可以让父子查询加速。</p>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://www.fovoy.com/2015/10/17/site/" data-id="cixo3g87q00572ls6j0cend6b" class="article-share-link">分享到</a>
+      <a data-url="http://www.fovoy.com/2015/10/17/elasticsearch查询类型/" data-id="cixts84yj00c257s6bd8226sv" class="article-share-link">分享到</a>
       
       
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/site/">site</a></li></ul>
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Elasticsearch/">Elasticsearch</a></li></ul>
 
     </footer>
   </div>
@@ -792,6 +796,40 @@
     <h3 class="widget-title">最新文章</h3>
     <div class="widget">
       <ul id="recent-post" class="">
+        
+          <li>
+            
+            <div class="item-thumbnail">
+              <a href="/2017/01/12/cmake/" class="thumbnail">
+  
+    <span class="thumbnail-image thumbnail-none"></span>
+  
+</a>
+            </div>
+            
+            <div class="item-inner">
+              <p class="item-category"></p>
+              <p class="item-title"><a href="/2017/01/12/cmake/" class="title"></a></p>
+              <p class="item-date"><time datetime="2017-01-12T02:51:57.000Z" itemprop="datePublished">2017-01-12</time></p>
+            </div>
+          </li>
+        
+          <li>
+            
+            <div class="item-thumbnail">
+              <a href="/2017/01/12/jenkins脚本/" class="thumbnail">
+  
+    <span class="thumbnail-image thumbnail-none"></span>
+  
+</a>
+            </div>
+            
+            <div class="item-inner">
+              <p class="item-category"></p>
+              <p class="item-title"><a href="/2017/01/12/jenkins脚本/" class="title"></a></p>
+              <p class="item-date"><time datetime="2017-01-12T02:51:26.000Z" itemprop="datePublished">2017-01-12</time></p>
+            </div>
+          </li>
         
           <li>
             
@@ -831,7 +869,7 @@
           <li>
             
             <div class="item-thumbnail">
-              <a href="/2016/11/12/异步化方案/" class="thumbnail">
+              <a href="/2016/11/12/cache/" class="thumbnail">
   
     <span class="thumbnail-image thumbnail-none"></span>
   
@@ -839,43 +877,9 @@
             </div>
             
             <div class="item-inner">
-              <p class="item-category"><a class="article-category-link" href="/categories/java/">java</a></p>
-              <p class="item-title"><a href="/2016/11/12/异步化方案/" class="title">异步化方案</a></p>
-              <p class="item-date"><time datetime="2016-11-12T05:22:01.000Z" itemprop="datePublished">2016-11-12</time></p>
-            </div>
-          </li>
-        
-          <li>
-            
-            <div class="item-thumbnail">
-              <a href="/2016/11/07/metaspace/" class="thumbnail">
-  
-    <span class="thumbnail-image thumbnail-none"></span>
-  
-</a>
-            </div>
-            
-            <div class="item-inner">
-              <p class="item-category"><a class="article-category-link" href="/categories/JVM/">JVM</a></p>
-              <p class="item-title"><a href="/2016/11/07/metaspace/" class="title">metaspace</a></p>
-              <p class="item-date"><time datetime="2016-11-07T01:13:36.000Z" itemprop="datePublished">2016-11-07</time></p>
-            </div>
-          </li>
-        
-          <li>
-            
-            <div class="item-thumbnail">
-              <a href="/2016/11/05/红黑树/" class="thumbnail">
-  
-    <span class="thumbnail-image thumbnail-none"></span>
-  
-</a>
-            </div>
-            
-            <div class="item-inner">
-              <p class="item-category"><a class="article-category-link" href="/categories/数据结构/">数据结构</a></p>
-              <p class="item-title"><a href="/2016/11/05/红黑树/" class="title">红黑树</a></p>
-              <p class="item-date"><time datetime="2016-11-05T01:13:36.000Z" itemprop="datePublished">2016-11-05</time></p>
+              <p class="item-category"><a class="article-category-link" href="/categories/系统/">系统</a></p>
+              <p class="item-title"><a href="/2016/11/12/cache/" class="title">cache</a></p>
+              <p class="item-date"><time datetime="2016-11-12T12:22:31.000Z" itemprop="datePublished">2016-11-12</time></p>
             </div>
           </li>
         
@@ -888,7 +892,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">分类</h3>
     <div class="widget">
-      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Elasticsearch/">Elasticsearch</a><span class="category-list-count">13</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Elasticsearch/config/">config</a><span class="category-list-count">6</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Elasticsearch/performance/">performance</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Elasticsearch/学习/">学习</a><span class="category-list-count">6</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Framework/">Framework</a><span class="category-list-count">3</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Framework/spring/">spring</a><span class="category-list-count">3</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/JAVA/">JAVA</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/JVM/">JVM</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Java/">Java</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Mac/">Mac</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Math/">Math</a><span class="category-list-count">2</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Math/Matrix/">Matrix</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Math/分布/">分布</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/design-pattern/">design pattern</a><span class="category-list-count">12</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/elasticsearch/">elasticsearch</a><span class="category-list-count">2</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/elasticsearch/运维/">运维</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/fovoy/">fovoy</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/gradle/">gradle</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/http/">http</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/java/">java</a><span class="category-list-count">22</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/java/gc/">gc</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/java/jvm/">jvm</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/java/学习/">学习</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/kibana/">kibana</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/lucene/">lucene</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/mysql/">mysql</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/mysql/config/">config</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/netty/">netty</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/recommendation/">recommendation</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/recommendation/协同过滤/">协同过滤</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/redis/">redis</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/scala/">scala</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/scala/基础/">基础</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/site/">site</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/tools/">tools</a><span class="category-list-count">14</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/tools/git/">git</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/tools/hexo/">hexo</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/tools/nginx/">nginx</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/中间件/">中间件</a><span class="category-list-count">3</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/中间件/kafka/">kafka</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/中间件/tomcat/">tomcat</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/主题模型/">主题模型</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/主题模型/主题抽取/">主题抽取</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/兴趣/">兴趣</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/分布式/">分布式</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/分布式消息队列/">分布式消息队列</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/分布式系统/">分布式系统</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/前端开发/">前端开发</a><span class="category-list-count">6</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/前端开发/angularjs/">angularjs</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/前端开发/html5/">html5</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/前端开发/node-js/">node.js</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/前端开发/nodejs/">nodejs</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/前端开发/学习/">学习</a><span class="category-list-count">2</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/基础架构/">基础架构</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/大数据/">大数据</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/并发编程/">并发编程</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/总结/">总结</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/数据结构/">数据结构</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/系统/">系统</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/网络/">网络</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/英语学习/">英语学习</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/计划/">计划</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/读书/">读书</a><span class="category-list-count">1</span></li></ul>
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Elasticsearch/">Elasticsearch</a><span class="category-list-count">13</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Elasticsearch/config/">config</a><span class="category-list-count">6</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Elasticsearch/performance/">performance</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Elasticsearch/学习/">学习</a><span class="category-list-count">6</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Framework/">Framework</a><span class="category-list-count">3</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Framework/spring/">spring</a><span class="category-list-count">3</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/JAVA/">JAVA</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/JVM/">JVM</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Java/">Java</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Mac/">Mac</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Math/">Math</a><span class="category-list-count">2</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Math/Matrix/">Matrix</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Math/分布/">分布</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/design-pattern/">design pattern</a><span class="category-list-count">12</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/elasticsearch/">elasticsearch</a><span class="category-list-count">2</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/elasticsearch/运维/">运维</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/fovoy/">fovoy</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/gradle/">gradle</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/http/">http</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/java/">java</a><span class="category-list-count">22</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/java/gc/">gc</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/java/jvm/">jvm</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/java/学习/">学习</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/kibana/">kibana</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/lucene/">lucene</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/mysql/">mysql</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/mysql/config/">config</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/netty/">netty</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/recommendation/">recommendation</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/recommendation/协同过滤/">协同过滤</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/redis/">redis</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/scala/">scala</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/scala/基础/">基础</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/site/">site</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/tools/">tools</a><span class="category-list-count">14</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/tools/git/">git</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/tools/hexo/">hexo</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/tools/nginx/">nginx</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/中间件/">中间件</a><span class="category-list-count">3</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/中间件/kafka/">kafka</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/中间件/tomcat/">tomcat</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/主题模型/">主题模型</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/主题模型/主题抽取/">主题抽取</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/兴趣/">兴趣</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/分布式/">分布式</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/分布式消息队列/">分布式消息队列</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/分布式系统/">分布式系统</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/前端开发/">前端开发</a><span class="category-list-count">6</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/前端开发/angularjs/">angularjs</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/前端开发/html5/">html5</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/前端开发/node-js/">node.js</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/前端开发/nodejs/">nodejs</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/前端开发/学习/">学习</a><span class="category-list-count">2</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/基础架构/">基础架构</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/大数据/">大数据</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/并发编程/">并发编程</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/总结/">总结</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/数据结构/">数据结构</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/系统/">系统</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/网络/">网络</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/英语学习/">英语学习</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/计划/">计划</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/读书/">读书</a><span class="category-list-count">1</span></li></ul>
     </div>
   </div>
 
@@ -915,7 +919,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">归档</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/01/">一月 2017</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/11/">十一月 2016</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/10/">十月 2016</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/07/">七月 2016</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/05/">五月 2016</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/04/">四月 2016</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/03/">三月 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/02/">二月 2016</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/01/">一月 2016</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/12/">十二月 2015</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/11/">十一月 2015</a><span class="archive-list-count">12</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/10/">十月 2015</a><span class="archive-list-count">16</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/09/">九月 2015</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/08/">八月 2015</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/07/">七月 2015</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/05/">五月 2015</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/04/">四月 2015</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/03/">三月 2015</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/02/">二月 2015</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/01/">一月 2015</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/12/">十二月 2014</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/11/">十一月 2014</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/10/">十月 2014</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/07/">七月 2014</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/06/">六月 2014</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/05/">五月 2014</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/04/">四月 2014</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/03/">三月 2014</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/01/">一月 2014</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/10/">十月 2013</a><span class="archive-list-count">1</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/01/">一月 2017</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/11/">十一月 2016</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/10/">十月 2016</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/07/">七月 2016</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/05/">五月 2016</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/04/">四月 2016</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/03/">三月 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/02/">二月 2016</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/01/">一月 2016</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/12/">十二月 2015</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/11/">十一月 2015</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/10/">十月 2015</a><span class="archive-list-count">16</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/09/">九月 2015</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/08/">八月 2015</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/07/">七月 2015</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/06/">六月 2015</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/05/">五月 2015</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/04/">四月 2015</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/03/">三月 2015</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/02/">二月 2015</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/01/">一月 2015</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/12/">十二月 2014</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/11/">十一月 2014</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/10/">十月 2014</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/07/">七月 2014</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/06/">六月 2014</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/05/">五月 2014</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/04/">四月 2014</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/03/">三月 2014</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/01/">一月 2014</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/10/">十月 2013</a><span class="archive-list-count">1</span></li></ul>
     </div>
   </div>
 

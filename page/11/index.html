@@ -97,7 +97,7 @@
     </div>
     <div class="article-info profile-block">
       <div class="article-info-block">
-        119
+        120
         <span>文章</span>
       </div>
       <div class="article-info-block">
@@ -172,7 +172,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://www.fovoy.com/2014/07/12/大数据的权衡/" data-id="cixo3g85s002b2ls627u4pkbe" class="article-share-link">分享到</a>
+      <a data-url="http://www.fovoy.com/2014/07/12/大数据的权衡/" data-id="cixts84t1002b57s6w7jojb5a" class="article-share-link">分享到</a>
       
       
     </footer>
@@ -225,10 +225,140 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://www.fovoy.com/2014/07/12/SecureCRT license/" data-id="cixo3g8bx00cp2ls6n4h4cl3p" class="article-share-link">分享到</a>
+      <a data-url="http://www.fovoy.com/2014/07/12/SecureCRT license/" data-id="cixts84yz00cp57s6je427cha" class="article-share-link">分享到</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/secureCRT/">secureCRT</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/tools/">tools</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+    
+      <article id="post-java问题排查" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2014/07/12/java问题排查/">gcutil</a>
+    </h1>
+  
+
+        <div class="article-meta">
+          
+  <div class="article-date">
+    <i class="fa fa-calendar"></i>
+    <a href="/2014/07/12/java问题排查/">
+      <time datetime="2014-07-12T11:25:12.000Z" itemprop="datePublished">2014-07-12</time>
+    </a>
+  </div>
+
+
+          
+  <div class="article-category">
+  	<i class="fa fa-folder"></i>
+    <a class="article-category-link" href="/categories/java/">java</a><i class="fa fa-angle-right"></i><a class="article-category-link" href="/categories/java/gc/">gc</a>
+  </div>
+
+        </div>
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+                
+        <p><img src="/thumbnails/java.png" alt=""></p>
+<p>1.Top -H -p pid  查看那个线程cpu过高<br>2.如果有线程出现cpu过高，jstack pid &gt; text.dump 打印出线程情况。转换为16进制，printf “%x\n” pid 转换为16进制，看看那个线程在做什么。<br>3.定位代码<br>4.如果很多线程都正常可能是gc问题。jstat -gcutil <pid> time(间隔毫秒) 打印次数<br>5.查看gc次数，jmap 出heap 的情况，查看哪些对象在不停的创建，并且没有销毁。</pid></p>
+<hr>
+<p>负载飙升关系到<br>cup利用率 = cup非空闲执行时间时间/cup总执行时间<br>cup负载 =CPU队列长度，负载均值用来估量CPU利用率的发展趋势，而不是某一时刻的状况。<br>高负载，低利用率 ：等待磁盘I/O完成的进程过多，导致进程队列长度过大，但是cpu运行的进程却很少，这样就体现到负载过大了，cpu使用率低。<br>cup 都在等待，而没有干活。出现的情况，就是io过多，大量I/O等待io太密集了，或者死锁。等。</p>
+<hr>
+<p>压测<br>1.使用netstat -nat |Grep  pid -c 查看有多少台机器链接了这个端口<br>2.调整链接数查看qps 有没有变化。<br>3.top查看cup 利用率，看是否需要加cpu.<br>4.ps -eLf|grep java -c  查看线程数。<br>5.查看sql文件， grep Y /xx/.log|awk -F ‘,’ ‘{print $7%5}’|sort -nr|head -20</p>
+<p>cat /proc/net/dev  /proc/loadavg  /proc/meminfo  /proc/stat</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://www.fovoy.com/2014/07/12/java问题排查/" data-id="cixts84wi008f57s6zq28soks" class="article-share-link">分享到</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/gc/">gc</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+    
+      <article id="post-java基础" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2014/06/17/java基础/">java基础</a>
+    </h1>
+  
+
+        <div class="article-meta">
+          
+  <div class="article-date">
+    <i class="fa fa-calendar"></i>
+    <a href="/2014/06/17/java基础/">
+      <time datetime="2014-06-17T14:13:01.000Z" itemprop="datePublished">2014-06-17</time>
+    </a>
+  </div>
+
+
+          
+  <div class="article-category">
+  	<i class="fa fa-folder"></i>
+    <a class="article-category-link" href="/categories/java/">java</a>
+  </div>
+
+        </div>
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+                
+        <p>1.java初始化顺序先，类成员变量，再构造函数创建对象。有限原则，静态优先非静态，父类优先于子类。按成员变量的定义顺序来初始化。<br>2.基本类型是值传递，引用类型引用传递。引用类型只能通过clone(),来返回对象的复制，实现cloneable。override clone()方法。spuer.clone().这样才能把浅复制引入。<br>当对象中存在非基本数据类型时候，需要深度复制。对象的非基本类型数据也要复制。浅复制没有吧对象中的非基本类型数据给复制了，还是原来的引用数据。<br>3.Class.forName(“Test”)  Test.class  test.getClass(),所以java可以通过，new 返射 clone 反序列化 4种方式来创建对象。<br>4.不要单纯的为了代码复用实现继承，会破坏可维护性，采用接口加组合有更好的扩展性。类的方法才有多态，成员变量没有多态。Base.i  不会是实现类的i.<br>5.包含抽象方法的类就是抽象类，接口，也就支持抽象类定义的两种机制。接口和抽象类都不能被实例化。<br>6.内部类可以看成是外部类的一个成员。可以调用外部类的private.静态内部类，可以直接实例化，只能调用外部类的静态方法，非静态不能直接实例化，但外部类的都可以调用。<br>匿名内部类 不能有构造函数和静态成员，一定在new 后面。构造器中的super()必须在第一条。<br>7.contine&lt; break &lt; return   break 想跳出多重循环，  hear:  break hear;在循环外加一个标识符。<br>8.final 不可变修饰，引用都不可变。final String s = “test”   s =”test2”,会编译出错。String 就是final class，不能被继承。finally。 配合try{}catch(){}finally{} 来使用。finalize 建议垃圾回收。<br>9.volatile,提高可见性，变量不在冲缓存中取，而是每次都在内存中取。每次让别的线程在寄存器中的变量失效。instanceof 二元运算符，判断对象是否是一个类，或接口。<br>10。strictfp strict float point 关键字修饰,所有浮点型计算都是精确的。BigDecimal 一样的效果。超过16位有效位。处理时候。</p>
+<ol>
+<li>8种基本数据类型 byte（-128-127 第一位是正负标识）,short,int,long,float,double,char,boolean. 封装类 Byte,Short,Integer,Long,Float,Double,Character,Boolean. byte&lt;short&lt;char&lt;int&lt;long&lt;float&lt;double. 小到大 字段转换。boolean 不能自动转换。</li>
+<li>+= 为规定运算符。 short s1 =1 ;s1 =s1+1 报错，但 s1+=1;就可以。 &gt;&gt;&gt; 有符号右移，也就是标识符最前面的1位，也跟着移动，负数会移成正数。</li>
+<li>&amp;&amp; 和&amp; 前面是短路与，|| 和| 前面是短路或。  int i = 5  i++ =5 先调用在加, ++i =7 先加再调用.</li>
+<li><blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<p>&lt;&lt; 移动大于可移动位数是 只能移动取摸，也就是int  33%32=1, long 65%64=1.</p>
+</blockquote>
+</blockquote>
+</blockquote>
+</blockquote>
+</blockquote>
+</li>
+<li>char =2byte 中文2字节，因为1字节，所以可以用来判断中文。<br>16.数组是对象 可以用instanceof 来判断。数组的大小不能随意改变，初始化的时候一定确定。<br>17.length 是数组的属性，length()是String 的长度等。<br>18.serialVersionUID 不同的话，反系列化就会抛异常。invalidClassException.SerialVersionUID,不写，序列化时候就要生产。增加兼容性。<br>19。classLoad 实质也是类，是吧类文件从硬盘读取到内存中，隐式加载 new ,显示加载 Class.forName();需要的类后续才会加载，这样节省内存。 .class是可以被动态加载的单元。BootStrap Loader负责加载系统类。ExtClassLoader 负责加载扩展类。 AppClassLoader 负责加载应用类。类加载是双亲委托模型，也就是都从父类加载器开始加载，这样才不会出现用户自己写个String类，把系统的String给盖了。如果不是加载path下面的jar,需要自定义ClassLoad.继承ClassLoad.重写findClass.tomcat 有两个自动以的加载器一个standard 和webApp. URLClassLoader 来加载的plugin.<br>20.stack 线程独立的，方法执行的时候有栈帧来操作出入。栈中的引用变量来访问堆中的对象。Object s  = new Object();前面在栈中，后面再堆中。<br>21.hashMap (capacity <em> load factor) threshold 没有超过这个数的话不会resize()。默认是16 1&lt;&lt;4 capacity,threshold(16</em>0.75=12)ConcurrentHashMap,Segment 加锁，ReentrantLock,第一次hash segment,后一次hashEntry 分化加锁。效率更高。 HashMap table -&gt;红黑树。<br>22.ArrayList 扩展就为1.5倍。Vector就为2倍。LinkedList 链表，访问效率低，但插入效率高。非线程安全。<br>23.同步在资源访问时候，是为了让支援安全，也就是synchronized.同步机制。上锁。<br>24.异步Callable,返回Future. future.get()时候回当前线程就会堵塞。直接调用run()就是方法调用就是同步的了。 ThreadPoolExecutor ExecutorService 执行runable callable 返回future.线程池实现的就是。提交runable,创建thread.并且执行。ThreadPool里执行work.sleep是thread,方法是暂停一段时间交出cpu,但不会释放锁。对象还在他手上，wait()是对象方法，释放占有的锁，并等待,wati()要放在同步块中，直到notify.sleep 不释放锁，所以容易产生，死锁，所以不推荐使用。yield()只是放出执行权，但又可能会重新获得。<br>25.synchronized 使用的是Object对象自身的notify,wait,notityAll调度机制。Lock使用的是condition.Lock 使用的范围小，但控制性比较强。功能强大，需要手动在finally里面手动释放锁。synchronized的同步范围是在定义的方法体中。静态sychronized和非同步方法，都不会被同步方法影响。<br>26.守护线程t.setDaemon(true),在start()之前。没有非守护线程后，守护线程也会立刻终止。垃圾回收期就是典型的守护线程。<br>27.jion()现实同步， t.join(10) 阻塞等待线程执行。<br>29.GET获取服务端资源，资源在url中，所以不安全，POST修改服务端资源。请求体附件中，安全的。<br>30.Servelet 来处理用户的web请求，相应的url对应相应的servlet.创建request和response来调用相应的方法。组装http格式返回给客户端。servlet容器启动的时候就会被初始化，每次请求过来都会创建新线程来调用server()根据请求的method来调用doGET() OR doPOST();<br>31.cookie和session的区别，一个是浏览器端的小文件，一个是服务器端的保证状态的。SessionID使用cookie来传递的，所以禁用了cookie ,session也就用不了了。当也可以吧sessionid放到URL中.</li>
+</ol>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://www.fovoy.com/2014/06/17/java基础/" data-id="cixts84wt009257s6pjzqyptc" class="article-share-link">分享到</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/基础/">基础</a></li></ul>
 
     </footer>
   </div>
@@ -296,78 +426,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://www.fovoy.com/2014/06/17/java那点事/" data-id="cixo3g89j008q2ls6tkr913no" class="article-share-link">分享到</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/基础/">基础</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-
-    
-      <article id="post-java基础" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2014/06/17/java基础/">java基础</a>
-    </h1>
-  
-
-        <div class="article-meta">
-          
-  <div class="article-date">
-    <i class="fa fa-calendar"></i>
-    <a href="/2014/06/17/java基础/">
-      <time datetime="2014-06-17T14:13:01.000Z" itemprop="datePublished">2014-06-17</time>
-    </a>
-  </div>
-
-
-          
-  <div class="article-category">
-  	<i class="fa fa-folder"></i>
-    <a class="article-category-link" href="/categories/java/">java</a>
-  </div>
-
-        </div>
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-                
-        <p>1.java初始化顺序先，类成员变量，再构造函数创建对象。有限原则，静态优先非静态，分类优先于子类。按成员变量的定义顺序来初始化。<br>2.基本类型是值传递，引用类型引用传递。引用类型只能通过clone(),来返回对象的复制，实现cloneable。override clone()方法。spuer.clone().这样才能把浅复制引入。<br>当对象中存在非基本数据类型时候，需要深度复制。对象的非基本类型数据也要复制。浅复制没有吧对象中的非基本类型数据给复制了，还是原来的引用数据。<br>3.Class.forName(“Test”)  Test.class  test.getClass(),所以java可以通过，new 返射 clone 反序列化 4种方式来创建对象。<br>4.不要单纯的为了代码复用实现继承，会破坏可维护性，采用接口加组合有更好的扩展性。类的方法才有多态，成员变量没有多态。Base.i  不会是实现类的i.<br>5.包含抽象方法的类就是抽象类，接口，也就支持抽象类定义的两种机制。接口和抽象类都不能被实例化。<br>6.内部类可以看成是外部类的一个成员。可以调用外部类的private.静态内部类，可以直接实例化，只能调用外部类的静态方法，非静态不能直接实例化，但外部类的都可以调用。<br>匿名内部类 不能有构造函数和静态成员，一定在new 后面。构造器中的super()必须在第一条。<br>7.contine&lt; break &lt; return   break 想跳出多重循环，  hear:  break hear;在循环外加一个标识符。<br>8.final 不可变修饰，引用都不可变。final String s = “test”   s =”test2”,会编译出错。String 就是final class，不能被继承。finally。 配合try{}catch(){}finally{} 来使用。finalize 建议垃圾回收。<br>9.volatile,提高可见性，变量不在冲缓存中取，而是每次都在内存中取。每次让别的线程在寄存器中的变量失效。instanceof 二元运算符，判断对象是否是一个类，或接口。<br>10。strictfp strict float point 关键字修饰,所有浮点型计算都是精确的。BigDecimal 一样的效果。超过16位有效位。处理时候。</p>
-<ol>
-<li>8种基本数据类型 byte（-128-127 第一位是正负标识）,short,int,long,float,double,char,boolean. 封装类 Byte,Short,Integer,Long,Float,Double,Character,Boolean. byte&lt;short&lt;char&lt;int&lt;long&lt;float&lt;double. 小到大 字段转换。boolean 不能自动转换。</li>
-<li>+= 为规定运算符。 short s1 =1 ;s1 =s1+1 报错，但 s1+=1;就可以。 &gt;&gt;&gt; 有符号右移，也就是标识符最前面的1位，也跟着移动，负数会移成正数。</li>
-<li>&amp;&amp; 和&amp; 前面是短路与，|| 和| 前面是短路或。  int i = 5  i++ =5 先调用在加, ++i =7 先加再调用.</li>
-<li><blockquote>
-<blockquote>
-<blockquote>
-<blockquote>
-<blockquote>
-<p>&lt;&lt; 移动大于可移动位数是 只能移动取摸，也就是int  33%32=1, long 65%64=1.</p>
-</blockquote>
-</blockquote>
-</blockquote>
-</blockquote>
-</blockquote>
-</li>
-<li>char =2byte 中文2字节，因为1字节，所以可以用来判断中文。<br>16.数组是对象 可以用instanceof 来判断。数组的大小不能随意改变，初始化的时候一定确定。<br>17.length 是数组的属性，length()是String 的长度等。<br>18.serialVersionUID 不同的话，反系列化就会抛异常。invalidClassException.SerialVersionUID,不写，序列化时候就要生产。增加兼容性。<br>19。classLoad 实质也是类，是吧类文件从硬盘读取到内存中，隐式加载 new ,显示加载 Class.forName();需要的类后续才会加载，这样节省内存。 .class是可以被动态加载的单元。BootStrap Loader负责加载系统类。ExtClassLoader 负责加载扩展类。 AppClassLoader 负责加载应用类。类加载是双亲委托模型，也就是都从父类加载器开始加载，这样才不会出现用户自己写个String类，把系统的String给盖了。如果不是加载path下面的jar,需要自定义ClassLoad.继承ClassLoad.重写findClass.tomcat 有两个自动以的加载器一个standard 和webApp. URLClassLoader 来加载的plugin.<br>20.stack 线程独立的，方法执行的时候有栈帧来操作出入。栈中的引用变量来访问堆中的对象。Object s  = new Object();前面在栈中，后面再堆中。<br>21.hashMap (capacity <em> load factor) threshold 没有超过这个数的话不会resize()。默认是16 1&lt;&lt;4 capacity,threshold(16</em>0.75=12)ConcurrentHashMap,Segment 加锁，ReentrantLock,第一次hash segment,后一次hashEntry 分化加锁。效率更高。 HashMap table -&gt;红黑树。<br>22.ArrayList 扩展就为1.5倍。Vector就为2倍。LinkedList 链表，访问效率低，但插入效率高。非线程安全。<br>23.同步在资源访问时候，是为了让支援安全，也就是synchronized.同步机制。上锁。<br>24.异步Callable,返回Future. future.get()时候回当前线程就会堵塞。直接调用run()就是方法调用就是同步的了。 ThreadPoolExecutor ExecutorService 执行runable callable 返回future.线程池实现的就是。提交runable,创建thread.并且执行。ThreadPool里执行work.sleep是thread,方法是暂停一段时间交出cpu,但不会释放锁。对象还在他手上，wait()是对象方法，释放占有的锁，并等待,wati()要放在同步块中，直到notify.sleep 不释放锁，所以容易产生，死锁，所以不推荐使用。yield()只是放出执行权，但又可能会重新获得。<br>25.synchronized 使用的是Object对象自身的notify,wait,notityAll调度机制。Lock使用的是condition.Lock 使用的范围小，但控制性比较强。功能强大，需要手动在finally里面手动释放锁。synchronized的同步范围是在定义的方法体中。静态sychronized和非同步方法，都不会被同步方法影响。<br>26.守护线程t.setDaemon(true),在start()之前。没有非守护线程后，守护线程也会立刻终止。垃圾回收期就是典型的守护线程。<br>27.jion()现实同步， t.join(10) 阻塞等待线程执行。<br>29.GET获取服务端资源，资源在url中，所以不安全，POST修改服务端资源。请求体附件中，安全的。<br>30.Servelet 来处理用户的web请求，相应的url对应相应的servlet.创建request和response来调用相应的方法。组装http格式返回给客户端。servlet容器启动的时候就会被初始化，每次请求过来都会创建新线程来调用server()根据请求的method来调用doGET() OR doPOST();<br>31.cookie和session的区别，一个是浏览器端的小文件，一个是服务器端的保证状态的。SessionID使用cookie来传递的，所以禁用了cookie ,session也就用不了了。当也可以吧sessionid放到URL中.</li>
-</ol>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://www.fovoy.com/2014/06/17/java基础/" data-id="cixo3g89q00922ls6wduxo39f" class="article-share-link">分享到</a>
+      <a data-url="http://www.fovoy.com/2014/06/17/java那点事/" data-id="cixts84wn008q57s6c2xfmy4b" class="article-share-link">分享到</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/基础/">基础</a></li></ul>
@@ -427,7 +486,67 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://www.fovoy.com/2014/05/22/Adapter适配器模式/" data-id="cixo3g8cu00ee2ls6ldoywf7e" class="article-share-link">分享到</a>
+      <a data-url="http://www.fovoy.com/2014/05/22/Adapter适配器模式/" data-id="cixts84zx00eg57s6c7xyo1sd" class="article-share-link">分享到</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/design-pattern/">design pattern</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+    
+      <article id="post-Template模版模式" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2014/05/11/Template模版模式/">template 模版模式</a>
+    </h1>
+  
+
+        <div class="article-meta">
+          
+  <div class="article-date">
+    <i class="fa fa-calendar"></i>
+    <a href="/2014/05/11/Template模版模式/">
+      <time datetime="2014-05-11T01:13:36.000Z" itemprop="datePublished">2014-05-11</time>
+    </a>
+  </div>
+
+
+          
+  <div class="article-category">
+  	<i class="fa fa-folder"></i>
+    <a class="article-category-link" href="/categories/design-pattern/">design pattern</a>
+  </div>
+
+        </div>
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+                
+        <p><img src="/thumbnails/template.png" alt=""></p>
+<h4 id="模版模式">模版模式</h4><h5 id="描述">描述</h5><ul>
+<li>把多部调用统一在一起，减少调用。模版就是重复使用的处理过程。</li>
+<li>hook 引进,超类定义hook=true，子类具体定义，需不需要执行，hook，所判断的方法。</li>
+</ul>
+<h5 id="代码如下">代码如下</h5><hr>
+<figure class="highlight aspectj"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">abstract</span> <span class="class"><span class="keyword">class</span> <span class="title">Template</span>&lt;<span class="title">T</span>&gt; </span>&#123;</span><br><span class="line"></span><br><span class="line">      <span class="keyword">abstract</span> <span class="function">T <span class="title">process</span><span class="params">()</span> <span class="keyword">throws</span> Throwable</span>;</span><br><span class="line"></span><br><span class="line">      <span class="keyword">abstract</span> <span class="function"><span class="keyword">void</span> <span class="title">checkParam</span><span class="params">()</span></span>;</span><br><span class="line"></span><br><span class="line">      <span class="keyword">public</span> <span class="function">T <span class="title">execute</span><span class="params">()</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">          <span class="keyword">try</span> &#123;</span><br><span class="line">              checkParam();</span><br><span class="line">              <span class="function"><span class="keyword">return</span> <span class="title">process</span><span class="params">()</span></span>;</span><br><span class="line">          &#125; <span class="keyword">catch</span> (Throwable th) &#123;</span><br><span class="line">              <span class="keyword">if</span> (th <span class="keyword">instanceof</span> Exception) &#123;</span><br><span class="line">                  <span class="keyword">throw</span> (Exception) th;</span><br><span class="line">              &#125;</span><br><span class="line">              <span class="keyword">throw</span> <span class="keyword">new</span> Exception(th.getMessage(), th);</span><br><span class="line">          &#125;</span><br><span class="line">      &#125;</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
+<p>[TOC]</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://www.fovoy.com/2014/05/11/Template模版模式/" data-id="cixts84yv00cj57s6xn3zy72s" class="article-share-link">分享到</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/design-pattern/">design pattern</a></li></ul>
@@ -497,7 +616,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://www.fovoy.com/2014/05/11/Facade外观模式/" data-id="cixo3g8cf00dp2ls6l3ca2lse" class="article-share-link">分享到</a>
+      <a data-url="http://www.fovoy.com/2014/05/11/Facade外观模式/" data-id="cixts84zi00dr57s6ynxkcqtd" class="article-share-link">分享到</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/design-pattern/">design pattern</a></li></ul>
@@ -550,67 +669,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://www.fovoy.com/2014/05/11/visitor访问者模式/" data-id="cixo3g879004b2ls6q8zlqzc7" class="article-share-link">分享到</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/design-pattern/">design pattern</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-
-    
-      <article id="post-Template模版模式" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2014/05/11/Template模版模式/">template 模版模式</a>
-    </h1>
-  
-
-        <div class="article-meta">
-          
-  <div class="article-date">
-    <i class="fa fa-calendar"></i>
-    <a href="/2014/05/11/Template模版模式/">
-      <time datetime="2014-05-11T01:13:36.000Z" itemprop="datePublished">2014-05-11</time>
-    </a>
-  </div>
-
-
-          
-  <div class="article-category">
-  	<i class="fa fa-folder"></i>
-    <a class="article-category-link" href="/categories/design-pattern/">design pattern</a>
-  </div>
-
-        </div>
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-                
-        <p><img src="/thumbnails/template.png" alt=""></p>
-<h4 id="模版模式">模版模式</h4><h5 id="描述">描述</h5><ul>
-<li>把多部调用统一在一起，减少调用。模版就是重复使用的处理过程。</li>
-<li>hook 引进,超类定义hook=true，子类具体定义，需不需要执行，hook，所判断的方法。</li>
-</ul>
-<h5 id="代码如下">代码如下</h5><hr>
-<figure class="highlight aspectj"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">abstract</span> <span class="class"><span class="keyword">class</span> <span class="title">Template</span>&lt;<span class="title">T</span>&gt; </span>&#123;</span><br><span class="line"></span><br><span class="line">      <span class="keyword">abstract</span> <span class="function">T <span class="title">process</span><span class="params">()</span> <span class="keyword">throws</span> Throwable</span>;</span><br><span class="line"></span><br><span class="line">      <span class="keyword">abstract</span> <span class="function"><span class="keyword">void</span> <span class="title">checkParam</span><span class="params">()</span></span>;</span><br><span class="line"></span><br><span class="line">      <span class="keyword">public</span> <span class="function">T <span class="title">execute</span><span class="params">()</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">          <span class="keyword">try</span> &#123;</span><br><span class="line">              checkParam();</span><br><span class="line">              <span class="function"><span class="keyword">return</span> <span class="title">process</span><span class="params">()</span></span>;</span><br><span class="line">          &#125; <span class="keyword">catch</span> (Throwable th) &#123;</span><br><span class="line">              <span class="keyword">if</span> (th <span class="keyword">instanceof</span> Exception) &#123;</span><br><span class="line">                  <span class="keyword">throw</span> (Exception) th;</span><br><span class="line">              &#125;</span><br><span class="line">              <span class="keyword">throw</span> <span class="keyword">new</span> Exception(th.getMessage(), th);</span><br><span class="line">          &#125;</span><br><span class="line">      &#125;</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
-<p>[TOC]</p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://www.fovoy.com/2014/05/11/Template模版模式/" data-id="cixo3g8bt00cj2ls66k19mbj3" class="article-share-link">分享到</a>
+      <a data-url="http://www.fovoy.com/2014/05/11/visitor访问者模式/" data-id="cixts84uf004b57s6o4zyhjj2" class="article-share-link">分享到</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/design-pattern/">design pattern</a></li></ul>
@@ -673,67 +732,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://www.fovoy.com/2014/04/27/Command命令模式/" data-id="cixo3g8cs00eb2ls6ai32qyp1" class="article-share-link">分享到</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/design-pattern/">design pattern</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-
-    
-      <article id="post-Observer观察者模式" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2014/04/26/Observer观察者模式/">Observer 观察者模式</a>
-    </h1>
-  
-
-        <div class="article-meta">
-          
-  <div class="article-date">
-    <i class="fa fa-calendar"></i>
-    <a href="/2014/04/26/Observer观察者模式/">
-      <time datetime="2014-04-26T02:13:36.000Z" itemprop="datePublished">2014-04-26</time>
-    </a>
-  </div>
-
-
-          
-  <div class="article-category">
-  	<i class="fa fa-folder"></i>
-    <a class="article-category-link" href="/categories/design-pattern/">design pattern</a>
-  </div>
-
-        </div>
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-                
-        <p><img src="/thumbnails/observer.png" alt=""></p>
-<h4 id="观察者模式">观察者模式</h4><h5 id="描述">描述</h5><ul>
-<li>注册 撤销 需要通知的用户。本质是一个消息订阅／发布 pub／sub。订阅通知模式刚觉更适合中文语境。 Observer subject</li>
-<li>优点：作为一个动作的连接点，能实现通知功能。广播，喇叭  一对多。</li>
-</ul>
-<h5 id="代码如下">代码如下</h5><hr>
-<figure class="highlight cs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br></pre></td><td class="code"><pre><span class="line">   <span class="keyword">public</span> <span class="keyword">interface</span> <span class="title">Observer</span>&#123;</span><br><span class="line">   	 <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">notify</span>(<span class="params"></span>)</span>;</span><br><span class="line">   &#125;</span><br><span class="line"></span><br><span class="line">   <span class="keyword">public</span> <span class="keyword">class</span> <span class="title">OneObserver</span> <span class="title">implments</span> <span class="title">Observer</span>&#123;</span><br><span class="line"></span><br><span class="line"> 	  @<span class="function">Override</span><br><span class="line"> 	  <span class="keyword">public</span> <span class="keyword">void</span> <span class="title">notify</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">       system.<span class="keyword">out</span>.print(<span class="string">"one notify"</span>);</span><br><span class="line">     &#125;	</span><br><span class="line">   &#125;</span><br><span class="line"></span><br><span class="line">      <span class="keyword">public</span> <span class="keyword">class</span> <span class="title">TwoObserver</span> <span class="title">implments</span> <span class="title">Observer</span>&#123;</span><br><span class="line"></span><br><span class="line"> 	 @<span class="function">Override</span><br><span class="line"> 	 <span class="keyword">public</span> <span class="keyword">void</span> <span class="title">notify</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">       system.<span class="keyword">out</span>.print(<span class="string">"Two notify"</span>);</span><br><span class="line">     &#125;	</span><br><span class="line">   &#125;</span><br><span class="line"></span><br><span class="line">   <span class="function"><span class="keyword">public</span> <span class="keyword">interface</span> <span class="title">Subject</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">addObserver</span>(<span class="params">String obName,Observer ob</span>)</span>;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">removeObserver</span>(<span class="params">String obName</span>)</span>;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">notifyObserver</span>(<span class="params"></span>)</span>;</span><br><span class="line">   &#125;</span><br><span class="line"></span><br><span class="line">   <span class="keyword">public</span> <span class="keyword">class</span> <span class="title">OneObserver</span> <span class="title">implements</span> <span class="title">Subject</span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> Map&lt;String,Observer&gt; map = <span class="keyword">new</span> HashBiMap.create(); ;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">addObserver</span>(<span class="params">String obName,Observer ob</span>)</span>&#123;</span><br><span class="line">      <span class="keyword">if</span>(!map.contains(obName))<span class="keyword">return</span>;</span><br><span class="line">    	<span class="keyword">this</span>.map.put(obName,obj);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">removeObserver</span>(<span class="params">String obName</span>)</span>&#123;</span><br><span class="line">    	tap.map.remove(obName);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">notifyObserver</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">      <span class="keyword">for</span>(String key:map.keySet())&#123;</span><br><span class="line">        Observer obj = map.<span class="keyword">get</span>(key);</span><br><span class="line">        obj.notify();</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span>(<span class="params">String[] args</span>)</span>&#123;</span><br><span class="line">      Subject sub = <span class="keyword">new</span> OneObserver();</span><br><span class="line">      sub.add(<span class="keyword">new</span> OneObserver());</span><br><span class="line">      sub.add(<span class="keyword">new</span> TwoObserver());</span><br><span class="line">      sub.notifyObserver();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>[TOC]</p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://www.fovoy.com/2014/04/26/Observer观察者模式/" data-id="cixo3g8c500d62ls6zm2s6rwk" class="article-share-link">分享到</a>
+      <a data-url="http://www.fovoy.com/2014/04/27/Command命令模式/" data-id="cixts84zv00ed57s6w4zq4m7m" class="article-share-link">分享到</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/design-pattern/">design pattern</a></li></ul>
@@ -758,6 +757,40 @@
     <h3 class="widget-title">最新文章</h3>
     <div class="widget">
       <ul id="recent-post" class="">
+        
+          <li>
+            
+            <div class="item-thumbnail">
+              <a href="/2017/01/12/cmake/" class="thumbnail">
+  
+    <span class="thumbnail-image thumbnail-none"></span>
+  
+</a>
+            </div>
+            
+            <div class="item-inner">
+              <p class="item-category"></p>
+              <p class="item-title"><a href="/2017/01/12/cmake/" class="title"></a></p>
+              <p class="item-date"><time datetime="2017-01-12T02:51:57.000Z" itemprop="datePublished">2017-01-12</time></p>
+            </div>
+          </li>
+        
+          <li>
+            
+            <div class="item-thumbnail">
+              <a href="/2017/01/12/jenkins脚本/" class="thumbnail">
+  
+    <span class="thumbnail-image thumbnail-none"></span>
+  
+</a>
+            </div>
+            
+            <div class="item-inner">
+              <p class="item-category"></p>
+              <p class="item-title"><a href="/2017/01/12/jenkins脚本/" class="title"></a></p>
+              <p class="item-date"><time datetime="2017-01-12T02:51:26.000Z" itemprop="datePublished">2017-01-12</time></p>
+            </div>
+          </li>
         
           <li>
             
@@ -797,7 +830,7 @@
           <li>
             
             <div class="item-thumbnail">
-              <a href="/2016/11/12/异步化方案/" class="thumbnail">
+              <a href="/2016/11/12/cache/" class="thumbnail">
   
     <span class="thumbnail-image thumbnail-none"></span>
   
@@ -805,43 +838,9 @@
             </div>
             
             <div class="item-inner">
-              <p class="item-category"><a class="article-category-link" href="/categories/java/">java</a></p>
-              <p class="item-title"><a href="/2016/11/12/异步化方案/" class="title">异步化方案</a></p>
-              <p class="item-date"><time datetime="2016-11-12T05:22:01.000Z" itemprop="datePublished">2016-11-12</time></p>
-            </div>
-          </li>
-        
-          <li>
-            
-            <div class="item-thumbnail">
-              <a href="/2016/11/07/metaspace/" class="thumbnail">
-  
-    <span class="thumbnail-image thumbnail-none"></span>
-  
-</a>
-            </div>
-            
-            <div class="item-inner">
-              <p class="item-category"><a class="article-category-link" href="/categories/JVM/">JVM</a></p>
-              <p class="item-title"><a href="/2016/11/07/metaspace/" class="title">metaspace</a></p>
-              <p class="item-date"><time datetime="2016-11-07T01:13:36.000Z" itemprop="datePublished">2016-11-07</time></p>
-            </div>
-          </li>
-        
-          <li>
-            
-            <div class="item-thumbnail">
-              <a href="/2016/11/05/红黑树/" class="thumbnail">
-  
-    <span class="thumbnail-image thumbnail-none"></span>
-  
-</a>
-            </div>
-            
-            <div class="item-inner">
-              <p class="item-category"><a class="article-category-link" href="/categories/数据结构/">数据结构</a></p>
-              <p class="item-title"><a href="/2016/11/05/红黑树/" class="title">红黑树</a></p>
-              <p class="item-date"><time datetime="2016-11-05T01:13:36.000Z" itemprop="datePublished">2016-11-05</time></p>
+              <p class="item-category"><a class="article-category-link" href="/categories/系统/">系统</a></p>
+              <p class="item-title"><a href="/2016/11/12/cache/" class="title">cache</a></p>
+              <p class="item-date"><time datetime="2016-11-12T12:22:31.000Z" itemprop="datePublished">2016-11-12</time></p>
             </div>
           </li>
         
@@ -854,7 +853,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">分类</h3>
     <div class="widget">
-      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Elasticsearch/">Elasticsearch</a><span class="category-list-count">13</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Elasticsearch/config/">config</a><span class="category-list-count">6</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Elasticsearch/performance/">performance</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Elasticsearch/学习/">学习</a><span class="category-list-count">6</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Framework/">Framework</a><span class="category-list-count">3</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Framework/spring/">spring</a><span class="category-list-count">3</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/JAVA/">JAVA</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/JVM/">JVM</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Java/">Java</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Mac/">Mac</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Math/">Math</a><span class="category-list-count">2</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Math/Matrix/">Matrix</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Math/分布/">分布</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/design-pattern/">design pattern</a><span class="category-list-count">12</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/elasticsearch/">elasticsearch</a><span class="category-list-count">2</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/elasticsearch/运维/">运维</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/fovoy/">fovoy</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/gradle/">gradle</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/http/">http</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/java/">java</a><span class="category-list-count">22</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/java/gc/">gc</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/java/jvm/">jvm</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/java/学习/">学习</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/kibana/">kibana</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/lucene/">lucene</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/mysql/">mysql</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/mysql/config/">config</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/netty/">netty</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/recommendation/">recommendation</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/recommendation/协同过滤/">协同过滤</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/redis/">redis</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/scala/">scala</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/scala/基础/">基础</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/site/">site</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/tools/">tools</a><span class="category-list-count">14</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/tools/git/">git</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/tools/hexo/">hexo</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/tools/nginx/">nginx</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/中间件/">中间件</a><span class="category-list-count">3</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/中间件/kafka/">kafka</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/中间件/tomcat/">tomcat</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/主题模型/">主题模型</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/主题模型/主题抽取/">主题抽取</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/兴趣/">兴趣</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/分布式/">分布式</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/分布式消息队列/">分布式消息队列</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/分布式系统/">分布式系统</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/前端开发/">前端开发</a><span class="category-list-count">6</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/前端开发/angularjs/">angularjs</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/前端开发/html5/">html5</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/前端开发/node-js/">node.js</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/前端开发/nodejs/">nodejs</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/前端开发/学习/">学习</a><span class="category-list-count">2</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/基础架构/">基础架构</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/大数据/">大数据</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/并发编程/">并发编程</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/总结/">总结</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/数据结构/">数据结构</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/系统/">系统</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/网络/">网络</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/英语学习/">英语学习</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/计划/">计划</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/读书/">读书</a><span class="category-list-count">1</span></li></ul>
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Elasticsearch/">Elasticsearch</a><span class="category-list-count">13</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Elasticsearch/config/">config</a><span class="category-list-count">6</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Elasticsearch/performance/">performance</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Elasticsearch/学习/">学习</a><span class="category-list-count">6</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Framework/">Framework</a><span class="category-list-count">3</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Framework/spring/">spring</a><span class="category-list-count">3</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/JAVA/">JAVA</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/JVM/">JVM</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Java/">Java</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Mac/">Mac</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Math/">Math</a><span class="category-list-count">2</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Math/Matrix/">Matrix</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Math/分布/">分布</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/design-pattern/">design pattern</a><span class="category-list-count">12</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/elasticsearch/">elasticsearch</a><span class="category-list-count">2</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/elasticsearch/运维/">运维</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/fovoy/">fovoy</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/gradle/">gradle</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/http/">http</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/java/">java</a><span class="category-list-count">22</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/java/gc/">gc</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/java/jvm/">jvm</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/java/学习/">学习</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/kibana/">kibana</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/lucene/">lucene</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/mysql/">mysql</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/mysql/config/">config</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/netty/">netty</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/recommendation/">recommendation</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/recommendation/协同过滤/">协同过滤</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/redis/">redis</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/scala/">scala</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/scala/基础/">基础</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/site/">site</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/tools/">tools</a><span class="category-list-count">14</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/tools/git/">git</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/tools/hexo/">hexo</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/tools/nginx/">nginx</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/中间件/">中间件</a><span class="category-list-count">3</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/中间件/kafka/">kafka</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/中间件/tomcat/">tomcat</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/主题模型/">主题模型</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/主题模型/主题抽取/">主题抽取</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/兴趣/">兴趣</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/分布式/">分布式</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/分布式消息队列/">分布式消息队列</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/分布式系统/">分布式系统</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/前端开发/">前端开发</a><span class="category-list-count">6</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/前端开发/angularjs/">angularjs</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/前端开发/html5/">html5</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/前端开发/node-js/">node.js</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/前端开发/nodejs/">nodejs</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/前端开发/学习/">学习</a><span class="category-list-count">2</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/基础架构/">基础架构</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/大数据/">大数据</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/并发编程/">并发编程</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/总结/">总结</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/数据结构/">数据结构</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/系统/">系统</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/网络/">网络</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/英语学习/">英语学习</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/计划/">计划</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/读书/">读书</a><span class="category-list-count">1</span></li></ul>
     </div>
   </div>
 
@@ -881,7 +880,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">归档</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/01/">一月 2017</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/11/">十一月 2016</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/10/">十月 2016</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/07/">七月 2016</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/05/">五月 2016</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/04/">四月 2016</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/03/">三月 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/02/">二月 2016</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/01/">一月 2016</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/12/">十二月 2015</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/11/">十一月 2015</a><span class="archive-list-count">12</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/10/">十月 2015</a><span class="archive-list-count">16</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/09/">九月 2015</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/08/">八月 2015</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/07/">七月 2015</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/05/">五月 2015</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/04/">四月 2015</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/03/">三月 2015</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/02/">二月 2015</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/01/">一月 2015</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/12/">十二月 2014</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/11/">十一月 2014</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/10/">十月 2014</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/07/">七月 2014</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/06/">六月 2014</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/05/">五月 2014</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/04/">四月 2014</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/03/">三月 2014</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/01/">一月 2014</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/10/">十月 2013</a><span class="archive-list-count">1</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/01/">一月 2017</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/11/">十一月 2016</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/10/">十月 2016</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/07/">七月 2016</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/05/">五月 2016</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/04/">四月 2016</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/03/">三月 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/02/">二月 2016</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/01/">一月 2016</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/12/">十二月 2015</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/11/">十一月 2015</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/10/">十月 2015</a><span class="archive-list-count">16</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/09/">九月 2015</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/08/">八月 2015</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/07/">七月 2015</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/06/">六月 2015</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/05/">五月 2015</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/04/">四月 2015</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/03/">三月 2015</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/02/">二月 2015</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/01/">一月 2015</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/12/">十二月 2014</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/11/">十一月 2014</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/10/">十月 2014</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/07/">七月 2014</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/06/">六月 2014</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/05/">五月 2014</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/04/">四月 2014</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/03/">三月 2014</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/01/">一月 2014</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/10/">十月 2013</a><span class="archive-list-count">1</span></li></ul>
     </div>
   </div>
 
